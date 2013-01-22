@@ -2,11 +2,11 @@
 #### Makefile to build legacy BLAS+LAPACK interface library
 ####
 
-CC=clang++
+CC=/usr/local/bin/c++
 LATL=../include
 CFLAGS=-O3 -Wall -pedantic -std=c++11 -I$(LATL)
 LIBTOOL=ar cr
-LIB=liblatl.a
+LIB=../liblatl.a
 
 ####
 #### BLAS objects
@@ -36,17 +36,17 @@ OBJL=xerbla.o dlamch.o slamch.o disnan.o sisnan.o slange.o dlange.o clange.o zla
 #### rules and targets
 ####
 
-all: 
-	@$(MAKE) lib OBJ="$(OBJB) $(OBJL)"
+default: $(LIB)
 
-blas: 
-	@$(MAKE) lib OBJ="$(OBJB)"
+all: $(LIB)
 
 lib: $(LIB)
 
 $(OBJB): blas.h
 
 $(OBJL): lapack.h
+
+OBJ=$(OBJB) $(OBJL)
 
 $(LIB): $(OBJ)
 	$(LIBTOOL) $@ $(OBJ)
