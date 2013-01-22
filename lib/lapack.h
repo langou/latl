@@ -125,5 +125,9 @@ extern "C"
    int dlauu2_(char &uplo, int &n, double *A, int &ldA, int &info);
    int clauu2_(char &uplo, int &n, complex<float> *A, int &ldA, int &info);
    int zlauu2_(char &uplo, int &n, complex<double> *A, int &ldA, int &info);
+   int slauum_(char &uplo, int &n, float *A, int &ldA, int &info);
+   int dlauum_(char &uplo, int &n, double *A, int &ldA, int &info);
+   int clauum_(char &uplo, int &n, complex<float> *A, int &ldA, int &info);
+   int zlauum_(char &uplo, int &n, complex<double> *A, int &ldA, int &info);
 }
 #endif

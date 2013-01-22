@@ -30,7 +30,7 @@ zgemm.o zsymm.o zsyrk.o zsyr2k.o ztrmm.o ztrsm.o zhemm.o zherk.o zher2k.o
 #### LAPACK objects
 ####
 
-OBJL=xerbla.o dlamch.o slamch.o disnan.o sisnan.o slange.o dlange.o clange.o zlange.o sladiv.o dladiv.o cladiv.o zladiv.o slapy2.o dlapy2.o slapy3.o dlapy3.o slauu2.o dlauu2.o clauu2.o zlauu2.o
+OBJL=xerbla.o dlamch.o slamch.o disnan.o sisnan.o slange.o dlange.o clange.o zlange.o sladiv.o dladiv.o cladiv.o zladiv.o slapy2.o dlapy2.o slapy3.o dlapy3.o slauu2.o dlauu2.o clauu2.o zlauu2.o slauum.o dlauum.o clauum.o zlauum.o
 
 ####
 #### rules and targets
