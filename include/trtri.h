@@ -9,6 +9,8 @@
 #ifndef _tritri_h
 #define _tritri_h
 
+/// @file trtri.h Computes the inverse of an upper or lower triangular matrix using blocked algorithm.
+
 #include "latl.h"
 #include "trti2.h"
 #include "trmm.h"
@@ -16,6 +18,38 @@
 
 namespace latl
 {
+   /// @brief Computes the inverse of an upper or lower triangular matrix using blocked algorithm.
+   /// @tparam real_t Floating point type.
+   /// @return 0 if success.
+   /// @return -i if the ith argument is invalid.
+   /// @return i, A(i,i) is exactly zero.  The triangular matrix is singular 
+   /// and its inverse can not be computed.
+   /// @param uplo Specifies whether the triangular factor stored in the array 
+   /// is upper or lower triangular:
+   ///
+   ///             'U' or 'u':  upper triangular
+   ///             'L' or 'l':  lower triangular
+   /// @param diag Specifies whether the or not the matrix is unit triangular:
+   ///
+   ///             'N' or 'n':  non-unit triangular
+   ///             'U' or 'u':  unit triangular
+   /// @param n The order of the triangular factor U or L.  n >= 0.
+   /// @param A Real triangular matrix of order n.
+   /// A is DOUBLE PRECISION array, dimension (LDA,N)
+   /// On entry, the triangular matrix A.  If UPLO = 'U', the leading n by n 
+   /// upper triangular part of the array A contains the upper triangular 
+   /// matrix, and the strictly lower triangular part of A is not referenced.
+   /// If UPLO = 'L', the leading n by n lower triangular part of the array A 
+   /// contains the lower triangular matrix, and the strictly upper triangular 
+   /// part of A is not referenced.  If DIAG = 'U', the diagonal elements of A 
+   /// are also not referenced and are assumed to be 1.
+   ///
+   /// On exit, the (triangular) inverse of the original matrix, in
+   /// the same storage format.
+   /// @param ldA Column length of the matrix A.  ldA>=n.
+   /// @ingroup MATM
+
+
    template <typename real_t>
    int_t trtri(char uplo, char diag, int_t n, real_t *A, int_t ldA, int_t nb=32)
    {
@@ -77,6 +111,37 @@ namespace latl
    }
    
    
+   /// @brief Computes the inverse of an upper or lower triangular matrix using blocked algorithm.
+   /// @tparam real_t Floating point type.
+   /// @return 0 if success.
+   /// @return -i if the ith argument is invalid.
+   /// @return i, A(i,i) is exactly zero.  The triangular matrix is singular 
+   /// and its inverse can not be computed.
+   /// @param uplo Specifies whether the triangular factor stored in the array 
+   /// is upper or lower triangular:
+   ///
+   ///             'U' or 'u':  upper triangular
+   ///             'L' or 'l':  lower triangular
+   /// @param diag Specifies whether the or not the matrix is unit triangular:
+   ///
+   ///             'N' or 'n':  non-unit triangular
+   ///             'U' or 'u':  unit triangular
+   /// @param n The order of the triangular factor U or L.  n >= 0.
+   /// @param A Complex triangular matrix of order n.
+   /// A is COMPLEX DOUBLE PRECISION array, dimension (LDA,N)
+   /// On entry, the triangular matrix A.  If UPLO = 'U', the leading n by n 
+   /// upper triangular part of the array A contains the upper triangular 
+   /// matrix, and the strictly lower triangular part of A is not referenced.
+   /// If UPLO = 'L', the leading n by n lower triangular part of the array A 
+   /// contains the lower triangular matrix, and the strictly upper triangular 
+   /// part of A is not referenced.  If DIAG = 'U', the diagonal elements of A 
+   /// are also not referenced and are assumed to be 1.
+   ///
+   /// On exit, the (triangular) inverse of the original matrix, in
+   /// the same storage format.
+   /// @param ldA Column length of the matrix A.  ldA>=n.
+   /// @ingroup MATM
+
    template <typename real_t>
    int_t trtri(char uplo, char diag, int_t n, complex<real_t> *A, int_t ldA, int_t nb=32)
    {
