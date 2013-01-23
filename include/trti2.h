@@ -73,8 +73,7 @@ namespace latl
             else
                AJJ = -one;
             
-            int_t info=trmv<real_t>('U','N', diag, j, A, ldA, A+j*ldA, 1);
-            if(info!=0) return info;
+            trmv<real_t>('U','N', diag, j, A, ldA, A+j*ldA, 1);
             scal<real_t>(j,AJJ,A+j*ldA,1);
          }
       }
@@ -92,8 +91,7 @@ namespace latl
             
             if(j<n-1)
             {
-               int_t info=trmv('L', 'N', diag, n-j-1, A+(j+1)+(j+1)*ldA, ldA, A+(j+1)+j*ldA, 1);
-               if(info!=0) return info;
+               trmv('L', 'N', diag, n-j-1, A+(j+1)+(j+1)*ldA, ldA, A+(j+1)+j*ldA, 1);
                scal<real_t>(n-j-1, AJJ, A+(j+1)+j*ldA, 1);
             }
          }
@@ -158,8 +156,7 @@ namespace latl
             else
                AJJ = -one;
             
-            int_t info=trmv<real_t>('U','N', diag, j, A, ldA, A+j*ldA, 1);
-            if(info!=0) return info;
+            trmv<real_t>('U','N', diag, j, A, ldA, A+j*ldA, 1);
             scal<real_t>(j,AJJ,A+j*ldA,1);
          }
       }
@@ -177,8 +174,7 @@ namespace latl
             
             if(j<n-1)
             {
-               int_t info=trmv('L', 'N', diag, n-j-1, A+(j+1)+(j+1)*ldA, ldA, A+(j+1)+j*ldA, 1);
-               if(info!=0) return info;
+               trmv('L', 'N', diag, n-j-1, A+(j+1)+(j+1)*ldA, ldA, A+(j+1)+j*ldA, 1);
                scal<real_t>(n-j-1, AJJ, A+(j+1)+j*ldA, 1);
             }
          }

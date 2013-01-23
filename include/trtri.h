@@ -22,8 +22,7 @@ namespace latl
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
    /// @return -i if the ith argument is invalid.
-   /// @return i if the ith diagonal element is exactly zero,
-   /// thus the matrix is singular and its inverse can not be computed.
+   /// @return 1 if the matrix is singular.
    /// @param uplo Specifies whether the triangular factor stored in the array 
    /// is upper or lower triangular:
    ///
@@ -51,7 +50,6 @@ namespace latl
       diag=toupper(diag);
       const real_t one=1.0;
       const real_t zero=0.0;
-      int_t info;
       
       if((uplo!='U')&&(uplo!='L'))
          return -1;
@@ -66,13 +64,12 @@ namespace latl
 
       if(diag=='N')
       {
-         for(int_t info=0; info<n; info++)
-            if(A[info+info*ldA]==zero)
-               return info;
-         info = 0;
+         for(int_t i=0; i<n; i++)
+            if(A[i+i*ldA]==zero)
+               return 1;
       }
       if(nb>n)
-         info=trti2( uplo, diag, n, A, ldA);
+         trti2( uplo, diag, n, A, ldA);
       else
       {
          if(uplo=='U')
@@ -82,7 +79,7 @@ namespace latl
                int_t jb = std::min(nb,n-j);
                trmm('L', 'U', 'N', diag, j, jb, one, A, ldA, A+j*ldA, ldA);
                trsm('R', 'U', 'N', diag, j, jb, -one, A+j+j*ldA, ldA, A+j*ldA, ldA);
-               info=trti2('U', diag, jb, A+j+j*ldA, ldA);
+               trti2('U', diag, jb, A+j+j*ldA, ldA);
             }
          }
          else
@@ -96,11 +93,11 @@ namespace latl
                   trmm('L', 'L', 'N', diag, n-j-jb, jb, one, A+(j+jb)+(j+jb)*ldA, ldA, A+(j+jb)+j*ldA, ldA);
                   trsm('R', 'L', 'N', diag, n-j-jb, jb, -one, A+j+j*ldA, ldA, A+(j+jb)+j*ldA, ldA);
                }
-               info=trti2('L', diag, jb, A+j+j*ldA, ldA);
+               trti2('L', diag, jb, A+j+j*ldA, ldA);
             }
          }
       }
-      return info;
+      return 0;
    }
    
    
@@ -108,8 +105,7 @@ namespace latl
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
    /// @return -i if the ith argument is invalid.
-   /// @return i if the ith diagonal element is exactly zero,
-   /// thus the matrix is singular and its inverse can not be computed.
+   /// @return 1 if the matrix is singular.
    /// @param uplo Specifies whether the triangular factor stored in the array
    /// is upper or lower triangular:
    ///
@@ -137,7 +133,6 @@ namespace latl
       diag=toupper(diag);
       const complex<real_t> one=1.0;
       const complex<real_t> zero=0.0;
-      int_t info;
       
       if((uplo!='U')&&(uplo!='L'))
          return -1;
@@ -152,13 +147,12 @@ namespace latl
       
       if(diag=='N')
       {
-         for(int_t info=0; info<n; info++)
-            if(A[info+info*ldA]==zero)
-               return info;
-         info = 0;
+         for(int_t i=0; i<n; i++)
+            if(A[i+i*ldA]==zero)
+               return 1;
       }
       if(nb>n)
-         info=trti2( uplo, diag, n, A, ldA);
+         trti2( uplo, diag, n, A, ldA);
       else
       {
          if(uplo=='U')
@@ -168,7 +162,7 @@ namespace latl
                int_t jb = std::min(nb,n-j);
                trmm('L', 'U', 'N', diag, j, jb, one, A, ldA, A+j*ldA, ldA);
                trsm('R', 'U', 'N', diag, j, jb, -one, A+j+j*ldA, ldA, A+j*ldA, ldA);
-               info=trti2('U', diag, jb, A+j+j*ldA, ldA);
+               trti2('U', diag, jb, A+j+j*ldA, ldA);
             }
          }
          else
@@ -182,11 +176,11 @@ namespace latl
                   trmm('L', 'L', 'N', diag, n-j-jb, jb, one, A+(j+jb)+(j+jb)*ldA, ldA, A+(j+jb)+j*ldA, ldA);
                   trsm('R', 'L', 'N', diag, n-j-jb, jb, -one, A+j+j*ldA, ldA, A+(j+jb)+j*ldA, ldA);
                }
-               info=trti2('L', diag, jb, A+j+j*ldA, ldA);
+               trti2('L', diag, jb, A+j+j*ldA, ldA);
             }
          }
       }
-      return info;
+      return 0;
    }
 }
 
