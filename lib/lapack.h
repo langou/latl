@@ -129,5 +129,13 @@ extern "C"
    int dlauum_(char &uplo, int &n, double *A, int &ldA, int &info);
    int clauum_(char &uplo, int &n, complex<float> *A, int &ldA, int &info);
    int zlauum_(char &uplo, int &n, complex<double> *A, int &ldA, int &info);
+   int strti2_(char &uplo, char &diag, int &n, float *A, int &ldA, int &info);
+   int dtrti2_(char &uplo, char &diag, int &n, double *A, int &ldA, int &info);
+   int ctrti2_(char &uplo, char &diag, int &n, complex<float> *A, int &ldA, int &info);
+   int ztrti2_(char &uplo, char &diag, int &n, complex<double> *A, int &ldA, int &info);
+   int strtri_(char &uplo, char &diag, int &n, float *A, int &ldA, int &info);
+   int dtrtri_(char &uplo, char &diag, int &n, double *A, int &ldA, int &info);
+   int ctrtri_(char &uplo, char &diag, int &n, complex<float> *A, int &ldA, int &info);
+   int ztrtri_(char &uplo, char &diag, int &n, complex<double> *A, int &ldA, int &info);
 }
 #endif
