@@ -17,12 +17,12 @@
 
 namespace latl
 {
-   /// @brief Computes the inverse of a triangular matrix (unblocked algorithm).
+   /// @brief Computes the inverse of a triangular matrix.
    ///
-   /// This is the Level 2 BLAS version of the algorithm.
+   /// This is the unblocked version of the algorithm.
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
-   /// @return -k if the k-th argument had an illegal value.
+   /// @return -i if the ith argument had an illegal value.
    /// @param uplo Specifies whether the triangular factor stored in the array 
    /// is upper or lower triangular:
    ///
@@ -32,19 +32,12 @@ namespace latl
    ///
    ///             'N' or 'n':  non-unit triangular
    ///             'U' or 'u':  unit triangular
-   /// @param n The order of the triangular factor U or L.  n >= 0.
+   /// @param n Order of the triangular matrix A.  n >= 0.
    /// @param A Real triangular matrix of order n.
-   /// A is DOUBLE PRECISION array, dimension (LDA,N)
-   /// On entry, the triangular matrix A.  If UPLO = 'U', the leading n by n 
-   /// upper triangular part of the array A contains the upper triangular 
-   /// matrix, and the strictly lower triangular part of A is not referenced.
-   /// If UPLO = 'L', the leading n by n lower triangular part of the array A 
-   /// contains the lower triangular matrix, and the strictly upper triangular 
-   /// part of A is not referenced.  If DIAG = 'U', the diagonal elements of A 
-   /// are also not referenced and are assumed to be 1.
-   ///
-   /// On exit, the (triangular) inverse of the original matrix, in
-   /// the same storage format.
+   /// If A is upper triangular, the strictly lower triangular part of A is not referenced.
+   /// If A is lower triangular, the strictly upper triangular part of A is not referenced.
+   /// If A is unit triangular, the diagonal elements of A are also not referenced and
+   /// are assumed to be one. On exit, A contains the inverse of the original matrix.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @ingroup MATM
 
@@ -108,12 +101,12 @@ namespace latl
       return 0;
    }
 
-   /// @brief Computes the inverse of a triangular matrix (unblocked algorithm).
+   /// @brief Computes the inverse of a triangular matrix.
    ///
-   /// This is the Level 2 BLAS version of the algorithm.
+   /// This is the unblocked version of the algorithm.
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
-   /// @return -k if the k-th argument had an illegal value.
+   /// @return -i if the ith argument had an illegal value.
    /// @param uplo Specifies whether the triangular factor stored in the array 
    /// is upper or lower triangular:
    ///
@@ -123,19 +116,12 @@ namespace latl
    ///
    ///             'N' or 'n':  non-unit triangular
    ///             'U' or 'u':  unit triangular
-   /// @param n The order of the triangular factor U or L.  n >= 0.
+   /// @param n Order of the triangular matrix A.  n >= 0.
    /// @param A Complex triangular matrix of order n.
-   /// A is COMPLEX DOUBLE PRECISION array, dimension (LDA,N)
-   /// On entry, the triangular matrix A.  If UPLO = 'U', the leading n by n 
-   /// upper triangular part of the array A contains the upper triangular 
-   /// matrix, and the strictly lower triangular part of A is not referenced.
-   /// If UPLO = 'L', the leading n by n lower triangular part of the array A 
-   /// contains the lower triangular matrix, and the strictly upper triangular 
-   /// part of A is not referenced.  If DIAG = 'U', the diagonal elements of A 
-   /// are also not referenced and are assumed to be 1.
-   ///
-   /// On exit, the (triangular) inverse of the original matrix, in
-   /// the same storage format.
+   /// If A is upper triangular, the strictly lower triangular part of A is not referenced.
+   /// If A is lower triangular, the strictly upper triangular part of A is not referenced.
+   /// If A is unit triangular, the diagonal elements of A are also not referenced and
+   /// are assumed to be one. On exit, A contains the inverse of the original matrix.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @ingroup MATM
 
