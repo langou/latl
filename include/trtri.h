@@ -1,13 +1,13 @@
 //
-//  tritri.h
+//  trtri.h
 //  Linear Algebra Template Library
 //
 //  Created by Henricus Bouwmeester on 1/22/13.
 //  Copyright (c) 2013 University of Colorado Denver. All rights reserved.
 //
 
-#ifndef _tritri_h
-#define _tritri_h
+#ifndef _trtri_h
+#define _trtri_h
 
 /// @file trtri.h Computes the inverse of an upper or lower triangular matrix using blocked algorithm.
 
@@ -69,7 +69,7 @@ namespace latl
                return 1;
       }
       if(nb>n)
-         trti2( uplo, diag, n, A, ldA);
+         trti2<real_t>( uplo, diag, n, A, ldA);
       else
       {
          if(uplo=='U')
@@ -77,9 +77,9 @@ namespace latl
             for(int_t j=0; j< n; j+=nb)
             {
                int_t jb = std::min(nb,n-j);
-               trmm('L', 'U', 'N', diag, j, jb, one, A, ldA, A+j*ldA, ldA);
-               trsm('R', 'U', 'N', diag, j, jb, -one, A+j+j*ldA, ldA, A+j*ldA, ldA);
-               trti2('U', diag, jb, A+j+j*ldA, ldA);
+               trmm<real_t>('L', 'U', 'N', diag, j, jb, one, A, ldA, A+j*ldA, ldA);
+               trsm<real_t>('R', 'U', 'N', diag, j, jb, -one, A+j+j*ldA, ldA, A+j*ldA, ldA);
+               trti2<real_t>('U', diag, jb, A+j+j*ldA, ldA);
             }
          }
          else
@@ -90,10 +90,10 @@ namespace latl
                int_t jb = std::min(nb,n-j);
                if(j+jb < n)
                {
-                  trmm('L', 'L', 'N', diag, n-j-jb, jb, one, A+(j+jb)+(j+jb)*ldA, ldA, A+(j+jb)+j*ldA, ldA);
-                  trsm('R', 'L', 'N', diag, n-j-jb, jb, -one, A+j+j*ldA, ldA, A+(j+jb)+j*ldA, ldA);
+                  trmm<real_t>('L', 'L', 'N', diag, n-j-jb, jb, one, A+(j+jb)+(j+jb)*ldA, ldA, A+(j+jb)+j*ldA, ldA);
+                  trsm<real_t>('R', 'L', 'N', diag, n-j-jb, jb, -one, A+j+j*ldA, ldA, A+(j+jb)+j*ldA, ldA);
                }
-               trti2('L', diag, jb, A+j+j*ldA, ldA);
+               trti2<real_t>('L', diag, jb, A+j+j*ldA, ldA);
             }
          }
       }
@@ -152,7 +152,7 @@ namespace latl
                return 1;
       }
       if(nb>n)
-         trti2( uplo, diag, n, A, ldA);
+         trti2<real_t>( uplo, diag, n, A, ldA);
       else
       {
          if(uplo=='U')
@@ -160,9 +160,9 @@ namespace latl
             for(int_t j=0; j< n; j+=nb)
             {
                int_t jb = std::min(nb,n-j);
-               trmm('L', 'U', 'N', diag, j, jb, one, A, ldA, A+j*ldA, ldA);
-               trsm('R', 'U', 'N', diag, j, jb, -one, A+j+j*ldA, ldA, A+j*ldA, ldA);
-               trti2('U', diag, jb, A+j+j*ldA, ldA);
+               trmm<real_t>('L', 'U', 'N', diag, j, jb, one, A, ldA, A+j*ldA, ldA);
+               trsm<real_t>('R', 'U', 'N', diag, j, jb, -one, A+j+j*ldA, ldA, A+j*ldA, ldA);
+               trti2<real_t>('U', diag, jb, A+j+j*ldA, ldA);
             }
          }
          else
@@ -173,10 +173,10 @@ namespace latl
                int_t jb = std::min(nb,n-j);
                if(j+jb < n)
                {
-                  trmm('L', 'L', 'N', diag, n-j-jb, jb, one, A+(j+jb)+(j+jb)*ldA, ldA, A+(j+jb)+j*ldA, ldA);
-                  trsm('R', 'L', 'N', diag, n-j-jb, jb, -one, A+j+j*ldA, ldA, A+(j+jb)+j*ldA, ldA);
+                  trmm<real_t>('L', 'L', 'N', diag, n-j-jb, jb, one, A+(j+jb)+(j+jb)*ldA, ldA, A+(j+jb)+j*ldA, ldA);
+                  trsm<real_t>('R', 'L', 'N', diag, n-j-jb, jb, -one, A+j+j*ldA, ldA, A+(j+jb)+j*ldA, ldA);
                }
-               trti2('L', diag, jb, A+j+j*ldA, ldA);
+               trti2<real_t>('L', diag, jb, A+j+j*ldA, ldA);
             }
          }
       }
