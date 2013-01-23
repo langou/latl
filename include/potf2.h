@@ -89,7 +89,7 @@ namespace latl
             
             if (j < n-1)
             {
-               latl::gemv('N', n-j-1, j, -one, A+j+1, ldA, A+j, ldA, one, A+j+1, 1);
+               latl::gemv('N', n-j-1, j, -one, A+j+1, ldA, A+j, ldA, one, Aj+j+1, 1);
                latl::scal(n-j-1, one/ajj, Aj+j+1, 1);
             }
             Aj += ldA;
