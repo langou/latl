@@ -17,7 +17,7 @@
 
 namespace latl
 {
-   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a real symmetric banded matrix.
+   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a real symmetric band matrix.
    ///
    /// @return Calculated norm value for the specified type.
    /// @tparam real_t Real floating point type
@@ -30,7 +30,7 @@ namespace latl
    ///     'F', 'f', 'E', or 'e' = the Frobenius norm of the matrix A.
    ///         This the square root of the sum of the squares of each element in A.
    ///
-   /// @param uplo Indicates whether the symmetric band matrix A is stored as upper triangular or lower triangular.  
+   /// @param uplo Indicates whether the symmetric band matrix A is stored as upper triangular or lower triangular.
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param k The number of super- or sub-diagonals within the band of A.  k >= 0.
    /// @param AB Real matrix size ldAB-by-n.  On entry, the matrix A in band storage.
@@ -168,7 +168,7 @@ namespace latl
       return value;
    }
    
-   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a complex symmetric banded matrix.
+   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a complex symmetric band matrix.
    ///
    /// @return Calculated norm value for the specified type.
    /// @tparam real_t Real floating point type
