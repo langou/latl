@@ -32,6 +32,7 @@ namespace latl
       using std::getline;
       using std::istringstream;
       using std::max;
+      using std::cin;
       string input;
       queue<string> q;
       n=0;
