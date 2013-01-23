@@ -62,7 +62,7 @@ namespace latl
                   temp = abs(ABj[i]);
                   if ((temp > value) || (isnan(temp)))
                   {
-                     value = abs(temp);
+                     value = temp;
                   }
                }
                ABj += ldAB;
