@@ -30,7 +30,7 @@ namespace latl
    ///        if uplo = 'U' or 'u' then A,B,C are upper triangular
    ///        if uplo = 'L' or 'l' then A,B,C are lower triangular
    /// If uplo is set to 'U' or 'u', the portion of each matrix below the diagonal is not accessed;
-   /// if uplo is set to 'L' or 'l', triangular, the portion of each matrix above the diagonal is not accessed.
+   /// if uplo is set to 'L' or 'l', the portion of each matrix above the diagonal is not accessed.
    /// @param n The number order of matrices A,B,C.
    /// @param alpha Real scalar.
    /// @param A Real triangular matrix of order n.
@@ -148,7 +148,7 @@ namespace latl
    ///        if uplo = 'U' or 'u' then A,B,C are upper triangular
    ///        if uplo = 'L' or 'l' then A,B,C are lower triangular
    /// If uplo is set to 'U' or 'u', the portion of each matrix below the diagonal is not accessed;
-   /// if uplo is set to 'L' or 'l', triangular, the portion of each matrix above the diagonal is not accessed.
+   /// if uplo is set to 'L' or 'l', the portion of each matrix above the diagonal is not accessed.
    /// @param n The number order of matrices A,B,C.
    /// @param alpha Complex scalar.
    /// @param A Complex triangular matrix of order n.
