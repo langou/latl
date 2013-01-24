@@ -38,13 +38,15 @@ namespace latl
    template< typename real_t>
    void lassq( const int_t n, real_t * const X, const int_t incx, real_t &scale, real_t &sumsq)
    {
+      using std::abs;
+      using std::isnan;
       if (n > 0)
       {
          real_t zero(0.0), absxi, temp;
          for (int_t ix = 0; ix < n*incx; ix += incx)
          {
-            absxi = std::abs(X[ix]);
-            if ((absxi > zero) || (std::isnan(absxi)))
+            absxi = abs(X[ix]);
+            if ((absxi > zero) || (isnan(absxi)))
             {
                if (scale < absxi)
                {
@@ -85,13 +87,15 @@ namespace latl
    template< typename real_t>
    void lassq( const int_t n, complex<real_t> * const X, const int_t incx, real_t &scale, real_t &sumsq)
    {
+      using std::abs;
+      using std::isnan;
       if (n > 0)
       {
          real_t zero(0.0), temp, temp2;
          for (int_t ix = 0; ix < n*incx; ix += incx)
          {
-            temp = std::abs(real(X[ix]));
-            if ((temp>zero)||(std::isnan(temp)))
+            temp = abs(real(X[ix]));
+            if ((temp>zero)||(isnan(temp)))
             {
                if (scale < temp)
                {
@@ -105,8 +109,8 @@ namespace latl
                   sumsq += (temp2*temp2);
                }
             }
-            temp = std::abs(imag(X[ix]));
-            if ((temp>zero)||(std::isnan(temp)))
+            temp = abs(imag(X[ix]));
+            if ((temp>zero)||(isnan(temp)))
             {
                if (scale < temp)
                {
