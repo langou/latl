@@ -15,11 +15,13 @@
 #include <iostream>
 #include <queue>
 #include <algorithm>
+#include <cstddef>
 
 namespace latl
 {
    /// @brief Attempts to read a rectangular matrix from standard input.
    /// @return Pointer to rectangular matrix read from standard input.
+   /// @return NULL if unable to read matrix.
    /// @tparam real_t Floating point type.
    /// @param[out] m Number of rows in matrix.
    /// @param[out] n Number of columns in matrix.
@@ -36,6 +38,7 @@ namespace latl
       string input;
       queue<string> q;
       n=0;
+      int count=0;
       while(getline(cin,input))
       {
          q.push(input);
@@ -44,9 +47,12 @@ namespace latl
          int N=0;
          while(s>>z)
             N++;
+         count+=N;
          n=max(n,N);
       }
       m=q.size();
+      if(m*n!=count)
+         return NULL;
       real_t *A=new real_t[m*n];
       int i=0;
       while(!q.empty())
@@ -67,6 +73,7 @@ namespace latl
 
    /// @brief Attempts to read a packed triangular matrix from standard input.
    /// @return Pointer to packed triangular matrix read from standard input.
+   /// @return NULL if unable to read matrix.
    /// @tparam real_t Floating point type.
    /// @param[out] uplo Determines whether the matrix is upper or lower triangular.
    ///
@@ -87,6 +94,7 @@ namespace latl
       queue<string> q;
       n=0;
       int m=0;
+      int count=0;
       bool first=1;
       while(getline(cin,input))
       {
@@ -96,6 +104,7 @@ namespace latl
          int N=0;
          while(s>>z)
             N++;
+         count+=N;
          n=max(n,N);
          if(first)
          {
@@ -103,6 +112,8 @@ namespace latl
             first=0;
          }
       }
+      if(n*(n+1)/2!=count)
+         return NULL;
       bool upper=(m==n)?1:0;
       uplo=(upper)?'U':'L';
       real_t *A=new real_t[(n*(n+1))/2];
