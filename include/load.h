@@ -110,11 +110,17 @@ namespace latl
       {
          istringstream ist(q.front());
          if(upper)
+         {
             for(int j=i;j<n;j++)
                ist >> A[i+j*(j+1)/2];
+         }
          else
+         {
             for(int j=0;j<=i;j++)
-               ist >> A[i+j*n-j*(j+1)/2];
+            {
+               ist >> A[i+j*(2*n-1-j)/2];
+            }
+         }
          q.pop();
       }
       
