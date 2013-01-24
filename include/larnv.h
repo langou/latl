@@ -29,13 +29,15 @@ namespace latl
    ///        3: normal (0,1)
    /// @param n Length of vector x.
    /// @param x Pointer to real vector of length n.
+   /// @param s Seed for random number generator. (optional)
    /// @ingroup VEC
    
    template<typename real_t> 
-   void larnv(int_t dist,int_t n,real_t *x)
+   void larnv(int_t dist,int_t n,real_t *x,uint32_t s=0)
    {
       std::random_device device;
       std::mt19937 generator(device());
+      generator.seed(s);
       if(dist==1)
       {
          std::uniform_real_distribution<real_t> d1(0,1);
@@ -69,10 +71,11 @@ namespace latl
    ///        5:  uniformly distributed on the circle abs(z) = 1
    /// @param n Length of vector x.
    /// @param x Pointer to complex vector of length n.
+   /// @param s Seed for random number generator. (optional)
    /// @ingroup VEC
    
    template<typename real_t> 
-   void larnv(int_t dist,int_t n,complex<real_t> *x)
+   void larnv(int_t dist,int_t n,complex<real_t> *x,uint32_t s=0)
    {
       const real_t zero=0.0;
       const real_t one=1.0;
@@ -80,6 +83,7 @@ namespace latl
       const real_t twopi=eight*std::atan(one);
       std::random_device device;
       std::mt19937 generator(device());
+      generator.seed(s);
       if(dist==1)
       {
          std::uniform_real_distribution<real_t> d1(0,1);
