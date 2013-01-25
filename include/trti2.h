@@ -28,7 +28,7 @@ namespace latl
    ///
    ///             'U' or 'u':  upper triangular
    ///             'L' or 'l':  lower triangular
-   /// @param diag Specifies whether the or not the matrix is unit triangular:
+   /// @param diag Specifies whether or not the matrix is unit triangular:
    ///
    ///             'N' or 'n':  non-unit triangular
    ///             'U' or 'u':  unit triangular
@@ -110,7 +110,7 @@ namespace latl
    ///
    ///             'U' or 'u':  upper triangular
    ///             'L' or 'l':  lower triangular
-   /// @param diag Specifies whether the or not the matrix is unit triangular:
+   /// @param diag Specifies whether or not the matrix is unit triangular:
    ///
    ///             'N' or 'n':  non-unit triangular
    ///             'U' or 'u':  unit triangular
