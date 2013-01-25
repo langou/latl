@@ -52,6 +52,77 @@ namespace latl
       return 0;
    }
    
+   /// @brief Prints a triangular matrix to standard output.
+   /// @tparam real_t Floating point type.
+   /// @return 0 if success.
+   /// @return -i if ith parameter is invalid.
+   /// @param uplo Specifies whether A is stored as upper or lower triangular.
+   ///
+   ///        if uplo = 'U' or 'u' then A is upper triangular
+   ///        if uplo = 'L' or 'l' then A is lower triangular
+   /// @param diag Specifies whether or not A is unit triangular as follows:
+   ///
+   ///        if diag = 'U' or 'u' then A is assumed to be unit triangular
+   ///        if diag = 'N' or 'n' then A is not assumed to be unit triangular.
+   /// @param n Order of triangular matrix.
+   /// @param A Matrix of size m-by-n.
+   /// @param ldA Column length of matrix A.
+   /// @param prec Precision to use in output (optional).
+   
+   template <typename real_t>
+   int print(char uplo, char diag, int n, real_t *A, int ldA, int prec=6)
+   {
+      const real_t zero=0.0;
+      const real_t one=1.0;
+      using std::toupper;
+      uplo=toupper(uplo);
+      diag=toupper(diag);
+      if((uplo!='U')&&(uplo!='L'))
+         return -1;
+      else if(n<0)
+         return -3;
+      else if(ldA<n)
+         return -5;
+      else if(prec<1)
+         return -6;
+      using std::cout;
+      using std::endl;
+      using std::setprecision;
+      if(prec!=6)
+         cout << setprecision(prec);
+      if(uplo=='U')
+      {
+         for(int i=0;i<n;i++)
+         {
+            for(int j=0;j<i;j++)
+               cout << zero << "\t";
+            if(diag=='U')
+               cout << one << "\t";
+            else
+               cout << A[i+i*ldA] << "\t";
+            for(int j=i+1;j<n;j++)
+               cout << A[i+j*ldA] << "\t";
+            cout << endl;
+         }
+      }
+      else
+      {
+         for(int i=0;i<n;i++)
+         {
+            for(int j=0;j<i;j++)
+               cout << A[i+j*ldA] << "\t";
+            if(diag=='U')
+               cout << one << "\t";
+            else
+               cout << A[i+i*ldA] << "\t";
+            for(int j=i+1;j<n;j++)
+               cout << zero << "\t";
+            cout << endl;
+         }
+      }
+      return 0;
+   }
+   
    /// @brief Prints a packed triangular matrix to standard output.
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
