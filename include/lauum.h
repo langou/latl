@@ -37,7 +37,7 @@ namespace latl
    /// @param A Real triangular matrix of order n.
    /// On entry, the triangular factor U or L.  On exit, if upper trianglar, A is overwritten with
    /// the upper triangle of the product U*U'; if lower trianglar, A is overwritten with the lower
-   //  triangle of the product L'*L.
+   /// triangle of the product L'*L.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param nb Block size (optional).
    /// @ingroup MATM
