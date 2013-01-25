@@ -172,7 +172,7 @@ namespace latl
             if (j < n-1)
             {
                latl::lacgv(j, A+j, ldA);
-               latl::gemv('N', n-j-1, j, -onec, A+j+1, ldA, A+j, ldA, onec, A+j+1, 1);
+               latl::gemv('N', n-j-1, j, -onec, A+j+1, ldA, A+j, ldA, onec, Aj+j+1, 1);
                latl::lacgv(j, A+j, ldA);
                latl::scal(n-j-1, one/ajj, Aj+j+1, 1);
             }
