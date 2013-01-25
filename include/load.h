@@ -52,7 +52,10 @@ namespace latl
       }
       m=q.size();
       if(m*n!=count)
+      {
+         m=n=0;
          return NULL;
+      }
       real_t *A=new real_t[m*n];
       int i=0;
       while(!q.empty())
@@ -113,7 +116,10 @@ namespace latl
          }
       }
       if(n*(n+1)/2!=count)
+      {
+         n=0;
          return NULL;
+      }
       bool upper=(m==n)?1:0;
       uplo=(upper)?'U':'L';
       real_t *A=new real_t[(n*(n+1))/2];
