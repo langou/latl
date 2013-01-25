@@ -24,7 +24,8 @@ zgemv.o zgbmv.o zhemv.o zhbmv.o zhpmv.o ztrmv.o ztbmv.o ztpmv.o ztrsv.o ztbsv.o 
 sgemm.o ssymm.o ssyrk.o ssyr2k.o strmm.o strsm.o \
 dgemm.o dsymm.o dsyrk.o dsyr2k.o dtrmm.o dtrsm.o \
 cgemm.o csymm.o csyrk.o csyr2k.o ctrmm.o ctrsm.o chemm.o cherk.o cher2k.o \
-zgemm.o zsymm.o zsyrk.o zsyr2k.o ztrmm.o ztrsm.o zhemm.o zherk.o zher2k.o
+zgemm.o zsymm.o zsyrk.o zsyr2k.o ztrmm.o ztrsm.o zhemm.o zherk.o zher2k.o \
+csyr.o zsyr.o
 
 ####
 #### LAPACK objects
@@ -48,7 +49,7 @@ $(OBJB): blas.h
 
 $(OBJL): lapack.h
 
-OBJ=$(OBJB) $(OBJL)
+OBJ=$(OBJB) #$(OBJL)
 
 $(LIB): $(OBJ)
 	$(LIBTOOL) $@ $(OBJ)
