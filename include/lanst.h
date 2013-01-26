@@ -50,11 +50,15 @@ namespace latl
          for (int_t i = 0; i < n-1; ++i)
          {
             temp = abs(D[i]);
-            if (temp > value || isnan(temp))
+            if (temp > value)
                value = temp;
+            else if (isnan(temp))
+               return temp;
             temp = abs(E[i]);
-            if (temp > value || isnan(temp))
+            if (temp > value)
                value = temp;
+            else if (isnan(temp))
+               return temp;
          }
       }
       else if (normType == 'O' || normType == 'o' || normType == '1' || normType == 'I' || normType == 'i')
@@ -65,15 +69,19 @@ namespace latl
          {
             real_t sum = abs(E[n-2]) + abs(D[n-1]);
             value = abs(D[0]) + abs(E[0]);
-            if (value < sum || isnan(sum))
+            if (value < sum)
                value = sum;
+            else if (isnan(sum))
+               return sum;
             for (int_t i = 1; i < n-1; ++i)
             {
                sum = abs(D[i]) + abs(E[i]) + abs(E[i-1]);
-               if (value < sum || isnan(sum))
+               if (value < sum)
                {
                   value = sum;
                }
+               else if (isnan(sum))
+                  return sum;
             }
          }
       }
@@ -124,11 +132,15 @@ namespace latl
          for (int_t i = 0; i < n-1; ++i)
          {
             temp = abs(D[i]);
-            if (temp > value || isnan(temp))
+            if (temp > value)
                value = temp;
+            else if (isnan(temp))
+               return temp;
             temp = abs(E[i]);
-            if (temp > value || isnan(temp))
+            if (temp > value)
                value = temp;
+            else if (isnan(temp))
+               return temp;
          }
       }
       else if (normType == 'O' || normType == 'o' || normType == '1' || normType == 'I' || normType == 'i')
@@ -139,15 +151,19 @@ namespace latl
          {
             real_t sum = abs(E[n-2]) + abs(D[n-1]);
             value = abs(D[0]) + abs(E[0]);
-            if (value < sum || isnan(sum))
+            if (value < sum)
                value = sum;
+            else if (isnan(sum))
+               return sum;
             for (int_t i = 1; i < n-1; ++i)
             {
                sum = abs(D[i]) + abs(E[i]) + abs(E[i-1]);
-               if (value < sum || isnan(sum))
+               if (value < sum)
                {
                   value = sum;
                }
+               else if (isnan(sum))
+                  return sum;
             }
          }
       }

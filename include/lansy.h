@@ -57,10 +57,12 @@ namespace latl
                for (int_t i = 0; i <= j; ++i)
                {
                   temp = abs(Aj[i]);
-                  if (temp > value || isnan(temp))
+                  if (temp > value)
                   {
                      value = temp;
                   }
+                  else if (isnan(temp))
+                     return temp;
                }
                Aj += ldA;
             }
@@ -72,10 +74,12 @@ namespace latl
                for (int_t i = j; i < n; ++i)
                {
                   temp = abs(Aj[i]);
-                  if (temp > value || isnan(temp))
+                  if (temp > value)
                   {
                      value = temp;
                   }
+                  else if (isnan(temp))
+                     return temp;
                }
                Aj += ldA;
             }
@@ -105,8 +109,13 @@ namespace latl
             for (int_t i = 0; i < n; ++i)
             {
                sum = Work[i];
-               if (value < sum || isnan(sum))
+               if (value < sum)
                   value = sum;
+               else if (isnan(sum))
+               {
+                  delete [] Work;
+                  return sum;
+               }
             }
          }
          else
@@ -120,8 +129,13 @@ namespace latl
                   Work[i] += abs(Aj[i]);
                }
                Aj += ldA;
-               if (value < sum || isnan(sum))
+               if (value < sum)
                   value = sum;
+               else if (isnan(sum))
+               {
+                  delete [] Work;
+                  return sum;
+               }
             }
          }
          delete [] Work;
@@ -193,10 +207,12 @@ namespace latl
                for (int_t i = 0; i <= j; ++i)
                {
                   temp = abs(Aj[i]);
-                  if (temp > value || isnan(temp))
+                  if (temp > value)
                   {
                      value = temp;
                   }
+                  else if (isnan(temp))
+                     return temp;
                }
                Aj += ldA;
             }
@@ -208,10 +224,12 @@ namespace latl
                for (int_t i = j; i < n; ++i)
                {
                   temp = abs(Aj[i]);
-                  if (temp > value || isnan(temp))
+                  if (temp > value)
                   {
                      value = temp;
                   }
+                  else if (isnan(temp))
+                     return temp;
                }
                Aj += ldA;
             }
@@ -242,8 +260,13 @@ namespace latl
             for (int_t i = 0; i < n; ++i)
             {
                sum = Work[i];
-               if (value < sum || isnan(sum))
+               if (value < sum)
                   value = sum;
+               else if (isnan(sum))
+               {
+                  delete [] Work;
+                  return sum;
+               }
             }
          }
          else
@@ -257,8 +280,13 @@ namespace latl
                   Work[i] += abs(Aj[i]);
                }
                Aj += ldA;
-               if (value < sum || isnan(sum))
+               if (value < sum)
                   value = sum;
+               else if (isnan(sum))
+               {
+                  delete [] Work;
+                  return sum;
+               }
             }
          }
          delete [] Work;

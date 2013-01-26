@@ -52,8 +52,10 @@ namespace latl
             for (int_t i = 0; i < min(n, j+2); ++i)
             {
                temp = abs(Aj[i]);
-               if (value < temp || isnan(temp))
+               if (value < temp)
                   value = temp;
+               else if (isnan(temp))
+                  return temp;
             }
             Aj += ldA;
          }
@@ -68,8 +70,10 @@ namespace latl
             {
                sum += abs(Aj[i]);
             }
-            if (value < sum || isnan(sum))
+            if (value < sum)
                value = sum;
+            else if (isnan(sum))
+               return sum;
             Aj += ldA;
          }
       }
@@ -96,8 +100,14 @@ namespace latl
             }
             for (int_t i = 0; i < n; ++i)
             {
-               if (value < Work[i] || isnan(Work[i]))
-                  value = Work[i];
+               temp = Work[i];
+               if (value < temp)
+                  value = temp;
+               else if (isnan(temp))
+               {
+                  delete [] Work;
+                  return temp;
+               }
             }
             delete [] Work;
          }
@@ -154,8 +164,10 @@ namespace latl
             for (int_t i = 0; i < min(n, j+2); ++i)
             {
                temp = abs(Aj[i]);
-               if (value < temp || isnan(temp))
+               if (value < temp)
                   value = temp;
+               else if (isnan(temp))
+                  return temp;
             }
             Aj += ldA;
          }
@@ -171,8 +183,10 @@ namespace latl
             {
                sum += abs(Aj[i]);
             }
-            if (value < sum || isnan(sum))
+            if (value < sum)
                value = sum;
+            else if (isnan(sum))
+               return sum;
             Aj += ldA;
          }
       }
@@ -199,8 +213,14 @@ namespace latl
             }
             for (int_t i = 0; i < n; ++i)
             {
-               if (value < Work[i] || isnan(Work[i]))
-                  value = Work[i];
+               temp = Work[i];
+               if (value < temp)
+                  value = temp;
+               else if (isnan(temp))
+               {
+                  delete [] Work;
+                  return temp;
+               }
             }
             delete [] Work;
          }

@@ -49,14 +49,18 @@ namespace latl
       if (normType == 'M' || normType == 'm')
       {
          real_t * Aj = A;
+         real_t temp;
          for (int_t j = 0; j < n; ++j)
          {
             for (int_t i = 0; i < m; ++i)
             {
-               if ((abs(Aj[i]) > value) || (isnan(Aj[i])))
+               temp = abs(Aj[i]);
+               if (temp > value)
                {
-                  value = abs(Aj[i]);
+                  value = temp;
                }
+               else if (isnan(temp))
+                  return temp;
             }
             Aj += ldA;
          }
@@ -71,16 +75,19 @@ namespace latl
             {
                sum += abs(Aj[i]);
             }
-            if ((sum > value) || (isnan(sum)))
+            if (sum > value)
             {
                value = sum;
             }
+            else if (isnan(sum))
+               return sum;
             Aj += ldA;
          }
       }
       else if (normType == 'I' || normType == 'i')
       {
          real_t * Work = new real_t[m];
+         real_t temp;
          for (int_t i = 0; i < m; ++i)
          {
             Work[i] = abs(A[i]);
@@ -96,9 +103,15 @@ namespace latl
          }
          for (int_t i = 0; i < m; ++i)
          {
-            if ((Work[i] > value) || (isnan(Work[i])))
+            temp = Work[i];
+            if (temp > value)
             {
-               value = Work[i];
+               value = temp;
+            }
+            else if (isnan(temp))
+            {
+               delete [] Work;
+               return temp;
             }
          }
          delete [] Work;
@@ -147,14 +160,18 @@ namespace latl
       if (normType == 'M' || normType == 'm')
       {
          complex< real_t> * Aj = A;
+         real_t temp;
          for (int_t j = 0; j < n; ++j)
          {
             for (int_t i = 0; i < m; ++i)
             {
-               if ((abs(Aj[i]) > value) || (isnan(abs(Aj[i]))))
+               temp = abs(Aj[i]);
+               if (temp > value)
                {
-                  value = abs(Aj[i]);
+                  value = temp;
                }
+               else if (isnan(temp))
+                  return temp;
             }
             Aj += ldA;
          }
@@ -170,16 +187,19 @@ namespace latl
             {
                sum += abs(Aj[i]);
             }
-            if ((sum > value) || (isnan(sum)))
+            if (sum > value)
             {
                value = sum;
             }
+            else if (isnan(sum))
+               return sum;
             Aj += ldA;
          }
       }
       else if (normType == 'I' || normType == 'i')
       {
          real_t * Work = new real_t[m];
+         real_t temp;
          for (int_t i = 0; i < m; ++i)
          {
             Work[i] = abs(A[i]);
@@ -195,9 +215,15 @@ namespace latl
          }
          for (int_t i = 0; i < m; ++i)
          {
-            if ((Work[i] > value) || (isnan(Work[i])))
+            temp = Work[i];
+            if (temp > value)
             {
-               value = Work[i];
+               value = temp;
+            }
+            else if (isnan(temp))
+            {
+               delete [] Work;
+               return temp;
             }
          }
          delete [] Work;

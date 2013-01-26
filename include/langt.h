@@ -49,15 +49,25 @@ namespace latl
          return value;
       if (normType == 'M' || normType == 'm')
       {
+         real_t temp;
          value = abs(D[n-1]);
          for (int_t i = 0; i < n-1; ++i)
          {
-            if (value < abs(DL[i]) || isnan(abs(DL[i])))
-               value = abs(DL[i]);
-            if (value < abs(D[i]) || isnan(abs(D[i])))
-               value = abs(D[i]);
-            if (value < abs(DU[i]) || isnan(abs(DU[i])))
-               value = abs(DU[i]);
+            temp = abs(DL[i]);
+            if (value < temp)
+               value = temp;
+            else if (isnan(temp))
+               return temp;
+            temp = abs(D[i]);
+            if (value < temp)
+               value = temp;
+            else if (isnan(temp))
+               return temp;
+            temp = abs(DU[i]);
+            if (value < temp)
+               value = temp;
+            else if (isnan(temp))
+               return temp;
          }
       }
       if (normType == 'O' || normType == 'o' || normType == '1')
@@ -70,13 +80,17 @@ namespace latl
             
             value = abs(D[0]) + abs(DL[0]);
             temp = abs(D[n-1]) + abs(DU[n-2]);
-            if (value < temp || isnan(temp))
+            if (value < temp)
                value = temp;
+            else if (isnan(temp))
+               return temp;
             for (int_t i = 1; i < n-1; ++i)
             {
                temp = abs(D[i])+abs(DU[i-1])+abs(DL[i]);
-               if (value < temp || isnan(temp))
+               if (value < temp)
                   value = temp;
+               else if (isnan(temp))
+                  return temp;
             }
          }
       }
@@ -90,13 +104,17 @@ namespace latl
             
             value = abs(D[0]) + abs(DU[0]);
             temp = abs(D[n-1]) + abs(DL[n-2]);
-            if (value < temp || isnan(temp))
+            if (value < temp)
                value = temp;
+            else if (isnan(temp))
+               return temp;
             for (int_t i = 1; i < n-1; ++i)
             {
                temp = abs(D[i]) + abs(DL[i-1]) + abs(DU[i]);
-               if (value < temp || isnan(temp))
+               if (value < temp)
                   value = temp;
+               else if (isnan(temp))
+                  return temp;
             }
          }
       }
@@ -148,14 +166,24 @@ namespace latl
       if (normType == 'M' || normType == 'm')
       {
          value = abs(D[n-1]);
+         real_t temp;
          for (int_t i = 0; i < n-1; ++i)
          {
-            if (value < abs(DL[i]) || isnan(abs(DL[i])))
-               value = abs(DL[i]);
-            if (value < abs(D[i]) || isnan(abs(D[i])))
-               value = abs(D[i]);
-            if (value < abs(DU[i]) || isnan(abs(DU[i])))
-               value = abs(DU[i]);
+            temp = abs(DL[i]);
+            if (value < temp)
+               value = temp;
+            else if (isnan(temp))
+               return temp;
+            temp = abs(D[i]);
+            if (value < temp)
+               value = temp;
+            else if (isnan(temp))
+               return temp;
+            temp = abs(DU[i]);
+            if (value < temp)
+               value = temp;
+            else if (isnan(temp))
+               return temp;
          }
       }
       if (normType == 'O' || normType == 'o' || normType == '1')
@@ -167,13 +195,17 @@ namespace latl
             real_t temp;
             value = abs(D[0]) + abs(DL[0]);
             temp = abs(D[n-1]) + abs(DU[n-2]);
-            if (value < temp || isnan(temp))
+            if (value < temp)
                value = temp;
+            else if (isnan(temp))
+               return temp;
             for (int_t i = 1; i < n-1; ++i)
             {
                temp = abs(D[i])+abs(DU[i-1])+abs(DL[i]);
-               if (value < temp || isnan(temp))
+               if (value < temp)
                   value = temp;
+               else if (isnan(temp))
+                  return temp;
             }
          }
       }
@@ -184,16 +216,19 @@ namespace latl
          else
          {
             real_t temp;
-         
             value = abs(D[0]) + abs(DU[0]);
             temp = abs(D[n-1]) + abs(DL[n-2]);
-            if (value < temp || isnan(temp))
+            if (value < temp)
                value = temp;
+            else if (isnan(temp))
+               return temp;
             for (int_t i = 1; i < n-1; ++i)
             {
                temp = abs(D[i]) + abs(DL[i-1]) + abs(DU[i]);
-               if (value < temp || isnan(temp))
+               if (value < temp)
                   value = temp;
+               else if (isnan(temp))
+                  return temp;
             }
          }
       }
