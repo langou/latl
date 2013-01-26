@@ -182,11 +182,11 @@ namespace latl
 
    /// @brief Computes the inverse of a symmetric indefinite matrix.
 
-   template <typename real_t>
-      int_t sytri(char uplo, char diag, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, int_t nb=32)
-      {
-         return 0;
-      }
+//    template <typename real_t>
+//       int_t sytri(char uplo, char diag, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, int_t nb=32)
+//       {
+//          return 0;
+//       }
 
 }
 

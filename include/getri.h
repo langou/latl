@@ -75,7 +75,7 @@ namespace latl
          {
             int_t jp = ipiv[j];
             if(jp != j)
-               swap(n,A+j*ldA,1,A+jp*ldA,1);
+               swap<real_t>(n,A+j*ldA,1,A+jp*ldA,1);
          }
 
          delete [] work;
