@@ -13,6 +13,7 @@
 
 #include "copy.h"
 #include "gemv.h"
+#include "gemm.h"
 #include "lacgv.h"
 #include "imax.h"
 #include "latl.h"
