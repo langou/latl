@@ -137,8 +137,10 @@ extern "C"
    int dtrtri_(char &uplo, char &diag, int &n, double *A, int &ldA, int &info);
    int ctrtri_(char &uplo, char &diag, int &n, complex<float> *A, int &ldA, int &info);
    int ztrtri_(char &uplo, char &diag, int &n, complex<double> *A, int &ldA, int &info);
-   int csyr_(char& uplo, int &n, complex<float>& alpha, complex<float> *x, int& incx, complex<float> *A, int &ldA);
-   int zsyr_(char& uplo, int &n, complex<float>& alpha, complex<float> *x, int& incx, complex<float> *A, int &ldA);
+   int ssytf2_(char &uplo,int &n,float *A,int &ldA,int *ipiv,int &info);
+   int dsytf2_(char &uplo,int &n,double *A,int &ldA,int *ipiv,int &info);
+   int csytf2_(char &uplo,int &n,complex<float> *A,int &ldA,int *ipiv,int &info);
+   int zsytf2_(char &uplo,int &n,complex<double> *A,int &ldA,int *ipiv,int &info);
 
 }
 #endif

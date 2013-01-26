@@ -33,7 +33,7 @@ csyr.o zsyr.o
 
 OBJL=xerbla.o dlamch.o slamch.o disnan.o sisnan.o slange.o dlange.o clange.o zlange.o sladiv.o dladiv.o cladiv.o zladiv.o \
 slapy2.o dlapy2.o slapy3.o dlapy3.o slauu2.o dlauu2.o clauu2.o zlauu2.o slauum.o dlauum.o clauum.o zlauum.o \
-strtri.o dtrtri.o ctrtri.o ztrtri.o strtri.o dtrtri.o ctrtri.o ztrtri.o
+strtri.o dtrtri.o ctrtri.o ztrtri.o strtri.o dtrtri.o ctrtri.o ztrtri.o ssytf2.o dsytf2.o csytf2.o zsytf2.o
 
 ####
 #### rules and targets
@@ -49,7 +49,7 @@ $(OBJB): blas.h
 
 $(OBJL): lapack.h
 
-OBJ=$(OBJB) #$(OBJL)
+OBJ=$(OBJB) $(OBJL)
 
 $(LIB): $(OBJ)
 	$(LIBTOOL) $@ $(OBJ)
