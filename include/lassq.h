@@ -46,7 +46,7 @@ namespace latl
          for (int_t ix = 0; ix < n*incx; ix += incx)
          {
             absxi = abs(X[ix]);
-            if ((absxi > zero) || (isnan(absxi)))
+            if (absxi > zero)
             {
                if (scale < absxi)
                {
@@ -59,6 +59,10 @@ namespace latl
                   temp = absxi/scale;
                   sumsq += (temp*temp);
                }
+            }
+            else if (isnan(absxi))
+            {
+               sumsq = temp;
             }
          }
       }
@@ -95,7 +99,7 @@ namespace latl
          for (int_t ix = 0; ix < n*incx; ix += incx)
          {
             temp = abs(real(X[ix]));
-            if ((temp>zero)||(isnan(temp)))
+            if (temp>zero)
             {
                if (scale < temp)
                {
@@ -109,8 +113,12 @@ namespace latl
                   sumsq += (temp2*temp2);
                }
             }
+            else if (isnan(temp))
+            {
+               sumsq = temp;
+            }
             temp = abs(imag(X[ix]));
-            if ((temp>zero)||(isnan(temp)))
+            if (temp>zero)
             {
                if (scale < temp)
                {
@@ -123,6 +131,10 @@ namespace latl
                   temp2 = temp/scale;
                   sumsq += temp2*temp2;
                }
+            }
+            else if (isnan(temp))
+            {
+               sumsq = temp;
             }
          }
       }
