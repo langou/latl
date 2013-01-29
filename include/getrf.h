@@ -96,7 +96,7 @@ namespace latl
                   latl::gemm('N', 'N', m-j-jb, n-j-jb, jb, -one, Ajj+jb, ldA, Ajj+ldA*jb, ldA, one, Ajj+ldA*jb+jb, ldA);
                }
             }
-            Ajj += (ldA*j + j);
+            Ajj += jb*ldA+jb;
          }
          
       }
