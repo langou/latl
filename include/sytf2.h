@@ -471,7 +471,7 @@ namespace latl
                {
                   r1 = one/Ak[k];
                   latl::syr(uplo, k, -r1, Ak, 1, A, ldA);
-                  latl::scal<real_t>(k, real(r1), Ak, 1);
+                  latl::scal<real_t>(k, r1, Ak, 1);
                }
                else
                {
@@ -593,7 +593,7 @@ namespace latl
                   {
                      complex<real_t> r1 = one/Ak[k];
                      latl::syr(uplo, n-k-1, -r1, Ak+k+1, 1, Ak+ldA+k+1, ldA);
-                     latl::scal<real_t>(n-k-1, real(r1), Ak+k+1, 1);
+                     latl::scal<real_t>(n-k-1, r1, Ak+k+1, 1);
                   }
                }
                else
