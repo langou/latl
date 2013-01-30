@@ -33,7 +33,7 @@ typedef long double ldouble;
 
 // triangular matrix inverse test
 
-template <typename real_t,typename matrix_t> real_t triangular(char uplo, char diag)
+template <typename real_t,typename matrix_t> real_t triangular(char uplo, char diag,bool resi,bool prnt)
 {
    int m,n;
    const matrix_t one(1.0);
@@ -60,7 +60,8 @@ template <typename real_t,typename matrix_t> real_t triangular(char uplo, char d
       cerr << "input matrix is singular" << endl;
       exit(0);
    }
-   real_t cond=lantr<real_t>('i',uplo,diag,n,n,A,n)*lantr<real_t>('i',uplo,diag,n,n,B,n);
+   if(prnt)
+      print(uplo,diag,n,A,n);
    laset<real_t>(uplo,n,n,zero,one,C,n);
    laset<real_t>(uplo,n,n,zero,one,D,n);
    if(diag=='u')
@@ -69,24 +70,24 @@ template <typename real_t,typename matrix_t> real_t triangular(char uplo, char d
    ttmm<real_t>(uplo,n,one,A,n,B,n,-one,C,n);
    ttmm<real_t>(uplo,n,one,B,n,A,n,-one,D,n);
    residual=max(lantr<real_t>('m',uplo,'n',n,n,C,n),lantr<real_t>('m',uplo,'n',n,n,D,n));
+   real_t condition=lantr<real_t>('i',uplo,diag,n,n,A,n)*lantr<real_t>('i',uplo,diag,n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
-//   cout << "condition = " << cond << endl;
-//   cout << "epsilon   = " << eps << endl;
-//   cout << "residual  = " << residual << endl;
    delete [] D;
    delete [] C;
    delete [] B;
    delete [] A;
-   return residual/(n*cond*eps);
+   return (resi)? residual : residual/(n*condition*eps);
 }
 
 void usage(char *name)
 {
-   cerr << "Usage: " << name << " -t <uplo> [-c] [-u]" << endl;
-   cerr << endl;
-   cerr << "           -c : use complex (default is to use real)" << endl;
-   cerr << "           -t <uplo> : invert triangular matrix where uplo is either U or L" << endl;
-   cerr << "           -u : assume unit triangular matrix" << endl;
+   cerr << "Usage: " << name << " [-triangular <uplo>] [-complex] [-unit] [-print] [-residual]" << endl;
+   cerr << "         -complex uses complex (default is to use real)" << endl;
+   cerr << "         -triangular <uplo> inverts triangular matrix where uplo is either U or L" << endl;
+   cerr << "         -unit assumes unit triangular matrix" << endl;
+   cerr << "         -print prints inverse matrix to standard output" << endl;
+   cerr << "         -residual reports the residual error instead of the relative error e, where" << endl;
+   cerr << " e = max{ || A * A^(-1) - I ||,  || A^(-1) * A - I || } / (cond(A) * epsilon * n)" << endl;
 }
 
 int main(int argc,char **argv)
@@ -98,11 +99,13 @@ int main(int argc,char **argv)
    char uplo;
    char diag='n';
    char Type='_';
-   bool UseComplex=0;
+   bool comp=0;
+   bool resi=0;
+   bool prnt=0;
 
    while(arg<argc)
    {
-      if(strncmp(argv[arg],"-t",2)==0)
+      if(strncmp(argv[arg],"-triangular",11)==0)
       {
          Type='T';
          arg++;
@@ -113,13 +116,21 @@ int main(int argc,char **argv)
             return 1;
          }
       }
-      else if(strncmp(argv[arg],"-c",2)==0)
+      else if(strncmp(argv[arg],"-complex",8)==0)
       {
-         UseComplex=1;
+         comp=1;
       }
-      else if(strncmp(argv[arg],"-u",2)==0)
+      else if(strncmp(argv[arg],"-unit",5)==0)
       {
          diag='u';
+      }
+      else if(strncmp(argv[arg],"-print",6)==0)
+      {
+         prnt=1;
+      }
+      else if(strncmp(argv[arg],"-residual",9)==0)
+      {
+         resi=1;
       }
       else
       {
@@ -133,10 +144,10 @@ int main(int argc,char **argv)
 
    if(Type=='T')
    {
-      if(UseComplex)
-         error=triangular<Real,Complex>(uplo,diag);
+      if(comp)
+         error=triangular<Real,Complex>(uplo,diag,resi,prnt);
       else
-         error=triangular<Real,Real>(uplo,diag);
+         error=triangular<Real,Real>(uplo,diag,resi,prnt);
       cout << error << endl;
       return 0;
    }
