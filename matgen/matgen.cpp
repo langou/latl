@@ -27,7 +27,7 @@ void usage(char *name)
    using std::endl;
    cerr << "Usage: " << name << " [-complex] [-random <dist>] [-m <M>] [-n <N>] [-precision <prec>] [-seed <seed>] [-hilbert]" << endl;
    cerr << "        -complex generates complex matrix (default is real)" << endl;
-   cerr << "        -precision <prec> sets precision out output (default is 6)" << endl;
+   cerr << "        -precision <prec> sets precision output (default is 6)" << endl;
    cerr << "        -m <M> sets number of rows (default is 1)" << endl;
    cerr << "        -n <N> sets number of columns (default is 1)" << endl;
    cerr << "        -hilbert creates N x N Hilbert matrix" << endl;
@@ -38,7 +38,7 @@ void usage(char *name)
    cerr << "                   1 = uniform on (0,1)" << endl;
    cerr << "                   2 = uniform on (-1,1)" << endl;
    cerr << "                   3 = normal on (0,1)" << endl;
-   cerr << "                   4 = uniformly distributed on the disc abs(z) < 1 (complex>)" << endl;
+   cerr << "                   4 = uniformly distributed on the disc abs(z) < 1 (complex)" << endl;
    cerr << "                   5 = uniformly distributed on the circle abs(z) = 1 (complex)" << endl;
 }
 
