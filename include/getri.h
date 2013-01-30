@@ -57,7 +57,7 @@ namespace latl
          if(info != 0)
             return info;
 
-         if((nb<2) | (nb>=n))
+         if((nb<2) || (nb>=n))
          {
             real_t *Aj = A+(n-1)*ldA;
             for(int_t j=n-1;j>=0;j--)
