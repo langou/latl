@@ -151,8 +151,10 @@ namespace latl
             if(A[i+i*ldA]==zero)
                return 1;
       }
-      if(nb>n)
+      if((nb>=n)||(nb<0))
+      {
          trti2<real_t>( uplo, diag, n, A, ldA);
+      }
       else
       {
          if(uplo=='U')

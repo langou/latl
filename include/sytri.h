@@ -20,6 +20,28 @@
 namespace latl
 {
    /// @brief Computes the inverse of a symmetric indefinite matrix.
+   /// 
+   /// A using the factorization A = U*D*U**T or A = L*D*L**T computed by 
+   /// SYTRF, the inverse of the symmetric indefinite matrix is returned in 
+   /// either the upper, U, or lower, L, part of the matrix A.
+   /// @tparam real_t Floating point type.
+   /// @return 0 if success.
+   /// @param uplo Specifies whether the triangular factor stored in the array
+   /// is upper or lower triangular:
+   ///
+   ///             'U' or 'u':  upper triangular
+   ///             'L' or 'l':  lower triangular
+   /// @param n The order of the triangular factor U or L.  n >= 0.
+   /// @param A Real triangular matrix of order n.  
+   /// On entry, the block diagonal matrix D and the multipliers used to obtain
+   /// the factor U or L as computed by SYTRF.
+   /// On entry, the triangular Cholesky factorization U or L.  On exit, if 
+   /// upper trianglar, A is overwritten with the upper triangle of the inverse
+   /// of A; if lower trianglar, A is overwritten with the lower triangle of 
+   /// the inverse of A.
+   /// @param ldA Column length of the matrix A.  ldA>=n.
+   /// @param nb Block size (optional).
+   /// @ingroup MATM
 
    template <typename real_t>
       int_t sytri(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, int_t nb=32)
@@ -68,7 +90,7 @@ namespace latl
                   {
                      copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
                      symv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                     A[(k-1)+(k-1)*ldA] = A[(k-1)+(k-1)*ldA] - dot( k-1, work, 1, A+(k-1)*ldA, 1);
+                     A[(k-1)+(k-1)*ldA] -= dot( k-1, work, 1, A+(k-1)*ldA, 1);
                   }
                   kstep = 1;
                }
@@ -87,11 +109,11 @@ namespace latl
                   {
                      copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
                      symv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                     A[(k-1)+(k-1)*ldA] = A[(k-1)+(k-1)*ldA] - dot( k-1, work, 1, A+(k-1)*ldA, 1);
-                     A[(k-1)+k*ldA] = A[(k-1)+k*ldA] - dot( k-1, A+(k-1)*ldA, 1, A+k*ldA, 1);
+                     A[(k-1)+(k-1)*ldA] -= dot( k-1, work, 1, A+(k-1)*ldA, 1);
+                     A[(k-1)+k*ldA] -= dot( k-1, A+(k-1)*ldA, 1, A+k*ldA, 1);
                      copy<real_t>( k-1, A+k*ldA, 1, work, 1);
                      symv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+k*ldA, 1);
-                     A[k+k*ldA] = A[k+k*ldA] -dot( k-1, work, 1, A+k*ldA, 1);
+                     A[k+k*ldA] -= dot( k-1, work, 1, A+k*ldA, 1);
                   }
                   kstep = 2;
                }
