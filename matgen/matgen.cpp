@@ -21,6 +21,27 @@
 #endif
 typedef REAL real_t;
 
+void usage(char *name)
+{
+   using std::cerr;
+   using std::endl;
+   cerr << "Usage: " << name << " [-complex] [-random <dist>] [-m <M>] [-n <N>] [-precision <prec>] [-seed <seed>] [-hilbert]" << endl;
+   cerr << "        -complex generates complex matrix (default is real)" << endl;
+   cerr << "        -precision <prec> sets precision out output (default is 6)" << endl;
+   cerr << "        -m <M> sets number of rows (default is 1)" << endl;
+   cerr << "        -n <N> sets number of columns (default is 1)" << endl;
+   cerr << "        -hilbert creates N x N Hilbert matrix" << endl;
+   cerr << "        -H creates N x N Hermitian matrix" << endl;
+   cerr << "        -S creates N x N symmetric matrix" << endl;
+   cerr << "        -seed <seed> sets random number generator seed (default is 0)" << endl;
+   cerr << "        -random <dist> creates M x N random matrix with one of the following distributions: " << endl;
+   cerr << "                   1 = uniform on (0,1)" << endl;
+   cerr << "                   2 = uniform on (-1,1)" << endl;
+   cerr << "                   3 = normal on (0,1)" << endl;
+   cerr << "                   4 = uniformly distributed on the disc abs(z) < 1 (complex>)" << endl;
+   cerr << "                   5 = uniformly distributed on the circle abs(z) = 1 (complex)" << endl;
+}
+
 int main(int argc, char** argv)
 {
    using std::cout;
@@ -38,7 +59,7 @@ int main(int argc, char** argv)
    int prec=6;
    uint32_t s=0;
    int dist=0;
-   bool comp=0;
+   bool use_complex=0;
    bool symmetric=0;
    bool hermitian=0;
    bool hilbert=0;
@@ -72,7 +93,7 @@ int main(int argc, char** argv)
       }
       else if(strncmp(argv[arg],"-complex",8)==0)
       {
-         comp=1;
+         use_complex=1;
       }
       else if(strncmp(argv[arg],"-S",2)==0)
       {
@@ -88,21 +109,7 @@ int main(int argc, char** argv)
       }
       else
       {
-         cerr << "Usage: " << argv[0] << " [-complex] [-random <dist>] [-m <M>] [-n <N>] [-precision <prec>] [-seed <seed>] [-hilbert]" << endl;
-         cerr << "        -complex generates complex matrix (default is real)" << endl;
-         cerr << "        -precision <prec> sets precision out output (default is 6)" << endl;
-         cerr << "        -m <M> sets number of rows (default is 1)" << endl;
-         cerr << "        -n <N> sets number of columns (default is 1)" << endl;
-         cerr << "        -hilbert creates N x N Hilbert matrix" << endl;
-         cerr << "        -H creates N x N Hermitian matrix" << endl;
-         cerr << "        -S creates N x N symmetric matrix" << endl;
-         cerr << "        -seed <seed> sets random number generator seed (default is 0)" << endl;
-         cerr << "        -random <dist> creates M x N random matrix with one of the following distributions: " << endl;
-         cerr << "                   1 = uniform on (0,1)" << endl;
-         cerr << "                   2 = uniform on (-1,1)" << endl;
-         cerr << "                   3 = normal on (0,1)" << endl;
-         cerr << "                   4 = uniformly distributed on the disc abs(z) < 1 (complex>)" << endl;
-         cerr << "                   5 = uniformly distributed on the circle abs(z) = 1 (complex)" << endl;
+         usage(argv[0]);
          return 1;
       }
       arg++;
@@ -112,18 +119,18 @@ int main(int argc, char** argv)
    {
       hermitian=0;
       symmetric=1;
-      comp=0;
+      use_complex=0;
    }
 
    if(hermitian||symmetric)
       m=n;
    
-   if(comp)
+   if(use_complex)
    {
       if(hermitian&&symmetric)
          symmetric=0;
       complex<real_t> *A=new complex<real_t>[m*n];
-      if((dist>01)&&(dist<6))
+      if((dist>0)&&(dist<6))
       {
          larnv(dist,m*n,A,s);
          if(symmetric||hermitian)
@@ -139,8 +146,13 @@ int main(int argc, char** argv)
                      A[i+j*n]=conj(A[j+i*n]);
             }
          }
+         latl::print(m,n,A,m,prec);
       }
-      latl::print(m,n,A,m,prec);
+      else
+      {
+         usage(argv[0]);
+         return 0;
+      }
    }
    else
    {
@@ -155,6 +167,7 @@ int main(int argc, char** argv)
          for(int j=0;j<n;j++)
             for(int i=0;i<n;i++)
                A[i+j*n]=1.0/(real_t)(i+j+1);
+         latl::print(m,n,A,m,prec);
       }
       else if((dist>0)&&(dist<4))
       {
@@ -168,8 +181,13 @@ int main(int argc, char** argv)
                   A[i+j*n]=A[j+i*n];
             }
          }
+         latl::print(m,n,A,m,prec);
       }
-      latl::print(m,n,A,m,prec);
+      else
+      {
+         usage(argv[0]);
+         return 0;
+      }
    }
    return 0;
 }
