@@ -113,73 +113,9 @@ namespace latl
    /// @ingroup MAT
    
    template< typename real_t>
-   void laswp(const int_t n, complex<real_t> * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, const bool forward = 1)
+   int laswp(const int_t n, complex<real_t> * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int inc)
    {
-      int_t i1, i2, inc;
-      if (forward == 1)
-      {
-         i1 = k1;
-         i2 = k2;
-         inc = 1;
-      }
-      else
-      {
-         i1 = k2;
-         i2 = k1;
-         inc = -1;
-      }
-      
-      int_t n32 = (n/32)*32;
-      int_t ix, ip, colSwap;
-      complex<real_t> temp;
-      complex<real_t> *Ai = A + i1, *Aip = A;
-      if (n32 != 0)
-      {
-         for (int_t j = 0; j < n32; j+= 32)
-         {
-            ix = i1;
-            for (int_t i = i1; i <= i2; i += inc)
-            {
-               ip = IPIV[ix];
-               if (ip != i)
-               {
-                  Aip = A + ip;
-                  for (int_t k = j; k < j+32; ++k)
-                  {
-                     int_t colSwap = ldA*k;
-                     temp = Ai[colSwap];
-                     Ai[colSwap] = Aip[colSwap];
-                     Aip[colSwap] = temp;
-                  }
-               }
-               ix += inc;
-               Ai += inc;
-            }
-         }
-      }
-      if (n32 != n)
-      {
-         ix = i1;
-         Ai = A;
-         for (int_t i = i1; i <= i2; i+= inc)
-         {
-            ip = IPIV[ix];
-            if (ip != i)
-            {
-               Aip = A + ip;
-               for (int_t k = n32; k < n; ++k)
-               {
-                  colSwap = ldA*k;
-                  temp = Ai[colSwap];
-                  Ai[colSwap] = Aip[colSwap];
-                  Aip[colSwap] = temp;
-               }
-            }
-            ix += inc;
-            Ai += inc;
-         }
-      }
-      return;
+      return laswp< complex<real_t> >(n,A,ldA,k1,k2,IPIV,inc);
    }
 }
 #endif
