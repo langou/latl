@@ -12,12 +12,22 @@
 /// @file hetf2.h Computes the factorization of a complex Hermitian matrix A using the Bunch-Kaufman diagonal pivoting method.
 
 #include <cmath>
+#include <algorithm>
 #include "imax.h"
 #include "lapy2.h"
 #include "swap.h"
 #include "her.h"
 #include "scal.h"
 #include "latl.h"
+
+template<typename real_t>
+static real_t abs1(complex<real_t> z)
+{
+   using std::abs;
+   using std::real;
+   using std::imag;
+   return abs(real(z))+abs(imag(z));
+}
 
 namespace latl
 {
@@ -57,6 +67,8 @@ namespace latl
       if (n == 0)
          return 0;
       
+      using std::abs;
+      using std::max;
       const real_t alpha = (1.0 + std::sqrt(17.0))/8.0;
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -70,27 +82,25 @@ namespace latl
       
       if (uplo == 'U' || uplo == 'u')
       {
-         k = n-1,
-         kstep = 1;
-         Ak = A+ldA*k;
+         k = n-1;
          while (k >= 0)
          {
             kstep = 1;
             Ak = A+ldA*k;
             
-            absakk = std::abs(real(Ak[k]));
+            absakk = abs(real(Ak[k]));
             
             if (k > 0)
             {
                imax = latl::imax(k, Ak, 1);
-               colmax = std::abs(Ak[imax]);
+               colmax = abs1(Ak[imax]);
             }
             else
             {
                colmax = zero;
             }
             
-            if (std::max(absakk, colmax) == 0 || std::isnan(absakk))
+            if (max(absakk, colmax) == 0 || std::isnan(absakk))
             {
                if (info == 0)
                {
@@ -109,20 +119,22 @@ namespace latl
                {
                   int_t jmax;
                   real_t rowmax;
-                  
-                  jmax = imax + latl::imax(k-imax, A+ldA*(imax+1)+imax, ldA);
-                  rowmax = std::abs(*(A+ldA*jmax+imax));
+                  //check here
+                  jmax = imax+1 + latl::imax(k-imax, A+ldA*(imax+1)+imax, ldA);
+                  complex<real_t> * Ajmax = A + ldA*jmax;
+                  complex<real_t> * Aimax = A + ldA*imax;
+                  rowmax = abs1(Ajmax[imax]);
                   if (imax > 0)
                   {
-                     jmax = latl::imax(imax-1, A+ldA*imax, 1);
-                     rowmax = std::max(rowmax, std::abs(*(A+ldA*imax+jmax)));
+                     jmax = latl::imax(imax, Aimax, 1);
+                     rowmax = max(rowmax, abs1(Aimax[jmax]));
                   }
                   
                   if (absakk >= alpha*colmax*(colmax/rowmax))
                   {
                      kp = k;
                   }
-                  else if (std::abs(real(*(A+ldA*imax+imax))) >= (alpha*rowmax))
+                  else if (abs(real(Aimax[imax])) >= (alpha*rowmax))
                   {
                      kp = imax;
                   }
@@ -139,8 +151,8 @@ namespace latl
                complex<real_t> temp;
                if (kp != kinc)
                {
-                  latl::swap(kp-1, Akinc, 1, A+ldA*kp, 1);
-                  for (int_t j = kp+1; j< kinc-1; ++j)
+                  latl::swap(kp, Akinc, 1, A+ldA*kp, 1);
+                  for (int_t j = kp+1; j< kinc; ++j)
                   {
                      Aj = A+ldA*j;
                      temp = conj(Akinc[j]);
@@ -174,14 +186,13 @@ namespace latl
                {
                   r1 = one/real(Ak[k]);
                   latl::her(uplo, k, -r1, Ak, 1, A, ldA);
-                  latl::scal(k, r1, Ak, 1);
+                  latl::scal<real_t>(k, r1, Ak, 1);
                }
                else
                {
                   if (k > 1)
                   {
                      complex<real_t> * Akm1 = A+ldA*(k-1);
-                     // this is the norm of the element above k
                      real_t d = latl::lapy2(real(Ak[k-1]),imag(Ak[k-1]));
                      real_t d22 = real(Akm1[k-1])/d;
                      real_t d11 = real(Ak[k])/d;
@@ -200,7 +211,7 @@ namespace latl
                         }
                         Ak[j] = wk;
                         Akm1[j] = wkm1;
-                        Aj[j] = complex<real_t>(real(Aj[j]), 0.0);
+                        Aj[j] = real(Aj[j]);
                      }
                   }
                }
@@ -218,30 +229,29 @@ namespace latl
             }
             
             k = k-kstep;
-         } // ends at 435
+         } 
       }
       else
       {
          k = 0;
-         kstep = 1;
          while (k < n)
          {
             kstep = 1;
             Ak = A+ldA*k;
             
-            absakk = std::abs(Ak[k]);
+            absakk = abs(real(Ak[k]));
             
             if (k < n-1)
             {
                imax = k+1 + latl::imax(n-k-1, Ak+k+1, 1);
-               colmax = std::abs(Ak[imax]);
+               colmax = abs1(Ak[imax]);
             }
             else
             {
                colmax = zero;
             }
             
-            if (std::max(absakk, colmax) == 0 || std::isnan(absakk))
+            if (max(absakk, colmax) == 0 || std::isnan(absakk))
             {
                if (info == 0)
                   info = k+1;
@@ -258,17 +268,17 @@ namespace latl
                   real_t rowmax;
                   
                   jmax = k+latl::imax(imax-k, Ak+imax, ldA);
-                  rowmax = std::abs(*(A+ldA*jmax+imax));
+                  rowmax = abs1(*(A+ldA*jmax+imax));
                   complex<real_t> * Aimax = A+ldA*imax;
                   if (imax < n-1)
                   {
-                     jmax = imax + latl::imax(n-imax-1, Aimax+imax+1, 1);
-                     rowmax = std::max(rowmax, std::abs(Aimax[jmax]));
+                     jmax = imax+1 + latl::imax(n-imax-1, Aimax+imax+1, 1);
+                     rowmax = max(rowmax, abs(Aimax[jmax]));
                   }
                   
                   if (absakk >= alpha*colmax*(colmax/rowmax))
                      kp = k;
-                  else if (std::abs(real(Aimax[imax])) >= alpha*rowmax)
+                  else if (abs(real(Aimax[imax])) >= alpha*rowmax)
                   {
                      kp = imax;
                   }
