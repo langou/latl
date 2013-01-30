@@ -33,6 +33,8 @@ namespace latl
    /// @param n Order of the matrix A.  n >= 0.
    /// @param A Real matrix of order n.
    /// @param ldA Column length of the matrix A.  ldA>=n.
+   /// @param ipiv is integer array with dimension n.  Details of the
+   /// interchanges and the block structure of D as determined by GETRF.
    /// @param nb Block size (optional).
    /// @ingroup MATM
 
@@ -124,6 +126,8 @@ namespace latl
    /// @param n Order of the matrix A.  n >= 0.
    /// @param A Complex matrix of order n.
    /// @param ldA Column length of the matrix A.  ldA>=n.
+   /// @param ipiv is integer array with dimension n.  Details of the
+   /// interchanges and the block structure of D as determined by GETRF.
    /// @param nb Block size (optional).
    /// @ingroup MATM
 
