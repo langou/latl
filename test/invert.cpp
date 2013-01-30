@@ -61,7 +61,7 @@ template <typename real_t,typename matrix_t> real_t general(bool resi,bool prnt)
    int_t *ipiv=new int_t[n];
    lacpy<real_t>(uplo,n,n,A,n,B,n);
    int info=getrf<real_t>(n,n,A,n,ipiv);
-   info=getri<real_t>(n,A,n,ipiv,4);
+   info=getri<real_t>(n,A,n,ipiv);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -107,7 +107,7 @@ template <typename real_t,typename matrix_t> real_t triangular(char uplo, char d
    matrix_t *C=new matrix_t[n*n];
    matrix_t *D=new matrix_t[n*n];
    lacpy<real_t>(uplo,n,n,A,n,B,n);
-   int info=trtri<real_t>(uplo,diag,n,A,n,4);
+   int info=trtri<real_t>(uplo,diag,n,A,n);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -190,7 +190,7 @@ int main(int argc,char **argv)
          error=triangular<Real,Complex>(uplo,diag,resi,prnt);
       else
          error=triangular<Real,Real>(uplo,diag,resi,prnt);
-      cout << error << endl;
+      cerr << error << endl;
       return 0;
    }
    else if(Type=='G')
@@ -199,7 +199,7 @@ int main(int argc,char **argv)
          error=general<Real,Complex>(resi,prnt);
       else
          error=general<Real,Real>(resi,prnt);
-      cout << error << endl;
+      cerr << error << endl;
       return 0;
    }
 
