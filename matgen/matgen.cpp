@@ -37,10 +37,11 @@ int main(int argc, char** argv)
    int arg=1;
    int prec=6;
    uint32_t s=0;
-   int dist=1;
+   int dist=0;
    bool comp=0;
-   bool sym=0;
-   bool her=0;
+   bool symmetric=0;
+   bool hermitian=0;
+   bool hilbert=0;
    
    while(arg<argc)
    {
@@ -54,106 +55,118 @@ int main(int argc, char** argv)
          arg++;
          n=atoi(argv[arg]);
       }
-      else if(strncmp(argv[arg],"-p",2)==0)
+      else if(strncmp(argv[arg],"-precision",10)==0)
       {
          arg++;
          prec=atoi(argv[arg]);
       }
-      else if(strncmp(argv[arg],"-s",2)==0)
+      else if(strncmp(argv[arg],"-seed",5)==0)
       {
          arg++;
          s=atoi(argv[arg]);
       }
-      else if(strncmp(argv[arg],"-r",2)==0)
+      else if(strncmp(argv[arg],"-random",7)==0)
       {
          arg++;
          dist=atoi(argv[arg]);
       }
-      else if(strncmp(argv[arg],"-c",2)==0)
+      else if(strncmp(argv[arg],"-complex",8)==0)
       {
          comp=1;
       }
       else if(strncmp(argv[arg],"-S",2)==0)
       {
-         sym=1;
+         symmetric=1;
       }
       else if(strncmp(argv[arg],"-H",2)==0)
       {
-         her=1;
+         hermitian=1;
+      }
+      else if(strncmp(argv[arg],"-hilbert",8)==0)
+      {
+         hilbert=1;
       }
       else
       {
-         cerr << "Usage: " << argv[0] << " [-c] [-r <dist>] [-m <M>] [-n <N>] [-p <prec>] [-s <seed>]" << endl;
-         cerr << "        -c generate complex matrix (default is real)" << endl;
-         cerr << "        -p <prec> set precision to <prec> (default is 6)" << endl;
-         cerr << "        -m <M> set number of rows to <M> (default is 1)" << endl;
-         cerr << "        -n <N> set number of columns to <N> (default is 1)" << endl;
-         cerr << "        -H create Hermitian matrix" << endl;
-         cerr << "        -S create symmetric matrix" << endl;
-         cerr << "        -s <seed> set random number generator seed to <seed> (default is 0)" << endl;
-         cerr << "        -r <dist> random number distribution (default = 1)" << endl;
-         cerr << "                  real:    1 = uniform on (0,1)" << endl;
-         cerr << "                           2 = uniform on (-1,1)" << endl;
-         cerr << "                           3 = normal on (0,1)" << endl;
-         cerr << "                  complex: 1 = real and imaginary uniform on (0,1)" << endl;
-         cerr << "                           2 = real and imaginary uniform on (-1,1)" << endl;
-         cerr << "                           3 = real and imaginary normal on (0,1)" << endl;
-         cerr << "                           4 = uniformly distributed on the disc abs(z) < 1" << endl;
-         cerr << "                           5 = uniformly distributed on the circle abs(z) = 1" << endl;
+         cerr << "Usage: " << argv[0] << " [-complex] [-random <dist>] [-m <M>] [-n <N>] [-precision <prec>] [-seed <seed>] [-hilbert]" << endl;
+         cerr << "        -complex generates complex matrix (default is real)" << endl;
+         cerr << "        -precision <prec> sets precision out output (default is 6)" << endl;
+         cerr << "        -m <M> sets number of rows (default is 1)" << endl;
+         cerr << "        -n <N> sets number of columns (default is 1)" << endl;
+         cerr << "        -hilbert creates N x N Hilbert matrix" << endl;
+         cerr << "        -H creates N x N Hermitian matrix" << endl;
+         cerr << "        -S creates N x N symmetric matrix" << endl;
+         cerr << "        -seed <seed> sets random number generator seed (default is 0)" << endl;
+         cerr << "        -random <dist> creates M x N random matrix with one of the following distributions: " << endl;
+         cerr << "                   1 = uniform on (0,1)" << endl;
+         cerr << "                   2 = uniform on (-1,1)" << endl;
+         cerr << "                   3 = normal on (0,1)" << endl;
+         cerr << "                   4 = uniformly distributed on the disc abs(z) < 1 (complex>)" << endl;
+         cerr << "                   5 = uniformly distributed on the circle abs(z) = 1 (complex)" << endl;
          return 1;
       }
       arg++;
    }
 
-   if(her||sym)
+   if(hilbert)
+   {
+      hermitian=0;
+      symmetric=1;
+      comp=0;
+   }
+
+   if(hermitian||symmetric)
       m=n;
+   
    if(comp)
    {
-      if((dist<1)||(dist>5))
-      {
-         cerr << "invalid distribution" << endl;
-         return 1;
-      }
-      if(her&&sym)
-         sym=0;
+      if(hermitian&&symmetric)
+         symmetric=0;
       complex<real_t> *A=new complex<real_t>[m*n];
-      larnv(dist,m*n,A,s);
-      if(sym||her)
+      if((dist>01)&&(dist<6))
       {
-         for(int i=0;i<n;i++)
+         larnv(dist,m*n,A,s);
+         if(symmetric||hermitian)
          {
-            A[i+i*n]=real(A[i+i*n]);
-            if(sym)
-               for(int j=i+1;j<n;j++)
-                  A[i+j*n]=A[j+i*n];
-            else
-               for(int j=i+1;j<n;j++)
-                  A[i+j*n]=conj(A[j+i*n]);
+            for(int i=0;i<n;i++)
+            {
+               A[i+i*n]=real(A[i+i*n]);
+               if(symmetric)
+                  for(int j=i+1;j<n;j++)
+                     A[i+j*n]=A[j+i*n];
+               else
+                  for(int j=i+1;j<n;j++)
+                     A[i+j*n]=conj(A[j+i*n]);
+            }
          }
       }
       latl::print(m,n,A,m,prec);
    }
    else
    {
-      if(her||sym)
-      {
-         her=0;
-         sym=1;
-      }
-      if((dist<1)||(dist>3))
-      {
-         cerr << "invalid distribution" << endl;
-         return 1;         
-      }
       real_t *A=new real_t[m*n];
-      larnv(dist,m*n,A,s);
-      if(sym)
+      if(hermitian||symmetric)
       {
-         for(int i=0;i<n;i++)
+         hermitian=0;
+         symmetric=1;
+      }
+      if(hilbert)
+      {
+         for(int j=0;j<n;j++)
+            for(int i=0;i<n;i++)
+               A[i+j*n]=1.0/(real_t)(i+j+1);
+      }
+      else if((dist>0)&&(dist<4))
+      {
+         larnv(dist,m*n,A,s);
+         if(symmetric)
          {
-            A[i+i*n]=real(A[i+i*n]);
-            for(int j=i+1;j<n;j++)
-               A[i+j*n]=A[j+i*n];
+            for(int i=0;i<n;i++)
+            {
+               A[i+i*n]=real(A[i+i*n]);
+               for(int j=i+1;j<n;j++)
+                  A[i+j*n]=A[j+i*n];
+            }
          }
       }
       latl::print(m,n,A,m,prec);
