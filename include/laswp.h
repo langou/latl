@@ -23,78 +23,78 @@ namespace latl
    /// @param ldA Column length of A.
    /// @param k1 The index of the first element of IPIV for a row interchange.
    /// @param k2 The index of the final element of IPIV for a row interchange.
-   /// @param IPIV Integer array length at least k2+1.  For each k between k1 and k2, IPIV[k] = L indicates an exchange of row k of A with row L.
-   /// @param forward Boolean value, optional.  Defaults to 1 for reading indices from the first index, k1, to the last, k2.  A value of 0 will read the values of IPIV in reverse order, from k2 to k1.
+   /// @param IPIV Integer array length at least k2+1.  For each k between k1 and k2,
+   /// IPIV[k] = L indicates an exchange of row k of A with row L.
+   /// @param forward Boolean value, optional.  Defaults to 1 for reading indices from
+   /// the first index, k1, to the last, k2.  A value of 0 will read the values of IPIV
+   /// in reverse order, from k2 to k1.
    /// @ingroup MAT
    
    template< typename real_t>
-   void laswp(const int_t n, real_t * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, const bool forward = 1)
+   int laswp(const int_t n, real_t * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int inc)
    {
-      int_t i1, i2, inc;
-      if (forward == 1)
+      const int_t b=32;
+      int_t i1, i2, i0;
+      if (inc==1)
       {
+         i0 = k1;
          i1 = k1;
          i2 = k2;
-         inc = 1;
       }
-      else
+      else if (inc==-1)
       {
+         i0 = k2;
          i1 = k2;
          i2 = k1;
-         inc = -1;
       }
+      else
+         return 0;
       
-      int_t n32 = (n/32)*32;
-      int_t ix, ip, colSwap;
-      real_t temp;
-      real_t *Ai = A + i1, *Aip = A;
-      if (n32 != 0)
+      int_t nb = (n/b)*b;
+      real_t *Aj = A;
+      int_t ip,ix;
+      for (int_t j = 0; j < nb; j+= b)
       {
-         for (int_t j = 0; j < n32; j+= 32)
+         ix = i0;
+         for (int_t i = i1; i <= i2; i += inc)
          {
-            ix = i1;
-            for (int_t i = i1; i <= i2; i += inc)
+            ip = IPIV[ix];
+            if (ip != i)
             {
-               ip = IPIV[ix];
-               if (ip != i)
+               real_t *Ak = Aj;
+               for (int_t k = j; k < j+b; k++)
                {
-                  Aip = A + ip;
-                  for (int_t k = j; k < j+32; ++k)
-                  {
-                     int_t colSwap = ldA*k;
-                     temp = Ai[colSwap];
-                     Ai[colSwap] = Aip[colSwap];
-                     Aip[colSwap] = temp;
-                  }
+                  real_t temp = Ak[i];
+                  Ak[i] = Ak[ip];
+                  Ak[ip] = temp;
+                  Ak+=ldA;
                }
-               ix += inc;
-               Ai += inc;
             }
+            ix += inc;
          }
+         Aj += b*ldA;
       }
-      if (n32 != n)
+      if (nb != n)
       {
-         ix = i1;
-         Ai = A;
+         ix = i0;
          for (int_t i = i1; i <= i2; i+= inc)
          {
             ip = IPIV[ix];
             if (ip != i)
             {
-               Aip = A + ip;
-               for (int_t k = n32; k < n; ++k)
+               real_t *Ak = A+nb*ldA;
+               for (int_t k = nb; k < n; k++)
                {
-                  colSwap = ldA*k;
-                  temp = Ai[colSwap];
-                  Ai[colSwap] = Aip[colSwap];
-                  Aip[colSwap] = temp;
+                  real_t temp = Ak[i];
+                  Ak[i] = Ak[ip];
+                  Ak[ip] = temp;
+                  Ak+=ldA;
                }
             }
             ix += inc;
-            Ai += inc;
          }
       }
-      return;
+      return 0;
    }
    
    /// @brief Applies a series of row changes to the matrix A.
@@ -105,8 +105,11 @@ namespace latl
    /// @param ldA Column length of A.
    /// @param k1 The index of the first element of IPIV for a row interchange.
    /// @param k2 The index of the final element of IPIV for a row interchange.
-   /// @param IPIV Integer array length at least k2+1.  For each k between k1 and k2, IPIV[k] = L indicates an exchange of row k of A with row L.
-   /// @param forward Boolean value, optional.  Defaults to 1 for reading indices from the first index, k1, to the last, k2.  A value of 0 will read the values of IPIV in reverse order, from k2 to k1.
+   /// @param IPIV Integer array length at least k2+1.  For each k between k1 and k2,
+   /// IPIV[k] = L indicates an exchange of row k of A with row L.
+   /// @param forward Boolean value, optional.  Defaults to 1 for reading indices from
+   /// the first index, k1, to the last, k2.  A value of 0 will read the values of IPIV in
+   /// reverse order, from k2 to k1.
    /// @ingroup MAT
    
    template< typename real_t>
