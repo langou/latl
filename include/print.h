@@ -14,6 +14,7 @@
 #include <cctype>
 #include <iostream>
 #include <iomanip>
+#include <limits>
 
 namespace latl
 {
@@ -28,7 +29,7 @@ namespace latl
    /// @param prec Precision to use in output (optional).
 
    template <typename real_t>
-   int print(int m, int n, real_t *A, int ldA, int prec=6)
+   int print(int m, int n, real_t *A, int ldA, int prec=std::numeric_limits<real_t>::digits10)
    {
       if(m<0)
          return -1;
@@ -43,14 +44,15 @@ namespace latl
       using std::setprecision;
       using std::setw;
 
-      if(prec!=6)
-         cout << setprecision(prec);
+      cout << setprecision(prec);
       for(int i=0;i<m;i++)
       {
          for(int j=0;j<n;j++)
             cout << setw(prec+7) << A[i+j*ldA] << "\t";
          cout << endl;
       }
+      cout << setprecision(6);
+      
       return 0;
    }
    
@@ -72,7 +74,7 @@ namespace latl
    /// @param prec Precision to use in output (optional).
    
    template <typename real_t>
-   int print(char uplo, char diag, int n, real_t *A, int ldA, int prec=6)
+   int print(char uplo, char diag, int n, real_t *A, int ldA, int prec=std::numeric_limits<real_t>::digits10)
    {
       const real_t zero=0.0;
       const real_t one=1.0;
@@ -92,8 +94,7 @@ namespace latl
       using std::setprecision;
       using std::setw;
 
-      if(prec!=6)
-         cout << setprecision(prec);
+      cout << setprecision(prec);
 
       if(uplo=='U')
       {
@@ -125,6 +126,9 @@ namespace latl
             cout << endl;
          }
       }
+      
+      cout << setprecision(6);
+      
       return 0;
    }
    
