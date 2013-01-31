@@ -42,10 +42,12 @@ namespace latl
       using std::endl;
       using std::setprecision;
       using std::scientific;
+      using std::showpos;
       
       if(prec!=6)
          cout << setprecision(prec);
       cout << scientific;
+      cout << showpos;
       
       for(int i=0;i<m;i++)
       {
@@ -93,10 +95,12 @@ namespace latl
       using std::endl;
       using std::setprecision;
       using std::scientific;
+      using std::showpos;
 
       if(prec!=6)
          cout << setprecision(prec);
       cout << scientific;
+      cout << showpos;
       
       if(uplo=='U')
       {
