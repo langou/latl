@@ -41,12 +41,16 @@ namespace latl
       using std::cout;
       using std::endl;
       using std::setprecision;
+      using std::scientific;
+      
       if(prec!=6)
          cout << setprecision(prec);
+      cout << scientific;
+      
       for(int i=0;i<m;i++)
       {
          for(int j=0;j<n;j++)
-            cout << A[i+j*ldA] << "\t";
+            cout <<  A[i+j*ldA] << "\t";
          cout << endl;
       }
       return 0;
@@ -88,8 +92,12 @@ namespace latl
       using std::cout;
       using std::endl;
       using std::setprecision;
+      using std::scientific;
+
       if(prec!=6)
          cout << setprecision(prec);
+      cout << scientific;
+      
       if(uplo=='U')
       {
          for(int i=0;i<n;i++)
