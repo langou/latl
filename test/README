@@ -1,0 +1,8 @@
+You can use matgen to generate a test matrix to be used by a test program in this directory.
+For example, to generate a 4x4 Hilbert matrix, with 15 digits of precision, and pipe it
+to the invert program using the general matrix inverse routine, do the following:
+
+     ../matgen/matgen -n 4 -hilbert -precision 15 | invert -general -residual
+
+and the residual max{ || A * A^(-1) - I ||, || A^(-1) * A - I || } is reported.
+
