@@ -41,18 +41,14 @@ namespace latl
       using std::cout;
       using std::endl;
       using std::setprecision;
-      using std::scientific;
-      using std::showpos;
-      
+      using std::setw;
+
       if(prec!=6)
          cout << setprecision(prec);
-      cout << scientific;
-      cout << showpos;
-      
       for(int i=0;i<m;i++)
       {
          for(int j=0;j<n;j++)
-            cout <<  A[i+j*ldA] << "\t";
+            cout << setw(prec+7) << A[i+j*ldA] << "\t";
          cout << endl;
       }
       return 0;
@@ -94,26 +90,23 @@ namespace latl
       using std::cout;
       using std::endl;
       using std::setprecision;
-      using std::scientific;
-      using std::showpos;
+      using std::setw;
 
       if(prec!=6)
          cout << setprecision(prec);
-      cout << scientific;
-      cout << showpos;
-      
+
       if(uplo=='U')
       {
          for(int i=0;i<n;i++)
          {
             for(int j=0;j<i;j++)
-               cout << zero << "\t";
+               cout << setw(prec+7) << zero << "\t";
             if(diag=='U')
-               cout << one << "\t";
+               cout << setw(prec+7) << one << "\t";
             else
-               cout << A[i+i*ldA] << "\t";
+               cout << setw(prec+7) << A[i+i*ldA] << "\t";
             for(int j=i+1;j<n;j++)
-               cout << A[i+j*ldA] << "\t";
+               cout << setw(prec+7) << A[i+j*ldA] << "\t";
             cout << endl;
          }
       }
@@ -122,13 +115,13 @@ namespace latl
          for(int i=0;i<n;i++)
          {
             for(int j=0;j<i;j++)
-               cout << A[i+j*ldA] << "\t";
+               cout << setw(prec+7) << A[i+j*ldA] << "\t";
             if(diag=='U')
-               cout << one << "\t";
+               cout << setw(prec+7) << one << "\t";
             else
-               cout << A[i+i*ldA] << "\t";
+               cout << setw(prec+7) << A[i+i*ldA] << "\t";
             for(int j=i+1;j<n;j++)
-               cout << zero << "\t";
+               cout << setw(prec+7) << zero << "\t";
             cout << endl;
          }
       }
