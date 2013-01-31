@@ -153,7 +153,7 @@ int main(int argc,char **argv)
    int arg=1;
    char uplo='u';
    char diag='n';
-   char Type='_';
+   char Type='G';
    bool comp=0;
    bool resi=0;
    bool prnt=0;
