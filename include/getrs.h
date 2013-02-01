@@ -66,7 +66,7 @@ namespace latl
       {
          latl::trsm('L', 'U', 'T', 'N', n, colB, one, A, ldA, B, ldB);
          latl::trsm('L', 'L', 'T', 'U', n, colB, one, A, ldA, B, ldB);
-         latl::laswp(colB, B, ldB, 0, n-1, IPIV, 0);
+         latl::laswp(colB, B, ldB, 0, n-1, IPIV, -1);
       }
       return 0;
    }
@@ -119,7 +119,7 @@ namespace latl
       {
          latl::trsm('L', 'U', trans, 'N', n, colB, one, A, ldA, B, ldB);
          latl::trsm('L', 'L', trans, 'U', n, colB, one, A, ldA, B, ldB);
-         latl::laswp(colB, B, ldB, 0, n-1, IPIV, 0);
+         latl::laswp(colB, B, ldB, 0, n-1, IPIV, -1);
       }
       return 0;
    }

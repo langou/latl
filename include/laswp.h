@@ -16,7 +16,6 @@
 namespace latl
 {
    /// @brief Applies a series of row changes to the matrix A.
-   ///
    /// @tparam real_t Floating point type.
    /// @param n Number of columns in matrix A.
    /// @param A Real matrix size ldA-by-n.  On exit, the permuted matrix.
@@ -25,13 +24,12 @@ namespace latl
    /// @param k2 The index of the final element of IPIV for a row interchange.
    /// @param IPIV Integer array length at least k2+1.  For each k between k1 and k2,
    /// IPIV[k] = L indicates an exchange of row k of A with row L.
-   /// @param forward Boolean value, optional.  Defaults to 1 for reading indices from
-   /// the first index, k1, to the last, k2.  A value of 0 will read the values of IPIV
-   /// in reverse order, from k2 to k1.
+   /// @param inc Determines whether IPIV is read forward (inc=1) or backward (inc=-1).
+   /// (optional, default value is 1)
    /// @ingroup MAT
    
    template< typename real_t>
-   int laswp(const int_t n, real_t * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int inc)
+   int laswp(const int_t n, real_t * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int_t inc=1)
    {
       const int_t b=32;
       int_t i1, i2, i0;
@@ -98,7 +96,6 @@ namespace latl
    }
    
    /// @brief Applies a series of row changes to the matrix A.
-   ///
    /// @tparam real_t Floating point type.
    /// @param n Number of columns in matrix A.
    /// @param A Complex matrix size ldA-by-n.  On exit, the permuted matrix.
@@ -107,13 +104,12 @@ namespace latl
    /// @param k2 The index of the final element of IPIV for a row interchange.
    /// @param IPIV Integer array length at least k2+1.  For each k between k1 and k2,
    /// IPIV[k] = L indicates an exchange of row k of A with row L.
-   /// @param forward Boolean value, optional.  Defaults to 1 for reading indices from
-   /// the first index, k1, to the last, k2.  A value of 0 will read the values of IPIV in
-   /// reverse order, from k2 to k1.
+   /// @param inc Determines whether IPIV is read forward (inc=1) or backward (inc=-1).
+   /// (optional, default value is 1)
    /// @ingroup MAT
    
    template< typename real_t>
-   int laswp(const int_t n, complex<real_t> * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int inc)
+   int laswp(const int_t n, complex<real_t> * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int_t inc=1)
    {
       return laswp< complex<real_t> >(n,A,ldA,k1,k2,IPIV,inc);
    }
