@@ -16,9 +16,6 @@
 #include "lasv2.h"
 #include "latl.h"
 
-template<typename real_t> 
-static real_t abs1(complex<real_t> z) { return abs(real(z))+abs(imag(z)); }
-
 namespace latl
 {
    /// @brief Computes 2-by-2 orthogonal matrices satisfying certain properties.
@@ -258,13 +255,13 @@ namespace latl
             complex<real_t> ua12=csl*a2+d1*snl*a3;
             real_t vb11r=csr*b1;
             complex<real_t> vb12=csr*b2+d1*snr*b3;
-            real_t aua12=abs(csl)*abs1(a2)+abs(snl)*abs(a3);
-            real_t avb12=abs(csr)*abs1(b2)+abs(snr)*abs(b3);
-            if((abs(ua11r)+abs1(ua12))==zero)
+            real_t aua12=abs(csl)*abs(a2)+abs(snl)*abs(a3);
+            real_t avb12=abs(csr)*abs(b2)+abs(snr)*abs(b3);
+            if((abs(ua11r)+abs(ua12))==zero)
                lartg(-complex<real_t>(vb11r),conj(vb12),csq,snq,r);
-            else if((abs(vb11r)+abs1(vb12))==zero ) 
+            else if((abs(vb11r)+abs(vb12))==zero ) 
                lartg( -complex<real_t>(ua11r),conj(ua12),csq,snq,r);
-            else if(aua12/(abs(ua11r)+abs1(ua12))<=avb12/(abs(vb11r)+abs1(vb12)))
+            else if(aua12/(abs(ua11r)+abs(ua12))<=avb12/(abs(vb11r)+abs(vb12)))
                lartg( -complex<real_t>(ua11r),conj(ua12),csq,snq,r);
             else
                lartg( -complex<real_t>(vb11r),conj(vb12),csq,snq,r);
@@ -279,13 +276,13 @@ namespace latl
             complex<real_t> ua22=-conj(d1)*snl*a2+csl*a3;
             complex<real_t> vb21=-conj(d1)*snr*b1;
             complex<real_t> vb22=-conj(d1)*snr*b2+csr*b3;
-            real_t aua22=abs(snl)*abs1(a2)+abs(csl)*abs(a3);
-            real_t avb22=abs(snr)*abs1(b2)+abs(csr)*abs(b3);
-            if((abs1(ua21)+abs1(ua22))==zero)
+            real_t aua22=abs(snl)*abs(a2)+abs(csl)*abs(a3);
+            real_t avb22=abs(snr)*abs(b2)+abs(csr)*abs(b3);
+            if((abs(ua21)+abs(ua22))==zero)
                lartg(-conj(vb21),conj(vb22),csq,snq,r);
-            else if((abs1(vb21)+abs(vb22))==zero)
+            else if((abs(vb21)+abs(vb22))==zero)
                lartg(-conj(ua21),conj(ua22),csq,snq,r);
-            else if(aua22/(abs1(ua21)+abs1(ua22))<=avb22/(abs1(vb21)+abs1(vb22)))
+            else if(aua22/(abs(ua21)+abs(ua22))<=avb22/(abs(vb21)+abs(vb22)))
                lartg(-conj(ua21),conj(ua22),csq,snq,r);
             else
                lartg(-conj(vb21),conj(vb22),csq,snq,r);
@@ -309,13 +306,13 @@ namespace latl
             real_t ua22r=csr*a3;
             complex<real_t> vb21=-d1*snl*b1+csl*b2;
             real_t vb22r=csl*b3;
-            real_t aua21=abs(snr)*abs(a1)+abs(csr)*abs1(a2);
-            real_t avb21=abs(snl)*abs(b1)+abs(csl)*abs1(b2);
-            if((abs1(ua21)+abs(ua22r))==zero)
+            real_t aua21=abs(snr)*abs(a1)+abs(csr)*abs(a2);
+            real_t avb21=abs(snl)*abs(b1)+abs(csl)*abs(b2);
+            if((abs(ua21)+abs(ua22r))==zero)
                lartg(complex<real_t>(vb22r ),vb21,csq,snq,r);
-            else if((abs1(vb21)+abs(vb22r))==zero)
+            else if((abs(vb21)+abs(vb22r))==zero)
                lartg(complex<real_t>(ua22r),ua21,csq,snq,r);
-            else if(aua21/(abs1(ua21)+abs(ua22r))<=avb21/(abs1(vb21)+abs(vb22r)))
+            else if(aua21/(abs(ua21)+abs(ua22r))<=avb21/(abs(vb21)+abs(vb22r)))
                lartg(complex<real_t>(ua22r),ua21,csq,snq,r);
             else
                lartg(complex<real_t>(vb22r),vb21,csq,snq,r);
@@ -330,13 +327,13 @@ namespace latl
             complex<real_t> ua12=conj(d1)*snr*a3;
             complex<real_t> vb11=csl*b1+conj(d1)*snl*b2;
             complex<real_t> vb12=conj(d1)*snl*b3;
-            real_t aua11=abs(csr)*abs(a1)+abs(snr)*abs1(a2);
-            real_t avb11=abs(csl)*abs(b1)+abs(snl)*abs1(b2);
-            if((abs1(ua11)+abs1(ua12))==zero)
+            real_t aua11=abs(csr)*abs(a1)+abs(snr)*abs(a2);
+            real_t avb11=abs(csl)*abs(b1)+abs(snl)*abs(b2);
+            if((abs(ua11)+abs(ua12))==zero)
                lartg(vb12,vb11,csq,snq,r);
-            else if((abs1(vb11)+abs1(vb12))==zero)
+            else if((abs(vb11)+abs(vb12))==zero)
                lartg(ua12,ua11,csq,snq,r);
-            else if(aua11/(abs1(ua11)+abs1(ua12))<=avb11/(abs1(vb11)+abs1(vb12)))
+            else if(aua11/(abs(ua11)+abs(ua12))<=avb11/(abs(vb11)+abs(vb12)))
                lartg(ua12,ua11,csq,snq,r);
             else
                lartg(vb12,vb11,csq,snq,r);

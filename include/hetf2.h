@@ -20,15 +20,6 @@
 #include "scal.h"
 #include "latl.h"
 
-template<typename real_t>
-static real_t abs1(complex<real_t> z)
-{
-   using std::abs;
-   using std::real;
-   using std::imag;
-   return abs(real(z))+abs(imag(z));
-}
-
 namespace latl
 {
    /// @brief Computes the factorization of a complex Hermitian matrix A using the Bunch-Kaufman diagonal pivoting method:
@@ -93,7 +84,7 @@ namespace latl
             if (k > 0)
             {
                imax = latl::imax(k, Ak, 1);
-               colmax = abs1(Ak[imax]);
+               colmax = abs(Ak[imax]);
             }
             else
             {
@@ -123,11 +114,11 @@ namespace latl
                   jmax = imax+1 + latl::imax(k-imax, A+ldA*(imax+1)+imax, ldA);
                   complex<real_t> * Ajmax = A + ldA*jmax;
                   complex<real_t> * Aimax = A + ldA*imax;
-                  rowmax = abs1(Ajmax[imax]);
+                  rowmax = abs(Ajmax[imax]);
                   if (imax > 0)
                   {
                      jmax = latl::imax(imax, Aimax, 1);
-                     rowmax = max(rowmax, abs1(Aimax[jmax]));
+                     rowmax = max(rowmax, abs(Aimax[jmax]));
                   }
                   
                   if (absakk >= alpha*colmax*(colmax/rowmax))
@@ -244,7 +235,7 @@ namespace latl
             if (k < n-1)
             {
                imax = k+1 + latl::imax(n-k-1, Ak+k+1, 1);
-               colmax = abs1(Ak[imax]);
+               colmax = abs(Ak[imax]);
             }
             else
             {
@@ -268,7 +259,7 @@ namespace latl
                   real_t rowmax;
                   
                   jmax = k+latl::imax(imax-k, Ak+imax, ldA);
-                  rowmax = abs1(*(A+ldA*jmax+imax));
+                  rowmax = abs(*(A+ldA*jmax+imax));
                   complex<real_t> * Aimax = A+ldA*imax;
                   if (imax < n-1)
                   {
