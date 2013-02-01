@@ -21,13 +21,16 @@ typedef long double ldouble;
 #ifndef REAL
 #define REAL double
 #endif
+
 typedef REAL real_t;
 
 void usage(char *name)
 {
    using std::cerr;
    using std::endl;
-   cerr << "Usage: " << name << " [-complex] [-random <dist>] [-m <m>] [-n <n>] [-seed <seed>] [-hilbert] [-symmetric] [-hermitian]" << endl;
+   
+   cerr << "Usage: " << name << " [-complex] [-random <dist>] [-m <m>] [-n <n>] [-seed <seed>] [-hilbert] [-symmetric] [-hermitian]";
+   cerr << endl;
    cerr << "        -complex generates complex matrix (default is real)" << endl;
    cerr << "        -m <m> sets number of rows (default is m=1)" << endl;
    cerr << "        -n <n> sets number of columns (default is n=1)" << endl;
@@ -41,6 +44,7 @@ void usage(char *name)
    cerr << "                   3 = normal on (0,1)" << endl;
    cerr << "                   4 = uniformly distributed on the disc abs(z) < 1 (complex)" << endl;
    cerr << "                   5 = uniformly distributed on the circle abs(z) = 1 (complex)" << endl;
+   exit(0);
 }
 
 int main(int argc, char** argv)
@@ -63,49 +67,60 @@ int main(int argc, char** argv)
    bool symmetric=0;
    bool hermitian=0;
    bool hilbert=0;
-   
+
    while(arg<argc)
    {
       if(strncmp(argv[arg],"-m",2)==0)
       {
          arg++;
-         m=atoi(argv[arg]);
+         if(arg<argc)
+            m=atoi(argv[arg]);
+         if(m<1)
+            usage(argv[0]);
       }
       else if(strncmp(argv[arg],"-n",2)==0)
       {
          arg++;
-         n=atoi(argv[arg]);
+         if(arg<argc)
+            n=atoi(argv[arg]);
+         if(n<1)
+            usage(argv[0]);
       }
-      else if(strncmp(argv[arg],"-seed",5)==0)
+      else if(strncmp(argv[arg],"-seed",3)==0)
       {
          arg++;
-         s=atoi(argv[arg]);
+         if(arg<argc)
+            s=atoi(argv[arg]);
+         if(s<0)
+            usage(argv[0]);
       }
-      else if(strncmp(argv[arg],"-random",7)==0)
+      else if(strncmp(argv[arg],"-random",2)==0)
       {
          arg++;
-         dist=atoi(argv[arg]);
+         if(arg<argc)
+            dist=atoi(argv[arg]);
+         if(dist<0)
+            usage(argv[0]);
       }
-      else if(strncmp(argv[arg],"-complex",8)==0)
+      else if(strncmp(argv[arg],"-complex",2)==0)
       {
          use_complex=1;
       }
-      else if(strncmp(argv[arg],"-symmetric",10)==0)
+      else if(strncmp(argv[arg],"-symmetric",3)==0)
       {
          symmetric=1;
       }
-      else if(strncmp(argv[arg],"-hermitian",10)==0)
+      else if(strncmp(argv[arg],"-hermitian",3)==0)
       {
          hermitian=1;
       }
-      else if(strncmp(argv[arg],"-hilbert",8)==0)
+      else if(strncmp(argv[arg],"-hilbert",3)==0)
       {
          hilbert=1;
       }
       else
       {
          usage(argv[0]);
-         return 1;
       }
       arg++;
    }
@@ -142,12 +157,11 @@ int main(int argc, char** argv)
                      A[i+j*n]=conj(A[j+i*n]);
             }
          }
-         latl::print(m,n,A,m);
+         latl::print<real_t>(m,n,A,m);
       }
       else
       {
          usage(argv[0]);
-         return 0;
       }
    }
    else
@@ -163,7 +177,7 @@ int main(int argc, char** argv)
          for(int j=0;j<n;j++)
             for(int i=0;i<n;i++)
                A[i+j*n]=1.0/(real_t)(i+j+1);
-         latl::print(m,n,A,m);
+         latl::print<real_t>(m,n,A,m);
       }
       else if((dist>0)&&(dist<4))
       {
@@ -177,12 +191,11 @@ int main(int argc, char** argv)
                   A[i+j*n]=A[j+i*n];
             }
          }
-         latl::print(m,n,A,m);
+         latl::print<real_t>(m,n,A,m);
       }
       else
       {
          usage(argv[0]);
-         return 0;
       }
    }
    return 0;

@@ -68,7 +68,7 @@ template <typename real_t,typename matrix_t> real_t general(bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      print(n,n,A,n);
+      print<real_t>(n,n,A,n);
    laset<real_t>(uplo,n,n,zero,one,C,n);
    laset<real_t>(uplo,n,n,zero,one,D,n);
    gemm<real_t>('n','n',n,n,n,one,A,n,B,n,-one,C,n);
@@ -114,7 +114,7 @@ template <typename real_t,typename matrix_t> real_t triangular(char uplo, char d
       exit(0);
    }
    if(prnt)
-      print(uplo,diag,n,A,n);
+      print<real_t>(uplo,diag,n,A,n);
    laset<real_t>(uplo,n,n,zero,one,C,n);
    laset<real_t>(uplo,n,n,zero,one,D,n);
    if(diag=='u')

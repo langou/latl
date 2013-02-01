@@ -14,6 +14,9 @@ float: clean
 double: clean
 	@$(MAKE) all DEFS="-DREAL=double"
 
+ldouble: clean
+	@$(MAKE) all DEFS="-DREAL=ldouble"
+
 matgen: matgen.o
 	$(CC) -o $@ matgen.o
 
