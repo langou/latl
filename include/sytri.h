@@ -46,7 +46,7 @@ namespace latl
    /// @ingroup MATM
 
    template <typename real_t>
-      int_t sytri(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, int_t nb=32)
+      int_t sytri(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb=32)
       {
 
          using std::toupper;
@@ -66,13 +66,13 @@ namespace latl
          if(uplo=='U')
          {
             for(int_t i=n-1; i>=0; i--)
-               if((ipiv[i] > 0) && (A[i+i*ldA]==zero))
+               if((bsdv[i] == 0) && (A[i+i*ldA]==zero))
                   return 1;
          }
          else
          {
             for(int_t i=0; i<n; i++)
-               if((ipiv[i] > 0) && (A[i+i*ldA]==zero))
+               if((bsdv[i] == 0) && (A[i+i*ldA]==zero))
                   return 1;
          }
 
@@ -84,7 +84,7 @@ namespace latl
             int_t k = 1;
             while(k<=n)
             {
-               if(ipiv[k-1]>-1)
+               if(bsdv[k-1] == 0)
                {
                   A[(k-1)+(k-1)*ldA] = one / A[(k-1)+(k-1)*ldA];
 
@@ -120,7 +120,7 @@ namespace latl
                   kstep = 2;
                }
 
-               int_t kp = std::abs( ipiv[k-1] );
+               int_t kp = ipiv[k-1];
                if(kp != k-1)
                {
                   swap<real_t>( kp, A+(k-1)*ldA, 1, A+kp*ldA, 1);
@@ -143,7 +143,7 @@ namespace latl
             int_t k = n;
             while(k>=1)
             {
-               if(ipiv[k-1]>-1)
+               if(bsdv[k-1] == 0)
                {
                   A[(k-1)+(k-1)*ldA] = one / A[(k-1)+(k-1)*ldA];
 
@@ -179,7 +179,7 @@ namespace latl
                   kstep = 2;
                }
 
-               int_t kp = std::abs( ipiv[k-1] );
+               int_t kp = ipiv[k-1];
                if(kp != k-1)
                {
                   if(kp<n-1)
@@ -231,7 +231,7 @@ namespace latl
    /// @ingroup MATM
 
    template <typename real_t>
-      int_t sytri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, int_t nb=32)
+      int_t sytri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb=32)
       {
 
          return 0;
