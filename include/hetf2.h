@@ -110,7 +110,7 @@ namespace latl
                {
                   int_t jmax;
                   real_t rowmax;
-                  //check here
+                  
                   jmax = imax+1 + latl::imax(k-imax, A+ldA*(imax+1)+imax, ldA);
                   complex<real_t> * Ajmax = A + ldA*jmax;
                   complex<real_t> * Aimax = A + ldA*imax;

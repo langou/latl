@@ -112,8 +112,12 @@ namespace latl
             
             if ( j > 0)
             {
-               itemp = latl::imax(n-j , Work+n+j, 1);
-               pvt = itemp + j;
+               pvt = j;
+               for (int_t i =j+1; i < n; ++i)
+               {
+                  if (Work[n+i] > Work[n+pvt])
+                     pvt = i;
+               }
                ajj = Work[n+pvt];
                if (ajj <= stop || std::isnan(ajj))
                {
@@ -172,8 +176,12 @@ namespace latl
             
             if ( j > 0)
             {
-               itemp = latl::imax(n-j , Work+n+j, 1);
-               pvt = itemp + j;
+               pvt = j;
+               for (int_t i =j+1; i < n; ++i)
+               {
+                  if (Work[n+i] > Work[n+pvt])
+                     pvt = i;
+               }
                ajj = Work[n+pvt];
                if (ajj <= stop || std::isnan(ajj))
                {
@@ -272,7 +280,12 @@ namespace latl
          Work[i] = real(Ai[i]);
          Ai += ldA;
       }
-      pvt = latl::imax(n, Work, 1);
+      pvt = 0;
+      for (int_t i =1; i < n; ++i)
+      {
+         if (Work[i] > Work[pvt])
+            pvt = i;
+      }
       Apvt = A + ldA*pvt;
       ajj = real(Apvt[pvt]);
       if (ajj == zero || std::isnan(ajj))
@@ -304,14 +317,18 @@ namespace latl
             {
                Ai = A+ldA*i;
                if (j > 0)
-                  Work[i] += real(conj(Ai[j-1])*Ai[j-1]);
-               Work[n+i] = real(Ai[i]) - Work[i];
+                  Work[i] += real((conj(Ai[j-1])*Ai[j-1]));//
+               Work[n+i] = real(Ai[i]) - Work[i];//
             }
             
             if ( j > 0)
             {
-               itemp = latl::imax(n-j , Work+n+j, 1);
-               pvt = itemp + j;
+               pvt = j;
+               for (int_t i =j+1; i < n; ++i)
+               {
+                  if (Work[n+i] > Work[n+pvt])
+                     pvt = i;
+               }
                ajj = Work[n+pvt];
                if (ajj <= stop || std::isnan(ajj))
                {
@@ -332,7 +349,7 @@ namespace latl
                {
                   latl::swap(n-pvt-1, Apvtp1+j, ldA, Apvtp1+pvt, ldA);
                }
-               for (int_t i = j+1; i < pvt; ++i)
+               for (int_t i = j+1; i < pvt; ++i)//
                {
                   Ai = A+ldA*i;
                   ztemp = conj(Ai[j]);
@@ -353,9 +370,9 @@ namespace latl
             
             if (j < n-1)
             {
-               latl::lacgv(j, Aj, 1);
+               latl::lacgv(j, Aj, 1);//
                latl::gemv('T', j, n-j-1, -onec, Aj+ldA, ldA, Aj, 1, onec, Aj+ldA+j, ldA);
-               latl::lacgv(j, Aj, 1);
+               latl::lacgv(j, Aj, 1);//
                latl::scal(n-j-1, one/ajj, Aj+ldA+j, ldA);
             }
             Aj += ldA;
@@ -375,12 +392,17 @@ namespace latl
                   Work[i] += real(conj(Ajm1[i])*Ajm1[i]);
                }
                Work[n+i] = real(Ai[i]) - Work[i];
+               
             }
             
             if ( j > 0)
             {
-               itemp = latl::imax(n-j , Work+n+j, 1);
-               pvt = itemp + j;
+               pvt = j;
+               for (int_t i =j+1; i < n; ++i)
+               {
+                  if (Work[n+i] > Work[n+pvt])
+                     pvt = i;
+               }
                ajj = Work[n+pvt];
                if (ajj <= stop || std::isnan(ajj))
                {
