@@ -108,7 +108,7 @@ real_t symmetric(char uplo,bool resi,bool prnt)
    matrix_t *D=new matrix_t[n*n];
    int_t *ipiv=new int_t[n];
    bool *block=new bool[n];
-   lacpy<real_t>(uplo,n,n,A,n,B,n);
+   lacpy<real_t>('a',n,n,A,n,B,n);
    int info=sytrf<real_t>(uplo,n,A,n,ipiv,block);
    info=sytri<real_t>(uplo,n,A,n,ipiv,block);
    if(info>0)
@@ -117,11 +117,11 @@ real_t symmetric(char uplo,bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      print<real_t>(uplo,n,A,n);
+      print<real_t>(n,n,A,n);
    laset<real_t>('a',n,n,zero,one,C,n);
    laset<real_t>('a',n,n,zero,one,D,n);
-   symm<real_t>('l','n',n,n,one,A,n,B,n,-one,C,n);
-   symm<real_t>('r','n',n,n,one,B,n,A,n,-one,D,n);
+   symm<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
+   symm<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
    residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
    real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
@@ -214,11 +214,11 @@ int main(int argc,char **argv)
       else if(strncmp(argv[arg],"-general",2)==0)
          Type='G';
       else if(strncmp(argv[arg],"-symmetric",2)==0)
-         Type='G';
+         Type='S';
       else if(strncmp(argv[arg],"-hermitian",2)==0)
-         Type='G';
+         Type='H';
       else if(strncmp(argv[arg],"-positive",3)==0)
-         Type='G';
+         Type='P';
       else if(strncmp(argv[arg],"-lower",2)==0)
          uplo='l';
       else if(strncmp(argv[arg],"-complex",2)==0)
