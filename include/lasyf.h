@@ -60,8 +60,8 @@ namespace latl
          return 0;
       
       const real_t alpha = (1.0*sqrt(17.0))/8.0;
-      const real_t zero(0.0);
       const real_t one(1.0);
+      const real_t zero(0.0);
       real_t * const Work = new real_t[n*nb];
       const int_t ldWork = n;
       int_t k, kw, kp, kstep, imax, jmax, kk, kkw, jtemp, jb, jp;
@@ -440,7 +440,6 @@ namespace latl
       
       const real_t alpha = (1.0*sqrt(17.0))/8.0;
       const real_t zero(0.0);
-      const real_t one(1.0);
       const complex<real_t> onec(1.0);
       complex<real_t> * const Work = new complex<real_t>[n*nb];
       const int_t ldWork = n;
