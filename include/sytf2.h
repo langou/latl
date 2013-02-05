@@ -21,6 +21,7 @@
 
 namespace latl
 {
+   
    /// @brief Computes the factorization of a real symmetric matrix A using the Bunch-Kaufman diagonal pivoting method:
    ///
    ///         A = U*D*U' if uplo = 'U'
@@ -388,12 +389,12 @@ namespace latl
             Ak = A + ldA*k;
             Akm1 = Ak-ldA;
             
-            absakk = abs(Ak[k]);
+            absakk = abs(real(Ak[k]))+abs(imag(Ak[k]));
             
             if (k > 0)
             {
                imax = latl::imax(k, Ak, 1);
-               colmax = abs(Ak[imax]);
+               colmax = abs(real(Ak[imax]))+abs(imag(Ak[imax]));
             }
             else
             {
@@ -420,16 +421,16 @@ namespace latl
                   jmax = imax+1+ latl::imax(k-imax, A+ldA*(imax+1)+imax, ldA);
                   complex<real_t> * Ajmax = A + ldA*jmax;
                   complex<real_t> * Aimax = A + ldA*imax;
-                  rowmax = abs(Ajmax[imax]);
+                  rowmax = abs(real(Ajmax[imax]))+abs(imag(Ajmax[imax])); 
                   if (imax > 0)
                   {
                      jmax = latl::imax(imax, Aimax, 1);
-                     rowmax = max(rowmax, abs(Aimax[jmax]));
+                     rowmax = max(rowmax, abs(real(Aimax[jmax]))+abs(imag(Aimax[jmax]))); 
                   }
                   
                   if (absakk >= alpha*colmax*(colmax/rowmax))
                      kp = k;
-                  else if (abs(Aimax[imax]) >= alpha*rowmax)
+                  else if (abs(real(Aimax[imax]))+abs(imag(Aimax[imax])) >= alpha*rowmax)
                      kp = imax;
                   else
                   {
@@ -513,12 +514,12 @@ namespace latl
             kstep = 1;
             Ak = A + ldA*k;
             
-            absakk = abs(Ak[k]);
+            absakk = abs(real(Ak[k]))+abs(imag(Ak[k]));
             
             if (k < n-1)
             {
                imax = k +1 + latl::imax(n-k-1, Ak+k+1, 1);
-               colmax = abs(Ak[imax]);
+               colmax = abs(real(Ak[imax]))+abs(imag(Ak[imax]));
             }
             else
             {
@@ -540,16 +541,16 @@ namespace latl
                   int_t jmax = k + latl::imax(imax-k, Ak+imax, ldA);
                   complex<real_t> * Ajmax = A + ldA*jmax;
                   complex<real_t> *Aimax = A +ldA*imax;
-                  real_t rowmax = abs(Ajmax[imax]);
+                  real_t rowmax = abs(real(Ajmax[imax]))+abs(imag(Ajmax[imax]));
                   if (imax < n-1)
                   {
                      jmax = imax +latl::imax(n-imax-1, Aimax+imax+1, 1);
-                     rowmax = max(rowmax, abs(Aimax[jmax]));
+                     rowmax = max(rowmax, abs(real(Aimax[jmax]))+abs(imag(Aimax[jmax]))); 
                   }
                   
                   if (absakk >= alpha*colmax*(colmax/rowmax))
                      kp = k;
-                  else if (abs(Aimax[imax]) >= alpha*rowmax)
+                  else if (abs(real(Aimax[imax]))+abs(imag(Aimax[imax])) >= alpha*rowmax)
                   {
                      kp = imax;
                   }
