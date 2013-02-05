@@ -155,8 +155,8 @@ real_t hermitian(char uplo,bool resi,bool prnt)
    int_t *ipiv=new int_t[n];
    bool *block=new bool[n];
    lacpy<real_t>('a',n,n,A,n,B,n);
-   int info=sytf2<real_t>(uplo,n,A,n,ipiv,block);
-   info=sytri<real_t>(uplo,n,A,n,ipiv,block);
+   int info=hetf2<real_t>(uplo,n,A,n,ipiv,block);
+   info=hetri<real_t>(uplo,n,A,n,ipiv,block);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
