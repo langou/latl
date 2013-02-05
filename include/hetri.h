@@ -62,41 +62,41 @@ namespace latl
             int_t k = 1;
             while(k<=n)
             {
-                if(bsdv[k-1] == 0)
-                {
-                   A[(k-1)+(k-1)*ldA] = complex<real_t>(one.real() / A[(k-1)+(k-1)*ldA].real(), 0.0);
- 
-                   if(k>1)
-                   {
-                      copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
-                      hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                      A[(k-1)+(k-1)*ldA] -= complex<real_t>((dotc( k-1, work, 1, A+(k-1)*ldA, 1)).real(),0.0);
-                   }
-                   kstep = 1;
-                }
-                else
-                {
-                   real_t t = std::abs( A[(k-1)+k*ldA] );
-                   real_t Ak = A[(k-1)+(k-1)*ldA].real() / t;
-                   real_t Akp1 = A[k+k*ldA].real() / t;
-                   complex<real_t> Akkp1 = A[(k-1)+k*ldA] / t;
-                   real_t d = t*( Ak*Akp1 - one.real() );
-                   A[(k-1)+(k-1)*ldA] = complex<real_t>(Akp1 / d, 0.0);
-                   A[k+k*ldA] = complex<real_t>(Ak / d, 0.0);
-                   A[(k-1)+k*ldA] = Akkp1 / d;
- 
-                   if(k>1)
-                   {
-                      copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
-                      hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                      A[(k-1)+(k-1)*ldA] -= complex<real_t>((dotc( k-1, work, 1, A+(k-1)*ldA, 1)).real(),0.0);
-                      A[(k-1)+k*ldA] -= dotc( k-1, A+(k-1)*ldA, 1, A+k*ldA, 1);
-                      copy<real_t>( k-1, A+k*ldA, 1, work, 1);
-                      hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+k*ldA, 1);
-                      A[k+k*ldA] -= complex<real_t>(dotc( k-1, work, 1, A+k*ldA, 1).real(),0.0);
-                   }
-                   kstep = 2;
-                }
+               if(bsdv[k-1] == 0)
+               {
+                  A[(k-1)+(k-1)*ldA] = complex<real_t>(one.real() / A[(k-1)+(k-1)*ldA].real());
+
+                  if(k>1)
+                  {
+                     copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
+                     hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
+                     A[(k-1)+(k-1)*ldA] -= complex<real_t>((dotc( k-1, work, 1, A+(k-1)*ldA, 1)).real());
+                  }
+                  kstep = 1;
+               }
+               else
+               {
+                  real_t t = std::abs( A[(k-1)+k*ldA] );
+                  real_t Ak = A[(k-1)+(k-1)*ldA].real() / t;
+                  real_t Akp1 = A[k+k*ldA].real() / t;
+                  complex<real_t> Akkp1 = A[(k-1)+k*ldA] / t;
+                  real_t d = t*( Ak*Akp1 - one.real() );
+                  A[(k-1)+(k-1)*ldA] = complex<real_t>(Akp1 / d);
+                  A[k+k*ldA] = complex<real_t>(Ak / d);
+                  A[(k-1)+k*ldA] = -Akkp1 / d;
+
+                  if(k>1)
+                  {
+                     copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
+                     hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
+                     A[(k-1)+(k-1)*ldA] -= complex<real_t>((dotc( k-1, work, 1, A+(k-1)*ldA, 1)).real());
+                     A[(k-1)+k*ldA] -= dotc( k-1, A+(k-1)*ldA, 1, A+k*ldA, 1);
+                     copy<real_t>( k-1, A+k*ldA, 1, work, 1);
+                     hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+k*ldA, 1);
+                     A[k+k*ldA] -= complex<real_t>(dotc( k-1, work, 1, A+k*ldA, 1).real());
+                  }
+                  kstep = 2;
+               }
 
                int_t kp = ipiv[k-1];
                if(kp != k-1)
@@ -123,7 +123,72 @@ namespace latl
                k = k + kstep;
             }
          }
+         else
+         {
+            int_t k = n;
+            while(k>=1)
+            {
+               if(bsdv[k-1] == 0)
+               {
+                  A[(k-1)+(k-1)*ldA] = complex<real_t>(one.real() / A[(k-1)+(k-1)*ldA].real());
 
+                  if(k<=n)
+                  {
+                     copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
+                     hemv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
+                     A[(k-1)+(k-1)*ldA] -= complex<real_t>((dotc( n-k, work, 1, A+k+(k-1)*ldA, 1)).real());
+                  }
+                  kstep = 1;
+               }
+               else
+               {
+                  real_t t = std::abs( A[(k-1)+(k-2)*ldA] );
+                  real_t Ak = A[(k-2)+(k-2)*ldA].real() / t;
+                  real_t Akp1 = A[(k-1)+(k-1)*ldA].real() / t;
+                  complex<real_t> Akkp1 = A[(k-1)+(k-2)*ldA] / t;
+                  real_t d = t*( Ak*Akp1 - one.real() );
+                  A[(k-2)+(k-2)*ldA] = complex<real_t>(Akp1 / d);
+                  A[(k-1)+(k-1)*ldA] = complex<real_t>(Ak / d);
+                  A[(k-1)+(k-2)*ldA] = -Akkp1 / d;
+
+                  if(k<=n)
+                  {
+                     copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
+                     hemv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
+                     A[(k-1)+(k-1)*ldA] -= complex<real_t>((dotc( n-k, work, 1, A+k+(k-1)*ldA, 1)).real());
+                     A[(k-1)+(k-2)*ldA] -= dotc( n-k, A+k+(k-1)*ldA, 1, A+k+(k-2)*ldA, 1);
+                     copy<real_t>( n-k, A+k+(k-2)*ldA, 1, work, 1);
+                     hemv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-2)*ldA, 1);
+                     A[(k-2)+(k-2)*ldA] -= complex<real_t>(dotc( n-k, work, 1, A+k+(k-2)*ldA, 1).real());
+                  }
+                  kstep = 2;
+               }
+
+               int_t kp = ipiv[k-1];
+               if(kp != k-1)
+               {
+                  swap<real_t>( n-kp-1, A+kp+1+(k-1)*ldA, 1, A+kp+1+kp*ldA, 1);
+                  for(int_t j=k+1;j<=kp;j++)
+                  {
+                     complex<real_t> temp = conj(A[(j-1)+(k-1)*ldA]);
+                     A[(j-1)+(k-1)*ldA] = conj(A[kp+(j-1)*ldA]);
+                     A[kp+(j-1)*ldA] = temp;
+                  }
+
+                  A[kp+(k-1)*ldA] = conj(A[kp+(k-1)*ldA]);
+                  complex<real_t> temp = A[(k-1)+(k-1)*ldA];
+                  A[(k-1)+(k-1)*ldA] = A[kp+kp*ldA];
+                  A[kp+kp*ldA] = temp;
+                  if(kstep==2)
+                  {
+                     temp = A[(k-1)+(k-2)*ldA];
+                     A[(k-1)+(k-2)*ldA] = A[kp+(k-2)*ldA];
+                     A[kp+(k-2)*ldA] = temp;
+                  }
+               }
+               k = k - kstep;
+            }
+         }
          return 0;
       }
 }
