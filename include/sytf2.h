@@ -357,6 +357,8 @@ namespace latl
       using std::isnan;
       using std::sqrt;
       using std::max;
+      using std::real;
+      using std::imag;
       
       if (uplo != 'U' && uplo != 'u' && uplo != 'L' && uplo != 'l')
          return -1;

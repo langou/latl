@@ -60,6 +60,8 @@ namespace latl
       
       using std::abs;
       using std::max;
+      using std::real;
+      using std::imag;
       const real_t alpha = (1.0 + std::sqrt(17.0))/8.0;
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -84,7 +86,7 @@ namespace latl
             if (k > 0)
             {
                imax = latl::imax(k, Ak, 1);
-               colmax = abs(Ak[imax]);
+               colmax = abs(real(Ak[imax]))+abs(imag(Ak[imax]));
             }
             else
             {
@@ -114,11 +116,11 @@ namespace latl
                   jmax = imax+1 + latl::imax(k-imax, A+ldA*(imax+1)+imax, ldA);
                   complex<real_t> * Ajmax = A + ldA*jmax;
                   complex<real_t> * Aimax = A + ldA*imax;
-                  rowmax = abs(Ajmax[imax]);
+                  rowmax = abs(real(Ajmax[imax]))+abs(imag(Ajmax[imax]));
                   if (imax > 0)
                   {
                      jmax = latl::imax(imax, Aimax, 1);
-                     rowmax = max(rowmax, abs(Aimax[jmax]));
+                     rowmax = max(rowmax, abs(real(Aimax[jmax]))+abs(imag(Aimax[jmax])));
                   }
                   
                   if (absakk >= alpha*colmax*(colmax/rowmax))
@@ -235,7 +237,7 @@ namespace latl
             if (k < n-1)
             {
                imax = k+1 + latl::imax(n-k-1, Ak+k+1, 1);
-               colmax = abs(Ak[imax]);
+               colmax = abs(real(Ak[imax]))+abs(imag(Ak[imax]));
             }
             else
             {
@@ -259,12 +261,12 @@ namespace latl
                   real_t rowmax;
                   
                   jmax = k+latl::imax(imax-k, Ak+imax, ldA);
-                  rowmax = abs(*(A+ldA*jmax+imax));
+                  rowmax = abs(real(*(A+ldA*jmax+imax)))+abs(imag(*(A+ldA*jmax+imax)));
                   complex<real_t> * Aimax = A+ldA*imax;
                   if (imax < n-1)
                   {
                      jmax = imax+1 + latl::imax(n-imax-1, Aimax+imax+1, 1);
-                     rowmax = max(rowmax, abs(Aimax[jmax]));
+                     rowmax = max(rowmax, abs(real(Aimax[jmax]))+abs(imag(Aimax[jmax])));
                   }
                   
                   if (absakk >= alpha*colmax*(colmax/rowmax))
