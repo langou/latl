@@ -105,7 +105,7 @@ namespace latl
                   real_t d = t*( Ak*Akp1 - one );
                   A[(k-1)+(k-1)*ldA] = Akp1 / d;
                   A[k+k*ldA] = Ak / d;
-                  A[(k-1)+k*ldA] = Akkp1 / d;
+                  A[(k-1)+k*ldA] = -Akkp1 / d;
 
                   if(k>1)
                   {
@@ -151,7 +151,7 @@ namespace latl
                   {
                      copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
                      symv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
-                     A[(k-1)+(k-1)*ldA] = A[(k-1)+(k-1)*ldA] - dot( n-k, work, 1, A+k+(k-1)*ldA, 1);
+                     A[(k-1)+(k-1)*ldA] -= dot( n-k, work, 1, A+k+(k-1)*ldA, 1);
                   }
                   kstep = 1;
                }
@@ -164,17 +164,17 @@ namespace latl
                   real_t d = t*( Ak*Akp1 - one );
                   A[(k-2)+(k-2)*ldA] = Akp1 / d;
                   A[(k-1)+(k-1)*ldA] = Ak / d;
-                  A[(k-1)+(k-2)*ldA] = Akkp1 / d;
+                  A[(k-1)+(k-2)*ldA] = -Akkp1 / d;
 
                   if(k<n)
                   {
                      copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
                      symv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
-                     A[(k-1)+(k-1)*ldA] = A[(k-1)+(k-1)*ldA] - dot( n-k, work, 1, A+k+(k-1)*ldA, 1);
-                     A[(k-1)+(k-2)*ldA] = A[(k-1)+(k-2)*ldA] - dot( n-k, A+k+(k-1)*ldA, 1, A+k+(k-2)*ldA, 1);
+                     A[(k-1)+(k-1)*ldA] -= dot( n-k, work, 1, A+k+(k-1)*ldA, 1);
+                     A[(k-1)+(k-2)*ldA] -= dot( n-k, A+k+(k-1)*ldA, 1, A+k+(k-2)*ldA, 1);
                      copy<real_t>( n-k, A+k+(k-2)*ldA, 1, work, 1);
                      symv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-2)*ldA, 1);
-                     A[(k-2)+(k-2)*ldA] = A[(k-2)+(k-2)*ldA] -dot( n-k, work, 1, A+k+(k-2)*ldA, 1);
+                     A[(k-2)+(k-2)*ldA] -= dot( n-k, work, 1, A+k+(k-2)*ldA, 1);
                   }
                   kstep = 2;
                }
@@ -183,7 +183,7 @@ namespace latl
                if(kp != k-1)
                {
                   if(kp<n-1)
-                     swap<real_t>( n-kp-1, A+kp+1+(k-1)*ldA,1,A+kp+1+(k-1)*ldA,1);
+                     swap<real_t>( n-kp-1, A+kp+1+(k-1)*ldA,1,A+kp+1+kp*ldA,1);
                   swap<real_t>( kp-k,A+k+(k-1)*ldA,1,A+kp+k*ldA,ldA);
                   real_t temp = A[(k-1)+(k-1)*ldA];
                   A[(k-1)+(k-1)*ldA] = A[kp+kp*ldA];
