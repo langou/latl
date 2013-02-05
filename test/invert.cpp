@@ -109,7 +109,7 @@ real_t symmetric(char uplo,bool resi,bool prnt)
    int_t *ipiv=new int_t[n];
    bool *block=new bool[n];
    lacpy<real_t>('a',n,n,A,n,B,n);
-   int info=sytrf<real_t>(uplo,n,A,n,ipiv,block);
+   int info=sytf2<real_t>(uplo,n,A,n,ipiv,block);
    info=sytri<real_t>(uplo,n,A,n,ipiv,block);
    if(info>0)
    {
@@ -127,6 +127,136 @@ real_t symmetric(char uplo,bool resi,bool prnt)
    real_t eps=numeric_limits<real_t>::epsilon();
    delete [] block;
    delete [] ipiv;
+   delete [] D;
+   delete [] C;
+   delete [] B;
+   delete [] A;
+   return (resi)? residual : residual/(n*condition*eps);
+}
+
+// hermitian matrix inverse test
+
+template <typename real_t>
+real_t hermitian(char uplo,bool resi,bool prnt)
+{
+   int m,n;
+   const complex<real_t> one(1.0);
+   const complex<real_t> zero(0.0);
+   real_t residual;
+   complex<real_t> *A=load< complex<real_t> >(m,n);
+   if((A==NULL)||(m!=n))
+   {
+      cerr << "error reading input matrix" << endl;
+      exit(0);
+   }
+   complex<real_t> *B=new complex<real_t>[n*n];
+   complex<real_t> *C=new complex<real_t>[n*n];
+   complex<real_t> *D=new complex<real_t>[n*n];
+   int_t *ipiv=new int_t[n];
+   bool *block=new bool[n];
+   lacpy<real_t>('a',n,n,A,n,B,n);
+   int info=sytf2<real_t>(uplo,n,A,n,ipiv,block);
+   info=sytri<real_t>(uplo,n,A,n,ipiv,block);
+   if(info>0)
+   {
+      cerr << "input matrix is singular" << endl;
+      exit(0);
+   }
+   if(prnt)
+      print<real_t>(n,n,A,n);
+   laset<real_t>('a',n,n,zero,one,C,n);
+   laset<real_t>('a',n,n,zero,one,D,n);
+   hemm<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
+   hemm<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
+   residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
+   real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
+   real_t eps=numeric_limits<real_t>::epsilon();
+   delete [] block;
+   delete [] ipiv;
+   delete [] D;
+   delete [] C;
+   delete [] B;
+   delete [] A;
+   return (resi)? residual : residual/(n*condition*eps);
+}
+
+// symmetric positive definite matrix inverse test
+
+template <typename real_t>
+real_t symmetric_positive(char uplo,bool resi,bool prnt)
+{
+   int m,n;
+   const real_t one(1.0);
+   const real_t zero(0.0);
+   real_t residual;
+   real_t *A=load<real_t>(m,n);
+   if((A==NULL)||(m!=n))
+   {
+      cerr << "error reading input matrix" << endl;
+      exit(0);
+   }
+   real_t *B=new real_t[n*n];
+   real_t *C=new real_t[n*n];
+   real_t *D=new real_t[n*n];
+   lacpy<real_t>('a',n,n,A,n,B,n);
+   int info=potrf<real_t>(uplo,n,A,n);
+   info=potri<real_t>(uplo,n,A,n);
+   if(info>0)
+   {
+      cerr << "input matrix is singular" << endl;
+      exit(0);
+   }
+   if(prnt)
+      print<real_t>(n,n,A,n);
+   laset<real_t>('a',n,n,zero,one,C,n);
+   laset<real_t>('a',n,n,zero,one,D,n);
+   symm<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
+   symm<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
+   residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
+   real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
+   real_t eps=numeric_limits<real_t>::epsilon();
+   delete [] D;
+   delete [] C;
+   delete [] B;
+   delete [] A;
+   return (resi)? residual : residual/(n*condition*eps);
+}
+
+// hermitian positive definite matrix inverse test
+
+template <typename real_t>
+real_t hermitian_positive(char uplo,bool resi,bool prnt)
+{
+   int m,n;
+   const complex<real_t> one(1.0);
+   const complex<real_t> zero(0.0);
+   real_t residual;
+   complex<real_t> *A=load< complex<real_t> >(m,n);
+   if((A==NULL)||(m!=n))
+   {
+      cerr << "error reading input matrix" << endl;
+      exit(0);
+   }
+   complex<real_t> *B=new complex<real_t>[n*n];
+   complex<real_t> *C=new complex<real_t>[n*n];
+   complex<real_t> *D=new complex<real_t>[n*n];
+   lacpy<real_t>('a',n,n,A,n,B,n);
+   int info=potrf<real_t>(uplo,n,A,n);
+   info=potri<real_t>(uplo,n,A,n);
+   if(info>0)
+   {
+      cerr << "input matrix is singular" << endl;
+      exit(0);
+   }
+   if(prnt)
+      print<real_t>(n,n,A,n);
+   laset<real_t>('a',n,n,zero,one,C,n);
+   laset<real_t>('a',n,n,zero,one,D,n);
+   hemm<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
+   hemm<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
+   residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
+   real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
+   real_t eps=numeric_limits<real_t>::epsilon();
    delete [] D;
    delete [] C;
    delete [] B;
@@ -263,6 +393,21 @@ int main(int argc,char **argv)
          error=symmetric<Real,Complex>(uplo,resi,prnt);
       else
          error=symmetric<Real,Real>(uplo,resi,prnt);
+      cerr << error << endl;
+      return 0;
+   }
+   else if(Type=='H')
+   {
+      error=hermitian<Real>(uplo,resi,prnt);
+      cerr << error << endl;
+      return 0;
+   }
+   else if(Type=='P')
+   {
+      if(comp)
+         error=hermitian_positive<Real>(uplo,resi,prnt);
+      else
+         error=symmetric_positive<Real>(uplo,resi,prnt);
       cerr << error << endl;
       return 0;
    }
