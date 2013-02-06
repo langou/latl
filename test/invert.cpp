@@ -200,6 +200,11 @@ real_t symmetric_positive(char uplo,bool resi,bool prnt)
    real_t *D=new real_t[n*n];
    lacpy<real_t>('a',n,n,A,n,B,n);
    int info=potrf<real_t>(uplo,n,A,n);
+   if(info>0)
+   {
+      cerr << "input matrix is not positive definite" << endl;
+      exit(0);
+   }
    info=potri<real_t>(uplo,n,A,n);
    if(info>0)
    {
@@ -242,6 +247,11 @@ real_t hermitian_positive(char uplo,bool resi,bool prnt)
    complex<real_t> *D=new complex<real_t>[n*n];
    lacpy<real_t>('a',n,n,A,n,B,n);
    int info=potrf<real_t>(uplo,n,A,n);
+   if(info>0)
+   {
+      cerr << "input matrix is not positive definite" << endl;
+      exit(0);
+   }
    info=potri<real_t>(uplo,n,A,n);
    if(info>0)
    {
