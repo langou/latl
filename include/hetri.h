@@ -28,8 +28,8 @@ namespace latl
 
          using std::toupper;
          uplo=toupper(uplo);
-         const complex<real_t> zero = complex<double>(0.0,0.0);
-         const complex<real_t> one = complex<double>(1.0,0.0);
+         const complex<real_t> zero = 0.0;
+         const complex<real_t> one = 1.0;
 
          if((uplo!='U')&&(uplo!='L'))
             return -1;
@@ -64,36 +64,36 @@ namespace latl
             {
                if(bsdv[k-1] == 0)
                {
-                  A[(k-1)+(k-1)*ldA] = complex<real_t>(one.real() / A[(k-1)+(k-1)*ldA].real());
+                  A[(k-1)+(k-1)*ldA] = one / real(A[(k-1)+(k-1)*ldA]);
 
                   if(k>1)
                   {
                      copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
                      hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                     A[(k-1)+(k-1)*ldA] -= complex<real_t>((dotc( k-1, work, 1, A+(k-1)*ldA, 1)).real());
+                     A[(k-1)+(k-1)*ldA] -= dotc( k-1, work, 1, A+(k-1)*ldA, 1);
                   }
                   kstep = 1;
                }
                else
                {
                   real_t t = std::abs( A[(k-1)+k*ldA] );
-                  real_t Ak = A[(k-1)+(k-1)*ldA].real() / t;
-                  real_t Akp1 = A[k+k*ldA].real() / t;
+                  real_t Ak = real(A[(k-1)+(k-1)*ldA]) / t;
+                  real_t Akp1 = real(A[k+k*ldA]) / t;
                   complex<real_t> Akkp1 = A[(k-1)+k*ldA] / t;
-                  real_t d = t*( Ak*Akp1 - one.real() );
-                  A[(k-1)+(k-1)*ldA] = complex<real_t>(Akp1 / d);
-                  A[k+k*ldA] = complex<real_t>(Ak / d);
+                  real_t d = real(t*( Ak*Akp1 - one ));
+                  A[(k-1)+(k-1)*ldA] = Akp1 / d;
+                  A[k+k*ldA] = Ak / d;
                   A[(k-1)+k*ldA] = -Akkp1 / d;
 
                   if(k>1)
                   {
                      copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
                      hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                     A[(k-1)+(k-1)*ldA] -= complex<real_t>((dotc( k-1, work, 1, A+(k-1)*ldA, 1)).real());
+                     A[(k-1)+(k-1)*ldA] -= dotc( k-1, work, 1, A+(k-1)*ldA, 1);
                      A[(k-1)+k*ldA] -= dotc( k-1, A+(k-1)*ldA, 1, A+k*ldA, 1);
                      copy<real_t>( k-1, A+k*ldA, 1, work, 1);
                      hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+k*ldA, 1);
-                     A[k+k*ldA] -= complex<real_t>(dotc( k-1, work, 1, A+k*ldA, 1).real());
+                     A[k+k*ldA] -= dotc( k-1, work, 1, A+k*ldA, 1);
                   }
                   kstep = 2;
                }
@@ -130,36 +130,36 @@ namespace latl
             {
                if(bsdv[k-1] == 0)
                {
-                  A[(k-1)+(k-1)*ldA] = complex<real_t>(one.real() / A[(k-1)+(k-1)*ldA].real());
+                  A[(k-1)+(k-1)*ldA] = one / real(A[(k-1)+(k-1)*ldA]);
 
-                  if(k<=n)
+                  if(k<n)
                   {
                      copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
                      hemv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
-                     A[(k-1)+(k-1)*ldA] -= complex<real_t>((dotc( n-k, work, 1, A+k+(k-1)*ldA, 1)).real());
+                     A[(k-1)+(k-1)*ldA] -= dotc( n-k, work, 1, A+k+(k-1)*ldA, 1);
                   }
                   kstep = 1;
                }
                else
                {
                   real_t t = std::abs( A[(k-1)+(k-2)*ldA] );
-                  real_t Ak = A[(k-2)+(k-2)*ldA].real() / t;
-                  real_t Akp1 = A[(k-1)+(k-1)*ldA].real() / t;
+                  real_t Ak = real(A[(k-2)+(k-2)*ldA]) / t;
+                  real_t Akp1 = real(A[(k-1)+(k-1)*ldA]) / t;
                   complex<real_t> Akkp1 = A[(k-1)+(k-2)*ldA] / t;
-                  real_t d = t*( Ak*Akp1 - one.real() );
-                  A[(k-2)+(k-2)*ldA] = complex<real_t>(Akp1 / d);
-                  A[(k-1)+(k-1)*ldA] = complex<real_t>(Ak / d);
+                  real_t d = real(t*( Ak*Akp1 - one ));
+                  A[(k-2)+(k-2)*ldA] = Akp1 / d;
+                  A[(k-1)+(k-1)*ldA] = Ak / d;
                   A[(k-1)+(k-2)*ldA] = -Akkp1 / d;
 
-                  if(k<=n)
+                  if(k<n)
                   {
                      copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
                      hemv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
-                     A[(k-1)+(k-1)*ldA] -= complex<real_t>((dotc( n-k, work, 1, A+k+(k-1)*ldA, 1)).real());
+                     A[(k-1)+(k-1)*ldA] -= dotc( n-k, work, 1, A+k+(k-1)*ldA, 1);
                      A[(k-1)+(k-2)*ldA] -= dotc( n-k, A+k+(k-1)*ldA, 1, A+k+(k-2)*ldA, 1);
                      copy<real_t>( n-k, A+k+(k-2)*ldA, 1, work, 1);
                      hemv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-2)*ldA, 1);
-                     A[(k-2)+(k-2)*ldA] -= complex<real_t>(dotc( n-k, work, 1, A+k+(k-2)*ldA, 1).real());
+                     A[(k-2)+(k-2)*ldA] -= dotc( n-k, work, 1, A+k+(k-2)*ldA, 1);
                   }
                   kstep = 2;
                }
@@ -189,6 +189,9 @@ namespace latl
                k = k - kstep;
             }
          }
+
+         delete [] work;
+
          return 0;
       }
 }
