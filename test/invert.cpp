@@ -46,7 +46,7 @@ typedef long double ldouble;
 // general matrix inverse test
 
 template <typename real_t,typename matrix_t>
-real_t general(bool resi,bool prnt)
+real_t general(int nb,bool resi,bool prnt)
 {
    char uplo='a';
    int m,n;
@@ -64,8 +64,8 @@ real_t general(bool resi,bool prnt)
    matrix_t *D=new matrix_t[n*n];
    int_t *ipiv=new int_t[n];
    lacpy<real_t>(uplo,n,n,A,n,B,n);
-   int info=getrf<real_t>(n,n,A,n,ipiv);
-   info=getri<real_t>(n,A,n,ipiv);
+   int info=getrf<real_t>(n,n,A,n,ipiv,nb);
+   info=getri<real_t>(n,A,n,ipiv,nb);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -91,7 +91,7 @@ real_t general(bool resi,bool prnt)
 // symmetric matrix inverse test
 
 template <typename real_t,typename matrix_t>
-real_t symmetric(char uplo,bool resi,bool prnt)
+real_t symmetric(int nb,char uplo,bool resi,bool prnt)
 {
    int m,n;
    const matrix_t one(1.0);
@@ -109,8 +109,8 @@ real_t symmetric(char uplo,bool resi,bool prnt)
    int_t *ipiv=new int_t[n];
    bool *block=new bool[n];
    lacpy<real_t>('a',n,n,A,n,B,n);
-   int info=sytf2<real_t>(uplo,n,A,n,ipiv,block);
-   info=sytri<real_t>(uplo,n,A,n,ipiv,block);
+   int info=sytrf<real_t>(uplo,n,A,n,ipiv,block,nb);
+   info=sytri<real_t>(uplo,n,A,n,ipiv,block,nb);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -137,7 +137,7 @@ real_t symmetric(char uplo,bool resi,bool prnt)
 // hermitian matrix inverse test
 
 template <typename real_t>
-real_t hermitian(char uplo,bool resi,bool prnt)
+real_t hermitian(int nb,char uplo,bool resi,bool prnt)
 {
    int m,n;
    const complex<real_t> one(1.0);
@@ -155,8 +155,8 @@ real_t hermitian(char uplo,bool resi,bool prnt)
    int_t *ipiv=new int_t[n];
    bool *block=new bool[n];
    lacpy<real_t>('a',n,n,A,n,B,n);
-   int info=hetf2<real_t>(uplo,n,A,n,ipiv,block);
-   info=hetri<real_t>(uplo,n,A,n,ipiv,block);
+   int info=hetrf<real_t>(uplo,n,A,n,ipiv,block,nb);
+   info=hetri<real_t>(uplo,n,A,n,ipiv,block,nb);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -183,7 +183,7 @@ real_t hermitian(char uplo,bool resi,bool prnt)
 // symmetric positive definite matrix inverse test
 
 template <typename real_t>
-real_t symmetric_positive(char uplo,bool resi,bool prnt)
+real_t symmetric_positive(int nb,char uplo,bool resi,bool prnt)
 {
    int m,n;
    const real_t one(1.0);
@@ -199,13 +199,13 @@ real_t symmetric_positive(char uplo,bool resi,bool prnt)
    real_t *C=new real_t[n*n];
    real_t *D=new real_t[n*n];
    lacpy<real_t>('a',n,n,A,n,B,n);
-   int info=potrf<real_t>(uplo,n,A,n);
+   int info=potrf<real_t>(uplo,n,A,n,nb);
    if(info>0)
    {
       cerr << "input matrix is not positive definite" << endl;
       exit(0);
    }
-   info=potri<real_t>(uplo,n,A,n);
+   info=potri<real_t>(uplo,n,A,n,nb);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -230,7 +230,7 @@ real_t symmetric_positive(char uplo,bool resi,bool prnt)
 // hermitian positive definite matrix inverse test
 
 template <typename real_t>
-real_t hermitian_positive(char uplo,bool resi,bool prnt)
+real_t hermitian_positive(int nb,char uplo,bool resi,bool prnt)
 {
    int m,n;
    const complex<real_t> one(1.0);
@@ -246,13 +246,13 @@ real_t hermitian_positive(char uplo,bool resi,bool prnt)
    complex<real_t> *C=new complex<real_t>[n*n];
    complex<real_t> *D=new complex<real_t>[n*n];
    lacpy<real_t>('a',n,n,A,n,B,n);
-   int info=potrf<real_t>(uplo,n,A,n);
+   int info=potrf<real_t>(uplo,n,A,n,nb);
    if(info>0)
    {
       cerr << "input matrix is not positive definite" << endl;
       exit(0);
    }
-   info=potri<real_t>(uplo,n,A,n);
+   info=potri<real_t>(uplo,n,A,n,nb);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -277,7 +277,7 @@ real_t hermitian_positive(char uplo,bool resi,bool prnt)
 // triangular matrix inverse test
 
 template <typename real_t,typename matrix_t>
-real_t triangular(char uplo, char diag,bool resi,bool prnt)
+real_t triangular(int nb,char uplo, char diag,bool resi,bool prnt)
 {
    int m,n;
    const matrix_t one(1.0);
@@ -293,7 +293,7 @@ real_t triangular(char uplo, char diag,bool resi,bool prnt)
    matrix_t *C=new matrix_t[n*n];
    matrix_t *D=new matrix_t[n*n];
    lacpy<real_t>(uplo,n,n,A,n,B,n);
-   int info=trtri<real_t>(uplo,diag,n,A,n);
+   int info=trtri<real_t>(uplo,diag,n,A,n,nb);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -318,10 +318,10 @@ real_t triangular(char uplo, char diag,bool resi,bool prnt)
    return (resi)? residual : residual/(n*condition*eps);
 }
 
-void usage(char *name)
+void usage(char *name,int nb)
 {
    cerr << "Usage: " << name << " [-general | -triangular | -symmetric | -hermitian | -positive]";
-   cerr << " [-complex] [-lower] [-unit] [-print] [-residual]" << endl;
+   cerr << " [-complex] [-lower] [-unit] [-print] [-residual] [-b <nb>]" << endl;
    cerr << "           -general      invert general matrix (default)" << endl;
    cerr << "           -triangular   invert upper or lower triangular matrix" << endl;
    cerr << "           -symmetric    invert symmetric matrix" << endl;
@@ -332,6 +332,7 @@ void usage(char *name)
    cerr << "           -unit         assume unit triangular matrix" << endl;
    cerr << "           -print        write inverse matrix to standard output" << endl;
    cerr << "           -residual     report the residual error instead of the relative error" << endl;
+   cerr << "           -b <nb>       use block size of nb, otherwise blocksize is set to " << nb << endl;
 }
 
 int main(int argc,char **argv)
@@ -346,6 +347,7 @@ int main(int argc,char **argv)
    bool comp=0;
    bool resi=0;
    bool prnt=0;
+   int nb=64;
 
    while(arg<argc)
    {
@@ -369,9 +371,17 @@ int main(int argc,char **argv)
          prnt=1;
       else if(strncmp(argv[arg],"-residual",2)==0)
          resi=1;
+      else if(strncmp(argv[arg],"-b",2)==0)
+      {
+         arg++;
+         if(arg<argc)
+            nb=atoi(argv[arg]);
+         else
+            nb=0;
+      }
       else
       {
-         usage(argv[0]);
+         usage(argv[0],nb);
          return 1;
       }
       arg++;
@@ -382,46 +392,46 @@ int main(int argc,char **argv)
    if(Type=='T')
    {
       if(comp)
-         error=triangular<Real,Complex>(uplo,diag,resi,prnt);
+         error=triangular<Real,Complex>(nb,uplo,diag,resi,prnt);
       else
-         error=triangular<Real,Real>(uplo,diag,resi,prnt);
+         error=triangular<Real,Real>(nb,uplo,diag,resi,prnt);
       cerr << error << endl;
       return 0;
    }
    else if(Type=='G')
    {
       if(comp)
-         error=general<Real,Complex>(resi,prnt);
+         error=general<Real,Complex>(nb,resi,prnt);
       else
-         error=general<Real,Real>(resi,prnt);
+         error=general<Real,Real>(nb,resi,prnt);
       cerr << error << endl;
       return 0;
    }
    else if(Type=='S')
    {
       if(comp)
-         error=symmetric<Real,Complex>(uplo,resi,prnt);
+         error=symmetric<Real,Complex>(nb,uplo,resi,prnt);
       else
-         error=symmetric<Real,Real>(uplo,resi,prnt);
+         error=symmetric<Real,Real>(nb,uplo,resi,prnt);
       cerr << error << endl;
       return 0;
    }
    else if(Type=='H')
    {
-      error=hermitian<Real>(uplo,resi,prnt);
+      error=hermitian<Real>(nb,uplo,resi,prnt);
       cerr << error << endl;
       return 0;
    }
    else if(Type=='P')
    {
       if(comp)
-         error=hermitian_positive<Real>(uplo,resi,prnt);
+         error=hermitian_positive<Real>(nb,uplo,resi,prnt);
       else
-         error=symmetric_positive<Real>(uplo,resi,prnt);
+         error=symmetric_positive<Real>(nb,uplo,resi,prnt);
       cerr << error << endl;
       return 0;
    }
 
-   usage(argv[0]);
+   usage(argv[0],nb);
    return 0;
 }
