@@ -224,7 +224,7 @@ namespace latl
             if (max(absakk, colmax) == zero || isnan(absakk))
             {
                if (info == 0)
-                  info = k;
+                  info = k+1;
                kp = k;
             }
             else
@@ -239,7 +239,7 @@ namespace latl
                   real_t rowmax = abs(Ajmax[imax]);
                   if (imax < n-1)
                   {
-                     jmax = imax +latl::imax(n-imax-1, Aimax+imax+1, 1);
+                     jmax = imax+1 +latl::imax(n-imax-1, Aimax+imax+1, 1);
                      rowmax = max(rowmax, abs(Aimax[jmax]));
                   }
                   
@@ -292,8 +292,7 @@ namespace latl
                      d21 = Ak[k+1];
                      d11 = Akp1[k+1]/d21;
                      d22 = Ak[k]/d21;
-                     temp = one/(d11*d22-one);
-                     d21 = temp/d21;
+                     d21 = (one/(d11*d22-one))/d21;
                      
                      for (int_t j = k+2; j < n; ++j)
                      {
@@ -303,7 +302,7 @@ namespace latl
                         
                         for (int_t i = j; i< n; ++i)
                         {
-                           Aj[i] -= Ak[i]*wk+Akp1[i]*wkp1;
+                           Aj[i] -= (Ak[i]*wk+Akp1[i]*wkp1);
                         }
                         Ak[j] = wk;
                         Akp1[j] = wkp1;
@@ -531,7 +530,7 @@ namespace latl
             if (max(absakk, colmax) == zero || isnan(absakk))
             {
                if (info == 0)
-                  info = k;
+                  info = k+1;
                kp = k;
             }
             else
@@ -546,7 +545,7 @@ namespace latl
                   real_t rowmax = abs(real(Ajmax[imax]))+abs(imag(Ajmax[imax]));
                   if (imax < n-1)
                   {
-                     jmax = imax +latl::imax(n-imax-1, Aimax+imax+1, 1);
+                     jmax = imax+1 +latl::imax(n-imax-1, Aimax+imax+1, 1);
                      rowmax = max(rowmax, abs(real(Aimax[jmax]))+abs(imag(Aimax[jmax]))); 
                   }
                   
