@@ -11,8 +11,8 @@
 
 /// @file gbtrf.h Computes an LU factorization of an m-by-n band matrix A using partial pivoting with row interchanges.
 
+#include "imax.h"
 #include "swap.h"
-#include "gbtf2.h"
 #include "imax.h"
 #include "scal.h"
 #include "copy.h"
@@ -24,6 +24,114 @@
 
 namespace latl
 {
+   /// @brief Computes an LU factorization of a real m-by-n band matrix A using partial pivoting.
+   ///
+   /// @return 0 if success
+   /// @return -i if the ith argument is invalid
+   /// @return i+1 if the ith column of the matrix A has a zero pivot.
+   /// @tparam real_t Floating point type.
+   /// @param m Number of rows of the matrix A.  m >= 0
+   /// @param n Number of columns of the matrix A.  n >= 0
+   /// @param kL Number of subdiagonals within the band of A.  kL >= 0
+   /// @param kU Number of superdiagonals within the band of A.  kU >= 0
+   /// @param AB Real array size ldAB-by-n.  On entry, the matrix A in band storage, in rows kL to 2*kL+kU.  Rows 0 to kL of the array need not be set.  The jth column of A is stored in the jth column of the array AB as:  A(i, j) = AB(kL+kU+i-j, j)
+   ///
+   /// On exit, U is stored as an upper triangular band matrix with kL + kU superdiagonals in rows 0 to kL+kU.  Multipliers used during the factorization are stored in rows kL+kU+1 to 2*kL+kU.
+   /// @param ldAB Column length of the array AB.  ldAB >= 2*kL+kU
+   /// @param IPIV Integer array deminsion min(m, n).  The pivot indices, 0 <= i <= min(m, n), row i was interchanged with row IPIV(i).
+
+   template< typename real_t>
+   int_t gbtrf(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const IPIV)
+   {
+      if (m < 0)
+         return -1;
+      if (n < 0)
+         return -2;
+      if (kL < 0)
+         return -3;
+      if (kU < 0)
+         return -4;
+      if (ldAB < (2*kL+kU+1))
+         return -6;
+
+      if (m == 0 || n == 0)
+         return 0;
+
+      int_t kV = kL + kU, jU = 0, km, jp, info = 0;
+      real_t * ABj = AB;
+      const real_t zero(0.0);
+      const real_t one(1.0);
+
+      for (int_t j = kU+1; j < std::min(kV, n); ++j)
+      {
+         ABj = AB + ldAB*j;
+         for (int_t i = kV-j+1; i < kL; ++i)
+         {
+            ABj[i] = zero;
+         }
+      }
+
+      for (int_t j = 0; j < std::min(m,n); ++j)
+      {
+         if (j+kV < n)
+         {
+            ABj = AB + ldAB*(j+kV);
+            for (int_t i = 0; i < kL; ++i)
+            {
+               ABj[i] = zero;
+            }
+         }
+
+         ABj = AB+ldAB*j;
+         km = std::min(kL, m-j-1);
+         jp = latl::imax(km+1, ABj+kV, 1);
+         IPIV[j] = jp+j;
+         if (ABj[kV+jp] != zero)
+         {
+            jU = std::max(jU, std::min(j+kU+jp, n-1));
+            if (jp != 0)
+            {
+               latl::swap(jU-j+1, ABj+kV+jp, ldAB-1, ABj+kV, ldAB-1);
+            }
+            if (km > 0)
+            {
+               latl::scal(km, one/ABj[kV], ABj+kV+1, 1);
+               if (jU > j)
+                  latl::ger(km, jU-j, -one, ABj+kV+1, 1, ABj+ldAB+kV-1, ldAB-1, ABj+ldAB+kV, ldAB-1);
+            }
+         }
+         else
+         {
+            if (info == 0)
+               info = j+1;
+         }
+      }
+
+      return info;
+   }
+
+   /// @brief Computes an LU factorization of a complex m-by-n band matrix A using partial pivoting.
+   ///
+   /// @return 0 if success
+   /// @return -i if the ith argument is invalid
+   /// @return i+1 if the ith column of the matrix A has a zero pivot.
+   /// @tparam real_t Floating point type.
+   /// @param m Number of rows of the matrix A.  m >= 0
+   /// @param n Number of columns of the matrix A.  n >= 0
+   /// @param kL Number of subdiagonals within the band of A.  kL >= 0
+   /// @param kU Number of superdiagonals within the band of A.  kU >= 0
+   /// @param AB Complex array size ldAB-by-n.  On entry, the matrix A in band storage, in rows kL to 2*kL+kU.  Rows 0 to kL of the array need not be set.  The jth column of A is stored in the jth column of the array AB as:  A(i, j) = AB(kL+kU+i-j, j)
+   ///
+   /// On exit, U is stored as an upper triangular band matrix with kL + kU superdiagonals in rows 0 to kL+kU.  Multipliers used during the factorization are stored in rows kL+kU+1 to 2*kL+kU.
+   /// @param ldAB Column length of the array AB.  ldAB >= 2*kL+kU
+   /// @param IPIV Integer array deminsion min(m, n).  The pivot indices, 0 <= i <= min(m, n), row i was interchanged with row IPIV(i).
+
+   template< typename real_t>
+   int_t gbtrf(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const IPIV)
+   {
+      return latl::gbtrf< complex<real_t> > (m, n, kL, kU, AB, ldAB, IPIV);
+   }
+
    /// @brief Computes an LU factorization of a real m-by-n band matrix A using partial pivoting with row interchanges.
    ///
    /// This is the blocked version of the algorithm.
@@ -38,11 +146,10 @@ namespace latl
    /// @param AB Real matrix size ldAB-by-n.  On entry, the matrix A in band storage, in rows kL to 2*kL+kU.  Rows 0 to kL need not be set.  On exit, the factor U is stored as an upper triangular band matrix with kL+kU superdiagonals in rows 0 to kL+kU, and the multipliers using during the factorization are stored in rows kL+kU+1 to 2*kL+kU.
    /// @param ldAB Column length of matrix A.  ldAB >= 2*kL+kU+1
    /// @param IPIV Permutation matrix size min(m,n).  On exit, row k of A was exchanged with IPIV[k].
-   /// @param nb Block size, optional.  Default value is 64.
-   /// @ingroup TRF
+   /// @param nb Block size.
 
    template< typename real_t>
-   int_t gbtrf(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const IPIV, const int_t nb = 64)
+   int_t gbtrf(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const IPIV, const int_t nb)
    {
       if (m < 0)
          return -1;
@@ -60,7 +167,7 @@ namespace latl
       
       int_t info = 0;
       if (nb > kL || nb <= 1)
-         info = latl::gbtf2(m, n, kL, kU, AB, ldAB, IPIV);
+         info = latl::gbtrf(m, n, kL, kU, AB, ldAB, IPIV);
       else
       {
          const real_t zero(0.0);
@@ -289,11 +396,10 @@ namespace latl
    /// @param AB Complex matrix size ldAB-by-n.  On entry, the matrix A in band storage, in rows kL to 2*kL+kU.  Rows 0 to kL need not be set.  On exit, the factor U is stored as an upper triangular band matrix with kL+kU superdiagonals in rows 0 to kL+kU, and the multipliers using during the factorization are stored in rows kL+kU+1 to 2*kL+kU.
    /// @param ldAB Column length of matrix A.  ldAB >= 2*kL+kU+1
    /// @param IPIV Permutation matrix size min(m,n).  On exit, row k of A was exchanged with IPIV[k].
-   /// @param nb Block size, optional.  Default value is 64.
-   /// @ingroup TRF
+   /// @param nb Block size.
    
    template< typename real_t>
-   int_t gbtrf(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const IPIV, const int_t nb = 64)
+   int_t gbtrf(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const IPIV, const int_t nb)
    {
       return latl::gbtrf< complex<real_t> > (m, n, kL, kU, AB, ldAB, IPIV, nb);
    }
