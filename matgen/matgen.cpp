@@ -29,7 +29,7 @@ void usage(char *name)
    using std::cerr;
    using std::endl;
    
-   cerr << "Usage: " << name << " [-complex] [-random <dist>] [-m <m>] [-n <n>] [-seed <seed>] [-hilbert] [-symmetric] [-hermitian]";
+   cerr << "Usage: " << name << " [-complex] [-random <dist>] [-m <m>] [-n <n>] [-seed <seed>] [-hilbert] [-symmetric] [-hermitian] [-positive]";
    cerr << endl;
    cerr << "        -complex generates complex matrix (default is real)" << endl;
    cerr << "        -m <m> sets number of rows (default is m=1)" << endl;
@@ -37,6 +37,7 @@ void usage(char *name)
    cerr << "        -hilbert creates n-by-n Hilbert matrix" << endl;
    cerr << "        -hermitian creates n-by-n Hermitian matrix" << endl;
    cerr << "        -symmetric creates n-by-n symmetric matrix" << endl;
+   cerr << "        -positive creates n-by-n positive definite matrix by adding n to the diagonal" << endl;
    cerr << "        -seed <seed> sets random number generator seed (default is 0)" << endl;
    cerr << "        -random <dist> creates M x N random matrix with one of the following distributions: " << endl;
    cerr << "                   1 = uniform on (0,1) (default)" << endl;
@@ -67,7 +68,8 @@ int main(int argc, char** argv)
    bool symmetric=0;
    bool hermitian=0;
    bool hilbert=0;
-
+   bool positive=0;
+   
    while(arg<argc)
    {
       if(strncmp(argv[arg],"-m",2)==0)
@@ -118,6 +120,10 @@ int main(int argc, char** argv)
       {
          hilbert=1;
       }
+      else if(strncmp(argv[arg],"-positive",3)==0)
+      {
+         positive=1;
+      }
       else
       {
          usage(argv[0]);
@@ -131,6 +137,14 @@ int main(int argc, char** argv)
       symmetric=1;
       use_complex=0;
       dist=0;
+   }
+
+   if(positive)
+   {
+      if(use_complex)
+         hermitian=1;
+      else
+         symmetric=1;
    }
 
    if(hermitian||symmetric)
@@ -156,6 +170,11 @@ int main(int argc, char** argv)
                   for(int j=i+1;j<n;j++)
                      A[i+j*n]=conj(A[j+i*n]);
             }
+         }
+         if(positive)
+         {
+            for(int i=0;i<n;i++)
+               A[i+n*i]+=(real_t)n;
          }
          latl::print<real_t>(m,n,A,m);
       }
@@ -190,6 +209,11 @@ int main(int argc, char** argv)
                for(int j=i+1;j<n;j++)
                   A[i+j*n]=A[j+i*n];
             }
+         }
+         if(positive)
+         {
+            for(int i=0;i<n;i++)
+               A[i+n*i]+=(real_t)n;
          }
          latl::print<real_t>(m,n,A,m);
       }
