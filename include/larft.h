@@ -67,12 +67,12 @@ namespace latl
    ///
    /// @param n The order of the block reflector H. n >= 0.
    /// @param k The order of the triangular factor T, or the number of elementary reflectors. k >= 1.
-   /// @param V Real matrix containing the vectors defining the elementary reflector H.
+   /// @param[in] V Real matrix containing the vectors defining the elementary reflector H.
    /// If stored columnwise, V is n-by-k.  If stored rowwise, V is k-by-n.
    /// @param ldV Column length of the matrix V.  If stored columnwise, ldV >= n.
    /// If stored rowwise, ldV >= k.
-   /// @param tau Real vector of length k containing the scalar factors of the elementary reflectors H.
-   /// @param T Real matrix of size k-by-k containing the triangular factor of the block reflector.
+   /// @param[in] tau Real vector of length k containing the scalar factors of the elementary reflectors H.
+   /// @param[out] T Real matrix of size k-by-k containing the triangular factor of the block reflector.
    /// If the direction of the elementary reflectors is forward, T is upper triangular;
    /// if the direction of the elementary reflectors is backward, T is lower triangular.
    /// @param ldT Column length of the matrix T.  ldT >= k.
@@ -126,21 +126,20 @@ namespace latl
                      T[j]=-tau[i]*v[i];
                      v+=ldV;
                   }
-                  gemv<real_t>('T',n-i,i,-tau[i],V0+i+1,ldV,V+i+1,1,one,T,1);
-
+                  gemv<real_t>('T',n-i-1,i,-tau[i],&V0[i+1],ldV,&V[i+1],1,one,T,1);
                }
                else // storeV=='R'
                {
                   for(int_t j=0;j<i;j++)
                      T[j]=-tau[i]*V[j];
-                  gemv<real_t>('N',i,n-i,-tau[i],V+ldV,ldV,V+i+ldV,ldV,one,T,1);
+                  gemv<real_t>('N',i,n-i-1,-tau[i],V+ldV,ldV,V+i+ldV,ldV,one,T,1);
                }
                trmv<real_t>('U','N','N',i,T0,ldT,T,1);
                T[i]=tau[i];
             }
+            T+=ldT;
+            V+=ldV;
          }
-         T+=ldT;
-         V+=ldV;
       }
       else // direct=='B'
       {
@@ -168,19 +167,18 @@ namespace latl
                      T[j]=-tau[i]*v[n-k+i];
                      v+=ldV;
                   }
-                  gemv<real_t>('T',n-k+i,k-i,-tau[i],V+ldV,ldV,V,1,one,T+i+1,1);
+                  gemv<real_t>('T',n-k+i,k-i-1,-tau[i],V+ldV,ldV,V,1,one,T+i+1,1);
                }
                else // storeV=='R'
                {
-                  real_t *v=V+(n-k+1)*ldV;
+                  real_t *v=V+(n-k)*ldV;
                   for(int_t j=i+1;j<k;j++)
                   {
                      T[j]=-tau[i]*v[j];
-                     v+=ldV;
                   }
-                  gemv<real_t>('N',k-i,n-k+i,-tau[i],V0+i+1,ldV,V+i,ldV,one,T+i+1,1);
+                  gemv<real_t>('N',k-i-1,n-k+i,-tau[i],V0+i+1,ldV,V0+i,ldV,one,T+i+1,1);
                }
-               trmv<real_t>('L','N','N',k-i,T+i+1+ldT,ldT,T+i+1,1);
+               trmv<real_t>('L','N','N',k-i-1,T+i+1+ldT,ldT,T+i+1,1);
             }
             T[i]=tau[i];
          }
