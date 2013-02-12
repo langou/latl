@@ -392,7 +392,7 @@ namespace latl
             --km1;
             if (jp != jtemp && km1 >= 0)
             {
-               latl::swap(k, A+jp, ldA, A+jtemp, ldA);
+               latl::swap(km1+1, A+jp, ldA, A+jtemp, ldA);
             }
          }
          
@@ -776,7 +776,7 @@ namespace latl
             --km1;
             if (jp != jtemp && km1 >= 0)
             {
-               latl::swap(k, A+jp, ldA, A+jtemp, ldA);
+               latl::swap(km1+1, A+jp, ldA, A+jtemp, ldA);
             }
          }
          kb = k;
