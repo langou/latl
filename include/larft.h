@@ -9,7 +9,7 @@
 #ifndef _larft_h
 #define _larft_h
 
-/// @file larft.h Forms the triangular factor T of a block reflector H = I - vtvH.
+/// @file larft.h Forms the triangular factor T of a block reflector.
 
 #include <cctype>
 #include <algorithm>
@@ -22,70 +22,59 @@ namespace latl
    /// @brief Forms the triangular factor T of a real block reflector H of order n,
    /// which is defined as a product of k elementary reflectors.
    ///
-   ///  If direct = 'F', H = H(1) H(2) . . . H(k) and T is upper triangular;
-   ///  If direct = 'B', H = H(k) . . . H(2) H(1) and T is lower triangular.
+   ///               If direct = 'F', H = H_1 H_2 . . . H_k and T is upper triangular.
+   ///               If direct = 'B', H = H_k . . . H_2 H_1 and T is lower triangular.
+   ///
    ///  If storeV = 'C', the vector which defines the elementary reflector
    ///  H(i) is stored in the i-th column of the array V, and
    ///
-   ///         H  =  I - V * T * V'
+   ///               H  =  I - V * T * V'
    ///
    ///  If storeV = 'R', the vector which defines the elementary reflector
    ///  H(i) is stored in the i-th row of the array V, and
    ///
-   ///         H  =  I - V' * T * V
-   ///
+   ///               H  =  I - V' * T * V
    ///
    ///  The shape of the matrix V and the storage of the vectors which define
    ///  the H(i) is best illustrated by the following example with n = 5 and
    ///  k = 3. The elements equal to 1 are not stored.
    ///
-   ///  direct = 'F' and storeV = 'C':         direct = 'F' and storeV = 'R':
-   ///
+   ///               direct='F' & storeV='C'          direct='F' & storeV='R'
+   ///               -----------------------          -----------------------
    ///               V = (  1       )                 V = (  1 v1 v1 v1 v1 )
    ///                   ( v1  1    )                     (     1 v2 v2 v2 )
    ///                   ( v1 v2  1 )                     (        1 v3 v3 )
    ///                   ( v1 v2 v3 )
    ///                   ( v1 v2 v3 )
    ///
-   ///  direct = 'B' and storeV = 'C':         direct = 'B' and storeV = 'R':
-   ///
+   ///               direct='B' & storeV='C'          direct='B' & storeV='R'
+   ///               -----------------------          -----------------------
    ///               V = ( v1 v2 v3 )                 V = ( v1 v1  1       )
    ///                   ( v1 v2 v3 )                     ( v2 v2 v2  1    )
    ///                   (  1 v2 v3 )                     ( v3 v3 v3 v3  1 )
    ///                   (     1 v3 )
    ///                   (        1 )
    ///
-   /// @param direct Specifies the order in which the elementary reflectors are
-   ///               multiplied to form the block reflector:
+   /// @param direct Specifies the direction in which the elementary reflectors are multiplied to form the block reflector.
    ///
-   ///               direct = 'F': H = H(1) H(2) . . . H(k) (Forward)
-   ///               direct = 'B': H = H(k) . . . H(2) H(1) (Backward)
+   ///               'F' : forward
+   ///               'B' : backward
    ///
-   /// @param storeV Specifies how the vectors which define the elementary
-   ///               reflectors are stored.
+   /// @param storeV Specifies how the vectors which define the elementary reflectors are stored.
    ///
-   ///               storeV = 'C': columnwise
-   ///               storeV = 'R': rowwise
+   ///               'C' : columnwise
+   ///               'R' : rowwise
    ///
    /// @param n The order of the block reflector H. n >= 0.
-   /// @param k The order of the triangular factor T (= the number of elementary reflectors). k >= 1.
+   /// @param k The order of the triangular factor T, or the number of elementary reflectors. k >= 1.
    /// @param V Real matrix containing the vectors defining the elementary reflector H.
-   ///
-   ///               storeV = 'C' : V is n-by-k
-   ///               storeV = 'R' : V is k-by-n
-   ///
-   /// @param ldV Column length of the matrix V.
-   ///
-   ///               storeV = 'C' : ldV >= n
-   ///               storeV = 'R' : ldV >= k
-   ///
+   /// If stored columnwise, V is n-by-k.  If stored rowwise, V is k-by-n.
+   /// @param ldV Column length of the matrix V.  If stored columnwise, ldV >= n.
+   /// If stored rowwise, ldV >= k.
    /// @param tau Real vector of length k containing the scalar factors of the elementary reflectors H.
-   ///
    /// @param T Real matrix of size k-by-k containing the triangular factor of the block reflector.
-   ///
-   ///               direct = 'F' :  T is upper triangular
-   ///               direct = 'B' :  T is lower triangular.
-   ///
+   /// If the direction of the elementary reflectors is forward, T is upper triangular;
+   /// if the direction of the elementary reflectors is backward, T is lower triangular.
    /// @param ldT Column length of the matrix T.  ldT >= k.
 
    template<typename real_t>
