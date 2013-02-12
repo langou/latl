@@ -317,7 +317,7 @@ namespace latl
                   rowmax = std::abs(Wkp1[jmax]);
                   if (imax < n-1)
                   {
-                     jmax = imax+latl::imax(n-imax-1, Wkp1+imax+1, 1);
+                     jmax = imax+1+latl::imax(n-imax-1, Wkp1+imax+1, 1);
                      rowmax = std::max(rowmax, std::abs(Wkp1[jmax]));
                   }
                   

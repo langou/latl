@@ -290,7 +290,7 @@ namespace latl
                   rowmax = abs(Wkp1[jmax]);
                   if (imax < n-1)
                   {
-                     jmax = imax+latl::imax(n-imax-1, Wkp1+imax+1, 1);
+                     jmax = imax+1+latl::imax(n-imax-1, Wkp1+imax+1, 1);
                      rowmax = max(rowmax, abs(Wkp1[jmax]));
                   }
                   
@@ -674,7 +674,7 @@ namespace latl
                   rowmax = abs(real(Wkp1[jmax]))+abs(imag(Wkp1[jmax]));
                   if (imax < n-1)
                   {
-                     jmax = imax+latl::imax(n-imax-1, Wkp1+imax+1, 1);
+                     jmax = imax+1+latl::imax(n-imax-1, Wkp1+imax+1, 1);
                      rowmax = max(rowmax, abs(real(Wkp1[jmax]))+abs(imag(Wkp1[jmax])));
                   }
                   
