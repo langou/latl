@@ -261,8 +261,9 @@ namespace latl
                   real_t rowmax;
                   
                   jmax = k+latl::imax(imax-k, Ak+imax, ldA);
-                  rowmax = abs(real(*(A+ldA*jmax+imax)))+abs(imag(*(A+ldA*jmax+imax)));
-                  complex<real_t> * Aimax = A+ldA*imax;
+                  complex<real_t> * Ajmax = A + ldA*jmax;
+                  complex<real_t> *Aimax = A +ldA*imax;
+                  rowmax = abs(real(Ajmax[imax]))+abs(imag(Ajmax[imax]));
                   if (imax < n-1)
                   {
                      jmax = imax+1 + latl::imax(n-imax-1, Aimax+imax+1, 1);
@@ -335,10 +336,9 @@ namespace latl
                      real_t d = latl::lapy2(real(Ak[k+1]),imag(Ak[k+1]));
                      real_t d11 = real(Akp1[k+1])/d;
                      real_t d22 = real(Ak[k])/d;
-                     real_t tt = one/(d11*d22-one);
                      complex<real_t> d21 = Ak[k+1]/d;
                      complex<real_t> wk, wkp1;
-                     d = tt/d;
+                     d = (one/(d11*d22-one))/d;
                      
                      for (int_t j = k+2; j < n; ++j)
                      {
@@ -347,7 +347,7 @@ namespace latl
                         wkp1 = d*(d22*Akp1[j]-conj(d21)*Ak[j]);
                         for (int_t i = j; i < n; ++i)
                         {
-                           Aj[i] = Aj[i] - Ak[i]*conj(wk)- Akp1[i]*conj(wkp1);
+                           Aj[i] -= (Ak[i]*conj(wk)+ Akp1[i]*conj(wkp1));
                         }
                         Ak[j] = wk;
                         Akp1[j] = wkp1;

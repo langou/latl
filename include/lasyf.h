@@ -62,7 +62,7 @@ namespace latl
       using std::abs;
       using std::min;
       using std::max;
-      const real_t alpha = (1.0*sqrt(17.0))/8.0;
+      const real_t alpha = (1.0+sqrt(17.0))/8.0;
       const real_t one(1.0);
       const real_t zero(0.0);
       real_t * const Work = new real_t[n*nb];
@@ -80,9 +80,9 @@ namespace latl
          {
             kw = nb+k-n;
             Ak = A+ldA*k;
-            Akm1 = A+ldA*(k-1);
+            Akm1 = Ak-ldA;
             Wkw = Work+ldWork*kw;
-            Wkwm1 = Work+ldWork*(kw-1);
+            Wkwm1 = Wkw-ldWork;
             
             if (nb < n && k <= n-nb )
                break;
@@ -290,7 +290,7 @@ namespace latl
                   rowmax = abs(Wkp1[jmax]);
                   if (imax < n-1)
                   {
-                     jmax = imax+latl::imax(n-imax-1, Wkp1+imax+1, 1);
+                     jmax = imax+1+latl::imax(n-imax-1, Wkp1+imax+1, 1);
                      rowmax = max(rowmax, abs(Wkp1[jmax]));
                   }
                   
@@ -324,7 +324,7 @@ namespace latl
                if (kstep == 1)
                {
                   latl::copy(n-k, Wk+k, 1, Ak+k, 1);
-                  if (k < n)
+                  if (k < n-1)
                   {
                      r1 = one/Ak[k];
                      latl::scal(n-k-1, r1, Ak+k+1, 1);
@@ -385,14 +385,14 @@ namespace latl
          {
             jtemp = km1;
             jp = IPIV[km1];
-            if (BSDV[jp] == 1)
+            if (BSDV[km1] == 1)
             {
                --km1;
             }
             --km1;
             if (jp != jtemp && km1 >= 0)
             {
-               latl::swap(km1+1, A+jp, ldA, A+jtemp, ldA);
+               latl::swap(k, A+jp, ldA, A+jtemp, ldA);
             }
          }
          
@@ -444,7 +444,7 @@ namespace latl
       using std::abs;
       using std::max;
       using std::min;
-      const real_t alpha = (1.0*sqrt(17.0))/8.0;
+      const real_t alpha = (1.0+sqrt(17.0))/8.0;
       const real_t zero(0.0);
       const complex<real_t> onec(1.0);
       complex<real_t> * const Work = new complex<real_t>[n*nb];
@@ -464,9 +464,9 @@ namespace latl
             kw = nb+k-n;
             
             Ak = A+ldA*k;
-            Akm1 = A+ldA*(k-1);
+            Akm1 = Ak-ldA;
             Wkw = Work+ldWork*kw;
-            Wkwm1 = Work+ldWork*(kw-1);
+            Wkwm1 = Wkw-ldWork;
             
             
             if (nb < n && k <= n-nb )
@@ -674,7 +674,7 @@ namespace latl
                   rowmax = abs(real(Wkp1[jmax]))+abs(imag(Wkp1[jmax]));
                   if (imax < n-1)
                   {
-                     jmax = imax+latl::imax(n-imax-1, Wkp1+imax+1, 1);
+                     jmax = imax+1+latl::imax(n-imax-1, Wkp1+imax+1, 1);
                      rowmax = max(rowmax, abs(real(Wkp1[jmax]))+abs(imag(Wkp1[jmax])));
                   }
                   
@@ -708,7 +708,7 @@ namespace latl
                if (kstep == 1)
                {
                   latl::copy(n-k, Wk+k, 1, Ak+k, 1);
-                  if (k < n)
+                  if (k < n-1)
                   {
                      r1 = onec/Ak[k];
                      latl::scal(n-k-1, r1, Ak+k+1, 1);
@@ -769,7 +769,7 @@ namespace latl
          {
             jtemp = km1;
             jp = IPIV[km1];
-            if (BSDV[jp] == 1)
+            if (BSDV[km1] == 1)
             {
                --km1;
             }
