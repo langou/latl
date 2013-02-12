@@ -80,9 +80,9 @@ namespace latl
          {
             kw = nb+k-n;
             Ak = A+ldA*k;
-            Akm1 = A+ldA*(k-1);
+            Akm1 = Ak-ldA;
             Wkw = Work+ldWork*kw;
-            Wkwm1 = Work+ldWork*(kw-1);
+            Wkwm1 = Wkw-ldWork;
             
             if (nb < n && k <= n-nb )
                break;
@@ -464,9 +464,9 @@ namespace latl
             kw = nb+k-n;
             
             Ak = A+ldA*k;
-            Akm1 = A+ldA*(k-1);
+            Akm1 = Ak-ldA;
             Wkw = Work+ldWork*kw;
-            Wkwm1 = Work+ldWork*(kw-1);
+            Wkwm1 = Wkw-ldWork;
             
             
             if (nb < n && k <= n-nb )
