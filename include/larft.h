@@ -56,6 +56,9 @@ namespace latl
    ///                   (     1 v3 )
    ///                   (        1 )
    ///
+   /// @return 0 if success.
+   /// @return -i if the ith argument is invalid.
+   /// @tparam real_t Floating point type.
    /// @param direct Specifies the direction in which the elementary reflectors are multiplied to form the block reflector.
    ///
    ///               'F' : forward
