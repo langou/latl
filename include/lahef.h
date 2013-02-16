@@ -99,7 +99,7 @@ namespace latl
             if (k > 0)
             {
                imax = latl::imax(k, Wkw, 1);
-               colmax = std::abs(Wkw[imax]);
+               colmax = std::abs(real(Wkw[imax]))+std::abs(imag(Wkw[imax]));
             }
             else
             {
@@ -135,11 +135,11 @@ namespace latl
                   }
                   
                   jmax = imax+1 + latl::imax(k-imax, Wkwm1+imax+1, 1);
-                  rowmax = std::abs(Wkwm1[jmax]);
+                  rowmax = std::abs(real(Wkwm1[jmax]))+std::abs(imag(Wkwm1[jmax]));
                   if (imax > 0)
                   {
                      jmax = latl::imax(imax, Wkwm1, 1);
-                     rowmax = std::max(rowmax, std::abs(Wkwm1[jmax]));
+                     rowmax = std::max(rowmax, std::abs(real(Wkwm1[jmax]))+std::abs(imag(Wkwm1[jmax])));
                   }
                   
                   if (absakk >= alpha*colmax*(colmax/rowmax))
@@ -282,7 +282,7 @@ namespace latl
             if (k < n-1)
             {
                imax = k+1 + latl::imax(n-k-1, Wk+k+1, 1);
-               colmax = std::abs(Wk[imax]);
+               colmax = std::abs(real(Wk[imax]))+std::abs(imag(Wk[imax]));
             }
             else
             {
@@ -314,11 +314,11 @@ namespace latl
                   Wkp1[imax] = real(Wkp1[imax]);
                   
                   jmax = k + latl::imax(imax-k, Wkp1+k, 1);
-                  rowmax = std::abs(Wkp1[jmax]);
+                  rowmax = std::abs(real(Wkp1[jmax]))+std::abs(imag(Wkp1[jmax]));
                   if (imax < n-1)
                   {
                      jmax = imax+1+latl::imax(n-imax-1, Wkp1+imax+1, 1);
-                     rowmax = std::max(rowmax, std::abs(Wkp1[jmax]));
+                     rowmax = std::max(rowmax, std::abs(real(Wkp1[jmax]))+std::abs(imag(Wkp1[jmax])));
                   }
                   
                   if (absakk >= alpha*colmax*(colmax/rowmax))
@@ -347,7 +347,7 @@ namespace latl
                   latl::lacgv(kp-kk-1, Akk+ldA+kp, ldA);
                   if (kp < n-1)
                   {
-                     latl::copy(n-kp, Akk+kp+1, 1, A+ldA*kp+kp+1, 1);
+                     latl::copy(n-kp-1, Akk+kp+1, 1, A+ldA*kp+kp+1, 1);
                   }
                   latl::swap(kk, A+kk, ldA, A+kp, ldA);
                   latl::swap(kk+1, Work+kk, ldWork, Work+kp, ldWork);
@@ -405,12 +405,11 @@ namespace latl
          for (int_t j = k; j < n; j += nb)
          {
             jb = std::min(nb, n-j);
-            Ajj = A + ldA*j;
             for (int_t jj = j; jj < j+jb; ++jj)
             {
-               latl::gemv('N', j+jb-jj, k, -onec, A+jj, ldA, Work+jj, ldWork, onec, A+jj*ldA+jj, 1);
+               Ajj = A + ldA*jj;
+               latl::gemv('N', j+jb-jj, k, -onec, A+jj, ldA, Work+jj, ldWork, onec, Ajj+jj, 1);
                Ajj[jj] = real(Ajj[jj]);
-               Ajj += ldA;
             }
             
             if (j+jb < n)
