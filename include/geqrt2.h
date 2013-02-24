@@ -75,7 +75,7 @@ namespace latl
          {
             real_t temp=a[i];
             a[i]=one;
-            latl::gemv('T',m-i,n-i-1,one,b+i,ldA,a+i,ldA,1,zero,t,1);
+            latl::gemv('T',m-i,n-i-1,one,b+i,ldA,a+i,1,zero,t,1);
             latl::ger(m-i,n-i-1,-T[i],a+i,1,t,1,b+i,ldA);
             a[i]=temp;
          }
