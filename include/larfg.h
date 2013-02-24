@@ -54,8 +54,8 @@ namespace latl
    void larfg(int_t n, real_t &alpha, real_t *x, int_t incx, real_t &tau)
    {
       using std::abs;
-      using std::copysign;
-
+      using std::numeric_limits;
+      
       const real_t one(1.0);
       const real_t zero(0.0);
       const real_t safemin=numeric_limits<real_t>::min()/numeric_limits<real_t>::epsilon();
@@ -65,23 +65,26 @@ namespace latl
       if(n>0)
       {
          int_t knt=0;
-         real_t xnorm=nrm2<real_t,int_t>(n-1,x,incx);
+         real_t xnorm=nrm2<real_t>(n-1,x,incx);
          if(xnorm>zero)
          {
-            real_t beta=-copysign(lapy2(alpha,xnorm),alpha);
+            real_t temp=abs(lapy2(alpha,xnorm));
+            real_t beta=(alpha<zero)?temp:-temp;
             if(abs(beta)<safemin)
             {
                while(abs(beta)<safemin)
                {
                   knt++;
-                  scal<real_t,int_t>(n-1,rsafemin,x,incx);
+                  scal<real_t>(n-1,rsafemin,x,incx);
                   beta*=rsafemin;
                   alpha*=rsafemin;
                }
-               xnorm=nrm2<real_t,int_t>(n-1,x,incx);
-               beta=-copysign(lapy2(alpha,xnorm),alpha);            }
+               xnorm=nrm2<real_t>(n-1,x,incx);
+               temp=abs(lapy2(alpha,xnorm));
+               beta=(alpha<zero)?temp:-temp;
+            }
             tau=(beta-alpha)/beta;
-            scal<real_t,int_t>(n-1,one/(alpha-beta),x,incx);
+            scal<real_t>(n-1,one/(alpha-beta),x,incx);
             for(int_t j=0;j<knt;j++)
                beta*=safemin;
             alpha=beta;
@@ -124,8 +127,8 @@ namespace latl
       using std::real;
       using std::imag;
       using std::abs;
-      using std::copysign;
-      
+      using std::numeric_limits;
+
       const real_t one(1.0);
       const real_t zero(0.0);
       const complex<real_t> czero(0.0,0.0);
@@ -139,21 +142,23 @@ namespace latl
          real_t xnorm=nrm2<real_t>(n-1,x,incx);
          if((xnorm!=zero)||(imag(alpha)!=zero))
          {
-            real_t beta=-copysign(lapy3(real(alpha),imag(alpha),xnorm),real(alpha));
+            real_t temp=abs(lapy3(real(alpha),imag(alpha),xnorm));
+            real_t beta=(real(alpha)<zero)?temp:-temp;
             if(abs(beta)<safemin)
             {
                while(abs(beta)<safemin)
                {
                   knt++;
-                  scal<real_t,int_t>(n-1,rsafemin,x,incx);
+                  scal<real_t>(n-1,rsafemin,x,incx);
                   beta*=rsafemin;
                   alpha*=rsafemin;
                }
                xnorm=nrm2<real_t>(n-1,x,incx);
-               beta=-copysign(lapy3(real(alpha),imag(alpha),xnorm),real(alpha));
+               temp=abs(lapy3(real(alpha),imag(alpha),xnorm));
+               beta=(real(alpha)<zero)?temp:-temp;
             }
             tau=complex<real_t>((beta-real(alpha))/beta,-imag(alpha)/beta);
-            alpha=ladiv(complex<real_t>(one,zero),alpha-beta);
+            alpha=ladiv<real_t>(complex<real_t>(one,zero),alpha-beta);
             scal<real_t>(n-1,alpha,x,incx);
             for(int_t j=0;j<knt;j++)
                beta*=safemin;
