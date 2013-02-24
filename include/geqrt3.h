@@ -78,18 +78,14 @@ namespace latl
 
          real_t *A1=A+n1*ldA;
          real_t *T1=T+n1*ldT;
-         real_t *A2;
-         real_t *T2;
+         real_t *A2=A1;
+         real_t *T2=T1;
          
-         T2=T1;
          for(int_t j=0;j<n2;j++)
          {
-            A2=A;
             for(int_t i=0;i<n1;i++)
-            {
-               T2[i]=A2[j+n1];
-               A2+=ldA;
-            }
+               T2[i]=A2[i];
+            A2+=ldA;
             T2+=ldT;
          }
 
@@ -123,7 +119,7 @@ namespace latl
             A2+=ldA;
          }
          
-         trmm('R','L','N','U',n1,n2,one,A2+n1,ldA,T1,ldT);
+         trmm('R','L','N','U',n1,n2,one,A1+n1,ldA,T1,ldT);
          gemm('T','N',n1,n2,m-n,one,A+n,ldA,A1+n,ldA,one,T1,ldT);
          trmm('L','U','N','N',n1,n2,-one,T,ldT,T1,ldT);
          trmm('R','U','N','N',n1,n2,one,T1+n1,ldT,T1,ldT);
@@ -194,15 +190,13 @@ namespace latl
          complex<real_t> *A2;
          complex<real_t> *T2;
          
-         T2=T1;
+         A2=A+n1*ldA;
+         T2=T+n1*ldT;
          for(int_t j=0;j<n2;j++)
          {
-            A2=A;
             for(int_t i=0;i<n1;i++)
-            {
-               T2[i]=A2[j+n1];
-               A2+=ldA;
-            }
+               T2[i]=A2[i];
+            A2+=ldA;
             T2+=ldT;
          }
          
@@ -236,7 +230,7 @@ namespace latl
             A2+=ldA;
          }
          
-         trmm('R','L','N','U',n1,n2,one,A2+n1,ldA,T1,ldT);
+         trmm('R','L','N','U',n1,n2,one,A1+n1,ldA,T1,ldT);
          gemm('C','N',n1,n2,m-n,one,A+n,ldA,A1+n,ldA,one,T1,ldT);
          trmm('L','U','N','N',n1,n2,-one,T,ldT,T1,ldT);
          trmm('R','U','N','N',n1,n2,one,T1+n1,ldT,T1,ldT);
