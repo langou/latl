@@ -58,7 +58,7 @@ namespace latl
    /// @ingroup SCAL
 
    template<typename real_t>
-   complex<real_t> ladiv(complex<real_t> &x, complex<real_t> &y)
+   complex<real_t> ladiv(complex<real_t> x, complex<real_t> y)
    {
       using std::abs;
       using std::real;
