@@ -92,7 +92,7 @@ namespace latl
          a[i]=one;
          latl::gemv('T',m-i,i,-T[i],A+i,ldA,a+i,1,zero,t,1);
          a[i]=temp;
-         latl::trmv('U','N','N',i-1,T,ldT,t,1);
+         latl::trmv('U','N','N',i,T,ldT,t,1);
          t[i]=T[i];
          T[i]=zero;
       }
@@ -171,7 +171,7 @@ namespace latl
          a[i]=one;
          latl::gemv('C',m-i,i,-T[i],A+i,ldA,a+i,1,zero,t,1);
          a[i]=temp;
-         latl::trmv('U','N','N',i-1,T,ldT,t,1);
+         latl::trmv('U','N','N',i,T,ldT,t,1);
          t[i]=T[i];
          T[i]=zero;
       }
