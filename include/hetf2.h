@@ -62,6 +62,7 @@ namespace latl
       using std::max;
       using std::real;
       using std::imag;
+      using std::isnan;
       const real_t alpha = (1.0 + std::sqrt(17.0))/8.0;
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -93,7 +94,7 @@ namespace latl
                colmax = zero;
             }
             
-            if (max(absakk, colmax) == 0 || std::isnan(absakk))
+            if (max(absakk, colmax) == 0 || isnan(absakk))
             {
                if (info == 0)
                {
@@ -244,7 +245,7 @@ namespace latl
                colmax = zero;
             }
             
-            if (max(absakk, colmax) == 0 || std::isnan(absakk))
+            if (max(absakk, colmax) == 0 || isnan(absakk))
             {
                if (info == 0)
                   info = k+1;

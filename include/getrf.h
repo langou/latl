@@ -48,7 +48,8 @@ namespace latl
    int_t getrf(const int_t m, const int_t n, real_t * const A, const int_t ldA,  int_t *const pivot)
    {
       using std::numeric_limits;
-
+      using std::abs;
+      
       if (m < 0)
          return -1;
       if (n < 0)
@@ -79,7 +80,7 @@ namespace latl
             }
             if (j < m)
             {
-               if (std::abs(Ajj[0]) >= sfmin)
+               if (abs(Ajj[0]) >= sfmin)
                {
                   latl::scal(m-j-1, one/Ajj[0], Ajjp1, 1);
                }
@@ -133,7 +134,8 @@ namespace latl
    int_t getrf(const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA,  int_t * const pivot)
    {
       using std::numeric_limits;
-
+      using std::abs;
+      
       if (m < 0)
          return -1;
       if (n < 0)
@@ -164,7 +166,7 @@ namespace latl
             }
             if (j < m)
             {
-               if (std::abs(Ajj[0]) >= sfmin)
+               if (abs(Ajj[0]) >= sfmin)
                {
                   latl::scal(m-j-1, one/Ajj[0], Ajjp1, 1);
                }
@@ -218,6 +220,7 @@ namespace latl
    template< typename real_t >
    int_t getrf( const int_t m, const int_t n, real_t * const A, const int_t ldA, int_t * const pivot, int_t nb)
    {
+      using std::abs;
       if (m < 0)
          return -1;
       if (n < 0)

@@ -46,6 +46,7 @@ namespace latl
    template< typename real_t>
    int_t lahef(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV)
    {
+      using std::abs;
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
       if (n < 0)
@@ -94,12 +95,12 @@ namespace latl
             
             kstep = 1;
             
-            absakk = std::abs(real(Wkw[k]));
+            absakk = abs(real(Wkw[k]));
             
             if (k > 0)
             {
                imax = latl::imax(k, Wkw, 1);
-               colmax = std::abs(real(Wkw[imax]))+std::abs(imag(Wkw[imax]));
+               colmax = abs(real(Wkw[imax]))+abs(imag(Wkw[imax]));
             }
             else
             {
@@ -135,16 +136,16 @@ namespace latl
                   }
                   
                   jmax = imax+1 + latl::imax(k-imax, Wkwm1+imax+1, 1);
-                  rowmax = std::abs(real(Wkwm1[jmax]))+std::abs(imag(Wkwm1[jmax]));
+                  rowmax = abs(real(Wkwm1[jmax]))+abs(imag(Wkwm1[jmax]));
                   if (imax > 0)
                   {
                      jmax = latl::imax(imax, Wkwm1, 1);
-                     rowmax = std::max(rowmax, std::abs(real(Wkwm1[jmax]))+std::abs(imag(Wkwm1[jmax])));
+                     rowmax = std::max(rowmax, abs(real(Wkwm1[jmax]))+abs(imag(Wkwm1[jmax])));
                   }
                   
                   if (absakk >= alpha*colmax*(colmax/rowmax))
                      kp = k;
-                  else if (std::abs(real(Wkwm1[imax])) >= alpha*rowmax)
+                  else if (abs(real(Wkwm1[imax])) >= alpha*rowmax)
                   {
                      kp = imax;
                      latl::copy(k+1, Wkwm1, 1, Wkw, 1);
@@ -277,12 +278,12 @@ namespace latl
             
             kstep = 1;
             
-            absakk = std::abs(real(Wk[k]));
+            absakk = abs(real(Wk[k]));
             
             if (k < n-1)
             {
                imax = k+1 + latl::imax(n-k-1, Wk+k+1, 1);
-               colmax = std::abs(real(Wk[imax]))+std::abs(imag(Wk[imax]));
+               colmax = abs(real(Wk[imax]))+abs(imag(Wk[imax]));
             }
             else
             {
@@ -314,18 +315,18 @@ namespace latl
                   Wkp1[imax] = real(Wkp1[imax]);
                   
                   jmax = k + latl::imax(imax-k, Wkp1+k, 1);
-                  rowmax = std::abs(real(Wkp1[jmax]))+std::abs(imag(Wkp1[jmax]));
+                  rowmax = abs(real(Wkp1[jmax]))+abs(imag(Wkp1[jmax]));
                   if (imax < n-1)
                   {
                      jmax = imax+1+latl::imax(n-imax-1, Wkp1+imax+1, 1);
-                     rowmax = std::max(rowmax, std::abs(real(Wkp1[jmax]))+std::abs(imag(Wkp1[jmax])));
+                     rowmax = std::max(rowmax, abs(real(Wkp1[jmax]))+abs(imag(Wkp1[jmax])));
                   }
                   
                   if (absakk >= alpha*colmax*(colmax/rowmax))
                   {
                      kp = k;
                   }
-                  else if ( std::abs(real(Wkp1[imax])) >= alpha*rowmax)
+                  else if ( abs(real(Wkp1[imax])) >= alpha*rowmax)
                   {
                      kp = imax;
                      latl::copy(n-k, Wkp1+k, 1, Wk+k, 1);

@@ -48,7 +48,7 @@ namespace latl
       using std::toupper;
       uplo=toupper(uplo);
       diag=toupper(diag);
-      const real_t one=1.0;
+      const real_t one(1.0);
 
       if((uplo!='U')&&(uplo!='L'))
          return -1;
@@ -130,7 +130,7 @@ namespace latl
       using std::real;
       uplo=toupper(uplo);
       diag=toupper(diag);
-      const complex<real_t> one=1.0;
+      const complex<real_t> one(1.0);
 
       if((uplo!='U')&&(uplo!='L'))
          return -1;
@@ -211,8 +211,8 @@ namespace latl
       using std::toupper;
       uplo=toupper(uplo);
       diag=toupper(diag);
-      const real_t one=1.0;
-      const real_t zero=0.0;
+      const real_t one(1.0);
+      const real_t zero(0.0);
       
       if((uplo!='U')&&(uplo!='L'))
          return -1;
@@ -292,8 +292,8 @@ namespace latl
       using std::toupper;
       uplo=toupper(uplo);
       diag=toupper(diag);
-      const complex<real_t> one=1.0;
-      const complex<real_t> zero=0.0;
+      const complex<real_t> one(1.0);
+      const complex<real_t> zero(0.0);
       
       if((uplo!='U')&&(uplo!='L'))
          return -1;

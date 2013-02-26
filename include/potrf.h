@@ -43,6 +43,8 @@ namespace latl
    template< typename real_t>
    int_t potrf(const char uplo, const int_t n, real_t * A, const int_t ldA)
    {
+      using std::isnan;
+      using std::sqrt;
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
       if (n < 0)
@@ -63,12 +65,12 @@ namespace latl
          for (int_t j = 0; j < n; ++j)
          {
             ajj = Aj[j] - latl::dot(j, Aj, 1, Aj, 1);
-            if (ajj <= zero or std::isnan(ajj))
+            if (ajj <= zero or isnan(ajj))
             {
                Aj[j] = ajj;
                return j+1;
             }
-            Aj[j] = ajj = std::sqrt(ajj);
+            Aj[j] = ajj = sqrt(ajj);
 
             if (j < n-1)
             {
@@ -83,12 +85,12 @@ namespace latl
          for (int_t j = 0; j < n; ++j)
          {
             ajj = Aj[j] - latl::dot(j, A+j, ldA, A+j, ldA);
-            if (ajj <= zero || std::isnan(ajj))
+            if (ajj <= zero || isnan(ajj))
             {
                Aj[j] = ajj;
                return j+1;
             }
-            Aj[j] = ajj = std::sqrt(ajj);
+            Aj[j] = ajj = sqrt(ajj);
 
             if (j < n-1)
             {
@@ -121,6 +123,7 @@ namespace latl
    template< typename real_t>
    int_t potrf(const char uplo, const int_t n, complex<real_t> * A, const int_t ldA)
    {
+      using std::sqrt;
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
       if (n < 0)
@@ -142,12 +145,12 @@ namespace latl
          for (int_t j = 0; j < n; ++j)
          {
             ajj = real(Aj[j] - latl::dotc(j, Aj, 1, Aj, 1));
-            if (ajj <= zero or std::isnan(ajj))
+            if (ajj <= zero or isnan(ajj))
             {
                Aj[j] = ajj;
                return j+1;
             }
-            Aj[j] = ajj = std::sqrt(ajj);
+            Aj[j] = ajj = sqrt(ajj);
 
             if (j < n-1)
             {
@@ -164,12 +167,12 @@ namespace latl
          for (int_t j = 0; j < n; ++j)
          {
             ajj = real(Aj[j] - latl::dotc(j, A+j, ldA, A+j, ldA));
-            if (ajj <= zero || std::isnan(ajj))
+            if (ajj <= zero || isnan(ajj))
             {
                Aj[j] = ajj;
                return j+1;
             }
-            Aj[j] = ajj = std::sqrt(ajj);
+            Aj[j] = ajj = sqrt(ajj);
 
             if (j < n-1)
             {
@@ -206,6 +209,7 @@ namespace latl
    template< typename real_t>
    int_t potrf(const char uplo, const int_t n, real_t * const A, const int_t ldA, const int_t nb)
    {
+      using std::sqrt;
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
       if (n < 0)
@@ -282,6 +286,7 @@ namespace latl
    template< typename real_t>
    int_t potrf(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, const int_t nb)
    {
+      using std::sqrt;
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
       if (n < 0)

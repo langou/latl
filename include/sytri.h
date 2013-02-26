@@ -52,8 +52,8 @@ namespace latl
       using std::abs;
       using std::toupper;
       uplo=toupper(uplo);
-      const real_t zero = 0.0;
-      const real_t one = 1.0;
+      const real_t zero(0.0);
+      const real_t one(1.0);
 
       if((uplo!='U')&&(uplo!='L'))
          return -1;
@@ -236,8 +236,8 @@ namespace latl
    {
       using std::toupper;
       uplo=toupper(uplo);
-      const complex<real_t> zero = 0.0;
-      const complex<real_t> one = 1.0;
+      const complex<real_t> zero(0.0);
+      const complex<real_t> one(1.0);
 
       if((uplo!='U')&&(uplo!='L'))
          return -1;

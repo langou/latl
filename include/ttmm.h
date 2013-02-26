@@ -45,7 +45,7 @@ namespace latl
    template <typename real_t>
    int ttmm(char uplo, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB, real_t beta, real_t *C, int_t ldC)
    {
-      const real_t zero=0.0;
+      const real_t zero(0.0);
       using std::toupper;
       uplo=toupper(uplo);
       if((uplo!='U')&&(uplo!='L'))

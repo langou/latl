@@ -41,8 +41,8 @@ namespace latl
    template <typename real_t>
       int_t getri(int_t n, real_t *A, int_t ldA, int_t *ipiv, int_t nb=32)
       {
-         const real_t zero=0.0;
-         const real_t one=1.0;
+         const real_t zero(0.0);
+         const real_t one(1.0);
 
          if(n<0)
             return -1;

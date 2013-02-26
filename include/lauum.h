@@ -47,7 +47,7 @@ namespace latl
    int lauum(char uplo, int_t n, real_t *A, int_t ldA)
    {
       using std::toupper;
-      const real_t one=1.0;
+      const real_t one(1.0);
       uplo=toupper(uplo);
 
       if((uplo!='U')&&(uplo!='L'))
@@ -112,7 +112,7 @@ namespace latl
    {
       using std::toupper;
       using std::real;
-      const complex<real_t> one=1.0;
+      const complex<real_t> one(1.0);
       uplo=toupper(uplo);
 
       if((uplo!='U')&&(uplo!='L'))
@@ -183,7 +183,7 @@ namespace latl
    int lauum(char uplo, int_t n, real_t *A, int_t ldA, int_t nb)
    {
       using std::toupper;
-      const real_t one=1.0;
+      const real_t one(1.0);
       uplo=toupper(uplo);
       
       if((uplo!='U')&&(uplo!='L'))
@@ -263,7 +263,7 @@ namespace latl
    {
       using std::toupper;
       using std::real;
-      const complex<real_t> one=1.0;
+      const complex<real_t> one(1.0);
       uplo=toupper(uplo);
       
       if((uplo!='U')&&(uplo!='L'))
