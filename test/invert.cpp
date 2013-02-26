@@ -41,6 +41,11 @@ using namespace std;
 #define REAL double
 #endif
 
+#if REAL==mpreal
+#include "mpreal.h"
+using mpfr::mpreal;
+#endif
+
 typedef long double ldouble;
 
 // general matrix inverse test
@@ -322,17 +327,20 @@ void usage(char *name,int nb)
 {
    cerr << "Usage: " << name << " [-general | -triangular | -symmetric | -hermitian | -positive]";
    cerr << " [-complex] [-lower] [-unit] [-print] [-residual] [-b <nb>]" << endl;
-   cerr << "           -general      invert general matrix (default)" << endl;
-   cerr << "           -triangular   invert upper or lower triangular matrix" << endl;
-   cerr << "           -symmetric    invert symmetric matrix" << endl;
-   cerr << "           -hermitian    invert hermitian matrix" << endl;
-   cerr << "           -positive     invert positive definite matrix" << endl;
-   cerr << "           -complex      use complex (default is to use real)" << endl;
-   cerr << "           -lower        use lower triangular matrix (default is upper triangular)" << endl;
-   cerr << "           -unit         assume unit triangular matrix" << endl;
-   cerr << "           -print        write inverse matrix to standard output" << endl;
-   cerr << "           -residual     report the residual error instead of the relative error" << endl;
-   cerr << "           -b <nb>       use block size of nb, otherwise blocksize is set to " << nb << endl;
+   cerr << "           -general       invert general matrix (default)" << endl;
+   cerr << "           -triangular    invert upper or lower triangular matrix" << endl;
+   cerr << "           -symmetric     invert symmetric matrix" << endl;
+   cerr << "           -hermitian     invert hermitian matrix" << endl;
+   cerr << "           -positive      invert positive definite matrix" << endl;
+   cerr << "           -complex       use complex (default is to use real)" << endl;
+   cerr << "           -lower         use lower triangular matrix (default is upper triangular)" << endl;
+   cerr << "           -unit          assume unit triangular matrix" << endl;
+   cerr << "           -print         write inverse matrix to standard output" << endl;
+   cerr << "           -residual      report the residual error instead of the relative error" << endl;
+   cerr << "           -b <nb>        use block size of nb, otherwise blocksize is set to " << nb << endl;
+#if REAL==mpreal
+   cerr << "           -precision <n> set precision to <n> bits" << endl;
+#endif
 }
 
 int main(int argc,char **argv)
@@ -367,7 +375,7 @@ int main(int argc,char **argv)
          comp=1;
       else if(strncmp(argv[arg],"-unit",2)==0)
          diag='u';
-      else if(strncmp(argv[arg],"-print",3)==0)
+      else if(strncmp(argv[arg],"-print",4)==0)
          prnt=1;
       else if(strncmp(argv[arg],"-residual",2)==0)
          resi=1;
@@ -379,6 +387,17 @@ int main(int argc,char **argv)
          else
             nb=0;
       }
+#if REAL==mpreal
+      else if(strncmp(argv[arg],"-precision",4)==0)
+      {
+         arg++;
+         if(arg<argc)
+         {
+            long prec=atoi(argv[arg]);
+            mpreal::set_default_prec(prec);
+         }
+      }
+#endif
       else
       {
          usage(argv[0],nb);

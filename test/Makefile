@@ -13,8 +13,11 @@ double: clean
 ldouble: clean
 	@$(MAKE) all DEFS="-DREAL=ldouble"
 
+mpreal: clean
+	@$(MAKE) all DEFS="-DREAL=mpreal" LIBS="-lgmp -lmpfr"
+
 invert: invert.o
-	$(CC) -o $@ invert.o
+	$(CC) -o $@ invert.o $(LIBS)
 
 .cpp.o:
 	$(CC) -c $(CFLAGS) $(DEFS) $<
