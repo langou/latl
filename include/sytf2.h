@@ -287,7 +287,7 @@ namespace latl
                {
                   if (k < n-2)
                   {
-                     real_t d21, d11, d22, temp, wk, wkp1;
+                     real_t d21, d11, d22, wk, wkp1;
                      real_t * Akp1 = A+ldA*(k+1);
                      d21 = Ak[k+1];
                      d11 = Akp1[k+1]/d21;

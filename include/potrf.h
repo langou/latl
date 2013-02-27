@@ -20,6 +20,7 @@
 #include "trsm.h"
 #include "herk.h"
 #include "latl.h"
+#include <cmath>
 
 namespace latl
 {
@@ -124,6 +125,7 @@ namespace latl
    int_t potrf(const char uplo, const int_t n, complex<real_t> * A, const int_t ldA)
    {
       using std::sqrt;
+      using std::isnan;
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
       if (n < 0)
@@ -210,6 +212,7 @@ namespace latl
    int_t potrf(const char uplo, const int_t n, real_t * const A, const int_t ldA, const int_t nb)
    {
       using std::sqrt;
+      using std::isnan;
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
       if (n < 0)
