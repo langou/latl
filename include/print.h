@@ -43,7 +43,7 @@ namespace latl
       using std::setw;
       using std::numeric_limits;
 
-      int prec=numeric_limits<real_t>::digits10;
+      int prec=16; // numeric_limits<real_t>::digits10;
       cout << setprecision(prec);
 
       for(int i=0;i<m;i++)
@@ -81,7 +81,7 @@ namespace latl
       using std::setw;
       using std::numeric_limits;
 
-      int prec=numeric_limits<real_t>::digits10;
+      int prec=16; // numeric_limits<real_t>::digits10;
       cout << setprecision(prec);
 
       for(int i=0;i<m;i++)
@@ -131,7 +131,7 @@ namespace latl
       using std::setw;
       using std::numeric_limits;
 
-      int prec=numeric_limits<real_t>::digits10;
+      int prec=16; // numeric_limits<real_t>::digits10;
       cout << setprecision(prec);
 
       if(uplo=='U')
@@ -206,7 +206,7 @@ namespace latl
       using std::setw;
       using std::numeric_limits;
 
-      int prec=numeric_limits<real_t>::digits10;
+      int prec=16; // numeric_limits<real_t>::digits10;
       cout << setprecision(prec);
 
       if(uplo=='U')

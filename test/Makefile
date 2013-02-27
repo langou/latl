@@ -14,7 +14,7 @@ ldouble: clean
 	@$(MAKE) all DEFS="-DREAL=ldouble"
 
 mpreal: clean
-	@$(MAKE) all DEFS="-DREAL=mpreal" LIBS="-lgmp -lmpfr"
+	@$(MAKE) all DEFS="-DREAL=mpreal -DMPREAL" LIBS="-lgmp -lmpfr"
 
 invert: invert.o
 	$(CC) -o $@ invert.o $(LIBS)

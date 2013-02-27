@@ -39,7 +39,9 @@ using namespace std;
 
 #ifndef REAL
 #define REAL double
-#elif REAL==mpreal
+#endif
+
+#ifdef MPREAL
 #include "mpreal.h"
 using mpfr::mpreal;
 #endif
@@ -336,7 +338,7 @@ void usage(char *name,int nb)
    cerr << "           -print         write inverse matrix to standard output" << endl;
    cerr << "           -residual      report the residual error instead of the relative error" << endl;
    cerr << "           -b <nb>        use block size of nb, otherwise blocksize is set to " << nb << endl;
-#ifdef __MPREAL_H__
+#ifdef MPREAL
    cerr << "           -precision <n> set precision to <n> bits" << endl;
 #endif
 }
@@ -385,7 +387,7 @@ int main(int argc,char **argv)
          else
             nb=0;
       }
-#ifdef __MPREAL_H__
+#ifdef MPREAL
       else if(strncmp(argv[arg],"-precision",4)==0)
       {
          arg++;
