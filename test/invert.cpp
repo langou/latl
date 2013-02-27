@@ -37,16 +37,19 @@
 using namespace latl;
 using namespace std;
 
-#ifndef REAL
-#define REAL double
-#endif
-
-#ifdef MPREAL
+#if defined(FLOAT)
+typedef float REAL;
+#elif defined(DOUBLE)
+typedef double REAL;
+#elif defined(LDOUBLE)
+typedef long double REAL;
+#elif defined(MPREAL)
 #include "mpreal.h"
 using mpfr::mpreal;
+typedef mpreal REAL;
+#else
+typedef double REAL;
 #endif
-
-typedef long double ldouble;
 
 // general matrix inverse test
 
