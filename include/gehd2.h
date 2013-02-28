@@ -1,4 +1,3 @@
-
 //
 //  gehd2.h
 //  Linear Algebra Template Library
@@ -17,9 +16,6 @@
 #include "latl.h"
 #include "larfg.h"
 #include "larf.h"
-
-#include "gemv.h"
-#include "ger.h"
 
 namespace latl
 {
@@ -100,8 +96,18 @@ namespace latl
          alpha = A[i+(i-1)*ldA];
          larfg<real_t>( ihi-i, alpha, A+min(i+2,n)-1+(i-1)*ldA, 1, tau[i-1]);
          A[i+(i-1)*ldA] = 1.0;
-         larf<real_t>( 'R', ihi, ihi-i, A+i+(i-1)*ldA, 1, tau[i-1], A+i*ldA, ldA);
-         larf<real_t>( 'L', ihi-i, n-i, A+i+(i-1)*ldA, 1, tau[i-1], A+i+i*ldA, ldA);
+
+//          larf<real_t>( 'R', ihi, ihi-i, A+i+(i-1)*ldA, 1, tau[i-1], A+i*ldA, ldA);
+         real_t *w1=new real_t[ihi];
+         gemv<real_t>('N',ihi,ihi-i,1.0,A+i*ldA,ldA,A+i+(i-1)*ldA,1,0.0,w1,1);
+         ger<real_t>(ihi,ihi-i,-tau[i-1],w1,1,A+i+(i-1)*ldA,1,A+i*ldA,ldA);
+         delete [] w1;
+
+//          larf<real_t>( 'L', ihi-i, n-i, A+i+(i-1)*ldA, 1, tau[i-1], A+i+i*ldA, ldA);
+         real_t *w2=new real_t[n-i];
+         gemv<real_t>('T',ihi-i,n-i,1.0,A+i+i*ldA,ldA,A+i+(i-1)*ldA,1,0.0,w2,1);
+         ger<real_t>(ihi-i,n-i,-tau[i-1],A+i+(i-1)*ldA,1,w2,1,A+i+i*ldA,ldA);
+         delete [] w2;
          A[i+(i-1)*ldA] = alpha;
       }
       return 0;
