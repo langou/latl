@@ -68,14 +68,14 @@ namespace latl
       
       if(side=='L')
       {
-         real_t *w=new real_t[m];
+         real_t *w=new real_t[n];
          gemv<real_t>('T',m,n,one,C,ldC,v,incv,zero,w,1);
-         ger(m,n,-tau,v,incv,w,1,C,ldC);
+         ger<real_t>(m,n,-tau,v,incv,w,1,C,ldC);
          delete [] w;
       }
       else
       {
-         real_t *w=new real_t[n];
+         real_t *w=new real_t[m];
          gemv<real_t>('N',m,n,one,C,ldC,v,incv,zero,w,1);
          ger<real_t>(m,n,-tau,w,1,v,incv,C,ldC);
          delete [] w;
@@ -132,14 +132,14 @@ namespace latl
       
       if(side=='L')
       {
-         complex<real_t> *w=new complex<real_t>[m];
+         complex<real_t> *w=new complex<real_t>[n];
          gemv<real_t>('C',m,n,one,C,ldC,v,incv,zero,w,1);
          gerc<real_t>(m,n,-tau,v,incv,w,1,C,ldC);
          delete [] w;
       }
       else
       {
-         complex<real_t> *w=new complex<real_t>[n];
+         complex<real_t> *w=new complex<real_t>[m];
          gemv<real_t>('N',m,n,one,C,ldC,v,incv,zero,w,1);
          gerc<real_t>(m,n,-tau,w,1,v,incv,C,ldC);
          delete [] w;
