@@ -136,9 +136,9 @@ namespace latl
    ///
    /// Each H(i) has the form
    ///
-   ///    H(i) = I - tau * v * v**T
+   ///    H(i) = I - tau * v * v**H
    ///
-   /// where tau is a real scalar, and v is a real vector with
+   /// where tau is a complex scalar, and v is a complex vector with
    /// v(1:i) = 0, v(i+1) = 1 and v(ihi+1:n) = 0; v(i+2:ihi) is stored on
    /// exit in A(i+2:ihi,i), and tau in TAU(i).
    ///
@@ -162,7 +162,33 @@ namespace latl
    template <typename real_t>
    int_t gehd2(int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau )
    {
-      return latl::gehd2< complex<real_t> >( n, ilo, ihi, A, ldA, tau);
+
+      int_t i;
+      complex<real_t> alpha;
+
+      using std::min; 
+      using latl::larfg;
+      using latl::larf;
+
+      if (n<0)
+         return -1;
+      else if((ilo<1) || (ilo>n))
+         return -2;
+      else if((ihi<ilo) || (ihi>n))
+         return -3;
+      else if(ldA<n)
+         return -5;
+
+      for(i=ilo;i<ihi;i++)
+      {
+         alpha = A[i+(i-1)*ldA];
+         larfg< real_t >( ihi-i, alpha, A+min(i+2,n)-1+(i-1)*ldA, 1, tau[i-1]);
+         A[i+(i-1)*ldA] = 1.0;
+         larf< real_t >( 'R', ihi, ihi-i, A+i+(i-1)*ldA, 1, tau[i-1], A+i*ldA, ldA);
+         larf< real_t >( 'L', ihi-i, n-i, A+i+(i-1)*ldA, 1, std::conj(tau[i-1]), A+i+i*ldA, ldA);
+         A[i+(i-1)*ldA] = alpha;
+      }
+      return 0;
    }
 }
 #endif
