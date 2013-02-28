@@ -37,16 +37,19 @@
 using namespace latl;
 using namespace std;
 
-#ifndef REAL
-#define REAL double
+#if defined(FLOAT)
+typedef float Real;
+#elif defined(DOUBLE)
+typedef double Real;
+#elif defined(LDOUBLE)
+typedef long double Real;
+#elif defined(REAL)
+#include "real.hpp"
+typedef mpfr::real<REAL> Real;
+#else
+typedef double Real;
 #endif
-
-#ifdef MPREAL
-#include "mpreal.h"
-using mpfr::mpreal;
-#endif
-
-typedef long double ldouble;
+typedef complex<Real> Complex;
 
 // general matrix inverse test
 
@@ -338,15 +341,10 @@ void usage(char *name,int nb)
    cerr << "           -print         write inverse matrix to standard output" << endl;
    cerr << "           -residual      report the residual error instead of the relative error" << endl;
    cerr << "           -b <nb>        use block size of nb, otherwise blocksize is set to " << nb << endl;
-#ifdef MPREAL
-   cerr << "           -precision <n> set precision to <n> bits" << endl;
-#endif
 }
 
 int main(int argc,char **argv)
 {
-   typedef REAL Real;
-   typedef complex<REAL> Complex;
 
    int arg=1;
    char uplo='u';
@@ -387,17 +385,6 @@ int main(int argc,char **argv)
          else
             nb=0;
       }
-#ifdef MPREAL
-      else if(strncmp(argv[arg],"-precision",4)==0)
-      {
-         arg++;
-         if(arg<argc)
-         {
-            long prec=atoi(argv[arg]);
-            mpreal::set_default_prec(prec);
-         }
-      }
-#endif
       else
       {
          usage(argv[0],nb);
