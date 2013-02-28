@@ -10,6 +10,9 @@
 #include <cstdlib>
 #include <limits>
 #include <algorithm>
+#include <iomanip>
+#include <limits>
+#include <cmath>
 
 #if defined(FLOAT)
 typedef float real_t;
@@ -17,10 +20,9 @@ typedef float real_t;
 typedef double real_t;
 #elif defined(LDOUBLE)
 typedef long double real_t;
-#elif defined(MPREAL)
-#include "mpreal.h"
-using mpfr::mpreal;
-typedef mpreal real_t;
+#elif defined(REAL)
+#include "real.hpp"
+typedef mpfr::real<REAL> real_t;
 #else
 typedef double real_t;
 #endif
@@ -30,13 +32,7 @@ int main(int argc, char** argv)
    using std::cout;
    using std::endl;
    using std::numeric_limits;
-   using std::max;
-#ifdef MPREAL
-   int bits=53;
-   if(argc>1)
-      bits=max(2,atoi(argv[1]));
-   mpreal::set_default_prec(bits);
-#endif
+
    cout << endl;
    cout << "-------------------------------------" << endl;
    cout << "machine epsilon  = " << numeric_limits<real_t>::epsilon() << endl;
@@ -44,5 +40,6 @@ int main(int argc, char** argv)
    cout << "maximum value    = " << numeric_limits<real_t>::max() << endl;
    cout << "-------------------------------------" << endl;
    cout << endl;
+   
    return(0);
 }

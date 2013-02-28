@@ -15,6 +15,7 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <cmath>
 #include <latl.h>
 
 namespace latl
@@ -42,8 +43,9 @@ namespace latl
       using std::setprecision;
       using std::setw;
       using std::numeric_limits;
+      using std::floor;
 
-      int prec=16; // numeric_limits<real_t>::digits10;
+      const int prec=floor(static_cast<double>(numeric_limits<real_t>::digits)/3.32193);
       cout << setprecision(prec);
 
       for(int i=0;i<m;i++)
@@ -80,8 +82,9 @@ namespace latl
       using std::setprecision;
       using std::setw;
       using std::numeric_limits;
+      using std::floor;
 
-      int prec=16; // numeric_limits<real_t>::digits10;
+      const int prec=floor(static_cast<double>(numeric_limits<real_t>::digits)/3.32193);
       cout << setprecision(prec);
 
       for(int i=0;i<m;i++)
@@ -130,8 +133,9 @@ namespace latl
       using std::setprecision;
       using std::setw;
       using std::numeric_limits;
+      using std::floor;
 
-      int prec=16; // numeric_limits<real_t>::digits10;
+      const int prec=floor(static_cast<double>(numeric_limits<real_t>::digits)/3.32193);
       cout << setprecision(prec);
 
       if(uplo=='U')
@@ -205,8 +209,9 @@ namespace latl
       using std::setprecision;
       using std::setw;
       using std::numeric_limits;
+      using std::floor;
 
-      int prec=16; // numeric_limits<real_t>::digits10;
+      const int prec=floor(static_cast<double>(numeric_limits<real_t>::digits)/3.32193);
       cout << setprecision(prec);
 
       if(uplo=='U')
