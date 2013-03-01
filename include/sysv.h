@@ -13,7 +13,6 @@
 
 #include "sytrf.h"
 #include "sytrs.h"
-#include "sytrs2.h"
 
 namespace latl
 {
@@ -34,7 +33,7 @@ namespace latl
       int_t info = latl::sytrf(uplo, n, A, ldA, ipiv, bsdv);
       if (info == 0)
       {
-         info = latl::sytrs2(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
+         info = latl::sytrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
       }
       return info;
    }
