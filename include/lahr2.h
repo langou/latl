@@ -137,7 +137,7 @@ namespace latl
       A[k+nb-1+(nb-1)*ldA] = ei;
       lacpy<real_t>( 'A', k, nb, A+ldA, ldA, Y, ldY);
       trmm<real_t>( 'R', 'L', 'N', 'U', k, nb, 1.0, A+k, ldA, Y, ldY);
-      if(nb>k+nb)
+      if(n>k+nb)
          gemm<real_t>( 'N', 'N', k, nb, n-k-nb, 1.0, A+(nb+1)*ldA, ldA, A+k+nb, ldA, 1.0, Y, ldY);
       trmm<real_t>( 'R', 'U', 'N', 'N', k, nb, 1.0, T, ldT, Y, ldY);
       return 0;
@@ -253,7 +253,7 @@ namespace latl
       A[k+nb-1+(nb-1)*ldA] = ei;
       lacpy<real_t>( 'A', k, nb, A+ldA, ldA, Y, ldY);
       trmm<real_t>( 'R', 'L', 'N', 'U', k, nb, 1.0, A+k, ldA, Y, ldY);
-      if(nb>k+nb)
+      if(n>k+nb)
          gemm<real_t>( 'N', 'N', k, nb, n-k-nb, 1.0, A+(nb+1)*ldA, ldA, A+k+nb, ldA, 1.0, Y, ldY);
       trmm<real_t>( 'R', 'U', 'N', 'N', k, nb, 1.0, T, ldT, Y, ldY);
       return 0;

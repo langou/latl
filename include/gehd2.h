@@ -15,7 +15,8 @@
 #include <algorithm>
 #include "latl.h"
 #include "larfg.h"
-#include "larf.h"
+#include "gemv.h"
+#include "ger.h"
 
 namespace latl
 {
@@ -78,7 +79,6 @@ namespace latl
       using std::min; 
       using std::max; 
       using latl::larfg;
-      using latl::larf;
 
       if (n<0)
          return -1;
@@ -173,7 +173,6 @@ namespace latl
       using std::max; 
       using std::conj;
       using latl::larfg;
-      using latl::larf;
 
       if (n<0)
          return -1;
