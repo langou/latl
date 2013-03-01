@@ -101,7 +101,7 @@ namespace latl
             {
                latl::gemv('T', k, nrhs, -one, B, ldB, Ak, 1, one, B+k, ldB);
                latl::gemv('T', k, nrhs, -one, B, ldB, Ak+ldA, 1, one, B+k+1, ldB);
-               kp = -IPIV[k];
+               kp = IPIV[k];
                if (kp != k)
                   latl::swap(nrhs, B+k, ldB, B+kp, ldB);
                k += 2;

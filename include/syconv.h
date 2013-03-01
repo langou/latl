@@ -240,6 +240,12 @@ namespace latl
       }
       return 0;
    }
+   
+   template< typename real_t>
+   int_t syconv(const char uplo, const char way, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * ipiv, bool * bsdv, real_t * Work)
+   {
+      return latl::syconv(uplo, way, n, A, ldA, ipiv, bsdv, Work);
+   }
 }
 
 
