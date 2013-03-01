@@ -29,22 +29,22 @@ void usage(char *name)
    using std::cerr;
    using std::endl;
    
-   cerr << "Usage: " << name << " [-complex] [-random <dist>] [-m <m>] [-n <n>] [-seed <seed>] [-hilbert] [-symmetric] [-hermitian] [-positive]";
+   cerr << "Usage: " << name << " [-c] [-r <dist>] [-m <m>] [-n <n>] [-S <seed>] [-H] [-s] [-h] [-p]";
    cerr << endl;
-   cerr << "        -complex generates complex matrix (default is real)" << endl;
-   cerr << "        -m <m> sets number of rows (default is m=1)" << endl;
-   cerr << "        -n <n> sets number of columns (default is n=1)" << endl;
-   cerr << "        -hilbert creates n-by-n Hilbert matrix" << endl;
-   cerr << "        -hermitian creates n-by-n Hermitian matrix" << endl;
-   cerr << "        -symmetric creates n-by-n symmetric matrix" << endl;
-   cerr << "        -positive creates n-by-n positive definite matrix by adding n to the diagonal" << endl;
-   cerr << "        -seed <seed> sets random number generator seed (default is 0)" << endl;
-   cerr << "        -random <dist> creates M x N random matrix with one of the following distributions: " << endl;
-   cerr << "                   1 = uniform on (0,1) (default)" << endl;
-   cerr << "                   2 = uniform on (-1,1)" << endl;
-   cerr << "                   3 = normal on (0,1)" << endl;
-   cerr << "                   4 = uniformly distributed on the disc abs(z) < 1 (complex)" << endl;
-   cerr << "                   5 = uniformly distributed on the circle abs(z) = 1 (complex)" << endl;
+   cerr << "        -c        generates complex matrix (default is real)" << endl;
+   cerr << "        -m <m>    sets number of rows (default is m=1)" << endl;
+   cerr << "        -n <n>    sets number of columns (default is n=1)" << endl;
+   cerr << "        -H        creates n-by-n Hilbert matrix" << endl;
+   cerr << "        -h        creates n-by-n hermitian matrix" << endl;
+   cerr << "        -s        creates n-by-n symmetric matrix" << endl;
+   cerr << "        -p        creates n-by-n positive definite matrix by adding n to the diagonal" << endl;
+   cerr << "        -S <seed> sets random number generator seed (default is 0)" << endl;
+   cerr << "        -r <dist> creates M x N random matrix with one of the following distributions: " << endl;
+   cerr << "                    1 = uniform on (0,1) (default)" << endl;
+   cerr << "                    2 = uniform on (-1,1)" << endl;
+   cerr << "                    3 = normal on (0,1)" << endl;
+   cerr << "                    4 = uniformly distributed on the disc abs(z) < 1 (complex)" << endl;
+   cerr << "                    5 = uniformly distributed on the circle abs(z) = 1 (complex)" << endl;
    exit(0);
 }
 
@@ -88,7 +88,7 @@ int main(int argc, char** argv)
          if(n<1)
             usage(argv[0]);
       }
-      else if(strncmp(argv[arg],"-seed",3)==0)
+      else if(strncmp(argv[arg],"-S",2)==0)
       {
          arg++;
          if(arg<argc)
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
          if(s<0)
             usage(argv[0]);
       }
-      else if(strncmp(argv[arg],"-random",2)==0)
+      else if(strncmp(argv[arg],"-r",2)==0)
       {
          arg++;
          if(arg<argc)
@@ -104,23 +104,23 @@ int main(int argc, char** argv)
          if(dist<0)
             usage(argv[0]);
       }
-      else if(strncmp(argv[arg],"-complex",2)==0)
+      else if(strncmp(argv[arg],"-c",2)==0)
       {
          use_complex=1;
       }
-      else if(strncmp(argv[arg],"-symmetric",3)==0)
+      else if(strncmp(argv[arg],"-s",2)==0)
       {
          symmetric=1;
       }
-      else if(strncmp(argv[arg],"-hermitian",3)==0)
+      else if(strncmp(argv[arg],"-h",2)==0)
       {
          hermitian=1;
       }
-      else if(strncmp(argv[arg],"-hilbert",3)==0)
+      else if(strncmp(argv[arg],"-H",2)==0)
       {
          hilbert=1;
       }
-      else if(strncmp(argv[arg],"-positive",3)==0)
+      else if(strncmp(argv[arg],"-p",2)==0)
       {
          positive=1;
       }
