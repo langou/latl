@@ -44,8 +44,11 @@ namespace latl
       using std::setw;
       using std::numeric_limits;
       using std::floor;
-
-      const int prec=floor(static_cast<double>(numeric_limits<real_t>::digits)/3.32193);
+#ifdef MPREAL
+      int prec=floor((numeric_limits<real_t>::digits())/3.32193);
+#else
+      int prec=floor((numeric_limits<real_t>::digits)/3.32193);
+#endif
       cout << setprecision(prec);
 
       for(int i=0;i<m;i++)
@@ -84,7 +87,11 @@ namespace latl
       using std::numeric_limits;
       using std::floor;
 
-      const int prec=floor(static_cast<double>(numeric_limits<real_t>::digits)/3.32193);
+#ifdef MPREAL
+      int prec=floor((numeric_limits<real_t>::digits())/3.32193);
+#else
+      int prec=floor((numeric_limits<real_t>::digits)/3.32193);
+#endif
       cout << setprecision(prec);
 
       for(int i=0;i<m;i++)
@@ -135,7 +142,11 @@ namespace latl
       using std::numeric_limits;
       using std::floor;
 
-      const int prec=floor(static_cast<double>(numeric_limits<real_t>::digits)/3.32193);
+#ifdef MPREAL
+      int prec=floor((numeric_limits<real_t>::digits())/3.32193);
+#else
+      int prec=floor((numeric_limits<real_t>::digits)/3.32193);
+#endif
       cout << setprecision(prec);
 
       if(uplo=='U')
@@ -211,7 +222,11 @@ namespace latl
       using std::numeric_limits;
       using std::floor;
 
-      const int prec=floor(static_cast<double>(numeric_limits<real_t>::digits)/3.32193);
+#ifdef MPREAL
+      int prec=floor((numeric_limits<real_t>::digits())/3.32193);
+#else
+      int prec=floor((numeric_limits<real_t>::digits)/3.32193);
+#endif
       cout << setprecision(prec);
 
       if(uplo=='U')
