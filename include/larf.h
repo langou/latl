@@ -47,9 +47,13 @@ namespace latl
    ///                H * C if side='L',
    ///             or C * H if side='R'.
    /// @param ldC Column length of matrix C.  ldC >= m.
+   /// @param w Workspace array.  Must of of the following length:
+   ///
+   ///          n if side='L'
+   ///          m if side='R'
 
    template<typename real_t>
-   int larf(char side, int_t m, int_t n, real_t *v, int_t incv, real_t tau, real_t *C, int_t ldC)
+   int larf(char side, int_t m, int_t n, real_t *v, int_t incv, real_t tau, real_t *C, int_t ldC,real_t *w)
    {
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -68,17 +72,13 @@ namespace latl
       
       if(side=='L')
       {
-         real_t *w=new real_t[n];
          gemv<real_t>('T',m,n,one,C,ldC,v,incv,zero,w,1);
          ger<real_t>(m,n,-tau,v,incv,w,1,C,ldC);
-         delete [] w;
       }
       else
       {
-         real_t *w=new real_t[m];
          gemv<real_t>('N',m,n,one,C,ldC,v,incv,zero,w,1);
          ger<real_t>(m,n,-tau,w,1,v,incv,C,ldC);
-         delete [] w;
       }
       return 0;
    }
@@ -111,9 +111,13 @@ namespace latl
    ///                H * C if side='L',
    ///             or C * H if side='R'.
    /// @param ldC Column length of matrix C.  ldC >= m.
+   /// @param w Workspace array.  Must of of the following length:
+   ///
+   ///          n if side='L'
+   ///          m if side='R'
    
    template<typename real_t>
-   int larf(char side, int_t m, int_t n, complex<real_t> *v, int_t incv, complex<real_t> tau, complex<real_t> *C, int_t ldC)
+   int larf(char side, int_t m, int_t n, complex<real_t> *v, int_t incv, complex<real_t> tau, complex<real_t> *C, int_t ldC, complex<real_t> *w)
    {
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -132,17 +136,13 @@ namespace latl
       
       if(side=='L')
       {
-         complex<real_t> *w=new complex<real_t>[n];
          gemv<real_t>('C',m,n,one,C,ldC,v,incv,zero,w,1);
          gerc<real_t>(m,n,-tau,v,incv,w,1,C,ldC);
-         delete [] w;
       }
       else
       {
-         complex<real_t> *w=new complex<real_t>[m];
          gemv<real_t>('N',m,n,one,C,ldC,v,incv,zero,w,1);
          gerc<real_t>(m,n,-tau,w,1,v,incv,C,ldC);
-         delete [] w;
       }
       return 0;
    }
