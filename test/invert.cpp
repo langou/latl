@@ -46,6 +46,9 @@ typedef long double Real;
 #elif defined(REAL)
 #include "real.hpp"
 typedef mpfr::real<REAL> Real;
+#elif defined(MPREAL)
+#include "mpreal.h"
+typedef mpfr::mpreal Real;
 #else
 typedef double Real;
 #endif
@@ -328,19 +331,25 @@ real_t triangular(int nb,char uplo, char diag,bool resi,bool prnt)
 
 void usage(char *name,int nb)
 {
-   cerr << "Usage: " << name << " [-general | -triangular | -symmetric | -hermitian | -positive]";
-   cerr << " [-complex] [-lower] [-unit] [-print] [-residual] [-b <nb>]" << endl;
-   cerr << "           -general       invert general matrix (default)" << endl;
-   cerr << "           -triangular    invert upper or lower triangular matrix" << endl;
-   cerr << "           -symmetric     invert symmetric matrix" << endl;
-   cerr << "           -hermitian     invert hermitian matrix" << endl;
-   cerr << "           -positive      invert positive definite matrix" << endl;
-   cerr << "           -complex       use complex (default is to use real)" << endl;
-   cerr << "           -lower         use lower triangular matrix (default is upper triangular)" << endl;
-   cerr << "           -unit          assume unit triangular matrix" << endl;
-   cerr << "           -print         write inverse matrix to standard output" << endl;
-   cerr << "           -residual      report the residual error instead of the relative error" << endl;
-   cerr << "           -b <nb>        use block size of nb, otherwise blocksize is set to " << nb << endl;
+   cerr << "Usage: " << name << " [-g | -t | -s | -h | -p]";
+#ifdef MPREAL
+   cerr << " [-P <n>]";
+#endif
+   cerr << " [-c] [-l] [-u [-w] [-r] [-b <nb>]" << endl;
+   cerr << "           -g      invert general matrix (default)" << endl;
+   cerr << "           -t      invert upper or lower triangular matrix" << endl;
+   cerr << "           -s      invert symmetric matrix" << endl;
+   cerr << "           -h      invert hermitian matrix" << endl;
+   cerr << "           -p      invert positive definite matrix" << endl;
+   cerr << "           -c      use complex (default is to use real)" << endl;
+   cerr << "           -l      use lower triangular matrix (default is upper triangular)" << endl;
+   cerr << "           -u      assume unit triangular matrix" << endl;
+   cerr << "           -w      write inverse matrix to standard output" << endl;
+   cerr << "           -r      report the residual error instead of the relative error" << endl;
+   cerr << "           -b <nb> use block size of nb, otherwise blocksize is set to " << nb << endl;
+#ifdef MPREAL
+   cerr << "           -P <n>  set mpreal precision to n bits " << endl;
+#endif
 }
 
 int main(int argc,char **argv)
@@ -354,28 +363,28 @@ int main(int argc,char **argv)
    bool resi=0;
    bool prnt=0;
    int nb=64;
-
+   
    while(arg<argc)
    {
-      if(strncmp(argv[arg],"-triangular",2)==0)
+      if(strncmp(argv[arg],"-t",2)==0)
          Type='T';
-      else if(strncmp(argv[arg],"-general",2)==0)
+      else if(strncmp(argv[arg],"-g",2)==0)
          Type='G';
-      else if(strncmp(argv[arg],"-symmetric",2)==0)
+      else if(strncmp(argv[arg],"-s",2)==0)
          Type='S';
-      else if(strncmp(argv[arg],"-hermitian",2)==0)
+      else if(strncmp(argv[arg],"-h",2)==0)
          Type='H';
-      else if(strncmp(argv[arg],"-positive",3)==0)
+      else if(strncmp(argv[arg],"-p",2)==0)
          Type='P';
-      else if(strncmp(argv[arg],"-lower",2)==0)
+      else if(strncmp(argv[arg],"-l",2)==0)
          uplo='l';
-      else if(strncmp(argv[arg],"-complex",2)==0)
+      else if(strncmp(argv[arg],"-c",2)==0)
          comp=1;
-      else if(strncmp(argv[arg],"-unit",2)==0)
+      else if(strncmp(argv[arg],"-u",2)==0)
          diag='u';
-      else if(strncmp(argv[arg],"-print",4)==0)
+      else if(strncmp(argv[arg],"-w",2)==0)
          prnt=1;
-      else if(strncmp(argv[arg],"-residual",2)==0)
+      else if(strncmp(argv[arg],"-r",2)==0)
          resi=1;
       else if(strncmp(argv[arg],"-b",2)==0)
       {
@@ -385,6 +394,16 @@ int main(int argc,char **argv)
          else
             nb=0;
       }
+#ifdef MPREAL
+      else if(strncmp(argv[arg],"-P",4)==0)
+      {
+         int prec=53;
+         arg++;
+         if(arg<argc)
+            prec=atoi(argv[arg]);
+         mpfr::mpreal::set_default_prec(prec);
+      }
+#endif
       else
       {
          usage(argv[0],nb);

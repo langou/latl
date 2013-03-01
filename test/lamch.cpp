@@ -23,6 +23,9 @@ typedef long double real_t;
 #elif defined(REAL)
 #include "real.hpp"
 typedef mpfr::real<REAL> real_t;
+#elif defined(MPREAL)
+#include "mpreal.h"
+typedef mpfr::mpreal real_t;
 #else
 typedef double real_t;
 #endif
@@ -32,7 +35,13 @@ int main(int argc, char** argv)
    using std::cout;
    using std::endl;
    using std::numeric_limits;
-
+#ifdef MPREAL
+   int prec=53;
+   using std::atoi;
+   if(argc>1)
+      prec=atoi(argv[1]);
+   mpfr::mpreal::set_default_prec(prec);
+#endif
    cout << endl;
    cout << "-------------------------------------" << endl;
    cout << "machine epsilon  = " << numeric_limits<real_t>::epsilon() << endl;
