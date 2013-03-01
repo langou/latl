@@ -38,7 +38,7 @@ namespace latl
    /// It is assumed that A is already upper triangular in rows
    /// and columns 1:ILO-1 and IHI+1:N. ILO and IHI are normally
    /// set by a previous call to GEBAL; otherwise they should be
-   /// set to 1 and N respectively. 
+   /// set to 0 and N-1 respectively. 
    /// 0 <= ILO <= IHI < N
    ///
    /// The matrix Q is represented as a product of (ihi-ilo) elementary
@@ -75,41 +75,41 @@ namespace latl
    int_t gehd2(int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau )
    {
 
-      int_t i;
-      real_t alpha;
-
       using std::min; 
+      using std::max; 
       using latl::larfg;
       using latl::larf;
 
       if (n<0)
          return -1;
-      else if((ilo<1) || (ilo>n))
+      else if((ilo<0) || (ilo>n-1))
          return -2;
-      else if((ihi<ilo) || (ihi>n))
+      else if((ihi<ilo) || (ihi>n-1))
          return -3;
       else if(ldA<n)
          return -5;
 
+      int_t i;
+      real_t alpha;
+      real_t *w=new real_t[max(n-ilo-1,ihi+1)];
+      real_t *v = A+ilo+1+ilo*ldA;
+      real_t *CL = A+(ilo+1)*ldA;
+      real_t *CR = v+ldA;
       for(i=ilo;i<ihi;i++)
       {
-         alpha = A[i+(i-1)*ldA];
-         larfg<real_t>( ihi-i, alpha, A+min(i+2,n)-1+(i-1)*ldA, 1, tau[i-1]);
-         A[i+(i-1)*ldA] = 1.0;
-
-//          larf<real_t>( 'R', ihi, ihi-i, A+i+(i-1)*ldA, 1, tau[i-1], A+i*ldA, ldA);
-         real_t *w1=new real_t[ihi];
-         gemv<real_t>('N',ihi,ihi-i,1.0,A+i*ldA,ldA,A+i+(i-1)*ldA,1,0.0,w1,1);
-         ger<real_t>(ihi,ihi-i,-tau[i-1],w1,1,A+i+(i-1)*ldA,1,A+i*ldA,ldA);
-         delete [] w1;
-
-//          larf<real_t>( 'L', ihi-i, n-i, A+i+(i-1)*ldA, 1, tau[i-1], A+i+i*ldA, ldA);
-         real_t *w2=new real_t[n-i];
-         gemv<real_t>('T',ihi-i,n-i,1.0,A+i+i*ldA,ldA,A+i+(i-1)*ldA,1,0.0,w2,1);
-         ger<real_t>(ihi-i,n-i,-tau[i-1],A+i+(i-1)*ldA,1,w2,1,A+i+i*ldA,ldA);
-         delete [] w2;
-         A[i+(i-1)*ldA] = alpha;
+         alpha = v[0];
+         larfg<real_t>( ihi-i, alpha, A+min(i+2,n-1)+i*ldA, 1, tau[i]);
+         v[0] = 1.0;
+         gemv<real_t>('N',ihi+1,ihi-i,1.0,CL,ldA,v,1,0.0,w,1);
+         ger<real_t>(ihi+1,ihi-i,-tau[i],w,1,v,1,CL,ldA);
+         gemv<real_t>('T',ihi-i,n-i-1,1.0,CR,ldA,v,1,0.0,w,1);
+         ger<real_t>(ihi-i,n-i-1,-tau[i],v,1,w,1,CR,ldA);
+         v[0] = alpha;
+         v += 1+ldA;
+         CL += ldA;
+         CR = v+ldA;
       }
+      delete [] w;
       return 0;
    }
 
@@ -132,7 +132,7 @@ namespace latl
    /// It is assumed that A is already upper triangular in rows
    /// and columns 1:ILO-1 and IHI+1:N. ILO and IHI are normally
    /// set by a previous call to GEBAL; otherwise they should be
-   /// set to 1 and N respectively. 
+   /// set to 0 and N-1 respectively. 
    /// 0 <= ILO <= IHI < N
    ///
    /// The matrix Q is represented as a product of (ihi-ilo) elementary
@@ -169,31 +169,42 @@ namespace latl
    int_t gehd2(int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau )
    {
 
-      int_t i;
-      complex<real_t> alpha;
-
       using std::min; 
+      using std::max; 
+      using std::conj;
       using latl::larfg;
       using latl::larf;
 
       if (n<0)
          return -1;
-      else if((ilo<1) || (ilo>n))
+      else if((ilo<0) || (ilo>n-1))
          return -2;
-      else if((ihi<ilo) || (ihi>n))
+      else if((ihi<ilo) || (ihi>n-1))
          return -3;
       else if(ldA<n)
          return -5;
 
+      int_t i;
+      complex<real_t> alpha;
+      complex<real_t> *w=new complex<real_t>[max(n-ilo-1,ihi+1)];
+      complex<real_t> *v = A+ilo+1+ilo*ldA;
+      complex<real_t> *CL = A+(ilo+1)*ldA;
+      complex<real_t> *CR = v+ldA;
       for(i=ilo;i<ihi;i++)
       {
-         alpha = A[i+(i-1)*ldA];
-         larfg< real_t >( ihi-i, alpha, A+min(i+2,n)-1+(i-1)*ldA, 1, tau[i-1]);
-         A[i+(i-1)*ldA] = 1.0;
-         larf< real_t >( 'R', ihi, ihi-i, A+i+(i-1)*ldA, 1, tau[i-1], A+i*ldA, ldA);
-         larf< real_t >( 'L', ihi-i, n-i, A+i+(i-1)*ldA, 1, std::conj(tau[i-1]), A+i+i*ldA, ldA);
-         A[i+(i-1)*ldA] = alpha;
+         alpha = v[0];
+         larfg< real_t >( ihi-i, alpha, A+min(i+2,n-1)+i*ldA, 1, tau[i]);
+         v[0] = 1.0;
+         gemv<real_t>('N',ihi+1,ihi-i,1.0,CL,ldA,v,1,0.0,w,1);
+         gerc<real_t>(ihi+1,ihi-i,-tau[i],w,1,v,1,CL,ldA);
+         gemv<real_t>('C',ihi-i,n-i-1,1.0,CR,ldA,v,1,0.0,w,1);
+         gerc<real_t>(ihi-i,n-i-1,-conj(tau[i]),v,1,w,1,CR,ldA);
+         v[0] = alpha;
+         v += 1+ldA;
+         CL += ldA;
+         CR = v+ldA;
       }
+      delete [] w;
       return 0;
    }
 }
