@@ -15,8 +15,9 @@
 #include <algorithm>
 #include "latl.h"
 #include "larfg.h"
-#include "gemv.h"
-#include "ger.h"
+#include "larf.h"
+// #include "gemv.h"
+// #include "ger.h"
 
 namespace latl
 {
@@ -93,21 +94,19 @@ namespace latl
       real_t alpha;
       real_t *w=new real_t[max(n-ilo-1,ihi+1)];
       real_t *v = A+ilo+1+ilo*ldA;
-      real_t *CL = A+(ilo+1)*ldA;
-      real_t *CR = v+ldA;
+      real_t *CR = A+(ilo+1)*ldA;
+      real_t *CL = v+ldA;
       for(i=ilo;i<ihi;i++)
       {
          alpha = v[0];
          larfg<real_t>( ihi-i, alpha, A+min(i+2,n-1)+i*ldA, 1, tau[i]);
          v[0] = 1.0;
-         gemv<real_t>('N',ihi+1,ihi-i,1.0,CL,ldA,v,1,0.0,w,1);
-         ger<real_t>(ihi+1,ihi-i,-tau[i],w,1,v,1,CL,ldA);
-         gemv<real_t>('T',ihi-i,n-i-1,1.0,CR,ldA,v,1,0.0,w,1);
-         ger<real_t>(ihi-i,n-i-1,-tau[i],v,1,w,1,CR,ldA);
+         larf<real_t>( 'R', ihi+1, ihi-i, v, 1, tau[i], CR, ldA, w);
+         larf<real_t>( 'L', ihi-i, n-i-1, v, 1, tau[i], CL, ldA, w);
          v[0] = alpha;
          v += 1+ldA;
-         CL += ldA;
-         CR = v+ldA;
+         CR += ldA;
+         CL = v+ldA;
       }
       delete [] w;
       return 0;
@@ -187,21 +186,19 @@ namespace latl
       complex<real_t> alpha;
       complex<real_t> *w=new complex<real_t>[max(n-ilo-1,ihi+1)];
       complex<real_t> *v = A+ilo+1+ilo*ldA;
-      complex<real_t> *CL = A+(ilo+1)*ldA;
-      complex<real_t> *CR = v+ldA;
+      complex<real_t> *CR = A+(ilo+1)*ldA;
+      complex<real_t> *CL = v+ldA;
       for(i=ilo;i<ihi;i++)
       {
          alpha = v[0];
          larfg< real_t >( ihi-i, alpha, A+min(i+2,n-1)+i*ldA, 1, tau[i]);
          v[0] = 1.0;
-         gemv<real_t>('N',ihi+1,ihi-i,1.0,CL,ldA,v,1,0.0,w,1);
-         gerc<real_t>(ihi+1,ihi-i,-tau[i],w,1,v,1,CL,ldA);
-         gemv<real_t>('C',ihi-i,n-i-1,1.0,CR,ldA,v,1,0.0,w,1);
-         gerc<real_t>(ihi-i,n-i-1,-conj(tau[i]),v,1,w,1,CR,ldA);
+         larf<real_t>( 'R', ihi+1, ihi-i, v, 1, tau[i], CR, ldA, w);
+         larf<real_t>( 'L', ihi-i, n-i-1, v, 1, conj(tau[i]), CL, ldA, w);
          v[0] = alpha;
          v += 1+ldA;
-         CL += ldA;
-         CR = v+ldA;
+         CR += ldA;
+         CL = v+ldA;
       }
       delete [] w;
       return 0;
