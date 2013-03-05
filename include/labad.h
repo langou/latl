@@ -33,12 +33,14 @@ namespace latl
    template<typename real_t>
    void labad(real_t &small, real_t &large)
    {
+      using std::log10;
+      using std::sqrt;
       const real_t big(2000.0);
-      
-      if(std::log10(large)>big)
+
+      if(log10(large)>big)
       {
-         small=std::sqrt(small);
-         large=std::sqrt(large);
+         small=sqrt(small);
+         large=sqrt(large);
       }
    }
 }
