@@ -35,11 +35,11 @@ namespace latl
    /// @param ldA Column length of the array A.
    /// @param IPIV Integer array size n.  On exit, contains the details of the interchanges of D.
    /// @param BSDV Bool array size n.  On exit, contains the details of the block structure of D.  If BSDV[k] = 0, then rows and columns k and IPIV[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If BSDV[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and IPIV[k] = IPIV[k-1], then rows and columns k-1 and IPIV[k] were interchanged.  If uplo = 'L' and IPIV[k] = IPIV[k+1], then rows and columns k+1 and IPIV[k] were interchanged.
-   /// @param nb Block size, optional.  Default value is 64.
+   /// @param nb Block size, optional.  Default value is 32.
    /// @ingroup TRF
 
    template< typename real_t >
-   int_t hetrf(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, const int_t nb = 64)
+   int_t hetrf(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, const int_t nb = 32)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;

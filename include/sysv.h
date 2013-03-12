@@ -3,19 +3,32 @@
 //  Linear Algebra Template Library
 //
 //  Created by Stephanie Patterson on 2/19/13.
-//
+//  Copyright (c) 2012 University of Colorado Denver. All rights reserved.
 //
 
 #ifndef _sysv_h
 #define _sysv_h
 
-/// @file sysv.h
+/// @file sysv.h Computes the solution to a system of linear equations A*X = B.
 
 #include "sytrf.h"
 #include "sytrs.h"
 
 namespace latl
 {
+   /// @brief Computes the solution to a real system of linear equations
+   ///
+   ///      A * X = B
+   ///
+   /// where A is an n-by-n symmetric matrix and X and B are n-by-nrhs matrices.
+   ///
+   /// The Bunch-Kaufman diagonal pivoting method is used to factor A as L'*D*L, if uplo == 'L', or U*D*U' if uplo == 'U',
+   /// where U (or L) is a product of permutation and unit upper/lower triangular matrices and D is symmetric and block diagonal.
+   ///
+   /// The factored form of A is then used to solve the system of equations.
+   ///
+   ///
+   
    template<typename real_t>
    int_t sysv(const char uplo, const int_t n, const int_t nrhs, real_t * const A, int_t ldA, int_t * ipiv, bool * bsdv, real_t * const B, int_t ldB)
    {

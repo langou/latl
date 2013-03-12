@@ -1,6 +1,6 @@
 //
 //  hetrs.h
-//  Linear Algeba Template Library
+//  Linear Algebra Template Library
 //
 //  Created by Stephanie Patterson on 3/11/13.
 //  Copyright (c) 2012 University of Colorado Denver. All rights reserved.
