@@ -9,7 +9,7 @@
 #ifndef _hetrs_h
 #define _hetrs_h
 
-/// @file hetrs.h
+/// @file hetrs.h Solves a system of linear equations A*X = B.
 
 #include "scal.h"
 #include "syconv.h"
@@ -19,7 +19,20 @@
 
 namespace latl
 {
-
+   /// @brief Solves a system of linear equations A * X = B with a Hermitian n-by-n matrix A using the U*D*U^H (if uplo = 'U') or L^H*D*L factorization computed by sytrf.
+   /// @return 0
+   /// @tparam real_t Floating point type.
+   /// @param uplo Indicates whether the Hermitian matrix A is stored as upper triangular or lower triangular.  The other triangular part of A is not referenced.
+   /// @param n Number of columns of the matrix A.  n >= 0
+   /// @param nrhs Number of columns of the matrix B.  nrhs >= 0
+   /// @param A Complex Hermitian matrix size ldA-by-n.  On entry, should contain factors L (or U) and D from the factorization A computed by hetrf.
+   /// @param ldA Column length of matrix A.  ldA >= n
+   /// @param IPIV Integer array size n.  On entry, contains the details of the interchanges.
+   /// @param BSDV Bool array size n.  On entry, contains the details of the block structure of D.
+   /// @param B Real matrix size ldB-by-nrhs.  On exit, the solution matrix X.
+   /// @param ldB Column length of B.  ldB >= n
+   /// @ingroup SOLV
+   
    template<typename real_t>
    int_t hetrs(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, const int_t ldB)
    {
