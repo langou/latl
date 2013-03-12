@@ -43,7 +43,7 @@ namespace latl
    /// @ingroup SOLV
    
    template< typename real_t >
-   int_t gesv(const int_t n, const int_t colB, real_t * const A, const int_t ldA, int_t * const IPIV, real_t * const B, const int_t ldB, int_t nb=80)
+   int_t gesv(const int_t n, const int_t colB, real_t * const A, const int_t ldA, int_t * const IPIV, real_t * const B, const int_t ldB, int_t nb=32)
    {
       if (n < 0)
          return -1;
@@ -55,7 +55,7 @@ namespace latl
          return -7;
       
       int_t info = 0;
-      info = latl::getrf<real_t,int_t,nb>(n, n, A, ldA, IPIV);
+      info = latl::getrf<real_t>(n, n, A, ldA, IPIV, nb);
       if (info == 0)
       {
          info = latl::getrs('N', n, colB, A, ldA, IPIV, B, ldB);
@@ -89,7 +89,7 @@ namespace latl
    /// @ingroup SOLV
    
    template< typename real_t >
-   int_t gesv(const int_t n, const int_t colB, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, complex<real_t> * const B, const int_t ldB, int_t nb=80)
+   int_t gesv(const int_t n, const int_t colB, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, complex<real_t> * const B, const int_t ldB, int_t nb=32)
    {
       if (n < 0)
          return -1;
@@ -101,7 +101,7 @@ namespace latl
          return -7;
       
       int_t info = 0;
-      info = latl::getrf<real_t,nb>(n, n, A, ldA, IPIV);
+      info = latl::getrf<real_t>(n, n, A, ldA, IPIV, nb);
       if (info == 0)
       {
          info = latl::getrs('N', n, colB, A, ldA, IPIV, B, ldB);
