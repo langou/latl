@@ -218,7 +218,7 @@ namespace latl
    /// @param nb Block size.
 
    template< typename real_t >
-   int_t getrf( const int_t m, const int_t n, real_t * const A, const int_t ldA, int_t * const pivot, int_t nb = 32)
+   int_t getrf( const int_t m, const int_t n, real_t * const A, const int_t ldA, int_t * const pivot, int_t nb )
    {
       using std::abs;
       if (m < 0)

@@ -43,11 +43,9 @@ namespace latl
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
    /// interchanges and the block structure of D as determined by latl::sytrf.
-   /// @param nb Block size (optional).
-   /// @ingroup MATM
 
    template <typename real_t>
-   int_t sytri(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb=32)
+   int_t sytri(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv )
    {
       using std::abs;
       using std::toupper;
@@ -228,11 +226,9 @@ namespace latl
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
    /// interchanges and the block structure of D as determined by latl::sytrf.
-   /// @param nb Block size (optional).
-   /// @ingroup MATM
 
    template <typename real_t>
-   int_t sytri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb=32)
+   int_t sytri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv)
    {
       using std::toupper;
       uplo=toupper(uplo);

@@ -23,7 +23,7 @@ namespace latl
    ///
    
    template <typename real_t>
-   int_t hetri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb=32)
+   int_t hetri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv)
    {
       
       using std::toupper;

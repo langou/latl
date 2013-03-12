@@ -40,7 +40,7 @@ namespace latl
    /// @ingroup MATM
 
    template <typename real_t>
-      int_t potri(char uplo, int_t n, real_t *A, int_t ldA, int_t nb=32)
+      int_t potri(char uplo, int_t n, real_t *A, int_t ldA, int_t nb=40)
       {
 
          using std::toupper;
@@ -56,10 +56,10 @@ namespace latl
          else if(n==0)
             return 0;
 
-         info=trtri<real_t>( uplo, 'N', n, A, ldA);
+         info=trtri<real_t>( uplo, 'N', n, A, ldA, nb);
          if (info != 0) 
             return info;
-         info=lauum<real_t>( uplo, n, A, ldA);
+         info=lauum<real_t>( uplo, n, A, ldA, nb);
          return info;
       }
 
@@ -86,7 +86,7 @@ namespace latl
    /// @ingroup MATM
 
    template <typename real_t>
-      int_t potri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t nb=32)
+      int_t potri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t nb=40)
       {
 
          using std::toupper;
@@ -102,10 +102,10 @@ namespace latl
          else if(n==0)
             return 0;
 
-         info=trtri<real_t>( uplo, 'N', n, A, ldA);
+         info=trtri<real_t>( uplo, 'N', n, A, ldA, nb);
          if (info != 0) 
             return info;
-         info=lauum<real_t>( uplo, n, A, ldA);
+         info=lauum<real_t>( uplo, n, A, ldA, nb);
          return info;
       }
 }
