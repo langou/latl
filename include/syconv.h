@@ -136,7 +136,7 @@ namespace latl
             }
          }
       }
-      else
+      else //lower
       {
          if (way == 'C' || way == 'c')
          {
@@ -174,14 +174,14 @@ namespace latl
                else
                {
                   ip = ipiv[i];
-                  if (ip != i && i > 0)
+                  if (ip != i+1 && i > 0)
                   {
                      for (int_t j = 0; j < i; ++j)
                      {
                         real_t * Aj = A + ldA*j;
                         real_t temp = Aj[ip];
-                        Aj[ip] = Aj[i];
-                        Aj[i] = temp;
+                        Aj[ip] = Aj[i+1];
+                        Aj[i+1] = temp;
                      }
                   }
                   ++i;

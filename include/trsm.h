@@ -33,7 +33,7 @@ namespace latl
    ///
    ///        if uplo = 'U' or 'u' then A is upper triangular
    ///        if uplo = 'L' or 'l' then A is lower triangular
-   /// @param trans Specifies wheather the transpose or conjugate transpose of A is to be used:
+   /// @param trans Specifies whether the transpose or conjugate transpose of A is to be used:
    ///
    ///        if trans = 'N' or 'n' then A*X=alpha*B or X*A=alpha*B is solved
    ///        if trans = 'T' or 't' then A'*X=alpha*B or X*A'=alpha*B is solved
@@ -322,7 +322,7 @@ namespace latl
    ///
    ///        if uplo = 'U' or 'u' then A is upper triangular
    ///        if uplo = 'L' or 'l' then A is lower triangular
-   /// @param trans Specifies wheather the transpose of A is to be used or not:
+   /// @param trans Specifies whether the transpose of A is to be used or not:
    ///
    ///        if trans = 'N' or 'n' then A*X=alpha*B or X*A=alpha*B is solved
    ///        if trans = 'T' or 't' then A.'*X=alpha*B or X*A.'=alpha*B is solved
