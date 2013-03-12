@@ -52,6 +52,7 @@ namespace latl
          return 0;
       
       int_t info = 0, k, temp = 0, kb;
+      complex<real_t> * Work = new complex<real_t>[n*nb];
       if (uplo == 'U' || uplo == 'u')
       {
          // in this section, k is not an index variable
@@ -60,7 +61,7 @@ namespace latl
          {
             if ( k > nb)
             {
-               temp = latl::lahef(uplo, k, nb, kb, A, ldA, IPIV, BSDV);
+               temp = latl::lahef(uplo, k, nb, kb, A, ldA, IPIV, BSDV, Work);
             }
             else
             {
@@ -85,7 +86,7 @@ namespace latl
             Akk = A+ldA*k+k;
             if ( k < n-nb)
             {
-               temp = latl::lahef(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k);
+               temp = latl::lahef(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k, Work);
             }
             else
             {
@@ -106,6 +107,7 @@ namespace latl
             k += kb;
          }
       }
+      delete [] Work;
       return info;
    }
 }

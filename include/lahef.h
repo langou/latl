@@ -44,7 +44,7 @@ namespace latl
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t lahef(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV)
+   int_t lahef(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, complex<real_t> * Work)
    {
       using std::abs;
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
@@ -63,7 +63,6 @@ namespace latl
       const real_t zero(0.0);
       const real_t one(1.0);
       const complex<real_t> onec(1.0);
-      complex<real_t> * const Work = new complex<real_t>[n*nb];
       const int_t ldWork = n;
       int_t k, kw, kp, kstep, imax, jmax, kk, kkw, jtemp, jb, jp;
       real_t absakk, colmax, rowmax, r1;
@@ -437,7 +436,6 @@ namespace latl
          kb = k;
       }
       
-      delete [] Work;
       return info;
    }
 }

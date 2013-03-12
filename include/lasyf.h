@@ -42,10 +42,11 @@ namespace latl
    /// @param ldA Column length of the array A.  ldA >= n
    /// @param IPIV Integer array size n. On exit, details of the interchanges of D. If uplo = 'U', the last kb elements of IPIV and BSDV are set, and if uplo = 'L', the first kb elements of IPIV and BSDV are set.
    /// @param BSDV Bool array size n. On exit, contains the details of the block structure of D.  If BSDV[k] = 0, then rows and columns k and IPIV[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If BSDV[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and IPIV[k] = IPIV[k-1], then rows and columns k-1 and IPIV[k] were interchanged.  If uplo = 'L' and IPIV[k] = IPIV[k+1], then rows and columns k+1 and IPIV[k] were interchanged.
+   /// @param Work Real array size n-by-nb.
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t lasyf(const char uplo, const int_t n, const int_t nb, int_t &kb, real_t * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV)
+   int_t lasyf(const char uplo, const int_t n, const int_t nb, int_t &kb, real_t * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, real_t * Work)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -65,7 +66,6 @@ namespace latl
       const real_t alpha = (1.0+sqrt(17.0))/8.0;
       const real_t one(1.0);
       const real_t zero(0.0);
-      real_t * const Work = new real_t[n*nb];
       const int_t ldWork = n;
       int_t k, kw, kp, kstep, imax, jmax, kk, kkw, jtemp, jb, jp;
       real_t * Ak, absakk, colmax, *Aimax, rowmax, *Akk, r1, d21, d11, d22, *Akm1;
@@ -399,7 +399,6 @@ namespace latl
          kb = k;
       }
       
-      delete [] Work;
       return info;
    }
    
@@ -427,7 +426,7 @@ namespace latl
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t lasyf(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV)
+   int_t lasyf(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, complex<real_t> *Work)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -447,7 +446,6 @@ namespace latl
       const real_t alpha = (1.0+sqrt(17.0))/8.0;
       const real_t zero(0.0);
       const complex<real_t> onec(1.0);
-      complex<real_t> * const Work = new complex<real_t>[n*nb];
       const int_t ldWork = n;
       int_t k, kw, kp, kstep, imax, jmax, kk, kkw, jtemp, jb, jp;
       real_t absakk, colmax, rowmax;
@@ -782,7 +780,6 @@ namespace latl
          kb = k;
       }
       
-      delete [] Work;
       return info;
    }
 }

@@ -58,6 +58,7 @@ namespace latl
          return 0;
       
       int_t info = 0, k, temp = 0, kb;
+      real_t * Work = new real_t[n*nb];
       if (uplo == 'U' || uplo == 'u')
       {
          // in this section, k is not an index variable
@@ -66,7 +67,7 @@ namespace latl
          {
             if ( k > nb)
             {
-               temp = latl::lasyf(uplo, k, nb, kb, A, ldA, IPIV, BSDV);
+               temp = latl::lasyf(uplo, k, nb, kb, A, ldA, IPIV, BSDV, Work);
             }
             else
             {
@@ -91,7 +92,7 @@ namespace latl
             Akk = A+ldA*k+k;
             if ( k < n-nb)
             {
-               temp = latl::lasyf(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k);
+               temp = latl::lasyf(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k, Work);
             }
             else
             {
@@ -112,6 +113,7 @@ namespace latl
             k += kb;
          }
       }
+      delete [] Work;
       return info;
    }
    
