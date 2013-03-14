@@ -16,6 +16,10 @@
 #include "copy.h"
 #include "swap.h"
 #include "symv.h"
+#include "syconv.h"
+#include "trtri.h"
+#include "trmm.h"
+#include "syswapr.h"
 #include <cmath>
 
 namespace latl
@@ -385,6 +389,217 @@ namespace latl
       return 0;
    }
 
+   template <typename real_t>
+   int_t sytri(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb )
+   {
+      using std::abs;
+      using std::toupper;
+      int_t i, u11, ip, 
+            k, cut, 
+            nnb, count, j, 
+            invd;
+      const real_t zero(0.0);
+      const real_t one(1.0);
+      double Ak, Akkp1, Akp1, d, t,
+             u01_i_j, u01_ip1_j,
+             u11_i_j, u11_ip1_j;
+
+      uplo=toupper(uplo);
+
+      if((uplo!='U')&&(uplo!='L'))
+         return -1;
+      else if(n<0)
+         return -2;
+      else if(ldA<n)
+         return -4;
+      else if(n==0)
+         return 0;
+      else if(nb>=n)
+      {
+         sytri<real_t>( uplo, n, A, ldA, ipiv, bsdv );
+         return 0;
+      }
+
+      real_t *work = new real_t[(n+nb+1)*(nb+3)];
+      syconv<real_t>( uplo, 'C', n, A, ldA, ipiv, bsdv, work );
+
+      real_t *Aii;
+      if(uplo == 'U')
+      {
+         Aii = A+(n-1)*(1+ldA);
+         for(i=n-1;i>=0;i--)
+         {
+            if((bsdv[i] == 0) && (Aii[0] == zero))
+               return -1;
+            Aii--;
+         }
+      }
+      else
+      {
+         Aii = A;
+         for(i=0;i<n;i++)
+         {
+            if((bsdv[i] == 0) && (Aii[0] == zero))
+               return -1;
+            Aii++;
+         }
+      }
+
+      u11 = n-1;
+      invd = nb + 2 - 1;
+
+      if(uplo == 'U')
+      {
+         trtri<real_t>( uplo, 'U', n, A, ldA, nb );
+
+         k = 0;
+         while(k<n)
+         {
+            if(bsdv[k] == 0)
+            {
+               work[k+invd*(n+nb+1)] = one / A[k+k*ldA];
+               work[k+(invd+1)*(n+nb+1)] = zero;
+               k++;
+            }
+            else
+            {
+               t = work[k+1];
+               Ak = A[k+k*ldA] / t;
+               Akp1 = A[k+1+(k+1)*ldA] / t;
+               Akkp1 = work[k+1] / t;
+               d = t * ( Ak * Akp1 - one );
+               work[k+invd*(n+nb+1)] = Akp1 / d;
+               work[k+1+(invd+1)*(n+nb+1)] = Ak / d;
+               work[k+(invd+1)*(n+nb+1)] = -Akkp1 / d;
+               work[k+1+invd*(n+nb+1)] = -Akkp1 / d;
+               k+=2;
+            }
+         }
+
+         cut = n;
+         while(cut > 0)
+         {
+            nnb = nb;
+            if( cut <= nnb)
+               nnb = cut;
+            else
+            {
+               count = 0;
+               for(i=cut-nnb;i<cut;i++)
+                  if (bsdv[i] == 1)
+                     count++;
+               if(count%2 == 1)
+                  nnb++;
+            }
+
+            cut-=nnb;
+
+            for(i=0;i<cut;i++)
+               for(j=0;j<nnb;j++)
+                  work[i+j*(n+nb+1)] = A[i+(cut+j)*ldA];
+
+            for(i=0;i<nnb;i++)
+            {
+               work[u11+i+1+i*(n+nb+1)] = one;
+               for(j=0;j<i;j++)
+                  work[u11+i+1+j*(n+nb+1)] = zero;
+               for(j=i+1;j<nnb;j++)
+                  work[u11+i+1+j*(n+nb+1)] = A[cut+i+(cut+j)*ldA];
+            }
+
+            i = 0;
+            while(i<cut)
+            {
+               if(bsdv[i] == 0)
+               {
+                  for(j=0;j<nnb;j++)
+                     work[i+j*(n+nb+1)] = work[i+invd*(n+nb+1)]*work[i+j*(n+nb+1)];
+                  i++;
+               }
+               else
+               {
+                  for(j=0;j<nnb;j++)
+                  {
+                     u01_i_j = work[i+j*(n+nb+1)];
+                     u01_ip1_j = work[i+1+j*(n+nb+1)];
+                     work[i+j*(n+nb+1)] = work[i+invd*(n+nb+1)] * u01_i_j + work[i+(invd+1)*(n+nb+1)] * u01_ip1_j;
+                     work[i+1+j*(n+nb+1)] = work[i+1+invd*(n+nb+1)] * u01_i_j + work[i+1+(invd+1)*(n+nb+1)] * u01_ip1_j;
+                  }
+                  i+=2;
+               }
+            }
+
+            i = 0;
+            while(i<nnb)
+            {
+               if(bsdv[cut+i] == 0)
+               {
+                  for(j=i;j<nnb;j++)
+                     work[u11+i+1+j*(n+nb+1)] = work[cut+i+invd*(n+nb+1)] * work[u11+i+1+j*(n+nb+1)];
+                  i++;
+               }
+               else
+               {
+                  for(j=i;j<nnb;j++)
+                  {
+                     u11_i_j = work[u11+i+1+j*(n+nb+1)];
+                     u11_ip1_j = work[u11+i+2+j*(n+nb+1)];
+                     work[u11+i+1+j*(n+nb+1)] = work[cut+i+invd*(n+nb+1)] * work[u11+i+1+j*(n+nb+1)] + work[cut+i+(invd+1)*(n+nb+1)] * work[u11+i+2+j*(n+nb+1)];
+                     work[u11+i+2+j*(n+nb+1)] = work[cut+i+1+invd*(n+nb+1)] * u11_i_j + work[cut+i+1+(invd+1)*(n+nb+1)] * u11_ip1_j;
+                  }
+                  i+=2;
+               }
+            }
+
+            trmm<real_t>( 'L', 'U', 'T', 'U', nnb, nnb, one, A+cut+cut*ldA, ldA, work+u11+1, n+nb+1 );
+            for(i=0;i<nnb;i++)
+               for(j=i;j<nnb;j++)
+                  A[cut+i+(cut+j)*ldA] = work[u11+i+1+j*(n+nb+1)];
+
+            gemm<real_t>( 'T', 'N', nnb, nnb, cut, one, A+cut*ldA, ldA, work, n+nb+1, zero, work+u11+1, n+nb+1 );
+            for(i=0;i<nnb;i++)
+               for(j=i;j<nnb;j++)
+                  A[cut+i+(cut+j)*ldA] = A[cut+i+(cut+j)*ldA] + work[u11+i+1+j*(n+nb+1)];
+
+            trmm<real_t>( 'L', uplo, 'T', 'U', cut, nnb, one, A, ldA, work, n+nb+1 );
+
+            for(i=0;i<cut;i++)
+               for(j=0;j<nnb;j++)
+                  A[i+(cut+j)*ldA] = work[i+j*(n+nb+1)];
+         }
+
+         i = 0;
+         while(i<n)
+         {
+            ip = ipiv[i];
+            if(bsdv[i] == 0)
+            {
+               if(i<ip)
+                  syswapr( uplo, n, A, ldA, i, ip );
+               if(i>ip)
+                  syswapr( uplo, n, A, ldA, ip, i );
+            }
+            else
+            {
+               i++;
+               if((i-1) < ip)
+                  syswapr( uplo, n, A, ldA, i-1, ip );
+               if((i-1) > ip)
+                  syswapr( uplo, n, A, ldA, ip, i-1 );
+            }
+            i++;
+         }
+      }
+      else
+         // lower
+         // line 400 of dsytri2x.f
+      {
+
+      }
+
+      delete [] work;
+      return 0;
+   }
 }
 
 #endif

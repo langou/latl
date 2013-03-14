@@ -69,7 +69,8 @@ namespace latl
                   Ai[i-1] = zero;
                   --i;
                }
-               Work[i] = zero;
+               else
+                  Work[i] = zero;
                --i;
             }
             
