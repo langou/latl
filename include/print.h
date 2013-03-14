@@ -28,9 +28,10 @@ namespace latl
    /// @param n Number of columns in matrix.
    /// @param A Real matrix of size m-by-n.
    /// @param ldA Column length of matrix A.
+   /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
 
    template <typename real_t>
-   int print(int m, int n, real_t *A, int ldA)
+   int print(int m, int n, real_t *A, int ldA,std::ostream &outfile=std::cout)
    {
       if(m<0)
          return -1;
@@ -38,7 +39,6 @@ namespace latl
          return -2;
       else if(ldA<m)
          return -4;
-      using std::cout;
       using std::endl;
       using std::setprecision;
       using std::setw;
@@ -49,15 +49,15 @@ namespace latl
 #else
       int prec=floor((numeric_limits<real_t>::digits)/3.32193);
 #endif
-      cout << setprecision(prec);
+      outfile << setprecision(prec);
 
       for(int i=0;i<m;i++)
       {
          for(int j=0;j<n;j++)
-            cout << setw(prec+7) << A[i+j*ldA] << "\t";
-         cout << endl;
+            outfile << setw(prec+7) << A[i+j*ldA] << "\t";
+         outfile << endl;
       }
-      cout << setprecision(6);
+      outfile << setprecision(6);
       
       return 0;
    }
@@ -70,9 +70,10 @@ namespace latl
    /// @param n Number of columns in matrix.
    /// @param A Complex matrix of size m-by-n.
    /// @param ldA Column length of matrix A.
+   /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
 
    template <typename real_t>
-   int print(int m, int n, complex<real_t> *A, int ldA)
+   int print(int m, int n, complex<real_t> *A, int ldA,std::ostream &outfile=std::cout)
    {
       if(m<0)
          return -1;
@@ -80,7 +81,6 @@ namespace latl
          return -2;
       else if(ldA<m)
          return -4;
-      using std::cout;
       using std::endl;
       using std::setprecision;
       using std::setw;
@@ -92,15 +92,15 @@ namespace latl
 #else
       int prec=floor((numeric_limits<real_t>::digits)/3.32193);
 #endif
-      cout << setprecision(prec);
+      outfile << setprecision(prec);
 
       for(int i=0;i<m;i++)
       {
          for(int j=0;j<n;j++)
-            cout <<  setw(prec+7) << A[i+j*ldA] << "\t";
-         cout << endl;
+            outfile <<  setw(prec+7) << A[i+j*ldA] << "\t";
+         outfile << endl;
       }
-      cout << setprecision(6);
+      outfile << setprecision(6);
 
       return 0;
    }
@@ -120,9 +120,10 @@ namespace latl
    /// @param n Order of triangular matrix.
    /// @param A Real matrix of size m-by-n.
    /// @param ldA Column length of matrix A.
-   
+   /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
+
    template <typename real_t>
-   int print(char uplo, char diag, int n, real_t *A, int ldA)
+   int print(char uplo, char diag, int n, real_t *A, int ldA,std::ostream &outfile=std::cout)
    {
       const real_t zero=0.0;
       const real_t one=1.0;
@@ -135,7 +136,6 @@ namespace latl
          return -3;
       else if(ldA<n)
          return -5;
-      using std::cout;
       using std::endl;
       using std::setprecision;
       using std::setw;
@@ -147,21 +147,21 @@ namespace latl
 #else
       int prec=floor((numeric_limits<real_t>::digits)/3.32193);
 #endif
-      cout << setprecision(prec);
+      outfile << setprecision(prec);
 
       if(uplo=='U')
       {
          for(int i=0;i<n;i++)
          {
             for(int j=0;j<i;j++)
-               cout << setw(prec+7) << zero << "\t";
+               outfile << setw(prec+7) << zero << "\t";
             if(diag=='U')
-               cout << setw(prec+7) << one << "\t";
+               outfile << setw(prec+7) << one << "\t";
             else
-               cout << setw(prec+7) << A[i+i*ldA] << "\t";
+               outfile << setw(prec+7) << A[i+i*ldA] << "\t";
             for(int j=i+1;j<n;j++)
-               cout << setw(prec+7) << A[i+j*ldA] << "\t";
-            cout << endl;
+               outfile << setw(prec+7) << A[i+j*ldA] << "\t";
+            outfile << endl;
          }
       }
       else
@@ -169,18 +169,18 @@ namespace latl
          for(int i=0;i<n;i++)
          {
             for(int j=0;j<i;j++)
-               cout << setw(prec+7) << A[i+j*ldA] << "\t";
+               outfile << setw(prec+7) << A[i+j*ldA] << "\t";
             if(diag=='U')
-               cout << setw(prec+7) << one << "\t";
+               outfile << setw(prec+7) << one << "\t";
             else
-               cout << setw(prec+7) << A[i+i*ldA] << "\t";
+               outfile << setw(prec+7) << A[i+i*ldA] << "\t";
             for(int j=i+1;j<n;j++)
-               cout << setw(prec+7) << zero << "\t";
-            cout << endl;
+               outfile << setw(prec+7) << zero << "\t";
+            outfile << endl;
          }
       }
       
-      cout << setprecision(6);
+      outfile << setprecision(6);
       
       return 0;
    }
@@ -200,9 +200,10 @@ namespace latl
    /// @param n Order of triangular matrix.
    /// @param A Complex matrix of size m-by-n.
    /// @param ldA Column length of matrix A.
+   /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
 
    template <typename real_t>
-   int print(char uplo, char diag, int n, complex<real_t> *A, int ldA)
+   int print(char uplo, char diag, int n, complex<real_t> *A, int ldA,std::ostream &outfile=std::cout)
    {
       const real_t zero=0.0;
       const real_t one=1.0;
@@ -215,7 +216,6 @@ namespace latl
          return -3;
       else if(ldA<n)
          return -5;
-      using std::cout;
       using std::endl;
       using std::setprecision;
       using std::setw;
@@ -227,21 +227,21 @@ namespace latl
 #else
       int prec=floor((numeric_limits<real_t>::digits)/3.32193);
 #endif
-      cout << setprecision(prec);
+      outfile << setprecision(prec);
 
       if(uplo=='U')
       {
          for(int i=0;i<n;i++)
          {
             for(int j=0;j<i;j++)
-               cout << setw(prec+7) << zero << "\t";
+               outfile << setw(prec+7) << zero << "\t";
             if(diag=='U')
-               cout << setw(prec+7) << one << "\t";
+               outfile << setw(prec+7) << one << "\t";
             else
-               cout << setw(prec+7) << A[i+i*ldA] << "\t";
+               outfile << setw(prec+7) << A[i+i*ldA] << "\t";
             for(int j=i+1;j<n;j++)
-               cout << setw(prec+7) << A[i+j*ldA] << "\t";
-            cout << endl;
+               outfile << setw(prec+7) << A[i+j*ldA] << "\t";
+            outfile << endl;
          }
       }
       else
@@ -249,18 +249,18 @@ namespace latl
          for(int i=0;i<n;i++)
          {
             for(int j=0;j<i;j++)
-               cout << setw(prec+7) << A[i+j*ldA] << "\t";
+               outfile << setw(prec+7) << A[i+j*ldA] << "\t";
             if(diag=='U')
-               cout << setw(prec+7) << one << "\t";
+               outfile << setw(prec+7) << one << "\t";
             else
-               cout << setw(prec+7) << A[i+i*ldA] << "\t";
+               outfile << setw(prec+7) << A[i+i*ldA] << "\t";
             for(int j=i+1;j<n;j++)
-               cout << setw(prec+7) << zero << "\t";
-            cout << endl;
+               outfile << setw(prec+7) << zero << "\t";
+            outfile << endl;
          }
       }
 
-      cout << setprecision(6);
+      outfile << setprecision(6);
 
       return 0;
    }
