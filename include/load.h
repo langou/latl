@@ -25,21 +25,22 @@ namespace latl
    /// @tparam real_t Floating point type.
    /// @param[out] m Number of rows in matrix.
    /// @param[out] n Number of columns in matrix.
+   /// @param[in] infile Input stream from which to read matrix.  Defaults to standard input.
    
    template <typename real_t>
-   real_t *load(int &m,int &n)
+   real_t *load(int &m,int &n,std::istream &infile=std::cin)
    {
       using std::string;
       using std::queue;
       using std::getline;
       using std::istringstream;
       using std::max;
-      using std::cin;
+
       string input;
       queue<string> q;
       n=0;
       int count=0;
-      while(getline(cin,input))
+      while(getline(infile,input))
       {
          q.push(input);
          istringstream s(input);
@@ -83,9 +84,10 @@ namespace latl
    ///             uplo == 'U' : matrix is upper triangular
    ///             uplo == 'L' : matrix is lower triangular
    /// @param[out] n Order of packed triangular matrix.
+   /// @param[in] infile Input stream from which to read matrix.  Defaults to standard input.
    
    template <typename real_t>
-   real_t *load(char &uplo,int &n)
+   real_t *load(char &uplo,int &n,std::istream &infile=std::cin)
    {
       using std::string;
       using std::queue;
@@ -99,7 +101,7 @@ namespace latl
       int m=0;
       int count=0;
       bool first=1;
-      while(getline(cin,input))
+      while(getline(infile,input))
       {
          q.push(input);
          istringstream s(input);

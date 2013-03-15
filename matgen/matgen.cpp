@@ -9,7 +9,9 @@
 //
 
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
+#include <cmath>
 #include <limits>
 #include <cstring>
 #include <print.h>
@@ -29,8 +31,9 @@ void usage(char *name)
    using std::cerr;
    using std::endl;
    
-   cerr << "Usage: " << name << " [-c] [-r <dist>] [-m <m>] [-n <n>] [-S <seed>] [-H] [-s] [-h] [-p]";
+   cerr << "Usage: " << name << " [-o <file>] [-c] [-r <dist>] [-m <m>] [-n <n>] [-S <seed>] [-H] [-s] [-h] [-p]";
    cerr << endl;
+   cerr << "        -o <file> save matrix to <file>, otherwise writes matrix to standard output" << endl;
    cerr << "        -c        generates complex matrix (default is real)" << endl;
    cerr << "        -m <m>    sets number of rows (default is m=1)" << endl;
    cerr << "        -n <n>    sets number of columns (default is n=1)" << endl;
@@ -39,6 +42,7 @@ void usage(char *name)
    cerr << "        -s        creates n-by-n symmetric matrix" << endl;
    cerr << "        -p        creates n-by-n positive definite matrix by adding n to the diagonal" << endl;
    cerr << "        -S <seed> sets random number generator seed (default is 0)" << endl;
+   cerr << "        -e        creates M x N random matrix with entries exp(x), where x is determined below" << endl;
    cerr << "        -r <dist> creates M x N random matrix with one of the following distributions: " << endl;
    cerr << "                    1 = uniform on (0,1) (default)" << endl;
    cerr << "                    2 = uniform on (-1,1)" << endl;
@@ -58,6 +62,9 @@ int main(int argc, char** argv)
    using std::atoi;
    using std::real;
    using std::conj;
+   using std::exp;
+   using std::log;
+   using std::log2;
    using latl::larnv;
    int m=1;
    int n=1;
@@ -69,6 +76,7 @@ int main(int argc, char** argv)
    bool hermitian=0;
    bool hilbert=0;
    bool positive=0;
+   char *outfile=NULL;
    
    while(arg<argc)
    {
@@ -124,13 +132,19 @@ int main(int argc, char** argv)
       {
          positive=1;
       }
+      else if(strncmp(argv[arg],"-o",2)==0)
+      {
+         arg++;
+         if(arg<argc)
+            outfile=argv[arg];
+      }
       else
       {
          usage(argv[0]);
       }
       arg++;
    }
-
+   
    if(hilbert)
    {
       hermitian=0;
@@ -176,11 +190,11 @@ int main(int argc, char** argv)
             for(int i=0;i<n;i++)
                A[i+n*i]+=(real_t)n;
          }
-         latl::print<real_t>(m,n,A,m);
       }
       else
       {
          usage(argv[0]);
+         return 1;
       }
    }
    else
@@ -196,7 +210,6 @@ int main(int argc, char** argv)
          for(int j=0;j<n;j++)
             for(int i=0;i<n;i++)
                A[i+j*n]=1.0/(real_t)(i+j+1);
-         latl::print<real_t>(m,n,A,m);
       }
       else if((dist>0)&&(dist<4))
       {
@@ -215,12 +228,28 @@ int main(int argc, char** argv)
             for(int i=0;i<n;i++)
                A[i+n*i]+=(real_t)n;
          }
-         latl::print<real_t>(m,n,A,m);
       }
       else
       {
          usage(argv[0]);
+         return 1;
       }
+      if(outfile==NULL)
+      {
+         latl::print<real_t>(m,n,A,m);
+      }
+      else
+      {
+         std::ofstream out(outfile);
+         if(out)
+            latl::print<real_t>(m,n,A,m,out);
+         else
+         {
+            cerr << "Cannot open output file." << endl;
+            return 1;
+         }
+      }
+
    }
    return 0;
 }
