@@ -53,6 +53,8 @@ namespace latl
          return -2;
       if (ldA < n)
          return -4;
+      if (nb <= 1)
+         return latl::sytf2(uplo, n, A, ldA, IPIV, BSDV);
       
       if ( n == 0)
          return 0;

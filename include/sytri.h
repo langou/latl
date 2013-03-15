@@ -414,7 +414,7 @@ namespace latl
          return -4;
       else if(n==0)
          return 0;
-      else if(nb>=n)
+      else if((nb<=1) || (nb>=n))
       {
          sytri<real_t>( uplo, n, A, ldA, ipiv, bsdv );
          return 0;
