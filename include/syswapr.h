@@ -85,7 +85,7 @@ namespace latl
          real_t *aj=A+j*ldA;
          real_t *ak;
          real_t t;
-         swap(i-1,A+i,ldA,A+j,ldA);
+         swap(i,A+i,ldA,A+j,ldA);
          t=ai[i];
          ai[i]=aj[j];
          aj[j]=t;

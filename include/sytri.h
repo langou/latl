@@ -561,7 +561,7 @@ namespace latl
                for(j=i;j<nnb;j++)
                   A[cut+i+(cut+j)*ldA] = A[cut+i+(cut+j)*ldA] + work[u11+i+1+j*(n+nb+1)];
 
-            trmm<real_t>( 'L', uplo, 'T', 'U', cut, nnb, one, A, ldA, work, n+nb+1 );
+            trmm<real_t>( 'L', 'U', 'T', 'U', cut, nnb, one, A, ldA, work, n+nb+1 );
 
             for(i=0;i<cut;i++)
                for(j=0;j<nnb;j++)
@@ -591,10 +591,158 @@ namespace latl
          }
       }
       else
-         // lower
-         // line 400 of dsytri2x.f
       {
 
+         trtri<real_t>( 'L', 'U', n, A, ldA, nb );
+
+         k = n-1;
+         while(k>=0)
+         {
+            if(bsdv[k] == 0)
+            {
+               work[k+invd*(n+nb+1)] = one / A[k+k*ldA];
+               work[k+(invd+1)*(n+nb+1)] = zero;
+               k--;
+            }
+            else
+            {
+               t = work[k-1];
+               Ak = A[k-1+(k-1)*ldA] / t;
+               Akp1 = A[k+k*ldA] / t;
+               Akkp1 = work[k-1] / t;
+               d = t * ( Ak * Akp1 - one );
+               work[k-1+invd*(n+nb+1)] = Akp1 / d;
+               work[k+invd*(n+nb+1)] = Ak / d;
+               work[k+(invd+1)*(n+nb+1)] = -Akkp1 / d;
+               work[k-1+(invd+1)*(n+nb+1)] = -Akkp1 / d;
+               k-=2;
+            }
+         }
+
+         cut = 0;
+         while(cut < n)
+         {
+            nnb = nb;
+            if(cut+nnb > n)
+               nnb = n - cut;
+            else
+            {
+               count = 0;
+               for(i=cut;i<cut+nnb;i++)
+                  if (bsdv[i] == 1)
+                     count++;
+               if(count%2 == 1)
+                  nnb++;
+            }
+
+            for(i=0;i<n-cut-nnb;i++)
+               for(j=0;j<nnb;j++)
+                  work[i+j*(n+nb+1)] = A[cut+nnb+i+(cut+j)*ldA];
+
+            for(i=0;i<nnb;i++)
+            {
+               work[u11+i+1+i*(n+nb+1)] = one;
+               for(j=i+1;j<nnb;j++)
+                  work[u11+i+1+j*(n+nb+1)] = zero;
+               for(j=0;j<=i-1;j++)
+                  work[u11+i+1+j*(n+nb+1)] = A[cut+i+(cut+j)*ldA];
+            }
+
+            i = n - 1 - cut - nnb;
+            while(i>=0)
+            {
+               if(bsdv[cut+nnb+i] == 0)
+               {
+                  for(j=0;j<nnb;j++)
+                     work[i+j*(n+nb+1)] = work[cut+nnb+i+invd*(n+nb+1)]*work[i+j*(n+nb+1)];
+                  i--;
+               }
+               else
+               {
+                  for(j=0;j<nnb;j++)
+                  {
+                     u01_i_j = work[i+j*(n+nb+1)];
+                     u01_ip1_j = work[i-1+j*(n+nb+1)];
+                     work[i+j*(n+nb+1)] = work[cut+nnb+i+invd*(n+nb+1)] * u01_i_j + work[cut+nnb+i+(invd+1)*(n+nb+1)] * u01_ip1_j;
+                     work[i-1+j*(n+nb+1)] = work[cut+nnb+i-1+(invd+1)*(n+nb+1)] * u01_i_j + work[cut+nnb+i-1+invd*(n+nb+1)] * u01_ip1_j;
+                  }
+                  i-=2;
+               }
+            }
+
+            i = nnb - 1;
+            while(i>=0)
+            {
+               if(bsdv[cut+i] == 0)
+               {
+                  for(j=0;j<nnb;j++)
+                     work[u11+i+1+j*(n+nb+1)] = work[cut+i+invd*(n+nb+1)] * work[u11+i+1+j*(n+nb+1)];
+                  i--;
+               }
+               else
+               {
+                  for(j=0;j<nnb;j++)
+                  {
+                     u11_i_j = work[u11+i+1+j*(n+nb+1)];
+                     u11_ip1_j = work[u11+i+j*(n+nb+1)];
+                     work[u11+i+1+j*(n+nb+1)] = work[cut+i+invd*(n+nb+1)] * work[u11+i+1+j*(n+nb+1)] + work[cut+i+(invd+1)*(n+nb+1)] * u11_ip1_j;
+                     work[u11+i+j*(n+nb+1)] = work[cut+i-1+(invd+1)*(n+nb+1)] * u11_i_j + work[cut+i-1+invd*(n+nb+1)] * u11_ip1_j;
+                  }
+                  i-=2;
+               }
+            }
+
+            trmm<real_t>( 'L', 'L', 'T', 'U', nnb, nnb, one, A+cut+cut*ldA, ldA, work+u11+1, n+nb+1 );
+
+            for(i=0;i<nnb;i++)
+               for(j=0;j<=i;j++)
+                  A[cut+i+(cut+j)*ldA] = work[u11+i+1+j*(n+nb+1)];
+
+            if((cut+nnb) < n)
+            {
+               gemm<real_t>( 'T', 'N', nnb, nnb, n-nnb-cut, one, A+cut+nnb+cut*ldA, ldA, work, n+nb+1, zero, work+u11+1, n+nb+1 );
+
+               for(i=0;i<nnb;i++)
+                  for(j=0;j<=i;j++)
+                     A[cut+i+(cut+j)*ldA] = A[cut+i+(cut+j)*ldA] + work[u11+i+1+j*(n+nb+1)];
+
+               trmm<real_t>( 'L', 'L', 'T', 'U', n-nnb-cut, nnb, one, A+cut+nnb+(cut+nnb)*ldA, ldA, work, n+nb+1 );
+
+               for(i=0;i<n-cut-nnb;i++)
+                  for(j=0;j<nnb;j++)
+                     A[cut+nnb+i+(cut+j)*ldA] = work[i+j*(n+nb+1)];
+            }
+            else
+            {
+               for(i=0;i<nnb;i++)
+                  for(j=0;j<i;j++)
+                     A[cut+i+(cut+j)*ldA] = work[u11+i+1+j*(n+nb+1)];
+            }
+
+            cut += nnb;
+         }
+
+         i = n - 1;
+         while(i>=0)
+         {
+            ip = ipiv[i];
+            if(bsdv[i] == 0)
+            {
+               if(i<ip)
+                  syswapr( uplo, n, A, ldA, i, ip );
+               if(i>ip)
+                  syswapr( uplo, n, A, ldA, ip, i );
+            }
+            else
+            {
+               if(i < ip)
+                  syswapr( uplo, n, A, ldA, i, ip );
+               if(i > ip)
+                  syswapr( uplo, n, A, ldA, ip, i );
+               i--;
+            }
+            i--;
+         }
       }
 
       delete [] work;
