@@ -191,10 +191,20 @@ int main(int argc, char** argv)
                A[i+n*i]+=(real_t)n;
          }
       }
+      if(outfile==NULL)
+      {
+         latl::print<real_t>(m,n,A,m);
+      }
       else
       {
-         usage(argv[0]);
-         return 1;
+         std::ofstream out(outfile);
+         if(out)
+            latl::print<real_t>(m,n,A,m,out);
+         else
+         {
+            cerr << "Cannot open output file." << endl;
+            return 1;
+         }
       }
    }
    else
@@ -229,11 +239,6 @@ int main(int argc, char** argv)
                A[i+n*i]+=(real_t)n;
          }
       }
-      else
-      {
-         usage(argv[0]);
-         return 1;
-      }
       if(outfile==NULL)
       {
          latl::print<real_t>(m,n,A,m);
@@ -249,7 +254,6 @@ int main(int argc, char** argv)
             return 1;
          }
       }
-
    }
    return 0;
 }
