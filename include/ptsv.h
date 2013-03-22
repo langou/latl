@@ -34,6 +34,25 @@ namespace latl
       }
       return info;
    }
+   
+   template< typename real_t>
+   int_t ptsv(const int_t n, const int_t nrhs, real_t * const D, complex<real_t> * E, complex<real_t> * B, const int_t ldB, const int_t nb)
+   {
+      if ( n < 0)
+         return -1;
+      if (nrhs < 0)
+         return -2;
+      if (ldB<n)
+         return -6;
+      
+      int_t info;
+      info = latl::pttrf(n, D, E);
+      if (info == 0)
+      {
+         info = latl::pttrs('L', n, nrhs, D, E, B, ldB, nb);
+      }
+      return info;
+   }
 }
 
 
