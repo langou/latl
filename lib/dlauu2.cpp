@@ -1,5 +1,5 @@
 //
-//  dlauu2.cpp
+//  dlauum.cpp
 //  Linear Algebra Template Library
 //
 //  Created by Rodney James on 1/17/13.
@@ -7,13 +7,13 @@
 //
 
 #include "lapack.h"
-#include "lauu2.h"
+#include "lauum.h"
 
-using latl::lauu2;
+using latl::lauum;
 
 int dlauu2_(char &uplo,int &n,double *A,int &ldA,int &info)
 {
-   info=lauu2<double>(uplo,n,A,ldA);
+   info=lauum<double>(uplo,n,A,ldA);
    if(info!=0)
    {
       info=-info;
