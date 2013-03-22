@@ -47,13 +47,14 @@ namespace latl
    ///                H * C if side='L',
    ///             or C * H if side='R'.
    /// @param ldC Column length of matrix C.  ldC >= m.
-   /// @param w Workspace array.  Must of of the following length:
+   /// @param w Workspace vector (optional).  If used, must of of the following length:
    ///
    ///          n if side='L'
    ///          m if side='R'
+   /// otherwise, workspace will be allocated and deallocated internally.
 
    template<typename real_t>
-   int larf(char side, int_t m, int_t n, real_t *v, int_t incv, real_t tau, real_t *C, int_t ldC,real_t *w)
+   int larf(char side, int_t m, int_t n, real_t *v, int_t incv, real_t tau, real_t *C, int_t ldC,real_t *w=NULL)
    {
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -69,7 +70,11 @@ namespace latl
          return -5;
       else if(ldC<m)
          return -8;
-      
+
+      bool allocate=w?0:1;
+      if(allocate)
+         w=new real_t[(side=='L')?n:m];
+
       if(side=='L')
       {
          gemv<real_t>('T',m,n,one,C,ldC,v,incv,zero,w,1);
@@ -80,6 +85,9 @@ namespace latl
          gemv<real_t>('N',m,n,one,C,ldC,v,incv,zero,w,1);
          ger<real_t>(m,n,-tau,w,1,v,incv,C,ldC);
       }
+      if(allocate)
+         delete [] w;
+
       return 0;
    }
 
@@ -111,13 +119,14 @@ namespace latl
    ///                H * C if side='L',
    ///             or C * H if side='R'.
    /// @param ldC Column length of matrix C.  ldC >= m.
-   /// @param w Workspace array.  Must of of the following length:
+   /// @param w Workspace vector (optional).  If used, must of of the following length:
    ///
    ///          n if side='L'
    ///          m if side='R'
-   
+   /// otherwise, workspace will be allocated and deallocated internally.
+
    template<typename real_t>
-   int larf(char side, int_t m, int_t n, complex<real_t> *v, int_t incv, complex<real_t> tau, complex<real_t> *C, int_t ldC, complex<real_t> *w)
+   int larf(char side, int_t m, int_t n, complex<real_t> *v, int_t incv, complex<real_t> tau, complex<real_t> *C, int_t ldC, complex<real_t> *w=NULL)
    {
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -133,7 +142,11 @@ namespace latl
          return -5;
       else if(ldC<m)
          return -8;
-      
+
+      bool allocate=w?0:1;
+      if(allocate)
+         w=new complex<real_t>[(side=='L')?n:m];
+         
       if(side=='L')
       {
          gemv<real_t>('C',m,n,one,C,ldC,v,incv,zero,w,1);
@@ -144,6 +157,8 @@ namespace latl
          gemv<real_t>('N',m,n,one,C,ldC,v,incv,zero,w,1);
          gerc<real_t>(m,n,-tau,w,1,v,incv,C,ldC);
       }
+      if(allocate)
+         delete [] w;
       return 0;
    }
 }
