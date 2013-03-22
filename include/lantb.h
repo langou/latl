@@ -58,12 +58,13 @@ namespace latl
    ///        [ a e j . . ]        [ a b c . . ]
    ///        [ . b f k . ]
    ///        [ . . c g l ]
-   
    /// @param ldAB Column length of the matrix A.  ldAB >= m
+   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
+   /// deallocated internally; only used for the infinity norm.
    /// @ingroup NORM
    
    template <typename real_t>
-   real_t lantb(const char normType, const char uplo, const char diag, const int_t n, const int_t k, real_t * const AB, const int_t ldAB)
+   real_t lantb(const char normType, const char uplo, const char diag, const int_t n, const int_t k, real_t * const AB, const int_t ldAB, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -74,6 +75,8 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return value;
+      bool allocate=(Work==NULL)?1:0;
+
       if (normType == 'M' || normType == 'm')
       {
          real_t * ABj = AB;
@@ -220,7 +223,8 @@ namespace latl
       }
       else if ( normType == 'I' || normType == 'i')
       {
-         real_t * Work = new real_t[n];
+         if(allocate)
+            Work = new real_t[n];
          real_t * ABj = AB;
          real_t sum(0.0);
          if (uplo == 'U' || uplo == 'u')
@@ -298,11 +302,13 @@ namespace latl
             }
             else if (isnan(sum))
             {
-               delete [] Work;
+               if(allocate)
+                  delete [] Work;
                return sum;
             }
          }
-         delete [] Work;
+         if(allocate)
+            delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {
@@ -414,12 +420,13 @@ namespace latl
    ///        [ a e j . . ]        [ a b c . . ]
    ///        [ . b f k . ]
    ///        [ . . c g l ]
-   
    /// @param ldAB Column length of the matrix A.  ldAB >= m
+   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
+   /// deallocated internally; only used for the infinity norm.
    /// @ingroup NORM
    
    template <typename real_t>
-   real_t lantb(const char normType, const char uplo, const char diag, const int_t n, const int_t k, complex<real_t> * const AB, const int_t ldAB)
+   real_t lantb(const char normType, const char uplo, const char diag, const int_t n, const int_t k, complex<real_t> * const AB, const int_t ldAB, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -430,6 +437,8 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return value;
+      bool allocate=(Work==NULL)?1:0;
+
       if (normType == 'M' || normType == 'm')
       {
          complex<real_t> * ABj = AB;
@@ -576,7 +585,8 @@ namespace latl
       }
       else if ( normType == 'I' || normType == 'i')
       {
-         real_t * Work = new real_t[n];
+         if(allocate)
+            Work = new real_t[n];
          complex<real_t> * ABj = AB;
          real_t sum(0.0);
          if (uplo == 'U' || uplo == 'u')
@@ -654,11 +664,13 @@ namespace latl
             }
             else if (isnan(sum))
             {
-               delete [] Work;
+               if(allocate)
+                  delete [] Work;
                return sum;
             }
          }
-         delete [] Work;
+         if(allocate)
+            delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {

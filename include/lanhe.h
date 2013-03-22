@@ -34,10 +34,12 @@ namespace latl
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Complex matrix size n-by-n.
    /// @param ldA Column length of the matrix A.  ldA >= n
+   /// @param Work Workspace vector of length n (optional).  If not used, workspace will be allocated and
+   /// deallocated internally; only used for the infinity norm.
    /// @ingroup NORM
    
    template<typename real_t>
-   real_t lanhe(const char normType, const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA)
+   real_t lanhe(const char normType, const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, real_t * Work=NULL)
    {
       using std::abs;
       using std::real;
@@ -47,6 +49,8 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return value;
+      bool allocate=(Work==NULL)?1:0;
+
       if (normType == 'M' || normType == 'm')
       {
          real_t temp(0.0);
@@ -96,7 +100,8 @@ namespace latl
       {
          real_t sum(0.0), temp(0.0);
          complex<real_t> * Aj = A;
-         real_t * Work = new real_t[n];
+         if(allocate)
+            Work = new real_t[n];
          for (int_t i = 0; i < n; ++i)
             Work[i] = zero;
          if (uplo == 'U' || uplo == 'u')
@@ -120,7 +125,8 @@ namespace latl
                   value = sum;
                else if (isnan(sum))
                {
-                  delete [] Work;
+                  if(allocate)
+                     delete [] Work;
                   return sum;
                }
             }
@@ -142,11 +148,13 @@ namespace latl
                value = sum;
             else if (isnan(sum))
             {
-               delete [] Work;
+               if(allocate)
+                  delete [] Work;
                return sum;
             }
          }
-         delete [] Work;
+         if(allocate)
+            delete [] Work;
       }
       else if (normType == 'F' || normType == 'f' || normType == 'E' || normType == 'e')
       {

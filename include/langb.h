@@ -35,10 +35,12 @@ namespace latl
    /// @param kU The number of superdiagonals within the band of A.  kU >= 0.
    /// @param AB Real matrix size ldAB-by-n.  On entry, the matrix A in band storage.
    /// @param ldAB Column length of the matrix AB.  ldAB >= kU+kL+1
+   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
+   /// deallocated internally; only used for the infinity norm.
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t langb(const char normType, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB)
+   real_t langb(const char normType, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -49,6 +51,8 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return value;
+      bool allocate=(Work==NULL)?1:0;
+
       if (normType == 'M' || normType == 'm')
       {
          real_t * ABj = AB;
@@ -89,7 +93,8 @@ namespace latl
       }
       else if (normType == 'I' || normType == 'i')
       {
-         real_t * Work = new real_t[n];
+         if(allocate)
+            Work = new real_t[n];
          real_t temp;
          for (int_t i = 0; i < n; ++i)
          {
@@ -113,11 +118,13 @@ namespace latl
             }
             else if (isnan(temp))
             {
-               delete [] Work;
+               if(allocate)
+                  delete [] Work;
                return temp;
             }
          }
-         delete [] Work;
+         if(allocate)
+            delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {
@@ -153,10 +160,12 @@ namespace latl
    /// @param kU The number of superdiagonals within the band of A.  kU >= 0.
    /// @param AB Real matrix size ldAB-by-n.  On entry, the matrix A in band storage.
    /// @param ldAB Column length of the matrix AB.  ldAB >= kL+kU+1
+   /// @param Work Workspace vector of length n (optional).  If not used, workspace will be allocated and
+   /// deallocated internally; only used for the infinity norm.
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t langb(const char normType, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB)
+   real_t langb(const char normType, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -167,6 +176,8 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return value;
+      bool allocate=(Work==NULL)?1:0;
+
       if (normType == 'M' || normType == 'm')
       {
          complex<real_t> * ABj = AB;
@@ -208,7 +219,8 @@ namespace latl
       }
       else if (normType == 'I' || normType == 'i')
       {
-         real_t * Work = new real_t[n];
+         if(allocate)
+            Work = new real_t[n];
          real_t temp;
          for (int_t i = 0; i < n; ++i)
          {
@@ -232,11 +244,13 @@ namespace latl
             }
             else if (isnan(temp))
             {
-               delete [] Work;
+               if(allocate)
+                  delete [] Work;
                return temp;
             }
          }
-         delete [] Work;
+         if(allocate)
+            delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {

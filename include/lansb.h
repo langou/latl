@@ -35,10 +35,12 @@ namespace latl
    /// @param k The number of super- or sub-diagonals within the band of A.  k >= 0.
    /// @param AB Real matrix size ldAB-by-n.  On entry, the matrix A in band storage.
    /// @param ldAB Column length of the matrix AB.  ldAB >= k+1
+   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
+   /// deallocated internally; only used for the infinity norm.
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lansb(const char normType, const char uplo, const int_t n, const int_t k, real_t * const AB, const int_t ldAB)
+   real_t lansb(const char normType, const char uplo, const int_t n, const int_t k, real_t * const AB, const int_t ldAB, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -49,6 +51,8 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return value;
+      bool allocate=(Work==NULL)?1:0;
+
       if (normType == 'M' || normType == 'm')
       {
          real_t * ABj = AB;
@@ -90,7 +94,8 @@ namespace latl
       }
       else if ( normType == 'O' || normType == 'o' || normType == '1' || normType == 'I' || normType == 'i')
       {
-         real_t * Work = new real_t[n];
+         if(allocate)
+            Work = new real_t[n];
          real_t * ABj = AB;
          real_t sum(0.0);
          for (int_t i = 0; i < n; ++i)
@@ -119,7 +124,8 @@ namespace latl
                }
                else if (isnan(sum))
                {
-                  delete [] Work;
+                  if(allocate)
+                     delete [] Work;
                   return sum;
                }
             }
@@ -138,13 +144,15 @@ namespace latl
                   value = sum;
                else if (isnan(sum))
                {
-                  delete [] Work;
+                  if(allocate)
+                     delete [] Work;
                   return sum;
                }
                ABj += ldAB;
             }
          }
-         delete [] Work;
+         if(allocate)
+            delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {
@@ -200,10 +208,12 @@ namespace latl
    /// @param k The number of super- or sub-diagonals within the band of A.  k >= 0.
    /// @param AB Complex matrix size ldAB-by-n.  On entry, the matrix A in band storage.
    /// @param ldAB Column length of the matrix AB.  ldAB >= k+1
+   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
+   /// deallocated internally; only used for the infinity norm.
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lansb(const char normType, const char uplo, const int_t n, const int_t k, complex<real_t> * const AB, const int_t ldAB)
+   real_t lansb(const char normType, const char uplo, const int_t n, const int_t k, complex<real_t> * const AB, const int_t ldAB, real_t Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -214,6 +224,8 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return value;
+      bool allocate=(Work==NULL)?1:0;
+
       if (normType == 'M' || normType == 'm')
       {
          complex<real_t> * ABj = AB;
@@ -257,7 +269,8 @@ namespace latl
       }
       else if ( normType == 'O' || normType == 'o' || normType == '1' || normType == 'I' || normType == 'i')
       {
-         real_t * Work = new real_t[n];
+         if(allocate)
+            Work = new real_t[n];
          complex<real_t> * ABj = AB;
          real_t sum(0.0);
          for (int_t i = 0; i < n; ++i)
@@ -286,7 +299,8 @@ namespace latl
                }
                else if (isnan(sum))
                {
-                  delete [] Work;
+                  if(allocate)
+                     delete [] Work;
                   return sum;
                }
             }
@@ -305,13 +319,15 @@ namespace latl
                   value = sum;
                else if (isnan(sum))
                {
-                  delete [] Work;
+                  if(allocate)
+                     delete [] Work;
                   return sum;
                }
                ABj += ldAB;
             }
          }
-         delete [] Work;
+         if(allocate)
+            delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {

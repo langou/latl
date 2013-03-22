@@ -34,10 +34,12 @@ namespace latl
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Real symmetric matrix size ldA-by-n.
    /// @param ldA Column length of the matrix A.  ldA >= n
+   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
+   /// deallocated internally; only used for the infinity norm.
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lansy(const char normType, const char uplo, const int_t n, real_t * const A, const int_t ldA)
+   real_t lansy(const char normType, const char uplo, const int_t n, real_t * const A, const int_t ldA, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -46,6 +48,8 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return zero;
+      bool allocate=(Work==NULL)?1:0;
+
       if (normType == 'M' || normType == 'm')
       {
          real_t * Aj = A;
@@ -88,7 +92,8 @@ namespace latl
       else if ( normType == 'O' || normType == 'o' || normType == '1' || normType == 'I' || normType == 'i')
       {
          real_t sum, * Aj = A;
-         real_t * Work = new real_t[n];
+         if(allocate)
+            Work = new real_t[n];
          for (int_t i = 0; i < n; ++i)
          {
             Work[i] = zero;
@@ -113,7 +118,8 @@ namespace latl
                   value = sum;
                else if (isnan(sum))
                {
-                  delete [] Work;
+                  if(allocate)
+                     delete [] Work;
                   return sum;
                }
             }
@@ -133,12 +139,14 @@ namespace latl
                   value = sum;
                else if (isnan(sum))
                {
-                  delete [] Work;
+                  if(allocate)
+                     delete [] Work;
                   return sum;
                }
             }
          }
-         delete [] Work;
+         if(allocate)
+            delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {
@@ -184,10 +192,12 @@ namespace latl
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Complex symmetric matrix size ldA-by-n.
    /// @param ldA Column length of the matrix A.  ldA >= n
+   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
+   /// deallocated internally; only used for the infinity norm.
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lansy(const char normType, const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA)
+   real_t lansy(const char normType, const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -196,6 +206,8 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return zero;
+      bool allocate=(Work==NULL)?1:0;
+
       if (normType == 'M' || normType == 'm')
       {
          complex<real_t> * Aj = A;
@@ -239,7 +251,8 @@ namespace latl
       {
          real_t sum;
          complex<real_t> * Aj = A;
-         real_t * Work = new real_t[n];
+         if(allocate)
+            Work = new real_t[n];
          for (int_t i = 0; i < n; ++i)
          {
             Work[i] = zero;
@@ -264,7 +277,8 @@ namespace latl
                   value = sum;
                else if (isnan(sum))
                {
-                  delete [] Work;
+                  if(allocate)
+                     delete [] Work;
                   return sum;
                }
             }
@@ -284,12 +298,14 @@ namespace latl
                   value = sum;
                else if (isnan(sum))
                {
-                  delete [] Work;
+                  if(allocate)
+                     delete [] Work;
                   return sum;
                }
             }
          }
-         delete [] Work;
+         if(allocate)
+            delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {
