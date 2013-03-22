@@ -13,5 +13,5 @@ using latl::lange;
 
 double dlange_(char &norm,int &m,int &n,double *A,int &ldA,double *work)
 {
-   return lange<double>(norm,m,n,A,ldA);
+   return lange<double>(norm,m,n,A,ldA,work);
 }
