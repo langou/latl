@@ -1,5 +1,5 @@
 //
-//  slauu2.cpp
+//  slauum.cpp
 //  Linear Algebra Template Library
 //
 //  Created by Rodney James on 1/17/13.
@@ -7,13 +7,13 @@
 //
 
 #include "lapack.h"
-#include "lauu2.h"
+#include "lauum.h"
 
-using latl::lauu2;
+using latl::lauum;
 
 int slauu2_(char &uplo,int &n,float *A,int &ldA,int &info)
 {
-   info=lauu2<float>(uplo,n,A,ldA);
+   info=lauum<float>(uplo,n,A,ldA);
    if(info!=0)
    {
       info=-info;
