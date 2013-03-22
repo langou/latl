@@ -42,7 +42,8 @@ namespace latl
       using std::isnan;
       if (n > 0)
       {
-         real_t zero(0.0), absxi, temp;
+         real_t zero(0.0), absxi;
+         real_t temp=zero;
          for (int_t ix = 0; ix < n*incx; ix += incx)
          {
             absxi = abs(X[ix]);
@@ -95,7 +96,9 @@ namespace latl
       using std::isnan;
       if (n > 0)
       {
-         real_t zero(0.0), temp, temp2;
+         real_t zero(0.0);
+         real_t temp=zero;
+         real_t temp2=zero;
          for (int_t ix = 0; ix < n*incx; ix += incx)
          {
             temp = abs(real(X[ix]));

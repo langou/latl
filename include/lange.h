@@ -34,10 +34,12 @@ namespace latl
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Real matrix size m-by-n.
    /// @param ldA Column length of the matrix A.  ldA >= m
+   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
+   /// deallocated internally; only used for the infinity norm.
    /// @ingroup NORM
 
    template< typename real_t>
-   real_t lange(const char normType, const int_t m, const int_t n, real_t * const A, const int_t ldA)
+   real_t lange(const char normType, const int_t m, const int_t n, real_t * const A, const int_t ldA, real_t * Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -46,6 +48,9 @@ namespace latl
       real_t value(0.0);
       if (m == 0 || n == 0)
          return zero;
+
+      bool allocate=(Work==NULL)?1:0;
+
       if (normType == 'M' || normType == 'm')
       {
          real_t * Aj = A;
@@ -86,8 +91,9 @@ namespace latl
       }
       else if (normType == 'I' || normType == 'i')
       {
-         real_t * Work = new real_t[m];
-         real_t temp;
+         if(allocate)
+            Work = new real_t[m];
+         real_t temp=zero;
          for (int_t i = 0; i < m; ++i)
          {
             Work[i] = abs(A[i]);
@@ -110,11 +116,13 @@ namespace latl
             }
             else if (isnan(temp))
             {
-               delete [] Work;
+               if(allocate)
+                  delete [] Work;
                return temp;
             }
          }
-         delete [] Work;
+         if(allocate)
+            delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {
@@ -146,10 +154,12 @@ namespace latl
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Real matrix size m-by-n.
    /// @param ldA Column length of the matrix A.  ldA >= m
+   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
+   /// deallocated internally; only used for the infinity norm.
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lange(const char normType, const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA)
+   real_t lange(const char normType, const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, real_t * Work)
    {
       using std::isnan;
       using std::abs;
@@ -157,10 +167,13 @@ namespace latl
       real_t value(0.0);
       if (m == 0 || n == 0)
          return zero;
+
+      bool allocate=(Work==NULL)?1:0;
+
       if (normType == 'M' || normType == 'm')
       {
          complex< real_t> * Aj = A;
-         real_t temp;
+         real_t temp=zero;
          for (int_t j = 0; j < n; ++j)
          {
             for (int_t i = 0; i < m; ++i)
@@ -198,8 +211,9 @@ namespace latl
       }
       else if (normType == 'I' || normType == 'i')
       {
-         real_t * Work = new real_t[m];
-         real_t temp;
+         if(allocate)
+            Work = new real_t[m];
+         real_t temp=zero;
          for (int_t i = 0; i < m; ++i)
          {
             Work[i] = abs(A[i]);
@@ -222,11 +236,13 @@ namespace latl
             }
             else if (isnan(temp))
             {
-               delete [] Work;
+               if(allocate)
+                  delete [] Work;
                return temp;
             }
          }
-         delete [] Work;
+         if(allocate)
+            delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {
