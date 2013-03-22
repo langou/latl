@@ -13,7 +13,8 @@ using latl::lauum;
 
 int clauum_(char &uplo,int &n,complex<float> *A,int &ldA,int &info)
 {
-   info=lauum<float>(uplo,n,A,ldA);
+   int nb=80;
+   info=lauum<float>(uplo,n,A,ldA,nb);
    if(info!=0)
    {
       info=-info;

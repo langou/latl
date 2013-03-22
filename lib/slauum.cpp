@@ -13,7 +13,8 @@ using latl::lauum;
 
 int slauum_(char &uplo,int &n,float *A,int &ldA,int &info)
 {
-   info=lauum<float>(uplo,n,A,ldA);
+   int nb=80;
+   info=lauum<float>(uplo,n,A,ldA,nb);
    if(info!=0)
    {
       info=-info;
