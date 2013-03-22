@@ -39,7 +39,7 @@ namespace latl
    /// @ingroup NORM
 
    template< typename real_t>
-   real_t lange(const char normType, const int_t m, const int_t n, real_t * const A, const int_t ldA, real_t * Work=NULL)
+   real_t lange(char normType, int_t m, int_t n, real_t *A, int_t ldA, real_t * Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -159,7 +159,7 @@ namespace latl
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lange(const char normType, const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, real_t * Work)
+   real_t lange(char normType, int_t m, int_t n, complex<real_t> *A, int_t ldA, real_t * Work=NULL)
    {
       using std::isnan;
       using std::abs;
