@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Applies real plane rotations to a series of real points (x,y).
    ///

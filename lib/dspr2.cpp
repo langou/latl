@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "spr.h"
 
-using latl::spr;
+using LATL::spr;
 
 int dspr2_(char& uplo, int &n, double &alpha, double *x, int& incx, double *y, int& incy, double *A)
 {

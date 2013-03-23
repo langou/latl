@@ -18,7 +18,7 @@
 #include <cmath>
 #include <latl.h>
 
-namespace latl
+namespace LATL
 {
    /// @brief Prints a real rectangular matrix to standard output.
    /// @tparam real_t Floating point type.

@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "tbmv.h"
 
-using latl::tbmv;
+using LATL::tbmv;
 using std::complex;
 
 int ztbmv_(char& uplo, char& trans, char& diag, int &n, int& k, complex<double> *A, int &ldA, complex<double> *x, int& incx)

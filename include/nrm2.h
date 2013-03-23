@@ -14,7 +14,7 @@
 #include <cmath>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the Euclidean norm of a real vector.
    /// @return Euclidean norm ||x|| = sqrt(x'.x).

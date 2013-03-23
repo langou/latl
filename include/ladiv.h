@@ -14,7 +14,7 @@
 #include <cmath>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Performs complex division in real arithmetic.
    ///

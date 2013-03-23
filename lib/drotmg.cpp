@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "rotmg.h"
 
-using latl::rotmg;
+using LATL::rotmg;
 
 int drotmg_(double& d1, double& d2, double& x1, double& y1, double *param)
 {

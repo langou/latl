@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "trmm.h"
 
-using latl::trmm;
+using LATL::trmm;
 
 int dtrmm_(char& side, char& uplo, char& trans, char& diag, int &m, int &n, double &alpha, double *A, int &ldA, double *B, int &ldB)
 {

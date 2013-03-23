@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "scal.h"
 
-using latl::scal;
+using LATL::scal;
 
 int dscal_(int &n, double& alpha, double *x, int& incx)
 {

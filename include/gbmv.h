@@ -16,7 +16,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Performs banded real matrix vector multiplication.
    /// @return 0 if success.

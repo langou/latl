@@ -8,7 +8,7 @@
 
 #include "blas.h"
 #include "asum.h"
-using latl::asum;
+using LATL::asum;
 
 double dasum_(int &n, double *x, int& incx)
 {

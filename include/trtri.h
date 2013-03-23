@@ -17,7 +17,7 @@
 #include "trmv.h"
 #include "scal.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the inverse of a triangular matrix.
    ///

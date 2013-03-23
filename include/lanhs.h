@@ -14,7 +14,7 @@
 #include "latl.h"
 #include "lassq.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a real upper Hessenberg matrix A.
    ///
@@ -126,7 +126,7 @@ namespace latl
          real_t * Aj = A;
          for (int_t j = 0; j < n; ++j)
          {
-            latl::lassq(min(n, j+2), Aj, 1, scale, sum);
+            LATL::lassq(min(n, j+2), Aj, 1, scale, sum);
             Aj += ldA;
          }
          value = scale * sqrt(sum);
@@ -246,7 +246,7 @@ namespace latl
          complex<real_t> * Aj = A;
          for (int_t j = 0; j < n; ++j)
          {
-            latl::lassq(min(n, j+2), Aj, 1, scale, sum);
+            LATL::lassq(min(n, j+2), Aj, 1, scale, sum);
             Aj += ldA;
          }
          value = scale * sqrt(sum);

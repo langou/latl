@@ -15,7 +15,7 @@
 #include "hetrf.h"
 #include "hetrs.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the solution to a complex system of linear equations
    ///
@@ -59,10 +59,10 @@ namespace latl
       if (ldB < n)
          return -8;
       
-      int_t info = latl::hetrf(uplo, n, A, ldA, ipiv, bsdv);
+      int_t info = LATL::hetrf(uplo, n, A, ldA, ipiv, bsdv);
       if (info == 0)
       {
-         info = latl::hetrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
+         info = LATL::hetrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
       }
       return info;
    }
@@ -110,10 +110,10 @@ namespace latl
       if (ldB < n)
          return -8;
       
-      int_t info = latl::hetrf(uplo, n, A, ldA, ipiv, bsdv, nb);
+      int_t info = LATL::hetrf(uplo, n, A, ldA, ipiv, bsdv, nb);
       if (info == 0)
       {
-         info = latl::hetrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
+         info = LATL::hetrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
       }
       return info;
    }

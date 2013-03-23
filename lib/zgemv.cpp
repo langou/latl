@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "gemv.h"
 
-using latl::gemv;
+using LATL::gemv;
 using std::complex;
 
 int zgemv_(char& trans, int &m, int &n, complex<double> &alpha, complex<double> *A, int &ldA, complex<double> *x, int& incx, complex<double> &beta, complex<double> *y, int& incy)

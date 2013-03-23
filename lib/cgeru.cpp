@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "ger.h"
 
-using latl::ger;
+using LATL::ger;
 using std::complex;
 
 int cgeru_(int &m, int &n, complex<float> &alpha, complex<float> *x, int& incx, complex<float> *y, int& incy, complex<float> *A, int &ldA)

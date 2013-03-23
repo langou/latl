@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Creates permutation vector for sorting two contiguous lists.
    /// 

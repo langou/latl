@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Convert a real matrix to higher precision.
    ///

@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "dot.h"
 
-using latl::dot;
+using LATL::dot;
 
 double ddot_(int &n, double *x, int& incx, double *y, int& incy)
 {

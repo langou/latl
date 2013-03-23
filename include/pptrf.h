@@ -17,7 +17,7 @@
 #include "tpsv.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the Cholesky factorization of a real symmetric positive definite matrix A stored in packed form.
    ///
@@ -67,8 +67,8 @@ namespace latl
             jj += (j+1);
             
             if ( j > 0)
-               latl::tpsv('U', 'T', 'N', j, AP, AP+jc, 1);
-            ajj = AP[jj] - latl::dot(j, AP+jc, 1, AP+jc, 1);
+               LATL::tpsv('U', 'T', 'N', j, AP, AP+jc, 1);
+            ajj = AP[jj] - LATL::dot(j, AP+jc, 1, AP+jc, 1);
             if (ajj <= zero)
             {
                AP[jj] = ajj;
@@ -92,8 +92,8 @@ namespace latl
             
             if (j < n)
             {
-               latl::scal(n-j-1, one/ajj, AP+jj+1, 1);
-               latl::spr('L', n-j-1, -one, AP+jj+1, 1, AP+jj+n-j);
+               LATL::scal(n-j-1, one/ajj, AP+jj+1, 1);
+               LATL::spr('L', n-j-1, -one, AP+jj+1, 1, AP+jj+n-j);
                jj = jj+n-j;
             }
          }
@@ -150,8 +150,8 @@ namespace latl
             jj += (j+1);
             
             if ( j > 0)
-               latl::tpsv('U', 'C', 'N', j, AP, AP+jc, 1);
-            ajj = real(AP[jj] - latl::dotc(j, AP+jc, 1, AP+jc, 1));
+               LATL::tpsv('U', 'C', 'N', j, AP, AP+jc, 1);
+            ajj = real(AP[jj] - LATL::dotc(j, AP+jc, 1, AP+jc, 1));
             if (ajj <= zero)
             {
                AP[jj] = ajj;
@@ -175,8 +175,8 @@ namespace latl
             
             if (j < n)
             {
-               latl::scal(n-j-1, one/ajj, AP+jj+1, 1);
-               latl::hpr('L', n-j-1, -one, AP+jj+1, 1, AP+jj+n-j);
+               LATL::scal(n-j-1, one/ajj, AP+jj+1, 1);
+               LATL::hpr('L', n-j-1, -one, AP+jj+1, 1, AP+jj+n-j);
                jj = jj+n-j;
             }
          }

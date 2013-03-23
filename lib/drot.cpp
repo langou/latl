@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "rot.h"
 
-using latl::rot;
+using LATL::rot;
 
 int drot_(int &n, double *x, int& incx, double *y, int& incy, double& C, double& S)
 {

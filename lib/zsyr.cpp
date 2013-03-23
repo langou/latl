@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "syr.h"
 
-using latl::syr;
+using LATL::syr;
 
 int zsyr_(char& uplo, int &n, complex<float>& alpha, complex<float> *x, int& incx, complex<float> *A, int &ldA)
 {

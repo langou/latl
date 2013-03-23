@@ -21,7 +21,7 @@
 #include "herk.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the Cholesky factorization with complete pivoting of a real symmetric positive semidefinite matrix A.
    ///
@@ -135,12 +135,12 @@ namespace latl
                Apvt = A + ldA*pvt;
                Apvtp1 = Apvt+ldA;
                Apvt[pvt] = Aj[j];
-               latl::swap(j, Aj, 1, Apvt, 1);
+               LATL::swap(j, Aj, 1, Apvt, 1);
                if (pvt < n-1)
                {
-                  latl::swap(n-pvt-1, Apvtp1+j, ldA, Apvtp1+pvt, ldA);
+                  LATL::swap(n-pvt-1, Apvtp1+j, ldA, Apvtp1+pvt, ldA);
                }
-               latl::swap(pvt-j-1, Aj+ldA+j, ldA, Apvt+j+1, 1);
+               LATL::swap(pvt-j-1, Aj+ldA+j, ldA, Apvt+j+1, 1);
 
                temp = Work[j];
                Work[j] = Work[pvt];
@@ -154,8 +154,8 @@ namespace latl
 
             if (j < n-1)
             {
-               latl::gemv('T', j, n-j-1, -one, Aj+ldA, ldA, Aj, 1, one, Aj+ldA+j, ldA);
-               latl::scal(n-j-1, one/ajj, Aj+ldA+j, ldA);
+               LATL::gemv('T', j, n-j-1, -one, Aj+ldA, ldA, Aj, 1, one, Aj+ldA+j, ldA);
+               LATL::scal(n-j-1, one/ajj, Aj+ldA+j, ldA);
             }
             Aj += ldA;
          }
@@ -198,12 +198,12 @@ namespace latl
             {
                Apvt = A + ldA*pvt;
                Apvt[pvt] = Aj[j];
-               latl::swap(j, A+j, ldA, A+pvt, ldA);
+               LATL::swap(j, A+j, ldA, A+pvt, ldA);
                if (pvt < n-1)
                {
-                  latl::swap(n-pvt-1, Aj+pvt+1, 1, Apvt+pvt+1, 1);
+                  LATL::swap(n-pvt-1, Aj+pvt+1, 1, Apvt+pvt+1, 1);
                }
-               latl::swap(pvt-j-1, Aj+j+1, 1, Aj+ldA+pvt, ldA);
+               LATL::swap(pvt-j-1, Aj+j+1, 1, Aj+ldA+pvt, ldA);
 
                temp = Work[j];
                Work[j] = Work[pvt];
@@ -217,8 +217,8 @@ namespace latl
 
             if (j < n-1)
             {
-               latl::gemv('N', n-j-1, j, -one, A+j+1, ldA, A+j, ldA, one, Aj+j+1, 1);
-               latl::scal(n-j-1, one/ajj, Aj+j+1, 1);
+               LATL::gemv('N', n-j-1, j, -one, A+j+1, ldA, A+j, ldA, one, Aj+j+1, 1);
+               LATL::scal(n-j-1, one/ajj, Aj+j+1, 1);
             }
             Aj += ldA;
          }
@@ -346,10 +346,10 @@ namespace latl
                Apvt = A + ldA*pvt;
                Apvtp1 = Apvt+ldA;
                Apvt[pvt] = Aj[j];
-               latl::swap(j, Aj, 1, Apvt, 1);
+               LATL::swap(j, Aj, 1, Apvt, 1);
                if (pvt < n-1)
                {
-                  latl::swap(n-pvt-1, Apvtp1+j, ldA, Apvtp1+pvt, ldA);
+                  LATL::swap(n-pvt-1, Apvtp1+j, ldA, Apvtp1+pvt, ldA);
                }
                for (int_t i = j+1; i < pvt; ++i)//
                {
@@ -372,10 +372,10 @@ namespace latl
 
             if (j < n-1)
             {
-               latl::lacgv(j, Aj, 1);//
-               latl::gemv('T', j, n-j-1, -onec, Aj+ldA, ldA, Aj, 1, onec, Aj+ldA+j, ldA);
-               latl::lacgv(j, Aj, 1);//
-               latl::scal(n-j-1, one/ajj, Aj+ldA+j, ldA);
+               LATL::lacgv(j, Aj, 1);//
+               LATL::gemv('T', j, n-j-1, -onec, Aj+ldA, ldA, Aj, 1, onec, Aj+ldA+j, ldA);
+               LATL::lacgv(j, Aj, 1);//
+               LATL::scal(n-j-1, one/ajj, Aj+ldA+j, ldA);
             }
             Aj += ldA;
          }
@@ -419,10 +419,10 @@ namespace latl
             {
                Apvt = A + ldA*pvt;
                Apvt[pvt] = Aj[j];
-               latl::swap(j, A+j, ldA, A+pvt, ldA);
+               LATL::swap(j, A+j, ldA, A+pvt, ldA);
                if (pvt < n-1)
                {
-                  latl::swap(n-pvt-1, Aj+pvt+1, 1, Apvt+pvt+1, 1);
+                  LATL::swap(n-pvt-1, Aj+pvt+1, 1, Apvt+pvt+1, 1);
                }
                for (int_t i = j+1; i < pvt; ++i)
                {
@@ -445,10 +445,10 @@ namespace latl
 
             if (j < n-1)
             {
-               latl::lacgv(j, A+j, ldA);
-               latl::gemv('N', n-j-1, j, -onec, A+j+1, ldA, A+j, ldA, onec, Aj+j+1, 1);
-               latl::lacgv(j, A+j, ldA);
-               latl::scal(n-j-1, one/ajj, Aj+j+1, 1);
+               LATL::lacgv(j, A+j, ldA);
+               LATL::gemv('N', n-j-1, j, -onec, A+j+1, ldA, A+j, ldA, onec, Aj+j+1, 1);
+               LATL::lacgv(j, A+j, ldA);
+               LATL::scal(n-j-1, one/ajj, Aj+j+1, 1);
             }
             Aj += ldA;
          }
@@ -499,7 +499,7 @@ namespace latl
       
       if (nb <= 1 || nb >= n)
       {
-         return latl::pstrf(uplo, n, A, ldA, PIV, rank, tol);
+         return LATL::pstrf(uplo, n, A, ldA, PIV, rank, tol);
       }
       for (int_t i = 0; i < n; ++i)
       {
@@ -567,7 +567,7 @@ namespace latl
                
                if (j > 0)
                {
-                  itemp = latl::imax(n-j , Work+n+j, 1);
+                  itemp = LATL::imax(n-j , Work+n+j, 1);
                   pvt = itemp + j;
                   ajj = Work[n+pvt];
                   if (ajj <= stop || std::isnan(ajj))
@@ -583,12 +583,12 @@ namespace latl
                {
                   Apvt = A + ldA*pvt;
                   Apvt[pvt] = Aj[j];
-                  latl::swap(j, Aj, 1, Apvt, 1);
+                  LATL::swap(j, Aj, 1, Apvt, 1);
                   if (pvt < n-1)
                   {
-                     latl::swap(n-pvt-1, Apvt+ldA+j, ldA, Apvt+ldA+pvt, ldA);
+                     LATL::swap(n-pvt-1, Apvt+ldA+j, ldA, Apvt+ldA+pvt, ldA);
                   }
-                  latl::swap(pvt-j-1, Ajp1+j, ldA, Apvt+j+1, 1);
+                  LATL::swap(pvt-j-1, Ajp1+j, ldA, Apvt+j+1, 1);
                   
                   temp = Work[j];
                   Work[j] = Work[pvt];
@@ -602,8 +602,8 @@ namespace latl
                
                if (j < n-1)
                {
-                  latl::gemv('T', j-k, n-j-1, -one, Ajp1+k, ldA, Aj+k, 1, one, Ajp1+j, ldA);
-                  latl::scal(n-j-1, one/ajj, Ajp1+j, ldA);
+                  LATL::gemv('T', j-k, n-j-1, -one, Ajp1+k, ldA, Aj+k, 1, one, Ajp1+j, ldA);
+                  LATL::scal(n-j-1, one/ajj, Ajp1+j, ldA);
                }
                Aj += ldA;
                Ajp1 += ldA;
@@ -614,7 +614,7 @@ namespace latl
             Aj = A + ldA*itemp;
             if (itemp < n)
             {
-               latl::syrk('U', 'T', n-itemp, jb, -one, Aj+k, ldA, one, Aj+itemp, ldA);
+               LATL::syrk('U', 'T', n-itemp, jb, -one, Aj+k, ldA, one, Aj+itemp, ldA);
             }
          }
       }
@@ -647,7 +647,7 @@ namespace latl
                
                if (j > 0)
                {
-                  itemp = latl::imax(n-j , Work+n+j, 1);
+                  itemp = LATL::imax(n-j , Work+n+j, 1);
                   pvt = itemp + j;
                   ajj = Work[n+pvt];
                   if (ajj <= stop || std::isnan(ajj))
@@ -663,12 +663,12 @@ namespace latl
                {
                   Apvt = A+ldA*pvt;
                   Apvt[pvt] = Aj[j];
-                  latl::swap(j, A+j, ldA, A+pvt, ldA);
+                  LATL::swap(j, A+j, ldA, A+pvt, ldA);
                   if (pvt < n-1)
                   {
-                     latl::swap(n-pvt-1, Aj+pvt+1, 1, Apvt+pvt+1, 1);
+                     LATL::swap(n-pvt-1, Aj+pvt+1, 1, Apvt+pvt+1, 1);
                   }
-                  latl::swap(pvt-j-1, Aj+j+1, 1, Aj+ldA+pvt, ldA);
+                  LATL::swap(pvt-j-1, Aj+j+1, 1, Aj+ldA+pvt, ldA);
                   
                   temp = Work[j];
                   Work[j] = Work[pvt];
@@ -682,8 +682,8 @@ namespace latl
                
                if (j < n-1)
                {
-                  latl::gemv('N', n-j-1, j-k, -one, Ak+j+1, ldA, Ak+j, ldA, one, Aj+j+1, 1);
-                  latl::scal(n-j-1, one/ajj, Aj+j+1, 1);
+                  LATL::gemv('N', n-j-1, j-k, -one, Ak+j+1, ldA, Ak+j, ldA, one, Aj+j+1, 1);
+                  LATL::scal(n-j-1, one/ajj, Aj+j+1, 1);
                }
                
                Aj += ldA;
@@ -694,7 +694,7 @@ namespace latl
             Aj = A + ldA*itemp;
             if (itemp < n)
             {
-               latl::syrk('L', 'N', n-itemp, jb, -one, Ak+itemp, ldA, one, Aj+itemp, ldA);
+               LATL::syrk('L', 'N', n-itemp, jb, -one, Ak+itemp, ldA, one, Aj+itemp, ldA);
             }
             
             Ak += ldA*nb;
@@ -746,7 +746,7 @@ namespace latl
       
       if (nb <= 1 || nb >= n)
       {
-         return latl::pstrf(uplo, n, A, ldA, PIV, rank, tol);
+         return LATL::pstrf(uplo, n, A, ldA, PIV, rank, tol);
       }
       for (int_t i = 0; i < n; ++i)
       {
@@ -767,7 +767,7 @@ namespace latl
          Ai += ldA;
       }
       
-      pvt = latl::imax(n, Work, 1);
+      pvt = LATL::imax(n, Work, 1);
       Apvt += ldA*pvt;
       ajj = real(Apvt[pvt]);
       
@@ -815,7 +815,7 @@ namespace latl
                
                if (j > 0)
                {
-                  itemp = latl::imax(n-j , Work+n+j, 1);
+                  itemp = LATL::imax(n-j , Work+n+j, 1);
                   pvt = itemp + j;
                   ajj = Work[n+pvt];
                   if (ajj <= stop || std::isnan(ajj))
@@ -831,10 +831,10 @@ namespace latl
                {
                   Apvt = A + ldA*pvt;
                   Apvt[pvt] = Aj[j];
-                  latl::swap(j, Aj, 1, Apvt, 1);
+                  LATL::swap(j, Aj, 1, Apvt, 1);
                   if (pvt < n-1)
                   {
-                     latl::swap(n-pvt-1, Apvt+ldA+j, ldA, Apvt+ldA+pvt, ldA);
+                     LATL::swap(n-pvt-1, Apvt+ldA+j, ldA, Apvt+ldA+pvt, ldA);
                   }
                   Ai = A+ldA*(j+1);
                   for (int_t i = j+1; i < pvt; ++i)
@@ -857,10 +857,10 @@ namespace latl
                
                if (j < n-1)
                {
-                  latl::lacgv(j, Aj, 1);
-                  latl::gemv('T', j-k, n-j-1, -onec, Ajp1+k, ldA, Aj+k, 1, onec, Ajp1+j, ldA);
-                  latl::lacgv(j, Aj, 1);
-                  latl::scal(n-j-1, one/ajj, Ajp1+j, ldA);
+                  LATL::lacgv(j, Aj, 1);
+                  LATL::gemv('T', j-k, n-j-1, -onec, Ajp1+k, ldA, Aj+k, 1, onec, Ajp1+j, ldA);
+                  LATL::lacgv(j, Aj, 1);
+                  LATL::scal(n-j-1, one/ajj, Ajp1+j, ldA);
                }
                Aj += ldA;
                Ajp1 += ldA;
@@ -870,7 +870,7 @@ namespace latl
             Aj = A + ldA*itemp;
             if (itemp < n)
             {
-               latl::herk('U', 'C', n-itemp, jb, -one, Aj+k, ldA, one, Aj+itemp, ldA);
+               LATL::herk('U', 'C', n-itemp, jb, -one, Aj+k, ldA, one, Aj+itemp, ldA);
             }
          }
       }
@@ -903,7 +903,7 @@ namespace latl
                
                if (j > 0)
                {
-                  itemp = latl::imax(n-j , Work+n+j, 1);
+                  itemp = LATL::imax(n-j , Work+n+j, 1);
                   pvt = itemp + j;
                   ajj = Work[n+pvt];
                   if (ajj <= stop || std::isnan(ajj))
@@ -919,10 +919,10 @@ namespace latl
                {
                   Apvt = A+ldA*pvt;
                   Apvt[pvt] = Aj[j];
-                  latl::swap(j, A+j, ldA, A+pvt, ldA);
+                  LATL::swap(j, A+j, ldA, A+pvt, ldA);
                   if (pvt < n-1)
                   {
-                     latl::swap(n-pvt-1, Aj+pvt+1, 1, Apvt+pvt+1, 1);
+                     LATL::swap(n-pvt-1, Aj+pvt+1, 1, Apvt+pvt+1, 1);
                   }
                   Ai = A + ldA*(j+1);
                   for (int_t i = j+1; i < pvt; ++i)
@@ -946,10 +946,10 @@ namespace latl
                
                if (j < n-1)
                {
-                  latl::lacgv(j, A+j, ldA);
-                  latl::gemv('N', n-j-1, j-k, -onec, Ak+j+1, ldA, Ak+j, ldA, onec, Aj+j+1, 1);
-                  latl::lacgv(j, A+j, ldA);
-                  latl::scal(n-j-1, one/ajj, Aj+j+1, 1);
+                  LATL::lacgv(j, A+j, ldA);
+                  LATL::gemv('N', n-j-1, j-k, -onec, Ak+j+1, ldA, Ak+j, ldA, onec, Aj+j+1, 1);
+                  LATL::lacgv(j, A+j, ldA);
+                  LATL::scal(n-j-1, one/ajj, Aj+j+1, 1);
                }
                
                Aj += ldA;
@@ -960,7 +960,7 @@ namespace latl
             Aj = A + ldA*itemp;
             if (itemp < n)
             {
-               latl::herk('L', 'N', n-itemp, jb, -one, Ak+itemp, ldA, one, Aj+itemp, ldA);
+               LATL::herk('L', 'N', n-itemp, jb, -one, Ak+itemp, ldA, one, Aj+itemp, ldA);
             }
             
             Ak += ldA*nb;

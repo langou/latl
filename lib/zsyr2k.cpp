@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "syrk.h"
 
-using latl::syrk;
+using LATL::syrk;
 using std::complex;
 
 int zsyr2k_(char& uplo, char& trans, int &n, int& k, complex<double> &alpha, complex<double> *A, int &ldA, complex<double> *B, int &ldB, complex<double> &beta, complex<double> *C, int &ldC)

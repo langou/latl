@@ -19,7 +19,7 @@
 // #include "gemv.h"
 // #include "ger.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Reduces a general matrix A to upper Hessenberg form H by an orthogonal 
    /// similarity transformation:  Q**T * A * Q = H
@@ -79,7 +79,7 @@ namespace latl
 
       using std::min; 
       using std::max; 
-      using latl::larfg;
+      using LATL::larfg;
 
       if (n<0)
          return -1;
@@ -171,7 +171,7 @@ namespace latl
       using std::min; 
       using std::max; 
       using std::conj;
-      using latl::larfg;
+      using LATL::larfg;
 
       if (n<0)
          return -1;

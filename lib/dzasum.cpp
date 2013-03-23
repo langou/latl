@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "asum.h"
 
-using latl::asum;
+using LATL::asum;
 
 double dzasum_(int &n, complex<double> *x, int& incx)
 {

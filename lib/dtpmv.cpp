@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "tpmv.h"
 
-using latl::tpmv;
+using LATL::tpmv;
 
 int dtpmv_(char& uplo, char& trans, char& diag, int &n, double *A, double *x, int& incx)
 {

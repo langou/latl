@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "trmv.h"
 
-using latl::trmv;
+using LATL::trmv;
 using std::complex;
 
 int ctrmv_(char& uplo, char& trans, char& diag, int &n, complex<float> *A, int &ldA, complex<float> *x, int& incx)

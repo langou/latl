@@ -15,7 +15,7 @@
 #include <cmath>
 #include "lassq.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a real triangular band matrix A.
    ///
@@ -324,7 +324,7 @@ namespace latl
                   ABj += ldAB+k-1;
                   for (int_t j = 1; j < n; ++j)
                   {
-                     latl::lassq(min(j, k), ABj, 1, scale, sum);
+                     LATL::lassq(min(j, k), ABj, 1, scale, sum);
                      if (k-j > 0)
                         ABj += ldAB-1;
                      else
@@ -339,7 +339,7 @@ namespace latl
                ABj += k;
                for (int_t j = 0; j < n; ++j)
                {
-                  latl::lassq(min(j, k)+1, ABj, 1, scale, sum);
+                  LATL::lassq(min(j, k)+1, ABj, 1, scale, sum);
                   if (k-j > 0)
                      ABj += ldAB-1;
                   else
@@ -358,7 +358,7 @@ namespace latl
                {
                   for (int_t j = 0; j < n-1; ++j)
                   {
-                     latl::lassq(min(k, n-j-1), ABj, 1, scale, sum);
+                     LATL::lassq(min(k, n-j-1), ABj, 1, scale, sum);
                      ABj += ldAB;
                   }
                }
@@ -369,7 +369,7 @@ namespace latl
                sum = 1.0;
                for (int_t j = 0; j < n; ++j)
                {
-                  latl::lassq(min(k+1, n-j), ABj, 1, scale, sum);
+                  LATL::lassq(min(k+1, n-j), ABj, 1, scale, sum);
                   ABj += ldAB;
                }
             }
@@ -687,7 +687,7 @@ namespace latl
                   ABj += ldAB+k-1;
                   for (int_t j = 1; j < n; ++j)
                   {
-                     latl::lassq(min(j, k), ABj, 1, scale, sum);
+                     LATL::lassq(min(j, k), ABj, 1, scale, sum);
                      if (k-j > 0)
                         ABj += ldAB-1;
                      else
@@ -702,7 +702,7 @@ namespace latl
                ABj += k;
                for (int_t j = 0; j < n; ++j)
                {
-                  latl::lassq(min(j, k)+1, ABj, 1, scale, sum);
+                  LATL::lassq(min(j, k)+1, ABj, 1, scale, sum);
                   if (k-j > 0)
                      ABj += ldAB-1;
                   else
@@ -721,7 +721,7 @@ namespace latl
                {
                   for (int_t j = 0; j < n-1; ++j)
                   {
-                     latl::lassq(min(k, n-j-1), ABj, 1, scale, sum);
+                     LATL::lassq(min(k, n-j-1), ABj, 1, scale, sum);
                      ABj += ldAB;
                   }
                }
@@ -732,7 +732,7 @@ namespace latl
                sum = 1.0;
                for (int_t j = 0; j < n; ++j)
                {
-                  latl::lassq(min(k+1, n-j), ABj, 1, scale, sum);
+                  LATL::lassq(min(k+1, n-j), ABj, 1, scale, sum);
                   ABj += ldAB;
                }
             }

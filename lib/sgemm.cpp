@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "gemm.h"
 
-using latl::gemm;
+using LATL::gemm;
 
 int sgemm_(char& transA, char& transB, int &m, int &n, int& k, float& alpha, float *A, int &ldA, float *B, int &ldB, float &beta, float *C, int &ldC)
 {

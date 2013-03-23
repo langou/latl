@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "axpy.h"
 
-using latl::axpy;
+using LATL::axpy;
 
 int saxpy_(int &n, float& alpha, float *x, int& incx, float *y, int& incy)
 {

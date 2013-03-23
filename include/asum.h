@@ -14,7 +14,7 @@
 #include <cmath>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Find the sum of the absolute values of real vector elements.
    /// @return The sum of |x[i]| for i=0,...,n-1.

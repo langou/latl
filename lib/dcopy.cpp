@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "copy.h"
 
-using latl::copy;
+using LATL::copy;
 
 int dcopy_(int &n, double *x, int& incx, double *y, int& incy)
 {

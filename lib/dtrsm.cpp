@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "trsm.h"
 
-using latl::trsm;
+using LATL::trsm;
 
 int dtrsm_(char& side, char& uplo, char& trans, char& diag, int &m, int &n, double &alpha, double *A, int &ldA, double *B, int &ldB)
 {

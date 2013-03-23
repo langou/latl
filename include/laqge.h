@@ -14,7 +14,7 @@
 #include <limits>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Equilibrates a general m-by-n matrix A using the row and column scaling factors in the vectors R and C.
    ///

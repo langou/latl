@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "ladiv.h"
 
-using latl::ladiv;
+using LATL::ladiv;
 
 int sladiv_(float &A, float &B, float &C, float &D, float &P, float &Q)
 {

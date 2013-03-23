@@ -15,7 +15,7 @@
 #include <cmath>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a complex Hermitian matrix A supplied in packed form.
    ///
@@ -168,7 +168,7 @@ namespace latl
             for (int_t j = 1; j < n; ++j)
             {
                Aj += j;
-               latl::lassq(j, Aj, 1, scale, sum);
+               LATL::lassq(j, Aj, 1, scale, sum);
             }
             sum *= 2;
             Aj = AP;
@@ -197,7 +197,7 @@ namespace latl
             Aj += 1;
             for (int_t j = 0; j < n-1; ++j)
             {
-               latl::lassq(n-j-1, Aj, 1, scale, sum);
+               LATL::lassq(n-j-1, Aj, 1, scale, sum);
                Aj += n-j;
             }
             sum *= 2;

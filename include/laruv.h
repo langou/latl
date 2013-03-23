@@ -14,7 +14,7 @@
 #include <random>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Returns a vector of uniform random real numbers on (0,1).
    ///

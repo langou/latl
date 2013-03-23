@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes a modified rotation of complex pairs of points.
    /// 

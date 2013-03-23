@@ -17,7 +17,7 @@
 #include "gemm.h"
 #include "trsm.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the inverse of a matrix using the LU factorization
    /// computed by GETRF.
@@ -134,7 +134,7 @@ namespace latl
    template< typename real_t >
       int_t getri(int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, int_t nb=32)
       {
-         return latl::getri< complex<real_t> > (n, A, ldA, ipiv, nb);
+         return LATL::getri< complex<real_t> > (n, A, ldA, ipiv, nb);
       }
 
 }

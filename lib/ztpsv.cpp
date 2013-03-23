@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "tpsv.h"
 
-using latl::tpsv;
+using LATL::tpsv;
 using std::complex;
 
 int ztpsv_(char& uplo, char& trans, char& diag, int &n, complex<double> *A, complex<double> *x, int& incx)

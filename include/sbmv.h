@@ -15,7 +15,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Performs banded real symmetric matrix-vector multiplication.
    /// 

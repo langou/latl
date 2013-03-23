@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    
    /// @brief Forms the dot product of two real vectors.

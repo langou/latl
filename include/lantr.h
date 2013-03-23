@@ -15,7 +15,7 @@
 #include "latl.h"
 #include <cmath>
 
-namespace latl
+namespace LATL
 {
    /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a real triangular or trapezoidal matrix A.
    ///
@@ -285,7 +285,7 @@ namespace latl
                Aj += ldA;
                for (int_t j = 1; j < n; ++j)
                {
-                  latl::lassq(min(m, j), Aj, 1, scale, sum);
+                  LATL::lassq(min(m, j), Aj, 1, scale, sum);
                   Aj += ldA;
                }
             }
@@ -294,7 +294,7 @@ namespace latl
                scale = zero;
                for (int_t j = 0; j < n; ++j)
                {
-                  latl::lassq(min(m, j+1), Aj, 1, scale, sum);
+                  LATL::lassq(min(m, j+1), Aj, 1, scale, sum);
                   Aj += ldA;
                }
             }
@@ -307,7 +307,7 @@ namespace latl
                Aj += 1;
                for (int_t j = 0; j < n; ++j)
                {
-                  latl::lassq(m-j-1, Aj, 1, scale, sum);
+                  LATL::lassq(m-j-1, Aj, 1, scale, sum);
                   Aj += ldA+1;
                }
             }
@@ -316,7 +316,7 @@ namespace latl
                scale = zero;
                for (int_t j = 0; j < n; ++j)
                {
-                  latl::lassq(m-j, Aj, 1, scale, sum);
+                  LATL::lassq(m-j, Aj, 1, scale, sum);
                   Aj += ldA+1;
                }
             }
@@ -596,7 +596,7 @@ namespace latl
                Aj += ldA;
                for (int_t j = 1; j < n; ++j)
                {
-                  latl::lassq(min(m, j), Aj, 1, scale, sum);
+                  LATL::lassq(min(m, j), Aj, 1, scale, sum);
                   Aj += ldA;
                }
             }
@@ -605,7 +605,7 @@ namespace latl
                scale = zero;
                for (int_t j = 0; j < n; ++j)
                {
-                  latl::lassq(min(m, j+1), Aj, 1, scale, sum);
+                  LATL::lassq(min(m, j+1), Aj, 1, scale, sum);
                   Aj += ldA;
                }
             }
@@ -618,7 +618,7 @@ namespace latl
                Aj += 1;
                for (int_t j = 0; j < n; ++j)
                {
-                  latl::lassq(m-j-1, Aj, 1, scale, sum);
+                  LATL::lassq(m-j-1, Aj, 1, scale, sum);
                   Aj += ldA+1;
                }
             }
@@ -627,7 +627,7 @@ namespace latl
                scale = zero;
                for (int_t j = 0; j < n; ++j)
                {
-                  latl::lassq(m-j, Aj, 1, scale, sum);
+                  LATL::lassq(m-j, Aj, 1, scale, sum);
                   Aj += ldA+1;
                }
             }

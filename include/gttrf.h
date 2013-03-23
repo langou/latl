@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes an LU factorization of a real tridiagonal matrix A using elimination with partial pivoting and row interchanges.
    ///

@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Applies a series of row changes to the matrix A.
    /// @tparam real_t Floating point type.

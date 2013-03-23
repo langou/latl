@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "symv.h"
 
-using latl::symv;
+using LATL::symv;
 
 int dsymv_(char& uplo, int &n, double &alpha, double *A, int &ldA, double *x, int& incx, double &beta, double *y, int& incy)
 {

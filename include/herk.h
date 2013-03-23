@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Performs multiplcation of a complex matrix with its conjugate transpose.
    ///

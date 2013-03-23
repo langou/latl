@@ -15,7 +15,7 @@
 #include <cmath>
 #include "lassq.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a real banded matrix.
    ///
@@ -134,7 +134,7 @@ namespace latl
          {
             L = max(intzero,j-kU);
             K = kU -j+L;
-            latl::lassq(min(n, j+kL+1)-L, ABj+K, 1, scale, sum);
+            LATL::lassq(min(n, j+kL+1)-L, ABj+K, 1, scale, sum);
             ABj += ldAB;
          }
          value = scale*sqrt(sum);
@@ -261,7 +261,7 @@ namespace latl
          {
             L = max(intzero,j-kU);
             K = kU -j+L;
-            latl::lassq(min(n, j+kL+1)-L, ABj+K, 1, scale, sum);
+            LATL::lassq(min(n, j+kL+1)-L, ABj+K, 1, scale, sum);
             ABj += ldAB;
          }
          value = scale*sqrt(sum);

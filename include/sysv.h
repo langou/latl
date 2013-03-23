@@ -14,7 +14,7 @@
 #include "sytrf.h"
 #include "sytrs.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the solution to a real system of linear equations
    ///
@@ -58,10 +58,10 @@ namespace latl
       if (ldB < n)
          return -8;
       
-      int_t info = latl::sytrf(uplo, n, A, ldA, ipiv, bsdv);
+      int_t info = LATL::sytrf(uplo, n, A, ldA, ipiv, bsdv);
       if (info == 0)
       {
-         info = latl::sytrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
+         info = LATL::sytrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
       }
       return info;
    }
@@ -96,7 +96,7 @@ namespace latl
    template<typename real_t>
    int_t sysv(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB)
    {
-      return latl::sysv< complex<real_t> > (uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
+      return LATL::sysv< complex<real_t> > (uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
    }
    
    /// @brief Computes the solution to a real system of linear equations
@@ -142,10 +142,10 @@ namespace latl
       if (ldB < n)
          return -8;
       
-      int_t info = latl::sytrf(uplo, n, A, ldA, ipiv, bsdv, nb);
+      int_t info = LATL::sytrf(uplo, n, A, ldA, ipiv, bsdv, nb);
       if (info == 0)
       {
-         info = latl::sytrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
+         info = LATL::sytrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
       }
       return info;
    }
@@ -182,7 +182,7 @@ namespace latl
    template<typename real_t>
    int_t sysv(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB, int_t nb)
    {
-      return latl::sysv< complex<real_t> > (uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB, nb);
+      return LATL::sysv< complex<real_t> > (uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB, nb);
    }
 }
 #endif

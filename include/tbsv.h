@@ -15,7 +15,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Solves banded real triangular system of equations.
    /// 

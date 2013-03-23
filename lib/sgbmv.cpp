@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "gbmv.h"
 
-using latl::gbmv;
+using LATL::gbmv;
 
 int sgbmv_(char& trans, int &m, int &n, int& kL, int& kU, float& alpha, float *A, int &ldA, float *x, int& incx, float &beta, float *y, int& incy)
 {

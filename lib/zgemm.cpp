@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "gemm.h"
 
-using latl::gemm;
+using LATL::gemm;
 using std::complex;
 
 int zgemm_(char& transA, char& transB, int &m, int &n, int& k, complex<double> &alpha, complex<double> *A, int &ldA, complex<double> *B, int &ldB, complex<double> &beta, complex<double> *C, int &ldC)

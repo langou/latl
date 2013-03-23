@@ -8,7 +8,7 @@
 #include "blas.h"
 #include "hpr.h"
 
-using latl::hpr;
+using LATL::hpr;
 using std::complex;
 
 int chpr2_(char& uplo, int &n, complex<float> &alpha, complex<float> *x, int& incx, complex<float> *y, int& incy, complex<float> *A)

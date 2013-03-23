@@ -18,7 +18,7 @@
 #include "trmv.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Forms the triangular factor T of a real block reflector H of order n,
    /// which is defined as a product of k elementary reflectors.

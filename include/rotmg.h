@@ -13,7 +13,7 @@
 
 #include <cmath>
 
-namespace latl
+namespace LATL
 {
    /// @brief Constructs the modified Givens transformation matrix H.
    ///
@@ -27,7 +27,7 @@ namespace latl
    ///        ------------    ------------    -------------    ---------
    ///        [ h11  h12 ]    [  1   h12 ]    [ h11    1  ]    [ 1   0 ]
    ///        [ h21  h22 ]    [ h21   1  ]    [ -1    h22 ]    [ 0   1 ]
-   /// and is used in the application routine latl::rotm.
+   /// and is used in the application routine LATL::rotm.
    /// @tparam real_t Floating point type.
    /// @param d1 Real scalar.
    /// @param d2 Real scalar.

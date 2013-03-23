@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "syrk.h"
 
-using latl::syrk;
+using LATL::syrk;
 
 int ssyr2k_(char& uplo, char& trans, int &n, int& k, float& alpha, float *A, int &ldA, float *B, int &ldB, float &beta, float *C, int &ldC)
 {

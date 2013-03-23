@@ -14,7 +14,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Performs a real vector outer product using packed storage.
    /// 

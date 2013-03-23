@@ -16,7 +16,7 @@
 #include <random>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Returns a vector of n random real numbers from a uniform or normal distribution.
    ///

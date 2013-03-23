@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "lapy2.h"
 
-using latl::lapy2;
+using LATL::lapy2;
 
 float slapy2_(float &x, float &y)
 {

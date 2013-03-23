@@ -14,7 +14,7 @@
 #include <cmath>
 #include "latl.h"
 
-namespace latl 
+namespace LATL 
 {
    /// @brief Constructs real Givens plane rotations.
    ///

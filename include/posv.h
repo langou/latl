@@ -12,7 +12,7 @@
 #include "potrs.h"
 #include "potrf.h"
 
-namespace latl
+namespace LATL
 {
    template<typename real_t>
    int_t posv(const char uplo, const int_t n, const int_t nrhs, real_t * const A, const int_t ldA, real_t * const B, const int_t ldB)
@@ -28,16 +28,16 @@ namespace latl
       if (ldB < n)
          return -7;
       int_t info = 0;
-      info = latl::potrf(uplo, n, A, ldA);
+      info = LATL::potrf(uplo, n, A, ldA);
       if (info == 0)
-          info = latl::potrs(uplo, n, nrhs, A, ldA, B, ldB);
+          info = LATL::potrs(uplo, n, nrhs, A, ldA, B, ldB);
       return info;
    }
    
    template<typename real_t>
    int_t posv(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, complex<real_t> * const B, const int_t ldB)
    {
-      return latl::posv< complex<real_t> >(uplo, n, nrhs, A, ldA, B, ldB);
+      return LATL::posv< complex<real_t> >(uplo, n, nrhs, A, ldA, B, ldB);
    }
 }
 

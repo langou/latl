@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "symm.h"
 
-using latl::symm;
+using LATL::symm;
 using std::complex;
 
 int csymm_(char& side, char& uplo, int &m, int &n, complex<float> &alpha, complex<float> *A, int &ldA, complex<float> *B, int &ldB, complex<float> &beta, complex<float> *C, int &ldC)

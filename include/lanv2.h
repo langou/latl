@@ -17,7 +17,7 @@
 #include <limits>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the Schur factorization of a real 2-by-2 matrix.
    ///
@@ -51,7 +51,7 @@ namespace latl
       using std::min;
       using std::max;
       using std::copysign;
-      using latl::lapy2;
+      using LATL::lapy2;
       const real_t zero=0.0;
       const real_t one=1.0;
       const real_t half=0.5;

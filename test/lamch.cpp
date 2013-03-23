@@ -13,6 +13,7 @@
 #include <iomanip>
 #include <limits>
 #include <cmath>
+#include <larf.h>
 
 #if defined(FLOAT)
 typedef float real_t;

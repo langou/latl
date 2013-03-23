@@ -23,7 +23,7 @@
 #include "lacgv.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes product of a real triangular matrix with its transpose.
    ///

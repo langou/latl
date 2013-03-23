@@ -10,8 +10,8 @@
 #include "sytf2.h"
 #include "latl.h"
 
-using latl::sytf2;
-using latl::int_t;
+using LATL::sytf2;
+using LATL::int_t;
 
 int zsytf2_(char &uplo,int &n,complex<double> *A,int &ldA,int *ipiv,int &info)
 {

@@ -17,7 +17,7 @@
 #include <limits>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief  Multiplies real matrix A by the real scalar a/b.
    ///

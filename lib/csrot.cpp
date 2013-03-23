@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "rot.h"
 
-using latl::rot;
+using LATL::rot;
 
 int csrot_(int &n, complex<float> *x, int& incx, complex<float> *y, int& incy, float& C, float& S)
 {

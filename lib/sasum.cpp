@@ -8,7 +8,7 @@
 
 #include "blas.h"
 #include "asum.h"
-using latl::asum;
+using LATL::asum;
 
 float sasum_(int &n, float *x, int& incx)
 {

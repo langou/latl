@@ -15,7 +15,7 @@
 #include "trtri.h"
 #include "lauum.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the inverse of a symmetric positive definite matrix.
    /// 

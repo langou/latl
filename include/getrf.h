@@ -23,7 +23,7 @@
 #include "swap.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes an LU factorization of an m-by-n matrix A using partial pivoting.
    ///
@@ -70,19 +70,19 @@ namespace latl
 
       for (int_t j = 0; j < std::min(m,n); ++j)
       {
-         jp = j + latl::imax(m-j, Ajj, 1);
+         jp = j + LATL::imax(m-j, Ajj, 1);
          pivot[j]=jp;
          if (A[ldA*j+jp] != zero)
          {
             if (jp != j)
             {
-               latl::swap(n, A+j, ldA, A+jp, ldA);
+               LATL::swap(n, A+j, ldA, A+jp, ldA);
             }
             if (j < m)
             {
                if (abs(Ajj[0]) >= sfmin)
                {
-                  latl::scal(m-j-1, one/Ajj[0], Ajjp1, 1);
+                  LATL::scal(m-j-1, one/Ajj[0], Ajjp1, 1);
                }
                else
                {
@@ -102,7 +102,7 @@ namespace latl
          }
          if (j < std::min(m,n))
          {
-            latl::ger(m-j-1, n-j-1, -one, Ajjp1, 1, Ajj+ldA, ldA, Ajjp1+ldA, ldA);
+            LATL::ger(m-j-1, n-j-1, -one, Ajjp1, 1, Ajj+ldA, ldA, Ajjp1+ldA, ldA);
          }
          Ajj+= (ldA+1);
          Ajjp1 = Ajj+1;
@@ -156,19 +156,19 @@ namespace latl
 
       for (int_t j = 0; j < std::min(m,n); ++j)
       {
-         jp = j + latl::imax(m-j, Ajj, 1);
+         jp = j + LATL::imax(m-j, Ajj, 1);
          pivot[j]=jp;
          if (A[ldA*j+jp] != zero)
          {
             if (jp != j)
             {
-               latl::swap(n, A+j, ldA, A+jp, ldA);
+               LATL::swap(n, A+j, ldA, A+jp, ldA);
             }
             if (j < m)
             {
                if (abs(Ajj[0]) >= sfmin)
                {
-                  latl::scal(m-j-1, one/Ajj[0], Ajjp1, 1);
+                  LATL::scal(m-j-1, one/Ajj[0], Ajjp1, 1);
                }
                else
                {
@@ -188,7 +188,7 @@ namespace latl
          }
          if (j < std::min(m,n))
          {
-            latl::ger(m-j-1, n-j-1, -one, Ajjp1, 1, Ajj+ldA, ldA, Ajjp1+ldA, ldA);
+            LATL::ger(m-j-1, n-j-1, -one, Ajjp1, 1, Ajj+ldA, ldA, Ajjp1+ldA, ldA);
          }
          Ajj+= (ldA+1);
          Ajjp1 = Ajj+1;
@@ -237,7 +237,7 @@ namespace latl
       int_t smaller = std::min(m,n);
       if((nb<2)||(nb>=smaller))
       {
-         info = latl::getrf(m, n, A, ldA, pivot);
+         info = LATL::getrf(m, n, A, ldA, pivot);
       }
       else
       {
@@ -255,21 +255,21 @@ namespace latl
             }
             if (j+jb < m)
             {
-               latl::laswp(j, A, ldA, j, j+jb-1, pivot, 1);
+               LATL::laswp(j, A, ldA, j, j+jb-1, pivot, 1);
             }
             else
             {
-               latl::laswp(j, A, ldA, j, m-1, pivot, 1);
+               LATL::laswp(j, A, ldA, j, m-1, pivot, 1);
             }
             
             if ((j+jb) < n)
             {
-               latl::laswp(n-j-jb, A+ldA*(j+jb), ldA, j, j+jb-1, pivot, 1);
-               latl::trsm('L', 'L', 'N', 'U', jb, n-j-jb, one, Ajj, ldA, Ajj+ldA*jb, ldA);
+               LATL::laswp(n-j-jb, A+ldA*(j+jb), ldA, j, j+jb-1, pivot, 1);
+               LATL::trsm('L', 'L', 'N', 'U', jb, n-j-jb, one, Ajj, ldA, Ajj+ldA*jb, ldA);
                
                if ((j+jb) < m)
                {
-                  latl::gemm('N', 'N', m-j-jb, n-j-jb, jb, -one, Ajj+jb, ldA, Ajj+ldA*jb, ldA, one, Ajj+ldA*jb+jb, ldA);
+                  LATL::gemm('N', 'N', m-j-jb, n-j-jb, jb, -one, Ajj+jb, ldA, Ajj+ldA*jb, ldA, one, Ajj+ldA*jb+jb, ldA);
                }
             }
             Ajj += jb*ldA+jb;
@@ -303,7 +303,7 @@ namespace latl
    template< typename real_t >
    int_t getrf( const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const pivot, int_t nb)
    {
-      return latl::getrf< complex<real_t> > (m, n, A, ldA, pivot, nb);
+      return LATL::getrf< complex<real_t> > (m, n, A, ldA, pivot, nb);
    }
    
 }

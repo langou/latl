@@ -14,7 +14,7 @@
 #include <cmath>
 #include <algorithm>
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the singular values of a 2-by-2 triangular matrix.
    /// 

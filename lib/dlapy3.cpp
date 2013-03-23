@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "lapy3.h"
 
-using latl::lapy3;
+using LATL::lapy3;
 
 double dlapy3_(double &x, double &y, double &z)
 {

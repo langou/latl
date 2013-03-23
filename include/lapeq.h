@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Performs the matrix operation A+=alpha*B for real matrices A and B.
    /// @tparam real_t Floating point type.

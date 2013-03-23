@@ -14,7 +14,7 @@
 #include "scal.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    template<typename real_t>
    int_t ptts2(const int_t n, const int_t nrhs, real_t * const D, real_t * const E, real_t * const B, const int_t ldB)
@@ -29,7 +29,7 @@ namespace latl
          return 0;
       if (n == 1)
       {
-         latl::scal(nrhs, 1.0/D[0], B, ldB);
+         LATL::scal(nrhs, 1.0/D[0], B, ldB);
          return 0;
       }
       real_t * Bj = B;
@@ -61,7 +61,7 @@ namespace latl
          return 0;
       if (n == 1)
       {
-         latl::scal(nrhs, 1.0/D[0], B, ldB);
+         LATL::scal(nrhs, 1.0/D[0], B, ldB);
          return 0;
       }
       if (iuplo == 1)

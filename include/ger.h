@@ -14,7 +14,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Performs a vector outer product of two real vectors.
    /// 

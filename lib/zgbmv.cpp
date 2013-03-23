@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "gbmv.h"
 
-using latl::gbmv;
+using LATL::gbmv;
 using std::complex;
 
 int zgbmv_(char& trans, int &m, int &n, int& kL, int& kU, complex<double> &alpha, complex<double> *A, int &ldA, complex<double> *x, int& incx, complex<double> &beta, complex<double> *y, int& incy)

@@ -14,7 +14,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Solves packed real triangular system of equations.
    /// 

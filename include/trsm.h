@@ -14,7 +14,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Solves a real triangular matrix equation.
    /// 

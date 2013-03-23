@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "ladiv.h"
 
-using latl::ladiv;
+using LATL::ladiv;
 
 int dladiv_(double &A, double &B, double &C, double &D, double &P, double &Q)
 {

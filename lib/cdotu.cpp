@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "dot.h"
 
-using latl::dot;
+using LATL::dot;
 
 #if defined(__GNUC__) && !defined(__INTEL_COMPILER) && !defined(__clang__)
 complex<float> cdotu_(int &n, complex<float> *x, int& incx, complex<float> *y, int& incy)

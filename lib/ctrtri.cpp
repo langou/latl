@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "trtri.h"
 
-using latl::trtri;
+using LATL::trtri;
 
 int ctrtri_(char &uplo,char &diag, int &n,complex<float> *A,int &ldA,int &info)
 {

@@ -10,7 +10,7 @@
 #include "syrk.h"
 
 using std::complex;
-using latl::syrk;
+using LATL::syrk;
 
 int zsyrk_(char& uplo, char& trans, int &n, int& k, complex<double> &alpha, complex<double> *A, int &ldA, complex<double> &beta, complex<double> *C, int &ldC)
 {

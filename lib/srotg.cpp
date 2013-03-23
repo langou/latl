@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "rotg.h"
 
-using latl::rotg;
+using LATL::rotg;
 
 int srotg_(float& A, float& B, float& C, float& S)
 {

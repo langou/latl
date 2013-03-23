@@ -10,7 +10,7 @@
 #include "hbmv.h"
 
 using std::complex;
-using latl::hbmv;
+using LATL::hbmv;
 
 int zhbmv_(char& uplo, int &n, int& k, complex<double> &alpha,complex<double> *A, int &ldA, complex<double> *x, int& incx,complex<double> &beta, complex<double> *y, int& incy)
 {

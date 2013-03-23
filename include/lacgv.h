@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Conjugates a complex vector x of length n.
    /// @tparam real_t Floating point type.

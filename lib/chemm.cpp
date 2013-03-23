@@ -10,7 +10,7 @@
 #include "hemm.h"
 
 using std::complex;
-using latl::hemm;
+using LATL::hemm;
 
 int chemm_(char& side, char& uplo, int &m, int &n, complex<float> &alpha, complex<float> *A, int &ldA, complex<float> *B, int &ldB, complex<float> &beta, complex<float> *C, int &ldC)
 {

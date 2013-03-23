@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "gbmv.h"
 
-using latl::gbmv;
+using LATL::gbmv;
 
 int dgbmv_(char& trans, int &m, int &n, int& kL, int& kU, double &alpha, double *A, int &ldA, double *x, int& incx, double &beta, double *y, int& incy)
 {

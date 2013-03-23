@@ -17,7 +17,7 @@
 #include "swap.h"
 #include "hemv.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the inverse of a Hermitian indefinite matrix.
    ///

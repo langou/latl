@@ -18,7 +18,7 @@
 #include "lapeq.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
 
    /// @brief Applies a Householder block reflector to a real matrix.

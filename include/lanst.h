@@ -15,7 +15,7 @@
 #include <cmath>
 #include "lassq.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a real symmetric tridiagonal matrix.
    ///
@@ -90,10 +90,10 @@ namespace latl
          real_t scale(0.0), sum(1.0);
          if (n > 1)
          {
-            latl::lassq(n-1, E, 1, scale, sum);
+            LATL::lassq(n-1, E, 1, scale, sum);
             sum *= 2;
          }
-         latl::lassq(n, D, 1, scale, sum);
+         LATL::lassq(n, D, 1, scale, sum);
          value = scale*sqrt(sum);
       }
       return value;
@@ -172,10 +172,10 @@ namespace latl
          real_t scale(0.0), sum(1.0);
          if (n > 1)
          {
-            latl::lassq(n-1, E, 1, scale, sum);
+            LATL::lassq(n-1, E, 1, scale, sum);
             sum *= 2;
          }
-         latl::lassq(n, D, 1, scale, sum);
+         LATL::lassq(n, D, 1, scale, sum);
          value = scale*sqrt(sum);
       }
       return value;

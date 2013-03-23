@@ -15,7 +15,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Performs a vector outer product of a complex vector with itself.
    /// 

@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "lange.h"
 
-using latl::lange;
+using LATL::lange;
 
 double dlange_(char &norm,int &m,int &n,double *A,int &ldA,double *work)
 {

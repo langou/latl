@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "her.h"
 
-using latl::her;
+using LATL::her;
 using std::complex;
 
 int zher2_(char& uplo, int &n, complex<double> &alpha, complex<double> *x, int& incx, complex<double> *y, int& incy,complex<double> *A, int &ldA)

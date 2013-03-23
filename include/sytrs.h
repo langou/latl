@@ -17,7 +17,7 @@
 #include "trsm.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Solves a system of linear equations A * X = B with a symmetric n-by-n matrix A using the U*D*U' (if uplo = 'U') or L'*D*L factorization computed by sytrf.
    /// @return 0 
@@ -50,7 +50,7 @@ namespace latl
       if (n == 0 || nrhs == 0)
          return 0;
       real_t * Work = new real_t[n];
-      latl::syconv(uplo, 'C', n, A, ldA, IPIV, BSDV, Work);
+      LATL::syconv(uplo, 'C', n, A, ldA, IPIV, BSDV, Work);
       const real_t one(1.0);
       if (uplo == 'U' || uplo == 'u')
       {
@@ -61,19 +61,19 @@ namespace latl
             if (BSDV[k] == 0)
             {
                if (kp != k)
-                  latl::swap(nrhs, B+k, ldB, B+kp, ldB);
+                  LATL::swap(nrhs, B+k, ldB, B+kp, ldB);
                --k;
             }
             else
             {
                if (kp == IPIV[k-1])
                {
-                  latl::swap(nrhs, B+k-1, ldB, B+kp, ldB);
+                  LATL::swap(nrhs, B+k-1, ldB, B+kp, ldB);
                }
                k -= 2;
             }
          }
-         latl::trsm('L', 'U', 'N', 'U', n, nrhs, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'U', 'N', 'U', n, nrhs, one, A, ldA, B, ldB);
          
          int_t i = n-1;
          real_t * Ai;
@@ -82,7 +82,7 @@ namespace latl
             Ai = A+ldA*i;
             if (BSDV[i] == 0)
             {
-               latl::scal(nrhs, one/Ai[i], B+i, ldB);
+               LATL::scal(nrhs, one/Ai[i], B+i, ldB);
             }
             else if (i > 0)
             {
@@ -116,7 +116,7 @@ namespace latl
             {
                if (kp != k)
                {
-                  latl::swap(nrhs, B+k, ldB, B+kp, ldB);
+                  LATL::swap(nrhs, B+k, ldB, B+kp, ldB);
                }
                ++k;
             }
@@ -124,7 +124,7 @@ namespace latl
             {
                if (k < n-1 && kp == IPIV[k+1])
                {
-                  latl::swap(nrhs, B+k, ldB, B+kp, ldB);
+                  LATL::swap(nrhs, B+k, ldB, B+kp, ldB);
                }
                k+=2;
             }
@@ -139,7 +139,7 @@ namespace latl
             {
                kp = IPIV[k];
                if (kp != k)
-                  latl::swap(nrhs, B+k, ldB, B+kp, ldB);
+                  LATL::swap(nrhs, B+k, ldB, B+kp, ldB);
                ++k;
             }
             else
@@ -147,19 +147,19 @@ namespace latl
                kp = IPIV[k+1];
                if (kp == IPIV[k])
                {
-                  latl::swap(nrhs, B+k+1, ldB, B+kp, ldB);
+                  LATL::swap(nrhs, B+k+1, ldB, B+kp, ldB);
                }
                k += 2;
             }
          }
-         latl::trsm('L', 'L', 'N', 'U', n, nrhs, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'L', 'N', 'U', n, nrhs, one, A, ldA, B, ldB);
          int_t i = 0;
          while (i < n)
          {
             real_t * Ai = A+ldA*i;
             if (BSDV[i] == 0)
             {
-               latl::scal(nrhs, one/Ai[i], B+i, ldB);
+               LATL::scal(nrhs, one/Ai[i], B+i, ldB);
             }
             else
             {
@@ -181,7 +181,7 @@ namespace latl
             }
             ++i;
          }
-         latl::trsm('L', 'L', 'T', 'U', n, nrhs, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'L', 'T', 'U', n, nrhs, one, A, ldA, B, ldB);
          k = n-1;
          while (k >= 0)
          {
@@ -190,7 +190,7 @@ namespace latl
             {
                if (kp != k)
                {
-                  latl::swap(nrhs, B+k, ldB, B+kp, ldB);
+                  LATL::swap(nrhs, B+k, ldB, B+kp, ldB);
                }
                --k;
             }
@@ -198,14 +198,14 @@ namespace latl
             {
                if (k > 0 && kp == IPIV[k-1])
                {
-                  latl::swap(nrhs, B+k, ldB, B+kp, ldB);
+                  LATL::swap(nrhs, B+k, ldB, B+kp, ldB);
                }
                k -=2;
             }
          }
       }
    
-      latl::syconv(uplo, 'R', n, A, ldA, IPIV, BSDV, Work);
+      LATL::syconv(uplo, 'R', n, A, ldA, IPIV, BSDV, Work);
       delete [] Work;
       return 0;
    }
@@ -227,7 +227,7 @@ namespace latl
    template<typename real_t>
    int_t sytrs(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, complex<real_t> * const B, const int_t ldB)
    {
-      return latl::sytrs< complex<real_t> >(uplo, n, nrhs, A, ldA, IPIV, BSDV, B, ldB);
+      return LATL::sytrs< complex<real_t> >(uplo, n, nrhs, A, ldA, IPIV, BSDV, B, ldB);
    }
 }
 

@@ -14,7 +14,7 @@
 #include "latl.h"
 #include "ptts2.h"
 
-namespace latl
+namespace LATL
 {
    template< typename real_t>
    int_t pttrs(const int_t n, const int_t nrhs, real_t * const D, real_t * const E, real_t * const B, const int_t ldB, const int_t nb)
@@ -30,14 +30,14 @@ namespace latl
          return 0;
       using std::min;
       if (nb >= nrhs)
-         latl::ptts2(n, nrhs, D, E, B, ldB);
+         LATL::ptts2(n, nrhs, D, E, B, ldB);
       else
       {
          real_t * Bj = B;
          for (int_t j = 0; j < nrhs; j += nb)
          {
             int_t jb = min(nrhs-j, nb);
-            latl::ptts2(n, jb, D, E, Bj, ldB);
+            LATL::ptts2(n, jb, D, E, Bj, ldB);
             Bj += ldB*nb;
          }
       }
@@ -62,14 +62,14 @@ namespace latl
       if (uplo == 'U' || uplo == 'u')
          iuplo = 1;
       if (nb > nrhs)
-         latl::ptts2(iuplo, n, nrhs, D, E, B, ldB);
+         LATL::ptts2(iuplo, n, nrhs, D, E, B, ldB);
       else
       {
          complex<real_t> * Bj = B;
          for (int_t j = 0; j < nrhs; j += nb)
          {
             int_t jb = min(nrhs-j, nb);
-            latl::ptts2(iuplo, n, jb, D, E, Bj, ldB);
+            LATL::ptts2(iuplo, n, jb, D, E, Bj, ldB);
             Bj += ldB*nb;
          }
       }

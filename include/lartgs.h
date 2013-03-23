@@ -16,7 +16,7 @@
 #include "lartgp.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Generates a plane rotation for a QR iteration.
    ///
@@ -41,7 +41,7 @@ namespace latl
    void lartgs(real_t x, real_t y, real_t sigma, real_t &c, real_t &s)
    {
       using std::numeric_limits;
-      using latl::lartgp;
+      using LATL::lartgp;
       using std::abs;
       const real_t one(1.0);
       const real_t zero(0.0);

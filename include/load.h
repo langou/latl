@@ -17,7 +17,7 @@
 #include <algorithm>
 #include <cstddef>
 
-namespace latl
+namespace LATL
 {
    /// @brief Attempts to read a rectangular matrix from standard input.
    /// @return Pointer to rectangular matrix read from standard input.

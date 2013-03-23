@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "dot.h"
 
-using latl::dot;
+using LATL::dot;
 
 float sdot_(int &n, float *x, int& incx, float *y, int& incy)
 {

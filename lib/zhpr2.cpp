@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "hpr.h"
 
-using latl::hpr;
+using LATL::hpr;
 using std::complex;
 
 int zhpr2_(char& uplo, int &n, complex<double> &alpha, complex<double> *x, int& incx, complex<double> *y, int& incy, complex<double> *A)

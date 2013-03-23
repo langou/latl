@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "asum.h"
 
-using latl::asum;
+using LATL::asum;
 
 float scasum_(int &n, complex<float> *x, int& incx)
 {

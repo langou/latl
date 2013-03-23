@@ -15,7 +15,7 @@
 #include <cmath>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the Sturm count of a matrix.
    ///

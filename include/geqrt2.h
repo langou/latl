@@ -19,7 +19,7 @@
 #include "trmv.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes a QR factorization of a real matrix, using the compact WY representation of Q.
    ///
@@ -70,13 +70,13 @@ namespace latl
       real_t *t=T+(n-1)*ldT;
       for(int_t i=0;i<k;i++)
       {
-         latl::larfg(m-i,a[i],&(a[i+1]),1,T[i]);
+         LATL::larfg(m-i,a[i],&(a[i+1]),1,T[i]);
          if(i<n-1)
          {
             real_t temp=a[i];
             a[i]=one;
-            latl::gemv('T',m-i,n-i-1,one,b+i,ldA,a+i,1,zero,t,1);
-            latl::ger(m-i,n-i-1,-T[i],a+i,1,t,1,b+i,ldA);
+            LATL::gemv('T',m-i,n-i-1,one,b+i,ldA,a+i,1,zero,t,1);
+            LATL::ger(m-i,n-i-1,-T[i],a+i,1,t,1,b+i,ldA);
             a[i]=temp;
          }
          a+=ldA;
@@ -90,9 +90,9 @@ namespace latl
          t+=ldT;
          real_t temp=a[i];
          a[i]=one;
-         latl::gemv('T',m-i,i,-T[i],A+i,ldA,a+i,1,zero,t,1);
+         LATL::gemv('T',m-i,i,-T[i],A+i,ldA,a+i,1,zero,t,1);
          a[i]=temp;
-         latl::trmv('U','N','N',i,T,ldT,t,1);
+         LATL::trmv('U','N','N',i,T,ldT,t,1);
          t[i]=T[i];
          T[i]=zero;
       }
@@ -149,13 +149,13 @@ namespace latl
       real_t *t=T+(n-1)*ldT;
       for(int_t i=0;i<k;i++)
       {
-         latl::larfg(m-i,a[i],&(a[i+1]),1,T[i]);
+         LATL::larfg(m-i,a[i],&(a[i+1]),1,T[i]);
          if(i<n-1)
          {
             real_t temp=a[i];
             a[i]=one;
-            latl::gemv('C',m-i,n-i-1,one,b+i,ldA,a+i,ldA,1,zero,t,1);
-            latl::gerc(m-i,n-i-1,-conj(T[i]),a+i,1,t,1,b+i,ldA);
+            LATL::gemv('C',m-i,n-i-1,one,b+i,ldA,a+i,ldA,1,zero,t,1);
+            LATL::gerc(m-i,n-i-1,-conj(T[i]),a+i,1,t,1,b+i,ldA);
             a[i]=temp;
          }
          a+=ldA;
@@ -169,9 +169,9 @@ namespace latl
          t+=ldT;
          real_t temp=a[i];
          a[i]=one;
-         latl::gemv('C',m-i,i,-T[i],A+i,ldA,a+i,1,zero,t,1);
+         LATL::gemv('C',m-i,i,-T[i],A+i,ldA,a+i,1,zero,t,1);
          a[i]=temp;
-         latl::trmv('U','N','N',i,T,ldT,t,1);
+         LATL::trmv('U','N','N',i,T,ldT,t,1);
          t[i]=T[i];
          T[i]=zero;
       }

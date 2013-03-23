@@ -14,7 +14,7 @@
 #include <algorithm>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Scans real matrix for its last nonzero row.
    /// @return The index of the last nonzero row in [0,m-1].  If A is the zero matrix, -1 is returned.

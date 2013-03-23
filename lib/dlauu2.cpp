@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "lauum.h"
 
-using latl::lauum;
+using LATL::lauum;
 
 int dlauu2_(char &uplo,int &n,double *A,int &ldA,int &info)
 {

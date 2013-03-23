@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "syr.h"
 
-using latl::syr;
+using LATL::syr;
 
 int dsyr2_(char& uplo, int &n, double &alpha, double *x, int& incx, double *y, int& incy, double *A, int &ldA)
 {

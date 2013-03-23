@@ -14,7 +14,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {   
    /// @brief Performs multiplication of a real triangular matrix with a real rectangular matrix.
    /// 

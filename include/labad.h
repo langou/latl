@@ -13,7 +13,7 @@
 
 #include <cmath>
 
-namespace latl
+namespace LATL
 {
    /// @brief Corrects underflow and overflow values.
    ///

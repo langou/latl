@@ -17,7 +17,7 @@
 #include "dot.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes smallest singular value of a matrix formed by two real vectors.
    ///

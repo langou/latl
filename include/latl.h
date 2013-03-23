@@ -15,7 +15,7 @@
 using std::complex;
 #include <cstddef>
 
-namespace latl
+namespace LATL
 {
    /// Integer type used in latl namespace.
    

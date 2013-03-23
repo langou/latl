@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "ger.h"
 
-using latl::ger;
+using LATL::ger;
 
 int dger_(int &m, int &n, double &alpha, double *x, int& incx, double *y, int& incy, double *A, int &ldA)
 {

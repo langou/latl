@@ -21,7 +21,7 @@
 #include "larfb.h"
 #include "gehd2.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Reduces a real general matrix A to upper Hessenberg form H by an
    /// orthogonal similarity transformation:  Q**T * A * Q = H .

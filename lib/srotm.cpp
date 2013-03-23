@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "rotm.h"
 
-using latl::rotm;
+using LATL::rotm;
 
 int srotm_(int&n , float *x, int& incx, float *y, int& incy, float *param)
 {

@@ -15,7 +15,7 @@
 #include "lahef.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the factorization of a complex Hermitian matrix A using the Bunch-Kaufman diagonal pivoting method.  The form of the factorization is
    ///
@@ -61,11 +61,11 @@ namespace latl
          {
             if ( k > nb)
             {
-               temp = latl::lahef(uplo, k, nb, kb, A, ldA, IPIV, BSDV, Work);
+               temp = LATL::lahef(uplo, k, nb, kb, A, ldA, IPIV, BSDV, Work);
             }
             else
             {
-               temp = latl::hetf2(uplo, k, A, ldA, IPIV, BSDV);
+               temp = LATL::hetf2(uplo, k, A, ldA, IPIV, BSDV);
                kb = k;
             }
             
@@ -86,12 +86,12 @@ namespace latl
             Akk = A+ldA*k+k;
             if ( k < n-nb)
             {
-               temp = latl::lahef(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k, Work);
+               temp = LATL::lahef(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k, Work);
             }
             else
             {
                kb = n-k;
-               temp = latl::hetf2(uplo, kb, Akk, ldA, IPIV+k, BSDV+k);
+               temp = LATL::hetf2(uplo, kb, Akk, ldA, IPIV+k, BSDV+k);
             }
             
             if (info == 0 && temp != 0)

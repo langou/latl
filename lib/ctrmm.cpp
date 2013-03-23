@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "trmm.h"
 
-using latl::trmm;
+using LATL::trmm;
 
 int ctrmm_(char& side, char& uplo, char& trans, char& diag, int &m, int &n, complex<float> &alpha, complex<float> *A, int &ldA, complex<float> *B, int &ldB)
 {

@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "tbmv.h"
 
-using latl::tbmv;
+using LATL::tbmv;
 
 int stbmv_(char& uplo, char& trans, char& diag, int &n, int& k, float *A, int &ldA, float *x, int& incx)
 {

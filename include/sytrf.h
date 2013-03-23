@@ -15,7 +15,7 @@
 #include "sytf2.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the factorization of a real symmetric matrix A using the Bunch-Kaufman diagonal pivoting method.
    ///
@@ -54,7 +54,7 @@ namespace latl
       if (ldA < n)
          return -4;
       if (nb <= 1)
-         return latl::sytf2(uplo, n, A, ldA, IPIV, BSDV);
+         return LATL::sytf2(uplo, n, A, ldA, IPIV, BSDV);
       
       if ( n == 0)
          return 0;
@@ -69,11 +69,11 @@ namespace latl
          {
             if ( k > nb)
             {
-               temp = latl::lasyf(uplo, k, nb, kb, A, ldA, IPIV, BSDV, Work);
+               temp = LATL::lasyf(uplo, k, nb, kb, A, ldA, IPIV, BSDV, Work);
             }
             else
             {
-               temp = latl::sytf2(uplo, k, A, ldA, IPIV, BSDV);
+               temp = LATL::sytf2(uplo, k, A, ldA, IPIV, BSDV);
                kb = k;
             }
             
@@ -94,12 +94,12 @@ namespace latl
             Akk = A+ldA*k+k;
             if ( k < n-nb)
             {
-               temp = latl::lasyf(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k, Work);
+               temp = LATL::lasyf(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k, Work);
             }
             else
             {
                kb = n-k;
-               temp = latl::sytf2(uplo, kb, Akk, ldA, IPIV+k, BSDV+k);
+               temp = LATL::sytf2(uplo, kb, Akk, ldA, IPIV+k, BSDV+k);
             }
             
             if (info == 0 && temp != 0)
@@ -149,7 +149,7 @@ namespace latl
    template< typename real_t>
    int_t sytrf(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, const int_t nb = 32)
    {
-      return latl::sytrf< complex<real_t> >(uplo, n, A, ldA, IPIV, BSDV, nb);
+      return LATL::sytrf< complex<real_t> >(uplo, n, A, ldA, IPIV, BSDV, nb);
    }
 }
 

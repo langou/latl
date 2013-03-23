@@ -15,7 +15,7 @@
 #include <cmath>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a real tridiagonal matrix.
    ///
@@ -123,11 +123,11 @@ namespace latl
          real_t scale = zero;
          real_t sum = one;
          
-         latl::lassq(n, D, 1, scale, sum);
+         LATL::lassq(n, D, 1, scale, sum);
          if (n > 1)
          {
-            latl::lassq(n-1, DL, 1, scale, sum);
-            latl::lassq(n-1, DU, 1, scale, sum);
+            LATL::lassq(n-1, DL, 1, scale, sum);
+            LATL::lassq(n-1, DU, 1, scale, sum);
          }
          value = scale*sqrt(sum);
       }
@@ -237,11 +237,11 @@ namespace latl
          real_t scale = zero;
          real_t sum = one;
       
-         latl::lassq(n, D, 1, scale, sum);
+         LATL::lassq(n, D, 1, scale, sum);
          if (n > 1)
          {
-            latl::lassq(n-1, DL, 1, scale, sum);
-            latl::lassq(n-1, DU, 1, scale, sum);
+            LATL::lassq(n-1, DL, 1, scale, sum);
+            LATL::lassq(n-1, DU, 1, scale, sum);
          }
          value = scale*sqrt(sum);
       }

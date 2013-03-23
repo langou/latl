@@ -17,7 +17,7 @@
 #include "gemm.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Recursively computes a QR factorization of a real matrix, using the compact WY representation of Q. 
    ///
@@ -52,9 +52,9 @@ namespace latl
    template<typename real_t>
    int geqrt3(int_t m,int_t n,real_t *A,int_t ldA,real_t *T,int_t ldT)
    {
-      using latl::larfg;
-      using latl::gemm;
-      using latl::trmm;
+      using LATL::larfg;
+      using LATL::gemm;
+      using LATL::trmm;
       const real_t one(1.0);
       if(n<0)
          return -2;
@@ -161,9 +161,9 @@ namespace latl
    int geqrt3(int_t m,int_t n,complex<real_t> *A,int_t ldA,complex<real_t> *T,int_t ldT)
    {
       using std::conj;
-      using latl::larfg;
-      using latl::gemm;
-      using latl::trmm;
+      using LATL::larfg;
+      using LATL::gemm;
+      using LATL::trmm;
       const complex<real_t> one(1.0,0.0);
       if(n<0)
          return -2;

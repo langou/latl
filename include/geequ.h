@@ -16,7 +16,7 @@
 #include <algorithm>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes row and column scalings intended to equilibrate an m-by-n matrix A and reduce its condition number.
    ///

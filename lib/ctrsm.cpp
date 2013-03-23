@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "trsm.h"
 
-using latl::trsm;
+using LATL::trsm;
 
 int ctrsm_(char& side, char& uplo, char& trans, char& diag, int &m, int &n, complex<float> &alpha, complex<float> *A, int &ldA, complex<float> *B, int &ldB)
 {

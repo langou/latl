@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "symm.h"
 
-using latl::symm;
+using LATL::symm;
 
 int ssymm_(char& side, char& uplo, int &m, int &n, float& alpha, float *A, int &ldA, float *B, int &ldB, float &beta, float *C, int &ldC)
 {

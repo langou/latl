@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "trti2.h"
 
-using latl::trti2;
+using LATL::trti2;
 
 int dtrti2_(char &uplo,char &diag, int &n,double *A,int &ldA,int &info)
 {

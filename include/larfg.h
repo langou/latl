@@ -20,7 +20,7 @@
 #include "ladiv.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Generates a real elementary Householder reflection.
    ///

@@ -20,7 +20,7 @@
 #include "scal.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the factorization of a complex Hermitian matrix A using the Bunch-Kaufman diagonal pivoting method:
    ///
@@ -86,7 +86,7 @@ namespace latl
             
             if (k > 0)
             {
-               imax = latl::imax(k, Ak, 1);
+               imax = LATL::imax(k, Ak, 1);
                colmax = abs(real(Ak[imax]))+abs(imag(Ak[imax]));
             }
             else
@@ -114,13 +114,13 @@ namespace latl
                   int_t jmax;
                   real_t rowmax;
                   
-                  jmax = imax+1 + latl::imax(k-imax, A+ldA*(imax+1)+imax, ldA);
+                  jmax = imax+1 + LATL::imax(k-imax, A+ldA*(imax+1)+imax, ldA);
                   complex<real_t> * Ajmax = A + ldA*jmax;
                   complex<real_t> * Aimax = A + ldA*imax;
                   rowmax = abs(real(Ajmax[imax]))+abs(imag(Ajmax[imax]));
                   if (imax > 0)
                   {
-                     jmax = latl::imax(imax, Aimax, 1);
+                     jmax = LATL::imax(imax, Aimax, 1);
                      rowmax = max(rowmax, abs(real(Aimax[jmax]))+abs(imag(Aimax[jmax])));
                   }
                   
@@ -145,7 +145,7 @@ namespace latl
                complex<real_t> temp;
                if (kp != kinc)
                {
-                  latl::swap(kp, Akinc, 1, A+ldA*kp, 1);
+                  LATL::swap(kp, Akinc, 1, A+ldA*kp, 1);
                   for (int_t j = kp+1; j< kinc; ++j)
                   {
                      Aj = A+ldA*j;
@@ -179,15 +179,15 @@ namespace latl
                if (kstep == 1)
                {
                   r1 = one/real(Ak[k]);
-                  latl::her(uplo, k, -r1, Ak, 1, A, ldA);
-                  latl::scal<real_t>(k, r1, Ak, 1);
+                  LATL::her(uplo, k, -r1, Ak, 1, A, ldA);
+                  LATL::scal<real_t>(k, r1, Ak, 1);
                }
                else
                {
                   if (k > 1)
                   {
                      complex<real_t> * Akm1 = A+ldA*(k-1);
-                     real_t d = latl::lapy2(real(Ak[k-1]),imag(Ak[k-1]));
+                     real_t d = LATL::lapy2(real(Ak[k-1]),imag(Ak[k-1]));
                      real_t d22 = real(Akm1[k-1])/d;
                      real_t d11 = real(Ak[k])/d;
                      real_t tt = one/(d11*d22-one);
@@ -237,7 +237,7 @@ namespace latl
             
             if (k < n-1)
             {
-               imax = k+1 + latl::imax(n-k-1, Ak+k+1, 1);
+               imax = k+1 + LATL::imax(n-k-1, Ak+k+1, 1);
                colmax = abs(real(Ak[imax]))+abs(imag(Ak[imax]));
             }
             else
@@ -261,13 +261,13 @@ namespace latl
                   int_t jmax;
                   real_t rowmax;
                   
-                  jmax = k+latl::imax(imax-k, Ak+imax, ldA);
+                  jmax = k+LATL::imax(imax-k, Ak+imax, ldA);
                   complex<real_t> * Ajmax = A + ldA*jmax;
                   complex<real_t> *Aimax = A +ldA*imax;
                   rowmax = abs(real(Ajmax[imax]))+abs(imag(Ajmax[imax]));
                   if (imax < n-1)
                   {
-                     jmax = imax+1 + latl::imax(n-imax-1, Aimax+imax+1, 1);
+                     jmax = imax+1 + LATL::imax(n-imax-1, Aimax+imax+1, 1);
                      rowmax = max(rowmax, abs(real(Aimax[jmax]))+abs(imag(Aimax[jmax])));
                   }
                   
@@ -293,7 +293,7 @@ namespace latl
                {
                   if (kp < n-1)
                   {
-                     latl::swap(n-kp-1, Akinc+kp+1, 1, A+ldA*kp+kp+1, 1);
+                     LATL::swap(n-kp-1, Akinc+kp+1, 1, A+ldA*kp+kp+1, 1);
                   }
                   for (int_t j = kinc+1; j < kp; ++j)
                   {
@@ -326,15 +326,15 @@ namespace latl
                   if (k < n-1)
                   {
                      r1 = one/real(Ak[k]);
-                     latl::her(uplo, n-k-1, -r1, Ak+k+1, 1, Akp1+k+1, ldA);
-                     latl::scal(n-k-1, r1, Ak+k+1, 1);
+                     LATL::her(uplo, n-k-1, -r1, Ak+k+1, 1, Akp1+k+1, ldA);
+                     LATL::scal(n-k-1, r1, Ak+k+1, 1);
                   }
                }
                else
                {
                   if (k < n-2)
                   {
-                     real_t d = latl::lapy2(real(Ak[k+1]),imag(Ak[k+1]));
+                     real_t d = LATL::lapy2(real(Ak[k+1]),imag(Ak[k+1]));
                      real_t d11 = real(Akp1[k+1])/d;
                      real_t d22 = real(Ak[k])/d;
                      complex<real_t> d21 = Ak[k+1]/d;

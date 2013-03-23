@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "trmv.h"
 
-using latl::trmv;
+using LATL::trmv;
 
 int strmv_(char& uplo, char& trans, char& diag, int &n, float *A, int &ldA, float *x, int& incx)
 {

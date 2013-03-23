@@ -10,7 +10,7 @@
 #include "hemv.h"
 
 using std::complex;
-using latl::hemv;
+using LATL::hemv;
 
 int zhemv_(char& uplo, int &n, complex<double> &alpha, complex<double> *A, int &ldA, complex<double> *x, int& incx, complex<double> &beta, complex<double> *y, int& incy)
 {

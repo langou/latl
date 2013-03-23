@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "her.h"
 
-using latl::her;
+using LATL::her;
 using std::complex;
 
 int cher_(char& uplo, int &n, float& alpha, complex<float> *x, int& incx, complex<float> *A, int &ldA)

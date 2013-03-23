@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "lauum.h"
 
-using latl::lauum;
+using LATL::lauum;
 
 int zlauum_(char &uplo,int &n,complex<double> *A,int &ldA,int &info)
 {

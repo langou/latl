@@ -13,19 +13,19 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Applies a modified Givens rottaion matrix H to a pair of real vectors (x,y).
    ///
-   /// The Givens rotation matrix H with flag obtained by latl::rotmg are applied to a pair of vectors (x,y).
+   /// The Givens rotation matrix H with flag obtained by LATL::rotmg are applied to a pair of vectors (x,y).
    /// @tparam real_t Floating point type.
    /// @param n Length of vectors x,y.
    /// @param x Pointer to real vector x.
    /// @param incx Increment of vector x.
    /// @param y Pointer to real vector y.
    /// @param incy Increment of vector y.
-   /// @param flag Indicates the form of the Givens rotation matrix H, obtained from latl::rotmg.
-   /// @param H Pointer to 2-by-2 Givens rotation matrix obtained from latl::rotmg.
+   /// @param flag Indicates the form of the Givens rotation matrix H, obtained from LATL::rotmg.
+   /// @param H Pointer to 2-by-2 Givens rotation matrix obtained from LATL::rotmg.
    /// @ingroup ROT
 
    template <typename real_t>

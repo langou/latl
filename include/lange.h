@@ -15,7 +15,7 @@
 #include <cmath>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value
    ///
@@ -128,7 +128,7 @@ namespace latl
          real_t scale(0.0), sum(1.0), * Aj = A;
          for (int_t j = 0; j < n; ++j)
          {
-            latl::lassq(m, Aj, 1, scale, sum);
+            LATL::lassq(m, Aj, 1, scale, sum);
             Aj += ldA;
          }
          value = scale*sqrt(sum);
@@ -249,7 +249,7 @@ namespace latl
          complex< real_t> * Aj = A;
          for (int_t j = 0; j < n; ++j)
          {
-            latl::lassq(m, Aj, 1, scale, sum);
+            LATL::lassq(m, Aj, 1, scale, sum);
             Aj += ldA;
          }
          value = scale*sqrt(sum);

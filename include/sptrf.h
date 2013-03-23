@@ -18,7 +18,7 @@
 #include "latl.h"
 #include <iostream>
 
-namespace latl
+namespace LATL
 {
    template<typename real_t>
    int_t sptrf( const int_t n, real_t * const AP, int_t * const IPIV, bool * const BSDV)
@@ -67,7 +67,7 @@ namespace latl
          
          if (k > 0)
          {
-            imax = latl::imax(k, APk, 1);
+            imax = LATL::imax(k, APk, 1);
             colmax = abs(APk[imax]);
          }
          else
@@ -104,7 +104,7 @@ namespace latl
                APimax = AP + imax*(imax+1)/2;
                if (imax > 0)
                {
-                  jmax = latl::imax(imax, APimax, 1);
+                  jmax = LATL::imax(imax, APimax, 1);
                   rowmax = max(rowmax, abs(APimax[jmax]));
                }
                   
@@ -135,7 +135,7 @@ namespace latl
             
             if (kp != kk)
             {
-               latl::swap(kp, APkp, 1, APimax, 1);
+               LATL::swap(kp, APkp, 1, APimax, 1);
                APt = APimax;
                for (int_t j = kp+1; j < kk; ++j)
                {
@@ -158,8 +158,8 @@ namespace latl
             if (kstep == 1)
             {
                r1 = one/ APk[k];
-               latl::spr('U', k, -r1, APk, 1, AP);
-               latl::scal(k, r1, APk, 1);
+               LATL::spr('U', k, -r1, APk, 1, AP);
+               LATL::scal(k, r1, APk, 1);
             }
             else
             {
@@ -251,7 +251,7 @@ namespace latl
          
          if (k > 0)
          {
-            imax = latl::imax(k, APk, 1);
+            imax = LATL::imax(k, APk, 1);
             colmax = abs(real(APk[imax]))+abs(imag(APk[imax]));
          }
          else
@@ -288,7 +288,7 @@ namespace latl
                APimax = AP + imax*(imax+1)/2;
                if (imax > 0)
                {
-                  jmax = latl::imax(imax, APimax, 1);
+                  jmax = LATL::imax(imax, APimax, 1);
                   rowmax = max(rowmax, abs(real(APimax[jmax]))+abs(imag(APimax[jmax])));
                }
                
@@ -319,7 +319,7 @@ namespace latl
             
             if (kp != kk)
             {
-               latl::swap(kp, APkp, 1, APimax, 1);
+               LATL::swap(kp, APkp, 1, APimax, 1);
                APt = APimax;
                for (int_t j = kp+1; j < kk; ++j)
                {
@@ -342,8 +342,8 @@ namespace latl
             if (kstep == 1)
             {
                r1 = one/ APk[k];
-               latl::spr('U', k, -r1, APk, 1, AP);
-               latl::scal(k, r1, APk, 1);
+               LATL::spr('U', k, -r1, APk, 1, AP);
+               LATL::scal(k, r1, APk, 1);
             }
             else
             {

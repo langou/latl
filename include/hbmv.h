@@ -16,7 +16,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
 
    /// @brief Performs banded complex Hermitian matrix-vector multiplication.

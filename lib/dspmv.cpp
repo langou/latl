@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "spmv.h"
 
-using latl::spmv;
+using LATL::spmv;
 
 int dspmv_(char& uplo, int &n, double &alpha, double *A, double *x, int& incx, double &beta, double *y, int& incy)
 {

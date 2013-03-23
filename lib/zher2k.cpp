@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "herk.h"
 
-using latl::herk;
+using LATL::herk;
 using std::complex;
 
 int zher2k_(char& uplo, char& trans, int &n, int& k, complex<double> &alpha, complex<double> *A, int &ldA, complex<double> *B, int &ldB, double &beta, complex<double> *C, int &ldC)

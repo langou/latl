@@ -18,7 +18,7 @@
 template<typename real_t> 
 static bool greater_than(real_t a,real_t b) { return(a>b); }
 
-namespace latl
+namespace LATL
 {
    /// @brief Sorts a vector in increasing or descreasing order.
    /// @return 0 if success.

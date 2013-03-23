@@ -65,7 +65,7 @@ int main(int argc, char** argv)
    using std::exp;
    using std::log;
    using std::log2;
-   using latl::larnv;
+   using LATL::larnv;
    int m=1;
    int n=1;
    int arg=1;
@@ -193,13 +193,13 @@ int main(int argc, char** argv)
       }
       if(outfile==NULL)
       {
-         latl::print<real_t>(m,n,A,m);
+         LATL::print<real_t>(m,n,A,m);
       }
       else
       {
          std::ofstream out(outfile);
          if(out)
-            latl::print<real_t>(m,n,A,m,out);
+            LATL::print<real_t>(m,n,A,m,out);
          else
          {
             cerr << "Cannot open output file." << endl;
@@ -241,13 +241,13 @@ int main(int argc, char** argv)
       }
       if(outfile==NULL)
       {
-         latl::print<real_t>(m,n,A,m);
+         LATL::print<real_t>(m,n,A,m);
       }
       else
       {
          std::ofstream out(outfile);
          if(out)
-            latl::print<real_t>(m,n,A,m,out);
+            LATL::print<real_t>(m,n,A,m,out);
          else
          {
             cerr << "Cannot open output file." << endl;

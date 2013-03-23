@@ -34,7 +34,7 @@
 #include <hetrf.h>
 #include <hetri.h>
 
-using namespace latl;
+using namespace LATL;
 using namespace std;
 
 #if defined(FLOAT)
@@ -167,7 +167,7 @@ real_t hermitian(int nb,char uplo,bool resi,bool prnt)
    bool *block=new bool[n];
    lacpy<real_t>('a',n,n,A,n,B,n);
    int info=hetrf<real_t>(uplo,n,A,n,ipiv,block,nb);
-   info=hetri<real_t>(uplo,n,A,n,ipiv,block,nb);
+   info=hetri<real_t>(uplo,n,A,n,ipiv,block);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;

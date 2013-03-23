@@ -15,7 +15,7 @@
 #include "getrs.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the solution to a real system of linear equations
    ///
@@ -55,10 +55,10 @@ namespace latl
          return -7;
       
       int_t info = 0;
-      info = latl::getrf<real_t>(n, n, A, ldA, IPIV, nb);
+      info = LATL::getrf<real_t>(n, n, A, ldA, IPIV, nb);
       if (info == 0)
       {
-         info = latl::getrs('N', n, colB, A, ldA, IPIV, B, ldB);
+         info = LATL::getrs('N', n, colB, A, ldA, IPIV, B, ldB);
       }
       return info;
    }
@@ -101,10 +101,10 @@ namespace latl
          return -7;
       
       int_t info = 0;
-      info = latl::getrf<real_t>(n, n, A, ldA, IPIV, nb);
+      info = LATL::getrf<real_t>(n, n, A, ldA, IPIV, nb);
       if (info == 0)
       {
-         info = latl::getrs('N', n, colB, A, ldA, IPIV, B, ldB);
+         info = LATL::getrs('N', n, colB, A, ldA, IPIV, B, ldB);
       }
       return info;
    }

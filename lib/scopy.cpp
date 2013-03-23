@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "copy.h"
 
-using latl::copy;
+using LATL::copy;
 
 int scopy_(int &n, float *x, int& incx, float *y, int& incy)
 {

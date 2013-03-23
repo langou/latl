@@ -14,7 +14,7 @@
 #include "latl.h"
 #include "pttrs.h"
 
-namespace latl
+namespace LATL
 {
    template< typename real_t>
    int_t ptsv(const int_t n, const int_t nrhs, real_t * const D, real_t * const E, real_t * const B, const int_t ldB, const int_t nb)
@@ -27,10 +27,10 @@ namespace latl
          return -6;
       
       int_t info;
-      info = latl::pttrf(n, D, E);
+      info = LATL::pttrf(n, D, E);
       if (info == 0)
       {
-         info = latl::pttrs(n, nrhs, D, E, B, ldB, nb);
+         info = LATL::pttrs(n, nrhs, D, E, B, ldB, nb);
       }
       return info;
    }
@@ -46,10 +46,10 @@ namespace latl
          return -6;
       
       int_t info;
-      info = latl::pttrf(n, D, E);
+      info = LATL::pttrf(n, D, E);
       if (info == 0)
       {
-         info = latl::pttrs('L', n, nrhs, D, E, B, ldB, nb);
+         info = LATL::pttrs('L', n, nrhs, D, E, B, ldB, nb);
       }
       return info;
    }

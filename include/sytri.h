@@ -22,12 +22,12 @@
 #include "syswapr.h"
 #include <cmath>
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the inverse of a symmetric indefinite matrix.
    ///
    /// A using the factorization A = U D U' or A = L D L' computed by
-   /// latl::sytrf, the inverse of the symmetric indefinite matrix is returned in
+   /// LATL::sytrf, the inverse of the symmetric indefinite matrix is returned in
    /// either the upper, U, or lower, L, part of the matrix A.
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
@@ -39,16 +39,18 @@ namespace latl
    /// @param n The order of the triangular factor U or L.  n >= 0.
    /// @param A Real triangular matrix of order n.
    /// On entry, the block diagonal matrix D and the multipliers used to obtain
-   /// the factor U or L as computed by latl::sytrf.  On exit, if upper 
+   /// the factor U or L as computed by LATL::sytrf.  On exit, if upper 
    /// trianglar, A is overwritten with the upper triangle of the inverse of A;
    /// if lower trianglar, A is overwritten with the lower triangle of the
    /// inverse of A.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
-   /// interchanges and the block structure of D as determined by latl::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::sytrf.
+   /// @param work Workspace vector of length n (optional).  If not used, workspace will be allocated
+   /// and deallocated internally.
 
    template <typename real_t>
-   int_t sytri(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv )
+   int_t sytri(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv, real_t *work=NULL)
    {
       using std::abs;
       using std::toupper;
@@ -79,7 +81,9 @@ namespace latl
                return 1;
       }
 
-      real_t *work =new real_t[n];
+      bool allocate=(work==NULL)?1:0;
+      if(allocate)
+         work =new real_t[n];
       int_t kstep;
 
       if(uplo=='U')
@@ -201,8 +205,8 @@ namespace latl
             k = k - kstep;
          }
       }
-
-      delete [] work;
+      if(allocate)
+         delete [] work;
 
       return 0;
    }
@@ -210,7 +214,7 @@ namespace latl
    /// @brief Computes the inverse of a symmetric indefinite matrix.
    ///
    /// A using the factorization A = U D U.' or A = L D L.' computed by
-   /// latl::sytrf, the inverse of the symmetric indefinite matrix is returned in
+   /// LATL::sytrf, the inverse of the symmetric indefinite matrix is returned in
    /// either the upper, U, or lower, L, part of the matrix A.
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
@@ -222,16 +226,18 @@ namespace latl
    /// @param n The order of the triangular factor U or L.  n >= 0.
    /// @param A Complex triangular matrix of order n.
    /// On entry, the block diagonal matrix D and the multipliers used to obtain
-   /// the factor U or L as computed by latl::sytrf.  On exit, if upper 
+   /// the factor U or L as computed by LATL::sytrf.  On exit, if upper 
    /// trianglar, A is overwritten with the upper triangle of the inverse of A;
    /// if lower trianglar, A is overwritten with the lower triangle of the
    /// inverse of A.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
-   /// interchanges and the block structure of D as determined by latl::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::sytrf.
+   /// @param work Workspace vector of length n (optional).  If not used, workspace will be allocated
+   /// and deallocated internally.
 
    template <typename real_t>
-   int_t sytri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv)
+   int_t sytri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv, complex<real_t> *work=NULL)
    {
       using std::toupper;
       uplo=toupper(uplo);
@@ -261,7 +267,9 @@ namespace latl
                return 1;
       }
 
-      complex<real_t> *work =new complex<real_t>[n];
+      bool allocate=(work==NULL)?1:0;
+      if(allocate)
+         work =new complex<real_t>[n];
       int_t kstep;
 
       if(uplo=='U')
@@ -383,8 +391,9 @@ namespace latl
             k = k - kstep;
          }
       }
-      
-      delete [] work;
+
+      if(allocate)
+         delete [] work;
       
       return 0;
    }
@@ -392,7 +401,7 @@ namespace latl
    /// @brief Computes the inverse of a real symmetric indefinite matrix.
    ///
    /// A using the factorization A = U D U' or A = L D L' computed by
-   /// latl::sytrf, the inverse of the symmetric indefinite matrix is returned in
+   /// LATL::sytrf, the inverse of the symmetric indefinite matrix is returned in
    /// either the upper, U, or lower, L, part of the matrix A.
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
@@ -404,15 +413,15 @@ namespace latl
    /// @param n The order of the triangular factor U or L.  n >= 0.
    /// @param A Real triangular matrix of order n.
    /// On entry, the block diagonal matrix D and the multipliers used to obtain
-   /// the factor U or L as computed by latl::sytrf.  On exit, if upper 
+   /// the factor U or L as computed by LATL::sytrf.  On exit, if upper 
    /// trianglar, A is overwritten with the upper triangle of the inverse of A;
    /// if lower trianglar, A is overwritten with the lower triangle of the
    /// inverse of A.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
-   /// interchanges and the block structure of D as determined by latl::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::sytrf.
    /// @param bsdv is a boolean array with dimension n.  Details of the 
-   /// interchanges and the block structure of D as determined by latl::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::sytrf.
    /// @param nb Block size.
 
    template <typename real_t>
@@ -779,7 +788,7 @@ namespace latl
    /// @brief Computes the inverse of a complex symmetric indefinite matrix.
    ///
    /// A using the factorization A = U D U' or A = L D L' computed by
-   /// latl::sytrf, the inverse of the symmetric indefinite matrix is returned in
+   /// LATL::sytrf, the inverse of the symmetric indefinite matrix is returned in
    /// either the upper, U, or lower, L, part of the matrix A.
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
@@ -791,15 +800,15 @@ namespace latl
    /// @param n The order of the triangular factor U or L.  n >= 0.
    /// @param A Complex triangular matrix of order n.
    /// On entry, the block diagonal matrix D and the multipliers used to obtain
-   /// the factor U or L as computed by latl::sytrf.  On exit, if upper 
+   /// the factor U or L as computed by LATL::sytrf.  On exit, if upper 
    /// trianglar, A is overwritten with the upper triangle of the inverse of A;
    /// if lower trianglar, A is overwritten with the lower triangle of the
    /// inverse of A.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
-   /// interchanges and the block structure of D as determined by latl::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::sytrf.
    /// @param bsdv is a boolean array with dimension n.  Details of the 
-   /// interchanges and the block structure of D as determined by latl::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::sytrf.
    /// @param nb Block size.
 
    template <typename real_t>

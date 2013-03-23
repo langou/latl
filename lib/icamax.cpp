@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "imax.h"
 
-using latl::imax;
+using LATL::imax;
 
 int icamax_(int &n, complex<float> *x, int& incx)
 {

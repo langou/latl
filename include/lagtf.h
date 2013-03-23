@@ -14,7 +14,7 @@
 #include <limits>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Factorizes the matrix (T - lambda*I), where T is an n-by-n tridiagonal matrix and lambda is a scalar, as
    ///

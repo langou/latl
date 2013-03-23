@@ -14,7 +14,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief  Performs general real symmetric matrix-matrix multiplication.
    ///

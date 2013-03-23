@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "lauum.h"
 
-using latl::lauum;
+using LATL::lauum;
 
 int clauu2_(char &uplo,int &n,complex<float> *A,int &ldA,int &info)
 {

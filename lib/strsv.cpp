@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "trsv.h"
 
-using latl::trsv;
+using LATL::trsv;
 
 int strsv_(char& uplo, char& trans, char& diag, int &n, float *A, int &ldA, float *x, int& incx)
 {

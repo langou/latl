@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "ladiv.h"
 
-using latl::ladiv;
+using LATL::ladiv;
 
 #if defined(__GNUC__) && !defined(__INTEL_COMPILER) && !defined(__clang__)
 complex<float> zladiv_(complex<float> &x, complex<float> &y)

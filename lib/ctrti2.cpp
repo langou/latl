@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "trti2.h"
 
-using latl::trti2;
+using LATL::trti2;
 
 int ctrti2_(char &uplo,char &diag, int &n,complex<float> *A,int &ldA,int &info)
 {

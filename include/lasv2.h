@@ -15,7 +15,7 @@
 #include <limits>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the singular value decomposition of a 2-by-2 triangular matrix.
    /// 

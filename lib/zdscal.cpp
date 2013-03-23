@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "scal.h"
 
-using latl::scal;
+using LATL::scal;
 
 int zdscal_(int &n, double& alpha, complex<double> *x, int& incx)
 {

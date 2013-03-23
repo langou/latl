@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "ger.h"
 
-using latl::ger;
+using LATL::ger;
 
 int sger_(int &m, int &n, float& alpha, float *x, int& incx, float *y, int& incy, float *A, int &ldA)
 {

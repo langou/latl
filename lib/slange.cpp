@@ -9,7 +9,7 @@
 #include "lapack.h"
 #include "lange.h"
 
-using latl::lange;
+using LATL::lange;
 
 float slange_(char &norm,int &m,int &n,float *A,int &ldA,float *work)
 {

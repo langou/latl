@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "nrm2.h"
 
-using latl::nrm2;
+using LATL::nrm2;
 
 double dnrm2_(int &n, double *x, int& incx)
 {

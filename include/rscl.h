@@ -16,7 +16,7 @@
 #include "scal.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Multiplies a real vector x by the real scalar 1/a.
    /// @tparam real_t Floating point type.
@@ -30,8 +30,8 @@ namespace latl
    void rscl(int_t n, real_t a, real_t *x, int_t incx)
    {
       using std::numeric_limits;
-      using latl::labad;
-      using latl::scal;
+      using LATL::labad;
+      using LATL::scal;
       const real_t one(1.0);
       const real_t zero(0.0);
       real_t a_inv;
@@ -82,8 +82,8 @@ namespace latl
    void rscl(int_t n, real_t a, complex<real_t> *x, int_t incx)
    {
       using std::numeric_limits;
-      using latl::labad;
-      using latl::scal;
+      using LATL::labad;
+      using LATL::scal;
       const real_t one(1.0);
       const real_t zero(0.0);
       real_t a_inv;

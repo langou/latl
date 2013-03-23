@@ -17,7 +17,7 @@
 #include "lapy2.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Generates a plane rotation of a real vector (f,g) to eliminate g.
    /// generate a plane rotation so that
@@ -25,7 +25,7 @@ namespace latl
    ///        [  c  s ] [ f ]  =  [ r ]   
    ///        [ -s  c ] [ g ]     [ 0 ]
    /// where c^2+s^2=1.
-   /// This is a slower, more accurate version of latl::rotg with the following other differences:
+   /// This is a slower, more accurate version of LATL::rotg with the following other differences:
    ///
    ///        * f and g are unchanged on return.
    ///        * if g=0, then c=1 and s=0.
@@ -52,7 +52,7 @@ namespace latl
       using std::sqrt;
       using std::abs;
       using std::trunc;
-      using latl::lapy2;
+      using LATL::lapy2;
       
       const real_t zero=0.0;
       const real_t one=1.0;
@@ -132,7 +132,7 @@ namespace latl
    ///        [       c  s ] [ f ]  =  [ r ]   
    ///        [ -conj(s) c ] [ g ]     [ 0 ]
    /// where c^2+|s|^2=1.
-   /// This is a faster version of complex latl::rotg with the following differences:
+   /// This is a faster version of complex LATL::rotg with the following differences:
    ///
    ///        * f and g are unchanged on return.
    ///        * if g=0, then c=1 and s=0.
@@ -158,7 +158,7 @@ namespace latl
       using std::sqrt;
       using std::abs;
       using std::trunc;
-      using latl::lapy2;
+      using LATL::lapy2;
 
       const real_t zero(0.0);
       const real_t one(1.0);

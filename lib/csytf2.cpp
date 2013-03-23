@@ -10,8 +10,8 @@
 #include "sytf2.h"
 #include "latl.h"
 
-using latl::sytf2;
-using latl::int_t;
+using LATL::sytf2;
+using LATL::int_t;
 
 int csytf2_(char &uplo,int &n,complex<float> *A,int &ldA,int *ipiv,int &info)
 {

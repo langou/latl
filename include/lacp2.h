@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Copies a real A to complex matrix B where A is either a full, upper triangular or lower triangular matrix.
    /// @tparam real_t Floating point type.

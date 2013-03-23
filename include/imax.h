@@ -14,7 +14,7 @@
 #include <cmath>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    
    /// @brief Finds the index of the maximal element of a real vector.

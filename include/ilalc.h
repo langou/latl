@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Scans real matrix for its last nonzero column.
    /// @return The index of the last nonzero column in [0,n-1].  If A is the zero matrix, -1 is returned.

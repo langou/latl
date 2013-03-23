@@ -15,7 +15,7 @@
 #include "swap.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Applies an elementary permutation on the rows and columns of a hermitian matrix.
    ///
@@ -59,7 +59,7 @@ namespace latl
          complex<real_t> *aj=A+j*ldA;
          complex<real_t> *ak;
          complex<real_t> t;
-         latl::swap(i-1,ai,1,aj,1);
+         LATL::swap(i-1,ai,1,aj,1);
          t=ai[i];
          ai[i]=aj[j];
          aj[j]=t;
@@ -87,7 +87,7 @@ namespace latl
          complex<real_t> *aj=A+j*ldA;
          complex<real_t> *ak;
          complex<real_t> t;
-         latl::swap(i-1,A+i,ldA,A+j,ldA);
+         LATL::swap(i-1,A+i,ldA,A+j,ldA);
          t=ai[i];
          ai[i]=aj[j];
          aj[j]=t;

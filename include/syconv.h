@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Converts A, given by sytrf, into L and D and vice-versa.
    ///

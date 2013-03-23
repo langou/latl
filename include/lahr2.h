@@ -27,7 +27,7 @@
 #include "gemm.h"
 #include "lacgv.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Reduces the first NB columns of A real general n-BY-(n-k+1)
    /// matrix A so that elements below the k-th subdiagonal are zero. The 

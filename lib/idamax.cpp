@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "imax.h"
 
-using latl::imax;
+using LATL::imax;
 
 int idamax_(int &n, double *x, int& incx)
 {

@@ -8,7 +8,7 @@
 
 #include "blas.h"
 #include "hpmv.h"
-using latl::hpmv;
+using LATL::hpmv;
 using std::complex;
 
 int zhpmv_(char& uplo, int &n, complex<double> &alpha, complex<double> *A, complex<double> *x, int& incx, complex<double> &beta, complex<double> *y, int& incy)

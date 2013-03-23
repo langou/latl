@@ -17,7 +17,7 @@
 #include "ger.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Applies a real elementary reflector H to a real m-by-n matrix C.
    ///

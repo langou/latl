@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "herk.h"
 
-using latl::herk;
+using LATL::herk;
 using std::complex;
 
 int cherk_(char& uplo, char& trans, int &n, int& k, float& alpha, complex<float> *A, int &ldA, float &beta, complex<float> *C, int &ldC)

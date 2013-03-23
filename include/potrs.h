@@ -14,7 +14,7 @@
 #include "trsm.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    template< typename real_t>
    int_t potrs( const char uplo, const int_t n, const int_t nrhs, real_t * const A, const int_t ldA, real_t * const B, const int_t ldB)
@@ -35,13 +35,13 @@ namespace latl
       const real_t one(1.0);
       if (uplo == 'U' || uplo == 'u')
       {
-         latl::trsm('L', 'U', 'T', 'N', n, nrhs, one, A, ldA, B, ldB);
-         latl::trsm('L', 'U', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'U', 'T', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'U', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
       }
       else
       {
-         latl::trsm('L', 'L', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
-         latl::trsm('L', 'L', 'T', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'L', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'L', 'T', 'N', n, nrhs, one, A, ldA, B, ldB);
       }
       return 0;
    }
@@ -65,13 +65,13 @@ namespace latl
       const complex<real_t> one(1.0);
       if (uplo == 'U' || uplo == 'u')
       {
-         latl::trsm('L', 'U', 'C', 'N', n, nrhs, one, A, ldA, B, ldB);
-         latl::trsm('L', 'U', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'U', 'C', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'U', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
       }
       else
       {
-         latl::trsm('L', 'L', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
-         latl::trsm('L', 'L', 'C', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'L', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'L', 'C', 'N', n, nrhs, one, A, ldA, B, ldB);
       }
       return 0;
    }

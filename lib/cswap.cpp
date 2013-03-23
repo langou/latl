@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "swap.h"
 
-using latl::swap;
+using LATL::swap;
 
 int cswap_(int &n, complex<float> *x, int& incx, complex<float> *y, int& incy)
 {

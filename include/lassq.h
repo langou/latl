@@ -14,7 +14,7 @@
 #include <cmath>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    
    /// @brief Calculates the sum of the squares of elements of a real-valued vector.

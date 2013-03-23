@@ -9,7 +9,7 @@
 #include "hemv.h"
 
 using std::complex;
-using latl::hemv;
+using LATL::hemv;
 
 int chemv_(char& uplo, int &n, complex<float> &alpha, complex<float> *A, int &ldA, complex<float> *x, int& incx, complex<float> &beta, complex<float> *y, int& incy)
 {

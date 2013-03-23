@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "scal.h"
 
-using latl::scal;
+using LATL::scal;
 
 int cscal_(int &n, complex<float>& alpha, complex<float> *x, int& incx)
 {

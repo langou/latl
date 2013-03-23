@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "sbmv.h"
 
-using latl::sbmv;
+using LATL::sbmv;
 
 int ssbmv_(char& uplo, int &n, int& k, float& alpha, float *A, int &ldA, float *x, int& incx, float &beta, float *y, int& incy)
 {

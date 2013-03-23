@@ -14,7 +14,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Initializes a real matrix with diagonal values of beta and off-diagonal values of alpha.
    /// @return 0 if success.

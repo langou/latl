@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    
    /// @brief Computes a real constant times a real vector plus a real vector.

@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "tpsv.h"
 
-using latl::tpsv;
+using LATL::tpsv;
 
 int dtpsv_(char& uplo, char& trans, char& diag, int &n, double *A, double *x, int& incx)
 {

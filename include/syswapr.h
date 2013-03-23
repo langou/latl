@@ -15,7 +15,7 @@
 #include "swap.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Applies an elementary permutation on the rows and columns of a symmetric matrix.
    ///

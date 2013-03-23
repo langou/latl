@@ -19,7 +19,7 @@
 #include "ger.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes an LU factorization with complete pivoting of an n-by-n real matrix.
    ///

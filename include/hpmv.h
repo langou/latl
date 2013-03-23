@@ -14,7 +14,7 @@
 #include <cctype>
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Performs complex Hermitian matrix-vector multiplication using packed storage.
    /// 

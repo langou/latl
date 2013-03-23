@@ -13,7 +13,7 @@
 
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes the L*D*L' factorization of a real symmetric positive definite tridiagonal matrix A.  The factorization may also be regarded as having the form A = U'*D*U.
    ///

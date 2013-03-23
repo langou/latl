@@ -14,7 +14,7 @@
 #include <cmath>
 #include <algorithm>
 
-namespace latl
+namespace LATL
 {
    /// @brief Finds sqrt(x^2+y^2+z^2), taking care not to cause unnecessary overflow.
    /// @return sqrt(x^2+y^2+z^2)

@@ -9,7 +9,7 @@
 #include "blas.h"
 #include "dot.h"
 
-using latl::dotc;
+using LATL::dotc;
 
 #if defined(__GNUC__) && !defined(__INTEL_COMPILER) && !defined(__clang__)
 complex<double> zdotc_(int &n, complex<double> *x, int& incx, complex<double> *y, int& incy)

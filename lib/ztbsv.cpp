@@ -10,7 +10,7 @@
 #include "tbsv.h"
 
 using std::complex;
-using latl::tbsv;
+using LATL::tbsv;
 
 int ztbsv_(char& uplo, char& trans, char& diag, int &n, int& k, complex<double> *A, int &ldA, complex<double> *x, int& incx)
 {

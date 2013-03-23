@@ -15,7 +15,7 @@
 #include "trsm.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    
    /// @brief Solves a system of linear equations A * X = B.
@@ -58,15 +58,15 @@ namespace latl
       
       if (notrans)
       {
-         latl::laswp(colB, B, ldB, 0, n-1, IPIV);
-         latl::trsm('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
-         latl::trsm('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
+         LATL::laswp(colB, B, ldB, 0, n-1, IPIV);
+         LATL::trsm('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
       }
       else
       {
-         latl::trsm('L', 'U', 'T', 'N', n, colB, one, A, ldA, B, ldB);
-         latl::trsm('L', 'L', 'T', 'U', n, colB, one, A, ldA, B, ldB);
-         latl::laswp(colB, B, ldB, 0, n-1, IPIV, -1);
+         LATL::trsm('L', 'U', 'T', 'N', n, colB, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'L', 'T', 'U', n, colB, one, A, ldA, B, ldB);
+         LATL::laswp(colB, B, ldB, 0, n-1, IPIV, -1);
       }
       return 0;
    }
@@ -111,15 +111,15 @@ namespace latl
       
       if (notrans)
       {
-         latl::laswp(colB, B, ldB, 0, n-1, IPIV);
-         latl::trsm('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
-         latl::trsm('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
+         LATL::laswp(colB, B, ldB, 0, n-1, IPIV);
+         LATL::trsm('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
       }
       else
       {
-         latl::trsm('L', 'U', trans, 'N', n, colB, one, A, ldA, B, ldB);
-         latl::trsm('L', 'L', trans, 'U', n, colB, one, A, ldA, B, ldB);
-         latl::laswp(colB, B, ldB, 0, n-1, IPIV, -1);
+         LATL::trsm('L', 'U', trans, 'N', n, colB, one, A, ldA, B, ldB);
+         LATL::trsm('L', 'L', trans, 'U', n, colB, one, A, ldA, B, ldB);
+         LATL::laswp(colB, B, ldB, 0, n-1, IPIV, -1);
       }
       return 0;
    }

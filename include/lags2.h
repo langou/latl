@@ -16,7 +16,7 @@
 #include "lasv2.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes 2-by-2 orthogonal matrices satisfying certain properties.
    ///
@@ -61,8 +61,8 @@ namespace latl
    void lags2(bool upper,real_t a1,real_t a2,real_t a3,real_t b1,real_t b2,real_t b3,real_t &csu,real_t &snu,real_t &csv,real_t &snv,real_t &csq,real_t &snq)
    {
       using std::abs;
-      using latl::lartg;
-      using latl::lasv2;
+      using LATL::lartg;
+      using LATL::lasv2;
 
       const real_t zero=0.0;
       real_t s1,s2,snr,csr,snl,csl;
@@ -234,8 +234,8 @@ namespace latl
       using std::imag;
       using std::abs;
       using std::conj;
-      using latl::lartg;
-      using latl::lasv2;
+      using LATL::lartg;
+      using LATL::lasv2;
       
       const real_t zero=0.0;
       const real_t one=1.0;

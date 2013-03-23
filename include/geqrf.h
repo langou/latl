@@ -18,7 +18,7 @@
 #include "larfb.h"
 #include "latl.h"
 
-namespace latl
+namespace LATL
 {
    /// @brief Computes a QR factorization of a real matrix using recursive algorithm.
    /// @tparam real_t Floating point type.
@@ -35,9 +35,9 @@ namespace latl
    template<typename real_t>
    int geqrf(int_t m,int_t n,real_t *A,int_t ldA,real_t *T,int_t ldT)
    {
-      using latl::larfg;
-      using latl::gemm;
-      using latl::trmm;
+      using LATL::larfg;
+      using LATL::gemm;
+      using LATL::trmm;
       const real_t one(1.0);
       if(n<0)
          return -2;
@@ -171,9 +171,9 @@ namespace latl
    template<typename real_t>
    int geqrf(int_t m,int_t n,complex<real_t> *A,int_t ldA,complex<real_t> *T,int_t ldT)
    {
-      using latl::larfg;
-      using latl::gemm;
-      using latl::trmm;
+      using LATL::larfg;
+      using LATL::gemm;
+      using LATL::trmm;
       using std::conj;
       const complex<real_t> one(1.0);
       if(n<0)

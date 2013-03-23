@@ -15,7 +15,7 @@
 #include "latl.h"
 #include <cmath>
 
-namespace latl
+namespace LATL
 {
    /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a Hermitian band matrix.
    ///
@@ -174,7 +174,7 @@ namespace latl
                ABj += ldAB + k-1;
                for (int_t j = 1; j < n; ++j)
                {
-                  latl::lassq(min(j, k), ABj, 1, scale, sum);
+                  LATL::lassq(min(j, k), ABj, 1, scale, sum);
                   if (k-j > 0)
                      ABj += ldAB-1;
                   else
@@ -187,7 +187,7 @@ namespace latl
                ABj += 1;
                for (int_t j = 0; j < n-1; ++j)
                {
-                  latl::lassq(min(k, n-j-1), ABj, 1, scale, sum);
+                  LATL::lassq(min(k, n-j-1), ABj, 1, scale, sum);
                   ABj += ldAB;
                }
             }
