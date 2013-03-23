@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "sbmv.h"
 
-using LATL::sbmv;
+using LATL::SBMV;
 
 int ssbmv_(char& uplo, int &n, int& k, float& alpha, float *A, int &ldA, float *x, int& incx, float &beta, float *y, int& incy)
 {
-   int info=-sbmv<float>(uplo,n,k,alpha,A,ldA,x,incx,beta,y,incy);
+   int info=-SBMV<float>(uplo,n,k,alpha,A,ldA,x,incx,beta,y,incy);
    if(info>0)
       xerbla_("SSBMV ",info);
    return 0;

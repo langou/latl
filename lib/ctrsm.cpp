@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "trsm.h"
 
-using LATL::trsm;
+using LATL::TRSM;
 
 int ctrsm_(char& side, char& uplo, char& trans, char& diag, int &m, int &n, complex<float> &alpha, complex<float> *A, int &ldA, complex<float> *B, int &ldB)
 {
-   int info=-trsm<float>(side,uplo,trans,diag,m,n,alpha,A,ldA,B,ldB);
+   int info=-TRSM<float>(side,uplo,trans,diag,m,n,alpha,A,ldA,B,ldB);
    if(info>0)
       xerbla_("CTRSM ",info);
    return 0;

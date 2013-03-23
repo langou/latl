@@ -42,7 +42,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int syr(char uplo, int_t n, real_t alpha, real_t *x, int_t incx, real_t *A, int_t ldA)
+   int SYR(char uplo, int_t n, real_t alpha, real_t *x, int_t incx, real_t *A, int_t ldA)
    {
       using std::toupper;
 
@@ -151,9 +151,9 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int syr(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx, complex<real_t> *A, int_t ldA)
+   int SYR(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx, complex<real_t> *A, int_t ldA)
    {
-      return syr< complex<real_t> >(uplo,n,alpha,x,incx,A,ldA);
+      return SYR< complex<real_t> >(uplo,n,alpha,x,incx,A,ldA);
    }
    
    /// @brief Performs a vector outer product of two real vectors.  
@@ -184,7 +184,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int syr(char uplo, int_t n, real_t alpha, real_t *x, int_t incx, real_t *y, int_t incy, real_t *A, int_t ldA)
+   int SYR(char uplo, int_t n, real_t alpha, real_t *x, int_t incx, real_t *y, int_t incy, real_t *A, int_t ldA)
    {
       using std::toupper;
 

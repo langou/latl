@@ -9,10 +9,10 @@
 #include "blas.h"
 #include "dot.h"
 
-using LATL::dotx;
+using LATL::DOTX;
 
 float sdsdot_(int &n, float *B,float *x, int& incx, float *y, int& incy)
 {
-   return dotx<float,double>(n,*B,x,incx,y,incy);
+   return DOTX<float,double>(n,*B,x,incx,y,incy);
 }
 

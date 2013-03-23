@@ -113,33 +113,33 @@ namespace LATL
       {
          if(i>0)
          {
-            gemv<real_t>( 'N', n-k, i, -1.0, Y+k, ldY, A+k+i-1, ldA, 1.0, A+k+i*ldA, 1);
-            copy<real_t>( i, A+k+i*ldA, 1, T+(nb-1)*ldT, 1);
-            trmv<real_t>( 'L', 'T', 'U', i, A+k, ldA, T+(nb-1)*ldT, 1);
-            gemv<real_t>( 'T', n-k-i, i, 1.0, A+k+i, ldA, A+k+i+i*ldA, 1, 1.0, T+(nb-1)*ldT, 1);
-            trmv<real_t>( 'U', 'T', 'N', i, T, ldT, T+(nb-1)*ldT, 1);
-            gemv<real_t>( 'N', n-k-i, i, -1.0, A+k+i, ldA, T+(nb-1)*ldT, 1, 1.0, A+k+i+i*ldA, 1);
-            trmv<real_t>( 'L', 'N', 'U', i, A+k, ldA, T+(nb-1)*ldT, 1);
-            axpy<real_t>( i, -1.0, T+(nb-1)*ldT, 1, A+k+i*ldA, 1);
+            GEMV<real_t>( 'N', n-k, i, -1.0, Y+k, ldY, A+k+i-1, ldA, 1.0, A+k+i*ldA, 1);
+            COPY<real_t>( i, A+k+i*ldA, 1, T+(nb-1)*ldT, 1);
+            TRMV<real_t>( 'L', 'T', 'U', i, A+k, ldA, T+(nb-1)*ldT, 1);
+            GEMV<real_t>( 'T', n-k-i, i, 1.0, A+k+i, ldA, A+k+i+i*ldA, 1, 1.0, T+(nb-1)*ldT, 1);
+            TRMV<real_t>( 'U', 'T', 'N', i, T, ldT, T+(nb-1)*ldT, 1);
+            GEMV<real_t>( 'N', n-k-i, i, -1.0, A+k+i, ldA, T+(nb-1)*ldT, 1, 1.0, A+k+i+i*ldA, 1);
+            TRMV<real_t>( 'L', 'N', 'U', i, A+k, ldA, T+(nb-1)*ldT, 1);
+            AXPY<real_t>( i, -1.0, T+(nb-1)*ldT, 1, A+k+i*ldA, 1);
             A[k+i-1+(i-1)*ldA] = ei;
          }
-         larfg<real_t>( n-k-i, A[k+i+i*ldA], A+min(k+i+1,n-1)+i*ldA, 1, tau[i]);
+         LARFG<real_t>( n-k-i, A[k+i+i*ldA], A+min(k+i+1,n-1)+i*ldA, 1, tau[i]);
          ei = A[k+i+i*ldA];
          A[k+i+i*ldA] = 1.0;
-         gemv<real_t>( 'N', n-k, n-k-i, 1.0, A+k+(i+1)*ldA, ldA, A+k+i+i*ldA, 1, 0.0, Y+k+i*ldY, 1); 
-         gemv<real_t>( 'T', n-k-i, i, 1.0, A+k+i, ldA, A+k+i+i*ldA, 1, 0.0, T+i*ldT, 1);
-         gemv<real_t>( 'N', n-k, i, -1.0, Y+k, ldY, T+i*ldT, 1, 1.0, Y+k+i*ldY, 1);
-         scal<real_t>( n-k, tau[i], Y+k+i*ldY, 1);
-         scal<real_t>( i, -tau[i], T+i*ldT, 1);
-         trmv<real_t>( 'U', 'N', 'N', i, T, ldT, T+i*ldT, 1);
+         GEMV<real_t>( 'N', n-k, n-k-i, 1.0, A+k+(i+1)*ldA, ldA, A+k+i+i*ldA, 1, 0.0, Y+k+i*ldY, 1); 
+         GEMV<real_t>( 'T', n-k-i, i, 1.0, A+k+i, ldA, A+k+i+i*ldA, 1, 0.0, T+i*ldT, 1);
+         GEMV<real_t>( 'N', n-k, i, -1.0, Y+k, ldY, T+i*ldT, 1, 1.0, Y+k+i*ldY, 1);
+         SCAL<real_t>( n-k, tau[i], Y+k+i*ldY, 1);
+         SCAL<real_t>( i, -tau[i], T+i*ldT, 1);
+         TRMV<real_t>( 'U', 'N', 'N', i, T, ldT, T+i*ldT, 1);
          T[i+i*ldT] = tau[i];
       }
       A[k+nb-1+(nb-1)*ldA] = ei;
-      lacpy<real_t>( 'A', k, nb, A+ldA, ldA, Y, ldY);
-      trmm<real_t>( 'R', 'L', 'N', 'U', k, nb, 1.0, A+k, ldA, Y, ldY);
+      LACPY<real_t>( 'A', k, nb, A+ldA, ldA, Y, ldY);
+      TRMM<real_t>( 'R', 'L', 'N', 'U', k, nb, 1.0, A+k, ldA, Y, ldY);
       if(n>k+nb)
-         gemm<real_t>( 'N', 'N', k, nb, n-k-nb, 1.0, A+(nb+1)*ldA, ldA, A+k+nb, ldA, 1.0, Y, ldY);
-      trmm<real_t>( 'R', 'U', 'N', 'N', k, nb, 1.0, T, ldT, Y, ldY);
+         GEMM<real_t>( 'N', 'N', k, nb, n-k-nb, 1.0, A+(nb+1)*ldA, ldA, A+k+nb, ldA, 1.0, Y, ldY);
+      TRMM<real_t>( 'R', 'U', 'N', 'N', k, nb, 1.0, T, ldT, Y, ldY);
       return 0;
    }
 
@@ -227,35 +227,35 @@ namespace LATL
       {
          if(i>0)
          {
-            lacgv<real_t>( i, A+k+i-1, ldA);
-            gemv<real_t>( 'N', n-k, i, -1.0, Y+k, ldY, A+k+i-1, ldA, 1.0, A+k+i*ldA, 1);
-            lacgv<real_t>( i, A+k+i-1, ldA);
-            copy<real_t>( i, A+k+i*ldA, 1, T+(nb-1)*ldT, 1);
-            trmv<real_t>( 'L', 'C', 'U', i, A+k, ldA, T+(nb-1)*ldT, 1);
-            gemv<real_t>( 'C', n-k-i, i, 1.0, A+k+i, ldA, A+k+i+i*ldA, 1, 1.0, T+(nb-1)*ldT, 1);
-            trmv<real_t>( 'U', 'C', 'N', i, T, ldT, T+(nb-1)*ldT, 1);
-            gemv<real_t>( 'N', n-k-i, i, -1.0, A+k+i, ldA, T+(nb-1)*ldT, 1, 1.0, A+k+i+i*ldA, 1);
-            trmv<real_t>( 'L', 'N', 'U', i, A+k, ldA, T+(nb-1)*ldT, 1);
-            axpy<real_t>( i, -1.0, T+(nb-1)*ldT, 1, A+k+i*ldA, 1);
+            LACGV<real_t>( i, A+k+i-1, ldA);
+            GEMV<real_t>( 'N', n-k, i, -1.0, Y+k, ldY, A+k+i-1, ldA, 1.0, A+k+i*ldA, 1);
+            LACGV<real_t>( i, A+k+i-1, ldA);
+            COPY<real_t>( i, A+k+i*ldA, 1, T+(nb-1)*ldT, 1);
+            TRMV<real_t>( 'L', 'C', 'U', i, A+k, ldA, T+(nb-1)*ldT, 1);
+            GEMV<real_t>( 'C', n-k-i, i, 1.0, A+k+i, ldA, A+k+i+i*ldA, 1, 1.0, T+(nb-1)*ldT, 1);
+            TRMV<real_t>( 'U', 'C', 'N', i, T, ldT, T+(nb-1)*ldT, 1);
+            GEMV<real_t>( 'N', n-k-i, i, -1.0, A+k+i, ldA, T+(nb-1)*ldT, 1, 1.0, A+k+i+i*ldA, 1);
+            TRMV<real_t>( 'L', 'N', 'U', i, A+k, ldA, T+(nb-1)*ldT, 1);
+            AXPY<real_t>( i, -1.0, T+(nb-1)*ldT, 1, A+k+i*ldA, 1);
             A[k+i-1+(i-1)*ldA] = ei;
          }
-         larfg<real_t>( n-k-i, A[k+i+i*ldA], A+min(k+i+1,n-1)+i*ldA, 1, tau[i]);
+         LARFG<real_t>( n-k-i, A[k+i+i*ldA], A+min(k+i+1,n-1)+i*ldA, 1, tau[i]);
          ei = A[k+i+i*ldA];
          A[k+i+i*ldA] = 1.0;
-         gemv<real_t>( 'N', n-k, n-k-i, 1.0, A+k+(i+1)*ldA, ldA, A+k+i+i*ldA, 1, 0.0, Y+k+i*ldY, 1); 
-         gemv<real_t>( 'C', n-k-i, i, 1.0, A+k+i, ldA, A+k+i+i*ldA, 1, 0.0, T+i*ldT, 1);
-         gemv<real_t>( 'N', n-k, i, -1.0, Y+k, ldY, T+i*ldT, 1, 1.0, Y+k+i*ldY, 1);
-         scal<real_t>( n-k, tau[i], Y+k+i*ldY, 1);
-         scal<real_t>( i, -tau[i], T+i*ldT, 1);
-         trmv<real_t>( 'U', 'N', 'N', i, T, ldT, T+i*ldT, 1);
+         GEMV<real_t>( 'N', n-k, n-k-i, 1.0, A+k+(i+1)*ldA, ldA, A+k+i+i*ldA, 1, 0.0, Y+k+i*ldY, 1); 
+         GEMV<real_t>( 'C', n-k-i, i, 1.0, A+k+i, ldA, A+k+i+i*ldA, 1, 0.0, T+i*ldT, 1);
+         GEMV<real_t>( 'N', n-k, i, -1.0, Y+k, ldY, T+i*ldT, 1, 1.0, Y+k+i*ldY, 1);
+         SCAL<real_t>( n-k, tau[i], Y+k+i*ldY, 1);
+         SCAL<real_t>( i, -tau[i], T+i*ldT, 1);
+         TRMV<real_t>( 'U', 'N', 'N', i, T, ldT, T+i*ldT, 1);
          T[i+i*ldT] = tau[i];
       }
       A[k+nb-1+(nb-1)*ldA] = ei;
-      lacpy<real_t>( 'A', k, nb, A+ldA, ldA, Y, ldY);
-      trmm<real_t>( 'R', 'L', 'N', 'U', k, nb, 1.0, A+k, ldA, Y, ldY);
+      LACPY<real_t>( 'A', k, nb, A+ldA, ldA, Y, ldY);
+      TRMM<real_t>( 'R', 'L', 'N', 'U', k, nb, 1.0, A+k, ldA, Y, ldY);
       if(n>k+nb)
-         gemm<real_t>( 'N', 'N', k, nb, n-k-nb, 1.0, A+(nb+1)*ldA, ldA, A+k+nb, ldA, 1.0, Y, ldY);
-      trmm<real_t>( 'R', 'U', 'N', 'N', k, nb, 1.0, T, ldT, Y, ldY);
+         GEMM<real_t>( 'N', 'N', k, nb, n-k-nb, 1.0, A+(nb+1)*ldA, ldA, A+k+nb, ldA, 1.0, Y, ldY);
+      TRMM<real_t>( 'R', 'U', 'N', 'N', k, nb, 1.0, T, ldT, Y, ldY);
       return 0;
    }
 }

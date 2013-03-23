@@ -42,7 +42,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int hpr(char uplo, int_t n, real_t alpha, complex<real_t> *x, int_t incx, complex<real_t> *A)
+   int HPR(char uplo, int_t n, real_t alpha, complex<real_t> *x, int_t incx, complex<real_t> *A)
    {
       using std::conj;
       using std::real;
@@ -155,7 +155,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int hpr(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy, complex<real_t> *A)
+   int HPR(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy, complex<real_t> *A)
    {
       using std::conj;
       using std::real;

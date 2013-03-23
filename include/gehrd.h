@@ -78,7 +78,7 @@ namespace LATL
    /// subroutine incorporating improvements proposed by Quintana-Orti and
    /// Van de Geijn (2006). (See DLAHR2.)
    template <typename real_t>
-   int_t gehrd( int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau, int_t nb=32)
+   int_t GEHRD( int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau, int_t nb=32)
    {
 
       using std::min;
@@ -115,16 +115,16 @@ namespace LATL
             lahr2( ihi+1, i+1, ib, A+i*ldA, ldA, tau+i, T, n, work, n);
             ei = A[i+ib+(i+ib-1)*ldA];
             A[i+ib+(i+ib-1)*ldA] = 1.0;
-            gemm<real_t>( 'N', 'T', ihi+1, ihi-i-ib+1, ib, -1.0, work, n, A+i+ib+i*ldA, ldA, 1.0, A+(i+ib)*ldA, ldA);
+            GEMM<real_t>( 'N', 'T', ihi+1, ihi-i-ib+1, ib, -1.0, work, n, A+i+ib+i*ldA, ldA, 1.0, A+(i+ib)*ldA, ldA);
             A[i+ib+(i+ib-1)*ldA] = ei;
-            trmm<real_t>( 'R', 'L', 'T', 'U', i+1, ib-1, 1.0, A+i+1+i*ldA, ldA, work, n);
+            TRMM<real_t>( 'R', 'L', 'T', 'U', i+1, ib-1, 1.0, A+i+1+i*ldA, ldA, work, n);
             for(j=0;j<ib-1;j++)
-               axpy<real_t>( i+1, -1.0, work+n*j, 1, A+(i+j+1)*ldA, 1);
-            larfb( 'L', 'T', 'F', 'C', ihi-i, n-i-ib, ib, A+i+1+i*ldA, ldA, T, n, A+i+1+(i+ib)*ldA, ldA, work);
+               AXPY<real_t>( i+1, -1.0, work+n*j, 1, A+(i+j+1)*ldA, 1);
+            LARFB( 'L', 'T', 'F', 'C', ihi-i, n-i-ib, ib, A+i+1+i*ldA, ldA, T, n, A+i+1+(i+ib)*ldA, ldA, work);
          }
       }
 
-      gehd2( n, i, ihi, A, ldA, tau );
+      GEHD2( n, i, ihi, A, ldA, tau );
 
       delete [] work;
       return 0;
@@ -187,7 +187,7 @@ namespace LATL
    /// subroutine incorporating improvements proposed by Quintana-Orti and
    /// Van de Geijn (2006). (See DLAHR2.)
    template <typename real_t>
-   int_t gehrd( int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau, int_t nb=32)
+   int_t GEHRD( int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau, int_t nb=32)
    {
 
       using std::min;
@@ -224,16 +224,16 @@ namespace LATL
             lahr2( ihi+1, i+1, ib, A+i*ldA, ldA, tau+i, T, n, work, n);
             ei = A[i+ib+(i+ib-1)*ldA];
             A[i+ib+(i+ib-1)*ldA] = 1.0;
-            gemm<real_t>( 'N', 'C', ihi+1, ihi-i-ib+1, ib, -1.0, work, n, A+i+ib+i*ldA, ldA, 1.0, A+(i+ib)*ldA, ldA);
+            GEMM<real_t>( 'N', 'C', ihi+1, ihi-i-ib+1, ib, -1.0, work, n, A+i+ib+i*ldA, ldA, 1.0, A+(i+ib)*ldA, ldA);
             A[i+ib+(i+ib-1)*ldA] = ei;
-            trmm<real_t>( 'R', 'L', 'C', 'U', i+1, ib-1, 1.0, A+i+1+i*ldA, ldA, work, n);
+            TRMM<real_t>( 'R', 'L', 'C', 'U', i+1, ib-1, 1.0, A+i+1+i*ldA, ldA, work, n);
             for(j=0;j<ib-1;j++)
-               axpy<real_t>( i+1, -1.0, work+n*j, 1, A+(i+j+1)*ldA, 1);
-            larfb( 'L', 'C', 'F', 'C', ihi-i, n-i-ib, ib, A+i+1+i*ldA, ldA, T, n, A+i+1+(i+ib)*ldA, ldA, work);
+               AXPY<real_t>( i+1, -1.0, work+n*j, 1, A+(i+j+1)*ldA, 1);
+            LARFB( 'L', 'C', 'F', 'C', ihi-i, n-i-ib, ib, A+i+1+i*ldA, ldA, T, n, A+i+1+(i+ib)*ldA, ldA, work);
          }
       }
 
-      gehd2( n, i, ihi, A, ldA, tau );
+      GEHD2( n, i, ihi, A, ldA, tau );
 
       delete [] work;
       return 0;

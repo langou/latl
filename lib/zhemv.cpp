@@ -10,11 +10,11 @@
 #include "hemv.h"
 
 using std::complex;
-using LATL::hemv;
+using LATL::HEMV;
 
 int zhemv_(char& uplo, int &n, complex<double> &alpha, complex<double> *A, int &ldA, complex<double> *x, int& incx, complex<double> &beta, complex<double> *y, int& incy)
 {
-   int info=-hemv<double>(uplo,n,alpha,A,ldA,x,incx,beta,y,incy);
+   int info=-HEMV<double>(uplo,n,alpha,A,ldA,x,incx,beta,y,incy);
    if(info>0)
       xerbla_("ZHEMV ",info);
    return 0;

@@ -45,7 +45,7 @@ namespace LATL
    /// @ingroup MATV
    
    template<typename real_t>
-   int lagtm(char trans,int_t n,int_t nrhs,real_t alpha,real_t *dl,real_t *d,real_t *du,real_t *X,int_t ldX,real_t beta,real_t *B,int_t ldB)
+   int LAGTM(char trans,int_t n,int_t nrhs,real_t alpha,real_t *dl,real_t *d,real_t *du,real_t *X,int_t ldX,real_t beta,real_t *B,int_t ldB)
    {
       using std::toupper;
       trans=toupper(trans);
@@ -209,7 +209,7 @@ namespace LATL
    /// @ingroup MATV
    
    template<typename real_t>
-   int lagtm(char trans,int_t n,int_t nrhs,real_t alpha,complex<real_t> *dl,complex<real_t> *d,complex<real_t> *du,complex<real_t> *X,int_t ldX,real_t beta,complex<real_t> *B,int_t ldB)
+   int LAGTM(char trans,int_t n,int_t nrhs,real_t alpha,complex<real_t> *dl,complex<real_t> *d,complex<real_t> *du,complex<real_t> *X,int_t ldX,real_t beta,complex<real_t> *B,int_t ldB)
    {
       using std::conj;
       using std::toupper;

@@ -43,7 +43,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=n.
 
    template <typename real_t>
-   int_t trtri(char uplo, char diag, int_t n, real_t *A, int_t ldA)
+   int_t TRTRI(char uplo, char diag, int_t n, real_t *A, int_t ldA)
    {
       using std::toupper;
       uplo=toupper(uplo);
@@ -74,8 +74,8 @@ namespace LATL
             else
                AJJ = -one;
 
-            trmv<real_t>('U','N', diag, j, A, ldA, A+j*ldA, 1);
-            scal<real_t>(j,AJJ,A+j*ldA,1);
+            TRMV<real_t>('U','N', diag, j, A, ldA, A+j*ldA, 1);
+            SCAL<real_t>(j,AJJ,A+j*ldA,1);
          }
       }
       else
@@ -92,8 +92,8 @@ namespace LATL
 
             if(j<n-1)
             {
-               trmv('L', 'N', diag, n-j-1, A+(j+1)+(j+1)*ldA, ldA, A+(j+1)+j*ldA, 1);
-               scal<real_t>(n-j-1, AJJ, A+(j+1)+j*ldA, 1);
+               TRMV('L', 'N', diag, n-j-1, A+(j+1)+(j+1)*ldA, ldA, A+(j+1)+j*ldA, 1);
+               SCAL<real_t>(n-j-1, AJJ, A+(j+1)+j*ldA, 1);
             }
          }
       }
@@ -124,7 +124,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=n.
 
    template <typename real_t>
-   int_t trtri(char uplo, char diag, int_t n, complex<real_t> *A, int_t ldA)
+   int_t TRTRI(char uplo, char diag, int_t n, complex<real_t> *A, int_t ldA)
    {
       using std::toupper;
       using std::real;
@@ -156,8 +156,8 @@ namespace LATL
             else
                AJJ = -one;
 
-            trmv<real_t>('U','N', diag, j, A, ldA, A+j*ldA, 1);
-            scal<real_t>(j,AJJ,A+j*ldA,1);
+            TRMV<real_t>('U','N', diag, j, A, ldA, A+j*ldA, 1);
+            SCAL<real_t>(j,AJJ,A+j*ldA,1);
          }
       }
       else
@@ -174,8 +174,8 @@ namespace LATL
 
             if(j<n-1)
             {
-               trmv('L', 'N', diag, n-j-1, A+(j+1)+(j+1)*ldA, ldA, A+(j+1)+j*ldA, 1);
-               scal<real_t>(n-j-1, AJJ, A+(j+1)+j*ldA, 1);
+               TRMV('L', 'N', diag, n-j-1, A+(j+1)+(j+1)*ldA, ldA, A+(j+1)+j*ldA, 1);
+               SCAL<real_t>(n-j-1, AJJ, A+(j+1)+j*ldA, 1);
             }
          }
       }
@@ -206,7 +206,7 @@ namespace LATL
    /// @param nb Block size.
 
    template <typename real_t>
-   int_t trtri(char uplo, char diag, int_t n, real_t *A, int_t ldA, int_t nb)
+   int_t TRTRI(char uplo, char diag, int_t n, real_t *A, int_t ldA, int_t nb)
    {
       using std::toupper;
       uplo=toupper(uplo);
@@ -232,7 +232,7 @@ namespace LATL
                return 1;
       }
       if((nb<2)||(nb>n))
-         trtri<real_t>( uplo, diag, n, A, ldA);
+         TRTRI<real_t>( uplo, diag, n, A, ldA);
       else
       {
          if(uplo=='U')
@@ -240,9 +240,9 @@ namespace LATL
             for(int_t j=0; j< n; j+=nb)
             {
                int_t jb = std::min(nb,n-j);
-               trmm<real_t>('L', 'U', 'N', diag, j, jb, one, A, ldA, A+j*ldA, ldA);
-               trsm<real_t>('R', 'U', 'N', diag, j, jb, -one, A+j+j*ldA, ldA, A+j*ldA, ldA);
-               trtri<real_t>('U', diag, jb, A+j+j*ldA, ldA);
+               TRMM<real_t>('L', 'U', 'N', diag, j, jb, one, A, ldA, A+j*ldA, ldA);
+               TRSM<real_t>('R', 'U', 'N', diag, j, jb, -one, A+j+j*ldA, ldA, A+j*ldA, ldA);
+               TRTRI<real_t>('U', diag, jb, A+j+j*ldA, ldA);
             }
          }
          else
@@ -253,10 +253,10 @@ namespace LATL
                int_t jb = std::min(nb,n-j);
                if(j+jb < n)
                {
-                  trmm<real_t>('L', 'L', 'N', diag, n-j-jb, jb, one, A+(j+jb)+(j+jb)*ldA, ldA, A+(j+jb)+j*ldA, ldA);
-                  trsm<real_t>('R', 'L', 'N', diag, n-j-jb, jb, -one, A+j+j*ldA, ldA, A+(j+jb)+j*ldA, ldA);
+                  TRMM<real_t>('L', 'L', 'N', diag, n-j-jb, jb, one, A+(j+jb)+(j+jb)*ldA, ldA, A+(j+jb)+j*ldA, ldA);
+                  TRSM<real_t>('R', 'L', 'N', diag, n-j-jb, jb, -one, A+j+j*ldA, ldA, A+(j+jb)+j*ldA, ldA);
                }
-               trtri<real_t>('L', diag, jb, A+j+j*ldA, ldA);
+               TRTRI<real_t>('L', diag, jb, A+j+j*ldA, ldA);
             }
          }
       }
@@ -287,7 +287,7 @@ namespace LATL
    /// @param nb Block size.
 
    template <typename real_t>
-   int_t trtri(char uplo, char diag, int_t n, complex<real_t> *A, int_t ldA, int_t nb)
+   int_t TRTRI(char uplo, char diag, int_t n, complex<real_t> *A, int_t ldA, int_t nb)
    {
       using std::toupper;
       uplo=toupper(uplo);
@@ -314,7 +314,7 @@ namespace LATL
       }
       if((nb>=n)||(nb<2))
       {
-         trtri<real_t>( uplo, diag, n, A, ldA);
+         TRTRI<real_t>( uplo, diag, n, A, ldA);
       }
       else
       {
@@ -323,9 +323,9 @@ namespace LATL
             for(int_t j=0; j< n; j+=nb)
             {
                int_t jb = std::min(nb,n-j);
-               trmm<real_t>('L', 'U', 'N', diag, j, jb, one, A, ldA, A+j*ldA, ldA);
-               trsm<real_t>('R', 'U', 'N', diag, j, jb, -one, A+j+j*ldA, ldA, A+j*ldA, ldA);
-               trtri<real_t>('U', diag, jb, A+j+j*ldA, ldA);
+               TRMM<real_t>('L', 'U', 'N', diag, j, jb, one, A, ldA, A+j*ldA, ldA);
+               TRSM<real_t>('R', 'U', 'N', diag, j, jb, -one, A+j+j*ldA, ldA, A+j*ldA, ldA);
+               TRTRI<real_t>('U', diag, jb, A+j+j*ldA, ldA);
             }
          }
          else
@@ -336,10 +336,10 @@ namespace LATL
                int_t jb = std::min(nb,n-j);
                if(j+jb < n)
                {
-                  trmm<real_t>('L', 'L', 'N', diag, n-j-jb, jb, one, A+(j+jb)+(j+jb)*ldA, ldA, A+(j+jb)+j*ldA, ldA);
-                  trsm<real_t>('R', 'L', 'N', diag, n-j-jb, jb, -one, A+j+j*ldA, ldA, A+(j+jb)+j*ldA, ldA);
+                  TRMM<real_t>('L', 'L', 'N', diag, n-j-jb, jb, one, A+(j+jb)+(j+jb)*ldA, ldA, A+(j+jb)+j*ldA, ldA);
+                  TRSM<real_t>('R', 'L', 'N', diag, n-j-jb, jb, -one, A+j+j*ldA, ldA, A+(j+jb)+j*ldA, ldA);
                }
-               trtri<real_t>('L', diag, jb, A+j+j*ldA, ldA);
+               TRTRI<real_t>('L', diag, jb, A+j+j*ldA, ldA);
             }
          }
       }

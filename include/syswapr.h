@@ -36,7 +36,7 @@ namespace LATL
    /// @param j Second index for row and column transposition. 0<=j<n
    
    template<typename real_t>
-   int syswapr(char uplo,int_t n,real_t *A,int_t ldA,int_t i,int_t j)
+   int SYSWAPR(char uplo,int_t n,real_t *A,int_t ldA,int_t i,int_t j)
    {
       using std::toupper;
 
@@ -58,7 +58,7 @@ namespace LATL
          real_t *aj=A+j*ldA;
          real_t *ak;
          real_t t;
-         swap(i,ai,1,aj,1);
+         SWAP(i,ai,1,aj,1);
          t=ai[i];
          ai[i]=aj[j];
          aj[j]=t;
@@ -85,7 +85,7 @@ namespace LATL
          real_t *aj=A+j*ldA;
          real_t *ak;
          real_t t;
-         swap(i,A+i,ldA,A+j,ldA);
+         SWAP(i,A+i,ldA,A+j,ldA);
          t=ai[i];
          ai[i]=aj[j];
          aj[j]=t;

@@ -46,7 +46,7 @@ namespace LATL
    /// were interchanged and D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
 
    template <typename real_t>
-   int_t hetf2(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV)
+   int_t HETF2(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV)
    {
       if (uplo != 'U' && uplo != 'u' && uplo != 'L' && uplo != 'l')
          return -1;
@@ -86,7 +86,7 @@ namespace LATL
             
             if (k > 0)
             {
-               imax = LATL::imax(k, Ak, 1);
+               imax = LATL::IMAX(k, Ak, 1);
                colmax = abs(real(Ak[imax]))+abs(imag(Ak[imax]));
             }
             else
@@ -114,13 +114,13 @@ namespace LATL
                   int_t jmax;
                   real_t rowmax;
                   
-                  jmax = imax+1 + LATL::imax(k-imax, A+ldA*(imax+1)+imax, ldA);
+                  jmax = imax+1 + LATL::IMAX(k-imax, A+ldA*(imax+1)+imax, ldA);
                   complex<real_t> * Ajmax = A + ldA*jmax;
                   complex<real_t> * Aimax = A + ldA*imax;
                   rowmax = abs(real(Ajmax[imax]))+abs(imag(Ajmax[imax]));
                   if (imax > 0)
                   {
-                     jmax = LATL::imax(imax, Aimax, 1);
+                     jmax = LATL::IMAX(imax, Aimax, 1);
                      rowmax = max(rowmax, abs(real(Aimax[jmax]))+abs(imag(Aimax[jmax])));
                   }
                   
@@ -145,7 +145,7 @@ namespace LATL
                complex<real_t> temp;
                if (kp != kinc)
                {
-                  LATL::swap(kp, Akinc, 1, A+ldA*kp, 1);
+                  LATL::SWAP(kp, Akinc, 1, A+ldA*kp, 1);
                   for (int_t j = kp+1; j< kinc; ++j)
                   {
                      Aj = A+ldA*j;
@@ -179,8 +179,8 @@ namespace LATL
                if (kstep == 1)
                {
                   r1 = one/real(Ak[k]);
-                  LATL::her(uplo, k, -r1, Ak, 1, A, ldA);
-                  LATL::scal<real_t>(k, r1, Ak, 1);
+                  LATL::HER(uplo, k, -r1, Ak, 1, A, ldA);
+                  LATL::SCAL<real_t>(k, r1, Ak, 1);
                }
                else
                {
@@ -237,7 +237,7 @@ namespace LATL
             
             if (k < n-1)
             {
-               imax = k+1 + LATL::imax(n-k-1, Ak+k+1, 1);
+               imax = k+1 + LATL::IMAX(n-k-1, Ak+k+1, 1);
                colmax = abs(real(Ak[imax]))+abs(imag(Ak[imax]));
             }
             else
@@ -261,13 +261,13 @@ namespace LATL
                   int_t jmax;
                   real_t rowmax;
                   
-                  jmax = k+LATL::imax(imax-k, Ak+imax, ldA);
+                  jmax = k+LATL::IMAX(imax-k, Ak+imax, ldA);
                   complex<real_t> * Ajmax = A + ldA*jmax;
                   complex<real_t> *Aimax = A +ldA*imax;
                   rowmax = abs(real(Ajmax[imax]))+abs(imag(Ajmax[imax]));
                   if (imax < n-1)
                   {
-                     jmax = imax+1 + LATL::imax(n-imax-1, Aimax+imax+1, 1);
+                     jmax = imax+1 + LATL::IMAX(n-imax-1, Aimax+imax+1, 1);
                      rowmax = max(rowmax, abs(real(Aimax[jmax]))+abs(imag(Aimax[jmax])));
                   }
                   
@@ -293,7 +293,7 @@ namespace LATL
                {
                   if (kp < n-1)
                   {
-                     LATL::swap(n-kp-1, Akinc+kp+1, 1, A+ldA*kp+kp+1, 1);
+                     LATL::SWAP(n-kp-1, Akinc+kp+1, 1, A+ldA*kp+kp+1, 1);
                   }
                   for (int_t j = kinc+1; j < kp; ++j)
                   {
@@ -326,8 +326,8 @@ namespace LATL
                   if (k < n-1)
                   {
                      r1 = one/real(Ak[k]);
-                     LATL::her(uplo, n-k-1, -r1, Ak+k+1, 1, Akp1+k+1, ldA);
-                     LATL::scal(n-k-1, r1, Ak+k+1, 1);
+                     LATL::HER(uplo, n-k-1, -r1, Ak+k+1, 1, Akp1+k+1, ldA);
+                     LATL::SCAL(n-k-1, r1, Ak+k+1, 1);
                   }
                }
                else

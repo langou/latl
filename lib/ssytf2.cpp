@@ -10,14 +10,14 @@
 #include "sytf2.h"
 #include "latl.h"
 
-using LATL::sytf2;
+using LATL::SYTF2;
 using LATL::int_t;
 
 int ssytf2_(char &uplo,int &n,float *A,int &ldA,int *ipiv,int &info)
 {
    int_t *IPIV=new int_t[n];
    bool *BSDV=new bool[n];
-   info=sytf2<float>(uplo,n,A,ldA,IPIV,BSDV);
+   info=SYTF2<float>(uplo,n,A,ldA,IPIV,BSDV);
    for(int i=0;i<n;i++)
    {
       ipiv[i]=IPIV[i]+1;

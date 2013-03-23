@@ -130,15 +130,15 @@ namespace LATL
                      T[j]=-tau[i]*v[i];
                      v+=ldV;
                   }
-                  gemv<real_t>('T',n-i-1,i,-tau[i],&V0[i+1],ldV,&V[i+1],1,one,T,1);
+                  GEMV<real_t>('T',n-i-1,i,-tau[i],&V0[i+1],ldV,&V[i+1],1,one,T,1);
                }
                else // storeV=='R'
                {
                   for(int_t j=0;j<i;j++)
                      T[j]=-tau[i]*V[j];
-                  gemv<real_t>('N',i,n-i-1,-tau[i],V+ldV,ldV,V+i+ldV,ldV,one,T,1);
+                  GEMV<real_t>('N',i,n-i-1,-tau[i],V+ldV,ldV,V+i+ldV,ldV,one,T,1);
                }
-               trmv<real_t>('U','N','N',i,T0,ldT,T,1);
+               TRMV<real_t>('U','N','N',i,T0,ldT,T,1);
                T[i]=tau[i];
             }
             T+=ldT;
@@ -171,7 +171,7 @@ namespace LATL
                      T[j]=-tau[i]*v[n-k+i];
                      v+=ldV;
                   }
-                  gemv<real_t>('T',n-k+i,k-i-1,-tau[i],V+ldV,ldV,V,1,one,T+i+1,1);
+                  GEMV<real_t>('T',n-k+i,k-i-1,-tau[i],V+ldV,ldV,V,1,one,T+i+1,1);
                }
                else // storeV=='R'
                {
@@ -180,9 +180,9 @@ namespace LATL
                   {
                      T[j]=-tau[i]*v[j];
                   }
-                  gemv<real_t>('N',k-i-1,n-k+i,-tau[i],V0+i+1,ldV,V0+i,ldV,one,T+i+1,1);
+                  GEMV<real_t>('N',k-i-1,n-k+i,-tau[i],V0+i+1,ldV,V0+i,ldV,one,T+i+1,1);
                }
-               trmv<real_t>('L','N','N',k-i-1,T+i+1+ldT,ldT,T+i+1,1);
+               TRMV<real_t>('L','N','N',k-i-1,T+i+1+ldT,ldT,T+i+1,1);
             }
             T[i]=tau[i];
          }
@@ -298,15 +298,15 @@ namespace LATL
                      T[j]=-tau[i]*conj(v[i]);
                      v+=ldV;
                   }
-                  gemv<real_t>('C',n-i-1,i,-tau[i],&V0[i+1],ldV,&V[i+1],1,one,T,1);
+                  GEMV<real_t>('C',n-i-1,i,-tau[i],&V0[i+1],ldV,&V[i+1],1,one,T,1);
                }
                else // storeV=='R'
                {
                   for(int_t j=0;j<i;j++)
                      T[j]=-tau[i]*V[j];
-                  gemm<real_t>('N','C',i,1,n-i-1,-tau[i],V+ldV,ldV,V+i+ldV,ldV,one,T,ldT);
+                  GEMM<real_t>('N','C',i,1,n-i-1,-tau[i],V+ldV,ldV,V+i+ldV,ldV,one,T,ldT);
                }
-               trmv<real_t>('U','N','N',i,T0,ldT,T,1);
+               TRMV<real_t>('U','N','N',i,T0,ldT,T,1);
                T[i]=tau[i];
             }
             T+=ldT;
@@ -339,7 +339,7 @@ namespace LATL
                      T[j]=-tau[i]*conj(v[n-k+i]);
                      v+=ldV;
                   }
-                  gemv<real_t>('C',n-k+i,k-i-1,-tau[i],V+ldV,ldV,V,1,one,T+i+1,1);
+                  GEMV<real_t>('C',n-k+i,k-i-1,-tau[i],V+ldV,ldV,V,1,one,T+i+1,1);
                }
                else // storeV=='R'
                {
@@ -348,9 +348,9 @@ namespace LATL
                   {
                      T[j]=-tau[i]*v[j];
                   }
-                  gemm<real_t>('N','C',k-i-1,1,n-k+i,-tau[i],V0+i+1,ldV,V0+i,ldV,one,T+i+1,ldT);
+                  GEMM<real_t>('N','C',k-i-1,1,n-k+i,-tau[i],V0+i+1,ldV,V0+i,ldV,one,T+i+1,ldT);
                }
-               trmv<real_t>('L','N','N',k-i-1,T+i+1+ldT,ldT,T+i+1,1);
+               TRMV<real_t>('L','N','N',k-i-1,T+i+1+ldT,ldT,T+i+1,1);
             }
             T[i]=tau[i];
          }

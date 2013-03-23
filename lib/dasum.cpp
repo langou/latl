@@ -8,10 +8,11 @@
 
 #include "blas.h"
 #include "asum.h"
-using LATL::asum;
+
+using LATL::ASUM;
 
 double dasum_(int &n, double *x, int& incx)
 {
-   return asum<double>(n,x,incx);
+   return ASUM<double>(n,x,incx);
 }
 

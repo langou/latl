@@ -51,7 +51,7 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-   int syrk(char uplo, char trans, int_t n, int_t k, real_t alpha, real_t *A, int_t ldA, real_t beta, real_t *C, int_t ldC)
+   int SYRK(char uplo, char trans, int_t n, int_t k, real_t alpha, real_t *A, int_t ldA, real_t beta, real_t *C, int_t ldC)
    {
       using std::toupper;
 
@@ -226,7 +226,7 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-   int syrk(char uplo, char trans, int_t n, int_t k, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB, real_t beta, real_t *C, int_t ldC)
+   int SYRK(char uplo, char trans, int_t n, int_t k, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB, real_t beta, real_t *C, int_t ldC)
    {
       using std::toupper;
 
@@ -418,7 +418,7 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-   int syrk(char uplo, char trans, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> beta, complex<real_t> *C, int_t ldC)
+   int SYRK(char uplo, char trans, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> beta, complex<real_t> *C, int_t ldC)
    {
       using std::toupper;
 
@@ -591,7 +591,7 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-   int syrk(char uplo, char trans, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
+   int SYRK(char uplo, char trans, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
    {
       using std::toupper;
 

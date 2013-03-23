@@ -47,7 +47,7 @@ namespace LATL
    /// then rows and columns k+1 and IPIV[k] were interchanged.
    
    template<typename real_t>
-   int_t sytf2(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * IPIV, bool * BSDV)
+   int_t SYTF2(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * IPIV, bool * BSDV)
    {
       using std::abs;
       using std::isnan;
@@ -88,7 +88,7 @@ namespace LATL
             
             if (k > 0)
             {
-               imax = LATL::imax(k, Ak, 1);
+               imax = LATL::IMAX(k, Ak, 1);
                colmax = abs(Ak[imax]);
             }
             else
@@ -113,13 +113,13 @@ namespace LATL
                   int_t jmax;
                   real_t rowmax;
                   
-                  jmax = imax+1+ LATL::imax(k-imax, A+ldA*(imax+1)+imax, ldA);
+                  jmax = imax+1+ LATL::IMAX(k-imax, A+ldA*(imax+1)+imax, ldA);
                   real_t * Ajmax = A + ldA*jmax;
                   real_t * Aimax = A + ldA*imax;
                   rowmax = abs(Ajmax[imax]);
                   if (imax > 0)
                   {
-                     jmax = LATL::imax(imax, Aimax, 1);
+                     jmax = LATL::IMAX(imax, Aimax, 1);
                      rowmax = max(rowmax, abs(Aimax[jmax]));
                   }
                   
@@ -141,8 +141,8 @@ namespace LATL
                
                if (kp != kinc)
                {
-                  LATL::swap(kp, Akinc, 1, Akp, 1);
-                  LATL::swap(kinc-kp-1, Akinc+kp+1, 1, A+ldA*(kp+1)+kp, ldA);
+                  LATL::SWAP(kp, Akinc, 1, Akp, 1);
+                  LATL::SWAP(kinc-kp-1, Akinc+kp+1, 1, A+ldA*(kp+1)+kp, ldA);
                   real_t temp = Akinc[kinc];
                   Akinc[kinc] = Akp[kp];
                   Akp[kp] = temp;
@@ -157,8 +157,8 @@ namespace LATL
                if (kstep == 1)
                {
                   r1 = one/Ak[k];
-                  LATL::syr(uplo, k, -r1, Ak, 1, A, ldA);
-                  LATL::scal(k, r1, Ak, 1);
+                  LATL::SYR(uplo, k, -r1, Ak, 1, A, ldA);
+                  LATL::SCAL(k, r1, Ak, 1);
                }
                else
                {
@@ -213,7 +213,7 @@ namespace LATL
             
             if (k < n-1)
             {
-               imax = k +1 + LATL::imax(n-k-1, Ak+k+1, 1);
+               imax = k +1 + LATL::IMAX(n-k-1, Ak+k+1, 1);
                colmax = abs(Ak[imax]);
             }
             else
@@ -233,13 +233,13 @@ namespace LATL
                   kp = k;
                else
                {
-                  int_t jmax = k + LATL::imax(imax-k, Ak+imax, ldA);
+                  int_t jmax = k + LATL::IMAX(imax-k, Ak+imax, ldA);
                   real_t * Ajmax = A + ldA*jmax;
                   real_t *Aimax = A +ldA*imax;
                   real_t rowmax = abs(Ajmax[imax]);
                   if (imax < n-1)
                   {
-                     jmax = imax+1 +LATL::imax(n-imax-1, Aimax+imax+1, 1);
+                     jmax = imax+1 +LATL::IMAX(n-imax-1, Aimax+imax+1, 1);
                      rowmax = max(rowmax, abs(Aimax[jmax]));
                   }
                   
@@ -262,8 +262,8 @@ namespace LATL
                if (kp != kinc)
                {
                   if (kp < n-1)
-                     LATL::swap(n-kp-1, Akinc+kp+1, 1, Akp+kp+1, 1);
-                  LATL::swap(kp-kinc-1, Akinc+kinc+1, 1, Akinc+ldA+kp, ldA);
+                     LATL::SWAP(n-kp-1, Akinc+kp+1, 1, Akp+kp+1, 1);
+                  LATL::SWAP(kp-kinc-1, Akinc+kinc+1, 1, Akinc+ldA+kp, ldA);
                   real_t temp = Akinc[kinc];
                   Akinc[kinc] = Akp[kp];
                   Akp[kp] = temp;
@@ -279,8 +279,8 @@ namespace LATL
                   if (k < n-1)
                   {
                      real_t r1 = one/Ak[k];
-                     LATL::syr(uplo, n-k-1, -r1, Ak+k+1, 1, Ak+ldA+k+1, ldA);
-                     LATL::scal(n-k-1, r1, Ak+k+1, 1);
+                     LATL::SYR(uplo, n-k-1, -r1, Ak+k+1, 1, Ak+ldA+k+1, ldA);
+                     LATL::SCAL(n-k-1, r1, Ak+k+1, 1);
                   }
                }
                else
@@ -350,7 +350,7 @@ namespace LATL
    /// interchanged.  If uplo = 'L' and IPIV[k] = IPIV[k+1], then rows and columns k+1 and IPIV[k] were interchanged.
    
    template<typename real_t>
-   int_t sytf2(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * IPIV, bool * BSDV)
+   int_t SYTF2(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * IPIV, bool * BSDV)
    {
       using std::abs;
       using std::isnan;
@@ -394,7 +394,7 @@ namespace LATL
             
             if (k > 0)
             {
-               imax = LATL::imax(k, Ak, 1);
+               imax = LATL::IMAX(k, Ak, 1);
                colmax = abs(real(Ak[imax]))+abs(imag(Ak[imax]));
             }
             else
@@ -419,13 +419,13 @@ namespace LATL
                   int_t jmax;
                   real_t rowmax;
                   
-                  jmax = imax+1+ LATL::imax(k-imax, A+ldA*(imax+1)+imax, ldA);
+                  jmax = imax+1+ LATL::IMAX(k-imax, A+ldA*(imax+1)+imax, ldA);
                   complex<real_t> * Ajmax = A + ldA*jmax;
                   complex<real_t> * Aimax = A + ldA*imax;
                   rowmax = abs(real(Ajmax[imax]))+abs(imag(Ajmax[imax])); 
                   if (imax > 0)
                   {
-                     jmax = LATL::imax(imax, Aimax, 1);
+                     jmax = LATL::IMAX(imax, Aimax, 1);
                      rowmax = max(rowmax, abs(real(Aimax[jmax]))+abs(imag(Aimax[jmax]))); 
                   }
                   
@@ -447,8 +447,8 @@ namespace LATL
                
                if (kp != kinc)
                {
-                  LATL::swap(kp, Akinc, 1, Akp, 1);
-                  LATL::swap(kinc-kp-1, Akinc+kp+1, 1, A+ldA*(kp+1)+kp, ldA);
+                  LATL::SWAP(kp, Akinc, 1, Akp, 1);
+                  LATL::SWAP(kinc-kp-1, Akinc+kp+1, 1, A+ldA*(kp+1)+kp, ldA);
                   complex<real_t> temp = Akinc[kinc];
                   Akinc[kinc] = Akp[kp];
                   Akp[kp] = temp;
@@ -463,8 +463,8 @@ namespace LATL
                if (kstep == 1)
                {
                   r1 = one/Ak[k];
-                  LATL::syr(uplo, k, -r1, Ak, 1, A, ldA);
-                  LATL::scal<real_t>(k, r1, Ak, 1);
+                  LATL::SYR(uplo, k, -r1, Ak, 1, A, ldA);
+                  LATL::SCAL<real_t>(k, r1, Ak, 1);
                }
                else
                {
@@ -519,7 +519,7 @@ namespace LATL
             
             if (k < n-1)
             {
-               imax = k +1 + LATL::imax(n-k-1, Ak+k+1, 1);
+               imax = k +1 + LATL::IMAX(n-k-1, Ak+k+1, 1);
                colmax = abs(real(Ak[imax]))+abs(imag(Ak[imax]));
             }
             else
@@ -539,13 +539,13 @@ namespace LATL
                   kp = k;
                else
                {
-                  int_t jmax = k + LATL::imax(imax-k, Ak+imax, ldA);
+                  int_t jmax = k + LATL::IMAX(imax-k, Ak+imax, ldA);
                   complex<real_t> * Ajmax = A + ldA*jmax;
                   complex<real_t> *Aimax = A +ldA*imax;
                   real_t rowmax = abs(real(Ajmax[imax]))+abs(imag(Ajmax[imax]));
                   if (imax < n-1)
                   {
-                     jmax = imax+1 +LATL::imax(n-imax-1, Aimax+imax+1, 1);
+                     jmax = imax+1 +LATL::IMAX(n-imax-1, Aimax+imax+1, 1);
                      rowmax = max(rowmax, abs(real(Aimax[jmax]))+abs(imag(Aimax[jmax]))); 
                   }
                   
@@ -568,8 +568,8 @@ namespace LATL
                if (kp != kinc)
                {
                   if (kp < n-1)
-                     LATL::swap(n-kp-1, Akinc+kp+1, 1, Akp+kp+1, 1);
-                  LATL::swap(kp-kinc-1, Akinc+kinc+1, 1, Akinc+ldA+kp, ldA);
+                     LATL::SWAP(n-kp-1, Akinc+kp+1, 1, Akp+kp+1, 1);
+                  LATL::SWAP(kp-kinc-1, Akinc+kinc+1, 1, Akinc+ldA+kp, ldA);
                   complex<real_t> temp = Akinc[kinc];
                   Akinc[kinc] = Akp[kp];
                   Akp[kp] = temp;
@@ -585,8 +585,8 @@ namespace LATL
                   if (k < n-1)
                   {
                      complex<real_t> r1 = one/Ak[k];
-                     LATL::syr(uplo, n-k-1, -r1, Ak+k+1, 1, Ak+ldA+k+1, ldA);
-                     LATL::scal<real_t>(n-k-1, r1, Ak+k+1, 1);
+                     LATL::SYR(uplo, n-k-1, -r1, Ak+k+1, 1, Ak+ldA+k+1, ldA);
+                     LATL::SCAL<real_t>(n-k-1, r1, Ak+k+1, 1);
                   }
                }
                else

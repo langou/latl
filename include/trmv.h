@@ -50,7 +50,7 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int trmv(char uplo, char trans, char diag, int_t n, real_t *A, int_t ldA, real_t *x, int_t incx)
+   int TRMV(char uplo, char trans, char diag, int_t n, real_t *A, int_t ldA, real_t *x, int_t incx)
    {
       using std::toupper;
       
@@ -251,7 +251,7 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int trmv(char uplo, char trans, char diag, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx)
+   int TRMV(char uplo, char trans, char diag, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx)
    {
       using std::conj;
       using std::toupper;

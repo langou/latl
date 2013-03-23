@@ -74,12 +74,12 @@ namespace LATL
    /// element of the vector defining H(i).
    
    template <typename real_t>
-   int_t gehd2(int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau )
+   int_t GEHD2(int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau )
    {
 
       using std::min; 
       using std::max; 
-      using LATL::larfg;
+      using LATL::LARFG;
 
       if (n<0)
          return -1;
@@ -99,10 +99,10 @@ namespace LATL
       for(i=ilo;i<ihi;i++)
       {
          alpha = v[0];
-         larfg<real_t>( ihi-i, alpha, A+min(i+2,n-1)+i*ldA, 1, tau[i]);
+         LARFG<real_t>( ihi-i, alpha, A+min(i+2,n-1)+i*ldA, 1, tau[i]);
          v[0] = 1.0;
-         larf<real_t>( 'R', ihi+1, ihi-i, v, 1, tau[i], CR, ldA, w);
-         larf<real_t>( 'L', ihi-i, n-i-1, v, 1, tau[i], CL, ldA, w);
+         LARF<real_t>( 'R', ihi+1, ihi-i, v, 1, tau[i], CR, ldA, w);
+         LARF<real_t>( 'L', ihi-i, n-i-1, v, 1, tau[i], CL, ldA, w);
          v[0] = alpha;
          v += 1+ldA;
          CR += ldA;
@@ -165,13 +165,13 @@ namespace LATL
    /// element of the vector defining H(i).
    
    template <typename real_t>
-   int_t gehd2(int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau )
+   int_t GEHD2(int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau )
    {
 
       using std::min; 
       using std::max; 
       using std::conj;
-      using LATL::larfg;
+      using LATL::LARFG;
 
       if (n<0)
          return -1;
@@ -191,10 +191,10 @@ namespace LATL
       for(i=ilo;i<ihi;i++)
       {
          alpha = v[0];
-         larfg< real_t >( ihi-i, alpha, A+min(i+2,n-1)+i*ldA, 1, tau[i]);
+         LARFG< real_t >( ihi-i, alpha, A+min(i+2,n-1)+i*ldA, 1, tau[i]);
          v[0] = 1.0;
-         larf<real_t>( 'R', ihi+1, ihi-i, v, 1, tau[i], CR, ldA, w);
-         larf<real_t>( 'L', ihi-i, n-i-1, v, 1, conj(tau[i]), CL, ldA, w);
+         LARF<real_t>( 'R', ihi+1, ihi-i, v, 1, tau[i], CR, ldA, w);
+         LARF<real_t>( 'L', ihi-i, n-i-1, v, 1, conj(tau[i]), CL, ldA, w);
          v[0] = alpha;
          v += 1+ldA;
          CR += ldA;

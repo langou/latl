@@ -57,7 +57,7 @@ namespace LATL
    /// @ingroup SOLV
 
    template <typename real_t>
-   int trsm(char side, char uplo, char trans, char diag, int_t m, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB)
+   int TRSM(char side, char uplo, char trans, char diag, int_t m, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB)
    {
       using std::toupper;
 
@@ -346,7 +346,7 @@ namespace LATL
    /// @ingroup SOLV
 
    template <typename real_t>
-   int trsm(char side, char uplo, char trans, char diag, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB)
+   int TRSM(char side, char uplo, char trans, char diag, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB)
    {
       
       using std::conj;

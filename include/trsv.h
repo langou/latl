@@ -51,7 +51,7 @@ namespace LATL
    /// @ingroup SOLV
 
    template <typename real_t>
-   int trsv(char uplo, char trans, char diag, int_t n, real_t *A, int_t ldA, real_t *x, int_t incx)
+   int TRSV(char uplo, char trans, char diag, int_t n, real_t *A, int_t ldA, real_t *x, int_t incx)
    {
       using std::toupper;
       int_t i,j,ix,jx,kx;
@@ -252,7 +252,7 @@ namespace LATL
    /// @ingroup SOLV
 
    template <typename real_t>
-   int trsv(char uplo, char trans, char diag, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx)
+   int TRSV(char uplo, char trans, char diag, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx)
    {
       using std::conj;
       using std::toupper;

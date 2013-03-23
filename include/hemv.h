@@ -44,7 +44,7 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int hemv(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)
+   int HEMV(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)
    {
       using std::conj;
       using std::real;

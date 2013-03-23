@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "scal.h"
 
-using LATL::scal;
+using LATL::SCAL;
 
 int cscal_(int &n, complex<float>& alpha, complex<float> *x, int& incx)
 {
-   scal<float>(n,alpha,x,incx);
+   SCAL<float>(n,alpha,x,incx);
    return 0;
 }
 

@@ -8,10 +8,11 @@
 
 #include "blas.h"
 #include "asum.h"
-using LATL::asum;
+
+using LATL::ASUM;
 
 float sasum_(int &n, float *x, int& incx)
 {
-   return asum<float>(n,x,incx);
+   return ASUM<float>(n,x,incx);
 }
 

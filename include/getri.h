@@ -39,7 +39,7 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-      int_t getri(int_t n, real_t *A, int_t ldA, int_t *ipiv, int_t nb=32)
+      int_t GETRI(int_t n, real_t *A, int_t ldA, int_t *ipiv, int_t nb=32)
       {
          const real_t zero(0.0);
          const real_t one(1.0);
@@ -53,7 +53,7 @@ namespace LATL
 
          real_t *work=new real_t[n*nb];
 
-         int_t info=trtri<real_t>('U','N', n, A, ldA);
+         int_t info=TRTRI<real_t>('U','N', n, A, ldA);
          if(info != 0)
             return info;
 
@@ -68,7 +68,7 @@ namespace LATL
                   Aj[i]=zero;
                }
                if(j<n-1)
-                  gemv<real_t>('N', n, n-j-1, -one, Aj+ldA, ldA, work+j+1, 1, one, Aj, 1);
+                  GEMV<real_t>('N', n, n-j-1, -one, Aj+ldA, ldA, work+j+1, 1, one, Aj, 1);
                Aj -= ldA;
             }
          }
@@ -92,9 +92,9 @@ namespace LATL
                   workjjmj += n;
                }
                if( j+jb <= n)
-                  gemm<real_t>('N', 'N', n, jb, n-j-jb+1, -one, Aj+jb*ldA, ldA, work+j+jb-1, n, one, Aj, ldA);
+                  GEMM<real_t>('N', 'N', n, jb, n-j-jb+1, -one, Aj+jb*ldA, ldA, work+j+jb-1, n, one, Aj, ldA);
 
-               trsm<real_t>('R', 'L', 'N', 'U', n, jb, one, work+(j-1), n, Aj, ldA);
+               TRSM<real_t>('R', 'L', 'N', 'U', n, jb, one, work+(j-1), n, Aj, ldA);
                Aj -= nb*ldA;
             }
          }
@@ -104,7 +104,7 @@ namespace LATL
          {
             int_t jp = ipiv[j];
             if(jp != j)
-               swap<real_t>(n,Aj,1,A+jp*ldA,1);
+               SWAP<real_t>(n,Aj,1,A+jp*ldA,1);
             Aj -= ldA;
          }
 
@@ -132,9 +132,9 @@ namespace LATL
    /// @ingroup MATM
 
    template< typename real_t >
-      int_t getri(int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, int_t nb=32)
+      int_t GETRI(int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, int_t nb=32)
       {
-         return LATL::getri< complex<real_t> > (n, A, ldA, ipiv, nb);
+         return LATL::GETRI< complex<real_t> > (n, A, ldA, ipiv, nb);
       }
 
 }

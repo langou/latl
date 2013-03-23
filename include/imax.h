@@ -26,7 +26,7 @@ namespace LATL
    /// @ingroup VEC
    
    template <typename real_t>
-   int_t imax(int_t n, real_t *x, int_t incx)
+   int_t IMAX(int_t n, real_t *x, int_t incx)
    {
       using std::abs;
       int_t i,ix,index;
@@ -77,7 +77,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int_t imax(int_t n, complex<real_t> *x, int_t incx)
+   int_t IMAX(int_t n, complex<real_t> *x, int_t incx)
    {
       using std::abs;
       using std::real;

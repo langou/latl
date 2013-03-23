@@ -58,7 +58,7 @@ namespace LATL
    /// @ingroup SCAL
    
    template<typename real_t>
-   void lags2(bool upper,real_t a1,real_t a2,real_t a3,real_t b1,real_t b2,real_t b3,real_t &csu,real_t &snu,real_t &csv,real_t &snv,real_t &csq,real_t &snq)
+   void LAGS2(bool upper,real_t a1,real_t a2,real_t a3,real_t b1,real_t b2,real_t b3,real_t &csu,real_t &snu,real_t &csv,real_t &snv,real_t &csq,real_t &snq)
    {
       using std::abs;
       using LATL::lartg;
@@ -228,7 +228,7 @@ namespace LATL
    /// @ingroup SCAL
    
    template<typename real_t>
-   void lags2(bool upper,real_t a1,complex<real_t> a2,real_t a3,real_t b1,complex<real_t> b2,real_t b3,real_t &csu,complex<real_t> &snu,real_t &csv,complex<real_t> &snv,real_t &csq,complex<real_t> &snq)
+   void LAGS2(bool upper,real_t a1,complex<real_t> a2,real_t a3,real_t b1,complex<real_t> b2,real_t b3,real_t &csu,complex<real_t> &snu,real_t &csv,complex<real_t> &snv,real_t &csq,complex<real_t> &snq)
    {
       using std::real;
       using std::imag;

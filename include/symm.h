@@ -48,7 +48,7 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-   int symm(char side, char uplo, int_t m, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB, real_t beta, real_t *C, int_t ldC)
+   int SYMM(char side, char uplo, int_t m, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB, real_t beta, real_t *C, int_t ldC)
    {
       using std::toupper;
 
@@ -241,9 +241,9 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-   int symm(char side, char uplo, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
+   int SYMM(char side, char uplo, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
    {
-      return symm< complex<real_t> >(side,uplo,m,n,alpha,A,ldA,B,ldB,beta,C,ldC);
+      return SYMM< complex<real_t> >(side,uplo,m,n,alpha,A,ldA,B,ldB,beta,C,ldC);
    }
 }
 #endif

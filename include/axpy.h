@@ -32,7 +32,7 @@ namespace LATL
    /// @ingroup VEC
    
    template <typename real_t>
-   void axpy(int_t n, real_t a, real_t *x, int_t incx, real_t *y, int_t incy)
+   void AXPY(int_t n, real_t a, real_t *x, int_t incx, real_t *y, int_t incy)
    {
       const real_t zero(0.0);
       int_t i,ix,iy;
@@ -74,7 +74,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   void axpy(int_t n, complex<real_t> a, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)
+   void AXPY(int_t n, complex<real_t> a, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)
    {
       const complex<real_t> zero(0.0,0.0);
       int_t i,ix,iy;

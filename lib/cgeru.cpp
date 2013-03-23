@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "ger.h"
 
-using LATL::ger;
+using LATL::GER;
 using std::complex;
 
 int cgeru_(int &m, int &n, complex<float> &alpha, complex<float> *x, int& incx, complex<float> *y, int& incy, complex<float> *A, int &ldA)
 {
-   int info=-ger<float>(m,n,alpha,x,incx,y,incy,A,ldA);
+   int info=-GER<float>(m,n,alpha,x,incx,y,incy,A,ldA);
    if(info!=0)
       xerbla_("CGERU  ",info);
    return 0;

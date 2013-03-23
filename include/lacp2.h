@@ -32,7 +32,7 @@ namespace LATL
    /// @ingroup MAT
    
    template<typename real_t>
-   void lacp2(char uplo,int_t m,int_t n,real_t *A,int_t ldA,complex<real_t> *B,int_t ldB)
+   void LACP2(char uplo,int_t m,int_t n,real_t *A,int_t ldA,complex<real_t> *B,int_t ldB)
    {
       switch(uplo)
       {

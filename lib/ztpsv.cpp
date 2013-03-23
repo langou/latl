@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "tpsv.h"
 
-using LATL::tpsv;
+using LATL::TPSV;
 using std::complex;
 
 int ztpsv_(char& uplo, char& trans, char& diag, int &n, complex<double> *A, complex<double> *x, int& incx)
 {
-   int info=-tpsv<double>(uplo,trans,diag,n,A,x,incx);
+   int info=-TPSV<double>(uplo,trans,diag,n,A,x,incx);
    if(info>0)
       xerbla_("ZTPSV ",info);
    return 0;

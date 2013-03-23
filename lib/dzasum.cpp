@@ -9,9 +9,9 @@
 #include "blas.h"
 #include "asum.h"
 
-using LATL::asum;
+using LATL::ASUM;
 
 double dzasum_(int &n, complex<double> *x, int& incx)
 {
-   return asum<double>(n,x,incx);
+   return ASUM<double>(n,x,incx);
 }

@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "symm.h"
 
-using LATL::symm;
+using LATL::SYMM;
 using std::complex;
 
 int csymm_(char& side, char& uplo, int &m, int &n, complex<float> &alpha, complex<float> *A, int &ldA, complex<float> *B, int &ldB, complex<float> &beta, complex<float> *C, int &ldC)
 {
-   int info=-symm<float>(side,uplo,m,n,alpha,A,ldA,B,ldB,beta,C,ldC);
+   int info=-SYMM<float>(side,uplo,m,n,alpha,A,ldA,B,ldB,beta,C,ldC);
    if(info>0)
       xerbla_("CSYMM ",info);
    return 0;

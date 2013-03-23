@@ -9,10 +9,10 @@
 #include "blas.h"
 #include "swap.h"
 
-using LATL::swap;
+using LATL::SWAP;
 
 int sswap_(int &n, float *x, int& incx, float *y, int& incy)
 {
-   swap(n,x,incx,y,incy);
+   SWAP(n,x,incx,y,incy);
    return 0;
 }

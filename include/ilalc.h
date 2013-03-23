@@ -25,7 +25,7 @@ namespace LATL
    /// @ingroup MAT
 
    template<typename real_t>
-   int_t ilalc(const int_t m,const int_t n,real_t *A,const int_t ldA)
+   int_t ILALC(const int_t m,const int_t n,real_t *A,const int_t ldA)
    {
       const real_t zero(0.0);
       if(n>0)
@@ -52,7 +52,7 @@ namespace LATL
    /// @ingroup MAT
 
    template<typename real_t>
-   int_t ilalc(const int_t m,const int_t n,complex<real_t> *A,const int_t ldA)
+   int_t ILALC(const int_t m,const int_t n,complex<real_t> *A,const int_t ldA)
    {
       const complex<real_t> zero(0.0,0.0);
       if(n>0)

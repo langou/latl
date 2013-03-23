@@ -39,7 +39,7 @@ namespace LATL
    /// @ingroup TRF
 
    template< typename real_t >
-   int_t hetrf(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, const int_t nb = 32)
+   int_t HETRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, const int_t nb = 32)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -61,11 +61,11 @@ namespace LATL
          {
             if ( k > nb)
             {
-               temp = LATL::lahef(uplo, k, nb, kb, A, ldA, IPIV, BSDV, Work);
+               temp = LATL::LAHEF(uplo, k, nb, kb, A, ldA, IPIV, BSDV, Work);
             }
             else
             {
-               temp = LATL::hetf2(uplo, k, A, ldA, IPIV, BSDV);
+               temp = LATL::HETF2(uplo, k, A, ldA, IPIV, BSDV);
                kb = k;
             }
             
@@ -86,12 +86,12 @@ namespace LATL
             Akk = A+ldA*k+k;
             if ( k < n-nb)
             {
-               temp = LATL::lahef(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k, Work);
+               temp = LATL::LAHEF(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k, Work);
             }
             else
             {
                kb = n-k;
-               temp = LATL::hetf2(uplo, kb, Akk, ldA, IPIV+k, BSDV+k);
+               temp = LATL::HETF2(uplo, kb, Akk, ldA, IPIV+k, BSDV+k);
             }
             
             if (info == 0 && temp != 0)

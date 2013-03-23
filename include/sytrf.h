@@ -45,7 +45,7 @@ namespace LATL
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t sytrf(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, const int_t nb = 32)
+   int_t SYTRF(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, const int_t nb = 32)
    {
       if (uplo != 'U' && uplo != 'u' && uplo != 'L' && uplo != 'l')
          return -1;
@@ -54,7 +54,7 @@ namespace LATL
       if (ldA < n)
          return -4;
       if (nb <= 1)
-         return LATL::sytf2(uplo, n, A, ldA, IPIV, BSDV);
+         return LATL::SYTF2(uplo, n, A, ldA, IPIV, BSDV);
       
       if ( n == 0)
          return 0;
@@ -73,7 +73,7 @@ namespace LATL
             }
             else
             {
-               temp = LATL::sytf2(uplo, k, A, ldA, IPIV, BSDV);
+               temp = LATL::SYTF2(uplo, k, A, ldA, IPIV, BSDV);
                kb = k;
             }
             
@@ -99,7 +99,7 @@ namespace LATL
             else
             {
                kb = n-k;
-               temp = LATL::sytf2(uplo, kb, Akk, ldA, IPIV+k, BSDV+k);
+               temp = LATL::SYTF2(uplo, kb, Akk, ldA, IPIV+k, BSDV+k);
             }
             
             if (info == 0 && temp != 0)
@@ -147,9 +147,9 @@ namespace LATL
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t sytrf(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, const int_t nb = 32)
+   int_t SYTRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, const int_t nb = 32)
    {
-      return LATL::sytrf< complex<real_t> >(uplo, n, A, ldA, IPIV, BSDV, nb);
+      return LATL::SYTRF< complex<real_t> >(uplo, n, A, ldA, IPIV, BSDV, nb);
    }
 }
 

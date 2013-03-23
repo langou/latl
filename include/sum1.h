@@ -25,7 +25,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   real_t sum1(int_t n, complex<real_t> *x, int_t incx)
+   real_t SUM1(int_t n, complex<real_t> *x, int_t incx)
    {
       using std::abs;
       int_t i;

@@ -56,7 +56,7 @@ namespace LATL
          else if(n==0)
             return 0;
 
-         info=trtri<real_t>( uplo, 'N', n, A, ldA, nb);
+         info=TRTRI<real_t>( uplo, 'N', n, A, ldA, nb);
          if (info != 0) 
             return info;
          info=lauum<real_t>( uplo, n, A, ldA, nb);
@@ -102,7 +102,7 @@ namespace LATL
          else if(n==0)
             return 0;
 
-         info=trtri<real_t>( uplo, 'N', n, A, ldA, nb);
+         info=TRTRI<real_t>( uplo, 'N', n, A, ldA, nb);
          if (info != 0) 
             return info;
          info=lauum<real_t>( uplo, n, A, ldA, nb);

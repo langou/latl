@@ -37,7 +37,7 @@ namespace LATL
    /// @ingroup AUX
    
    template< typename real_t>
-   int_t syconv(const char uplo, const char way, const int_t n, real_t * const A, const int_t ldA, int_t * ipiv, bool * bsdv, real_t * Work)
+   int_t SYCONV(const char uplo, const char way, const int_t n, real_t * const A, const int_t ldA, int_t * ipiv, bool * bsdv, real_t * Work)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -284,7 +284,7 @@ namespace LATL
    /// @ingroup AUX
 
    template< typename real_t>
-   int_t syconv(const char uplo, const char way, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * Work)
+   int_t SYCONV(const char uplo, const char way, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * Work)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;

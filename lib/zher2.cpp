@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "her.h"
 
-using LATL::her;
+using LATL::HER;
 using std::complex;
 
 int zher2_(char& uplo, int &n, complex<double> &alpha, complex<double> *x, int& incx, complex<double> *y, int& incy,complex<double> *A, int &ldA)
 {
-   int info=-her<double>(uplo,n,alpha,x,incx,y,incy,A,ldA);
+   int info=-HER<double>(uplo,n,alpha,x,incx,y,incy,A,ldA);
    if(info>0)
       xerbla_("ZHER2  ",info);
    return 0;

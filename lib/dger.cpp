@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "ger.h"
 
-using LATL::ger;
+using LATL::GER;
 
 int dger_(int &m, int &n, double &alpha, double *x, int& incx, double *y, int& incy, double *A, int &ldA)
 {
-   int info=-ger<double>(m,n,alpha,x,incx,y,incy,A,ldA);
+   int info=-GER<double>(m,n,alpha,x,incx,y,incy,A,ldA);
    if(info!=0)
       xerbla_("DGER  ",info);
    return 0;

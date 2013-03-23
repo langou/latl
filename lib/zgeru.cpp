@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "ger.h"
 
-using LATL::ger;
+using LATL::GER;
 using std::complex;
 
 int zgeru_(int &m, int &n, complex<double> &alpha, complex<double> *x, int& incx, complex<double> *y, int& incy, complex<double> *A, int &ldA)
 {
-   int info=-ger<double>(m,n,alpha,x,incx,y,incy,A,ldA);
+   int info=-GER<double>(m,n,alpha,x,incx,y,incy,A,ldA);
    if(info!=0)
       xerbla_("ZGERU  ",info);
    return 0;

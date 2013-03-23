@@ -51,7 +51,7 @@ namespace LATL
    /// @ingroup QRF
    
    template<typename real_t>
-   int geqrt2(int_t m,int_t n,real_t *A,int_t ldA,real_t *T,int_t ldT)
+   int GEQRT2(int_t m,int_t n,real_t *A,int_t ldA,real_t *T,int_t ldT)
    {
       const real_t zero=0.0;
       const real_t one=1.0;
@@ -70,13 +70,13 @@ namespace LATL
       real_t *t=T+(n-1)*ldT;
       for(int_t i=0;i<k;i++)
       {
-         LATL::larfg(m-i,a[i],&(a[i+1]),1,T[i]);
+         LATL::LARFG(m-i,a[i],&(a[i+1]),1,T[i]);
          if(i<n-1)
          {
             real_t temp=a[i];
             a[i]=one;
-            LATL::gemv('T',m-i,n-i-1,one,b+i,ldA,a+i,1,zero,t,1);
-            LATL::ger(m-i,n-i-1,-T[i],a+i,1,t,1,b+i,ldA);
+            LATL::GEMV('T',m-i,n-i-1,one,b+i,ldA,a+i,1,zero,t,1);
+            LATL::GER(m-i,n-i-1,-T[i],a+i,1,t,1,b+i,ldA);
             a[i]=temp;
          }
          a+=ldA;
@@ -90,9 +90,9 @@ namespace LATL
          t+=ldT;
          real_t temp=a[i];
          a[i]=one;
-         LATL::gemv('T',m-i,i,-T[i],A+i,ldA,a+i,1,zero,t,1);
+         LATL::GEMV('T',m-i,i,-T[i],A+i,ldA,a+i,1,zero,t,1);
          a[i]=temp;
-         LATL::trmv('U','N','N',i,T,ldT,t,1);
+         LATL::TRMV('U','N','N',i,T,ldT,t,1);
          t[i]=T[i];
          T[i]=zero;
       }
@@ -129,7 +129,7 @@ namespace LATL
    /// @ingroup QRF
    
    template<typename real_t>
-   int geqrt2(int_t m,int_t n,complex<real_t> *A,int_t ldA,complex<real_t> *T,int_t ldT)
+   int GEQRT2(int_t m,int_t n,complex<real_t> *A,int_t ldA,complex<real_t> *T,int_t ldT)
    {
       using std::conj;
       const complex<real_t> zero(0.0,0.0);
@@ -149,13 +149,13 @@ namespace LATL
       real_t *t=T+(n-1)*ldT;
       for(int_t i=0;i<k;i++)
       {
-         LATL::larfg(m-i,a[i],&(a[i+1]),1,T[i]);
+         LATL::LARFG(m-i,a[i],&(a[i+1]),1,T[i]);
          if(i<n-1)
          {
             real_t temp=a[i];
             a[i]=one;
-            LATL::gemv('C',m-i,n-i-1,one,b+i,ldA,a+i,ldA,1,zero,t,1);
-            LATL::gerc(m-i,n-i-1,-conj(T[i]),a+i,1,t,1,b+i,ldA);
+            LATL::GEMV('C',m-i,n-i-1,one,b+i,ldA,a+i,ldA,1,zero,t,1);
+            LATL::GERC(m-i,n-i-1,-conj(T[i]),a+i,1,t,1,b+i,ldA);
             a[i]=temp;
          }
          a+=ldA;
@@ -169,9 +169,9 @@ namespace LATL
          t+=ldT;
          real_t temp=a[i];
          a[i]=one;
-         LATL::gemv('C',m-i,i,-T[i],A+i,ldA,a+i,1,zero,t,1);
+         LATL::GEMV('C',m-i,i,-T[i],A+i,ldA,a+i,1,zero,t,1);
          a[i]=temp;
-         LATL::trmv('U','N','N',i,T,ldT,t,1);
+         LATL::TRMV('U','N','N',i,T,ldT,t,1);
          t[i]=T[i];
          T[i]=zero;
       }

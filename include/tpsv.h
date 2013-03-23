@@ -53,7 +53,7 @@ namespace LATL
    /// @ingroup SOLV
 
    template <typename real_t>
-   int tpsv(char uplo, char trans, char diag, int_t n, real_t *A, real_t *x, int_t incx)
+   int TPSV(char uplo, char trans, char diag, int_t n, real_t *A, real_t *x, int_t incx)
    {
       using std::toupper;
 
@@ -255,7 +255,7 @@ namespace LATL
    /// @ingroup SOLV
 
    template <typename real_t>
-   int tpsv(char uplo, char trans, char diag, int_t n, complex<real_t> *A, complex<real_t> *x, int_t incx)
+   int TPSV(char uplo, char trans, char diag, int_t n, complex<real_t> *A, complex<real_t> *x, int_t incx)
    {
       using std::conj;
       using std::toupper;

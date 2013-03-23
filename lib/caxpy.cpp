@@ -9,10 +9,10 @@
 #include "blas.h"
 #include "axpy.h"
 
-using LATL::axpy;
+using LATL::AXPY;
 
 int caxpy_(int &n, complex<float>& alpha, complex<float> *x, int& incx, complex<float> *y, int& incy)
 {
-   axpy<float>(n,alpha,x,incx,y,incy);
+   AXPY<float>(n,alpha,x,incx,y,incy);
    return 0;
 }

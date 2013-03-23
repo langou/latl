@@ -25,7 +25,7 @@ namespace LATL
    /// @ingroup VEC
    
    template <typename real_t>
-   real_t asum(int_t n, real_t *x, int_t incx)
+   real_t ASUM(int_t n, real_t *x, int_t incx)
    {
       using std::abs;
       int_t i;
@@ -55,7 +55,7 @@ namespace LATL
    /// @ingroup VEC
    
    template <typename real_t>
-   real_t asum(int_t n, complex<real_t> *x, int_t incx)
+   real_t ASUM(int_t n, complex<real_t> *x, int_t incx)
    {
       using std::abs;
       using std::real;

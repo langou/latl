@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "copy.h"
 
-using LATL::copy;
+using LATL::COPY;
 
 int zcopy_(int &n, complex<double> *x, int& incx, complex<double> *y, int& incy)
 {
-   copy<double>(n,x,incx,y,incy);
+   COPY<double>(n,x,incx,y,incy);
    return 0;
 }
 

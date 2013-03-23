@@ -25,7 +25,7 @@ namespace LATL
    /// @ingroup VEC
    
    template <typename real_t>
-   void copy(int_t n, real_t *x, int_t incx, real_t *y, int_t incy)
+   void COPY(int_t n, real_t *x, int_t incx, real_t *y, int_t incy)
    {
       int_t i,ix,iy;
       if(n>0)
@@ -59,9 +59,9 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   void copy(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)
+   void COPY(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)
    {
-      copy< complex<real_t> >(n,x,incx,y,incy);
+      COPY< complex<real_t> >(n,x,incx,y,incy);
    }
 }
 #endif

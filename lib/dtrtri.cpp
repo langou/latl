@@ -9,11 +9,11 @@
 #include "lapack.h"
 #include "trtri.h"
 
-using LATL::trtri;
+using LATL::TRTRI;
 
 int dtrtri_(char &uplo,char &diag, int &n,double *A,int &ldA,int &info)
 {
-   info=trtri<double>(uplo,diag,n,A,ldA);
+   info=TRTRI<double>(uplo,diag,n,A,ldA);
    if(info!=0)
    {
       info=-info;

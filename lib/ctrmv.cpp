@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "trmv.h"
 
-using LATL::trmv;
+using LATL::TRMV;
 using std::complex;
 
 int ctrmv_(char& uplo, char& trans, char& diag, int &n, complex<float> *A, int &ldA, complex<float> *x, int& incx)
 {
-   int info=-trmv<float>(uplo,trans,diag,n,A,ldA,x,incx);
+   int info=-TRMV<float>(uplo,trans,diag,n,A,ldA,x,incx);
    if(info>0)
       xerbla_("CTRMV ",info);
    return 0;

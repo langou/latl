@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "syrk.h"
 
-using LATL::syrk;
+using LATL::SYRK;
 
 int ssyrk_(char& uplo, char& trans, int &n, int& k, float& alpha, float *A, int &ldA, float &beta, float *C, int &ldC)
 {
-   int info=-syrk<float>(uplo,trans,n,k,alpha,A,ldA,beta,C,ldC);
+   int info=-SYRK<float>(uplo,trans,n,k,alpha,A,ldA,beta,C,ldC);
    if(info>0)
       xerbla_("SSYRK ",info);
    return 0;

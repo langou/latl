@@ -29,7 +29,7 @@ namespace LATL
          return 0;
       if (n == 1)
       {
-         LATL::scal(nrhs, 1.0/D[0], B, ldB);
+         LATL::SCAL(nrhs, 1.0/D[0], B, ldB);
          return 0;
       }
       real_t * Bj = B;
@@ -61,7 +61,7 @@ namespace LATL
          return 0;
       if (n == 1)
       {
-         LATL::scal(nrhs, 1.0/D[0], B, ldB);
+         LATL::SCAL(nrhs, 1.0/D[0], B, ldB);
          return 0;
       }
       if (iuplo == 1)

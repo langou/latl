@@ -26,7 +26,7 @@ namespace LATL
    /// @param ldB Column length of the matrix B.  ldB>=m.
 
    template<typename real_t>
-   void lapeq(int_t m, int_t n, real_t *A, int_t ldA,real_t alpha, real_t *B, int_t ldB)
+   void LAPEQ(int_t m, int_t n, real_t *A, int_t ldA,real_t alpha, real_t *B, int_t ldB)
    {
       const real_t one(1.0);
       if(alpha==one)
@@ -73,9 +73,9 @@ namespace LATL
    /// @param ldB Column length of the matrix B.  ldB>=m.
 
    template<typename real_t>
-   inline void lapeq(int_t m, int_t n, complex<real_t> *A, int_t ldA,complex<real_t> alpha, complex<real_t> *B, int_t ldB)
+   inline void LAPEQ(int_t m, int_t n, complex<real_t> *A, int_t ldA,complex<real_t> alpha, complex<real_t> *B, int_t ldB)
    {
-      lapeq< complex<real_t> >(m,n,A,ldA,alpha,B,ldB);
+      LAPEQ< complex<real_t> >(m,n,A,ldA,alpha,B,ldB);
    }
 }
 

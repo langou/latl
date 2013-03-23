@@ -32,7 +32,7 @@ namespace LATL
    /// @ingroup MAT
 
    template<typename real_t>
-   void lacpy(char uplo, int_t m, int_t n, real_t *A, int_t ldA, real_t *B, int_t ldB)
+   void LACPY(char uplo, int_t m, int_t n, real_t *A, int_t ldA, real_t *B, int_t ldB)
    {
       switch(uplo)
       {
@@ -87,9 +87,9 @@ namespace LATL
    /// @ingroup MAT
 
    template<typename real_t>
-   void lacpy(char uplo, int_t m, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB)
+   void LACPY(char uplo, int_t m, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB)
    {
-      lacpy< complex<real_t> >(uplo,m,n,A,ldA,B,ldB);
+      LACPY< complex<real_t> >(uplo,m,n,A,ldA,B,ldB);
    }  
 }
 #endif

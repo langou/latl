@@ -40,7 +40,7 @@ namespace LATL
    /// @ingroup AUX
 
    template<typename real_t>
-   void larfb(char side, char trans, char direct, char storeV, int_t m, int_t n, int_t k, real_t *V, int_t ldV, real_t *T, int_t ldT, real_t *C, int_t ldC, real_t *W)
+   void LARFB(char side, char trans, char direct, char storeV, int_t m, int_t n, int_t k, real_t *V, int_t ldV, real_t *T, int_t ldT, real_t *C, int_t ldC, real_t *W)
    {
       const real_t one(1.0);
       using std::toupper;
@@ -57,54 +57,54 @@ namespace LATL
             {
                if(side=='L')
                {
-                  lacpy('A',k,n,C,ldC,W,k);
-                  trmm('L','L','T','U',k,n,one,V,ldV,W,k);
+                  LACPY('A',k,n,C,ldC,W,k);
+                  TRMM('L','L','T','U',k,n,one,V,ldV,W,k);
                   if(m>k)
-                     gemm('T','N',k,n,m-k,one,V+k,ldV,C+k,ldC,one,W,k);
-                  trmm('L','U',trans,'N',k,n,one,T,ldT,W,k);
+                     GEMM('T','N',k,n,m-k,one,V+k,ldV,C+k,ldC,one,W,k);
+                  TRMM('L','U',trans,'N',k,n,one,T,ldT,W,k);
                   if(m>k)
-                     gemm('N','N',m-k,n,k,-one,V+k,ldV,W,k,one,C+k,ldC);
-                  trmm('L','L','N','U',k,n,-one,V,ldV,W,k);
-                  lapeq(k,n,C,ldC,one,W,k);
+                     GEMM('N','N',m-k,n,k,-one,V+k,ldV,W,k,one,C+k,ldC);
+                  TRMM('L','L','N','U',k,n,-one,V,ldV,W,k);
+                  LAPEQ(k,n,C,ldC,one,W,k);
                }
                else if(side=='R')
                {
-                  lacpy('A',m,k,C,ldC,W,m);
-                  trmm('R','L','N','U',m,k,one,V,ldV,W,m);
+                  LACPY('A',m,k,C,ldC,W,m);
+                  TRMM('R','L','N','U',m,k,one,V,ldV,W,m);
                   if(n>k)
-                     gemm('N','N',m,k,n-k,one,C+k*ldC,ldC,V+k,ldV,one,W,m);
-                  trmm('R','U',trans,'N',m,k,one,T,ldT,W,m);
+                     GEMM('N','N',m,k,n-k,one,C+k*ldC,ldC,V+k,ldV,one,W,m);
+                  TRMM('R','U',trans,'N',m,k,one,T,ldT,W,m);
                   if(n>k)
-                     gemm('N','T',m-k,n,k,-one,V+k,ldV,W,m,one,C+k,ldC);
-                  trmm('R','L','T','U',n,k,-one,V,ldV,W,m);
-                  lapeq(n,k,C,ldC,one,W,m);
+                     GEMM('N','T',m-k,n,k,-one,V+k,ldV,W,m,one,C+k,ldC);
+                  TRMM('R','L','T','U',n,k,-one,V,ldV,W,m);
+                  LAPEQ(n,k,C,ldC,one,W,m);
                }
             }
             else if(direct=='B')
             {
                if(side=='L')
                {
-                  lacpy('A',k,n,C+m-k,ldC,W,k);
-                  trmm('L','L','T','U',k,n,one,V+m-k,ldV,W,k);
+                  LACPY('A',k,n,C+m-k,ldC,W,k);
+                  TRMM('L','L','T','U',k,n,one,V+m-k,ldV,W,k);
                   if(m>k)
-                     gemm('T','N',k,n,m-k,one,V,ldV,C,ldC,one,W,k);
-                  trmm('L','U',trans,'N',k,n,one,T,ldT,W,k);
+                     GEMM('T','N',k,n,m-k,one,V,ldV,C,ldC,one,W,k);
+                  TRMM('L','U',trans,'N',k,n,one,T,ldT,W,k);
                   if(m>k)
-                     gemm('N','N',m-k,n,k,-one,V,ldV,W,k,one,C,ldC);
-                  trmm('L','L','N','U',k,n,-one,V+m-k,ldV,W,k);
-                  lapeq(k,n,C+m-k,ldC,one,W,k);
+                     GEMM('N','N',m-k,n,k,-one,V,ldV,W,k,one,C,ldC);
+                  TRMM('L','L','N','U',k,n,-one,V+m-k,ldV,W,k);
+                  LAPEQ(k,n,C+m-k,ldC,one,W,k);
                }
                else if(side=='R')
                {
-                  lacpy('A',m,k,C+(n-k)*ldC,ldC,W,m);
-                  trmm('R','L','N','U',m,k,one,V+n-k,ldV,W,m);
+                  LACPY('A',m,k,C+(n-k)*ldC,ldC,W,m);
+                  TRMM('R','L','N','U',m,k,one,V+n-k,ldV,W,m);
                   if(n>k)
-                     gemm('N','N',m,k,n-k,one,C,ldC,V,ldV,one,W,m);
-                  trmm('R','U',trans,'N',m,k,one,T,ldT,W,m);
+                     GEMM('N','N',m,k,n-k,one,C,ldC,V,ldV,one,W,m);
+                  TRMM('R','U',trans,'N',m,k,one,T,ldT,W,m);
                   if(n>k)
-                     gemm('N','T',m-k,n,k,-one,V,ldV,W,m,one,C+k,ldC);
-                  trmm('R','L','T','U',n,k,-one,V+n-k,ldV,W,m);
-                  lapeq(n,k,C+(n-k)*ldC,ldC,one,W,m);
+                     GEMM('N','T',m-k,n,k,-one,V,ldV,W,m,one,C+k,ldC);
+                  TRMM('R','L','T','U',n,k,-one,V+n-k,ldV,W,m);
+                  LAPEQ(n,k,C+(n-k)*ldC,ldC,one,W,m);
                }
             }
          }
@@ -114,54 +114,54 @@ namespace LATL
             {
                if(side=='L')
                {
-                  lacpy('A',k,n,C,ldC,W,k);
-                  trmm('L','U','N','U',k,n,one,V,ldV,W,k);
+                  LACPY('A',k,n,C,ldC,W,k);
+                  TRMM('L','U','N','U',k,n,one,V,ldV,W,k);
                   if(m>k)
-                     gemm('N','N',k,n,m-k,one,V+k*ldV,ldV,C+k,ldC,one,W,k);
-                  trmm('L','U',trans,'N',k,n,one,T,ldT,W,k);
+                     GEMM('N','N',k,n,m-k,one,V+k*ldV,ldV,C+k,ldC,one,W,k);
+                  TRMM('L','U',trans,'N',k,n,one,T,ldT,W,k);
                   if(m>k)
-                     gemm('T','N',m-k,n,k,-one,V+k*ldV,ldV,W,k,one,C+k,ldC);
-                  trmm('L','U','T','U',k,n,-one,V,ldV,W,k);
-                  lapeq(k,n,C,ldC,one,W,k);
+                     GEMM('T','N',m-k,n,k,-one,V+k*ldV,ldV,W,k,one,C+k,ldC);
+                  TRMM('L','U','T','U',k,n,-one,V,ldV,W,k);
+                  LAPEQ(k,n,C,ldC,one,W,k);
                }
                else if(side=='R')
                {
-                  lacpy('A',m,k,C,ldC,W,m);
-                  trmm('R','U','T','U',m,k,one,V,ldV,W,m);
+                  LACPY('A',m,k,C,ldC,W,m);
+                  TRMM('R','U','T','U',m,k,one,V,ldV,W,m);
                   if(n>k)
-                     gemm('N','T',m,k,n-k,one,C+k*ldC,ldC,V+k*ldV,ldV,one,W,m);
-                  trmm('R','U',trans,'N',m,k,one,T,ldT,W,m);
+                     GEMM('N','T',m,k,n-k,one,C+k*ldC,ldC,V+k*ldV,ldV,one,W,m);
+                  TRMM('R','U',trans,'N',m,k,one,T,ldT,W,m);
                   if(n>k)
-                     gemm('N','N',m,n-k,k,-one,W,m,V+k*ldV,ldV,one,C+k*ldC,ldC);
-                  trmm('R','U','N','U',m,k,-one,V,ldV,W,m);
-                  lapeq(m,k,C,ldC,one,W,m);
+                     GEMM('N','N',m,n-k,k,-one,W,m,V+k*ldV,ldV,one,C+k*ldC,ldC);
+                  TRMM('R','U','N','U',m,k,-one,V,ldV,W,m);
+                  LAPEQ(m,k,C,ldC,one,W,m);
                }
             }
             else if(direct=='B')
             {
                if(side=='L')
                {
-                  lacpy('A',k,n,C+m-k,ldC,W,k);
-                  trmm('L','L','N','U',k,n,one,V+(m-k)*ldV,ldV,W,k);
+                  LACPY('A',k,n,C+m-k,ldC,W,k);
+                  TRMM('L','L','N','U',k,n,one,V+(m-k)*ldV,ldV,W,k);
                   if(m>k)
-                     gemm('N','N',k,n,m-k,one,V,ldV,C,ldC,one,W,k);
-                  trmm('L','L',trans,'N',k,n,one,T,ldT,W,k);
+                     GEMM('N','N',k,n,m-k,one,V,ldV,C,ldC,one,W,k);
+                  TRMM('L','L',trans,'N',k,n,one,T,ldT,W,k);
                   if(m>k)
-                     gemm('N','N',m-k,n,k,-one,V,ldV,W,k,one,C,ldC);
-                  trmm('L','L','N','U',k,n,-one,V+(m-k)*ldV,ldV,W,k);
-                  lapeq(k,n,C+m-k,ldC,one,W,k);
+                     GEMM('N','N',m-k,n,k,-one,V,ldV,W,k,one,C,ldC);
+                  TRMM('L','L','N','U',k,n,-one,V+(m-k)*ldV,ldV,W,k);
+                  LAPEQ(k,n,C+m-k,ldC,one,W,k);
                }
                else if(side=='R')
                {
-                  lacpy('A',m,k,C+(n-k)*ldC,ldC,W,m);
-                  trmm('R','L','T','U',m,k,one,V+(n-k)*ldV,ldV,W,m);
+                  LACPY('A',m,k,C+(n-k)*ldC,ldC,W,m);
+                  TRMM('R','L','T','U',m,k,one,V+(n-k)*ldV,ldV,W,m);
                   if(n>k)
-                     gemm('N','T',m,k,n-k,one,C,ldC,V,ldV,one,W,m);
-                  trmm('R','L',trans,'N',m,k,one,T,ldT,W,m);
+                     GEMM('N','T',m,k,n-k,one,C,ldC,V,ldV,one,W,m);
+                  TRMM('R','L',trans,'N',m,k,one,T,ldT,W,m);
                   if(n>k)
-                     gemm('N','N',m,n-k,k,-one,W,m,V,ldV,one,C,ldC);
-                  trmm('R','L','N','U',m,k,-one,V+(n-k)*ldV,ldV,W,m);
-                  lapeq(n,k,C+(n-k)*ldC,ldC,one,W,m);
+                     GEMM('N','N',m,n-k,k,-one,W,m,V,ldV,one,C,ldC);
+                  TRMM('R','L','N','U',m,k,-one,V+(n-k)*ldV,ldV,W,m);
+                  LAPEQ(n,k,C+(n-k)*ldC,ldC,one,W,m);
                }
             }
          }
@@ -187,7 +187,7 @@ namespace LATL
    /// @ingroup AUX
 
    template<typename real_t>
-   void larfb(char side, char trans, char direct, char storeV, int_t m, int_t n, int_t k, complex<real_t> *V, int_t ldV, complex<real_t> *T, int_t ldT, complex<real_t> *C, int_t ldC, complex<real_t> *W)
+   void LARFB(char side, char trans, char direct, char storeV, int_t m, int_t n, int_t k, complex<real_t> *V, int_t ldV, complex<real_t> *T, int_t ldT, complex<real_t> *C, int_t ldC, complex<real_t> *W)
    {
       const complex<real_t> one(1.0);
       using std::toupper;
@@ -204,54 +204,54 @@ namespace LATL
             {
                if(side=='L')
                {
-                  lacpy('A',k,n,C,ldC,W,k);
-                  trmm('L','L','C','U',k,n,one,V,ldV,W,k);
+                  LACPY('A',k,n,C,ldC,W,k);
+                  TRMM('L','L','C','U',k,n,one,V,ldV,W,k);
                   if(m>k)
-                     gemm('C','N',k,n,m-k,one,V+k,ldV,C+k,ldC,one,W,k);
-                  trmm('L','U',trans,'N',k,n,one,T,ldT,W,k);
+                     GEMM('C','N',k,n,m-k,one,V+k,ldV,C+k,ldC,one,W,k);
+                  TRMM('L','U',trans,'N',k,n,one,T,ldT,W,k);
                   if(m>k)
-                     gemm('N','N',m-k,n,k,-one,V+k,ldV,W,k,one,C+k,ldC);
-                  trmm('L','L','N','U',k,n,-one,V,ldV,W,k);
-                  lapeq(k,n,C,ldC,one,W,k);
+                     GEMM('N','N',m-k,n,k,-one,V+k,ldV,W,k,one,C+k,ldC);
+                  TRMM('L','L','N','U',k,n,-one,V,ldV,W,k);
+                  LAPEQ(k,n,C,ldC,one,W,k);
                }
                else if(side=='R')
                {
-                  lacpy('A',m,k,C,ldC,W,m);
-                  trmm('R','L','N','U',m,k,one,V,ldV,W,m);
+                  LACPY('A',m,k,C,ldC,W,m);
+                  TRMM('R','L','N','U',m,k,one,V,ldV,W,m);
                   if(n>k)
-                     gemm('N','N',m,k,n-k,one,C+k*ldC,ldC,V+k,ldV,one,W,m);
-                  trmm('R','U',trans,'N',m,k,one,T,ldT,W,m);
+                     GEMM('N','N',m,k,n-k,one,C+k*ldC,ldC,V+k,ldV,one,W,m);
+                  TRMM('R','U',trans,'N',m,k,one,T,ldT,W,m);
                   if(n>k)
-                     gemm('N','C',m-k,n,k,-one,V+k,ldV,W,m,one,C+k,ldC);
-                  trmm('R','L','C','U',n,k,-one,V,ldV,W,m);
-                  lapeq(n,k,C,ldC,one,W,m);
+                     GEMM('N','C',m-k,n,k,-one,V+k,ldV,W,m,one,C+k,ldC);
+                  TRMM('R','L','C','U',n,k,-one,V,ldV,W,m);
+                  LAPEQ(n,k,C,ldC,one,W,m);
                }
             }
             else if(direct=='B')
             {
                if(side=='L')
                {
-                  lacpy('A',k,n,C+m-k,ldC,W,k);
-                  trmm('L','L','C','U',k,n,one,V+m-k,ldV,W,k);
+                  LACPY('A',k,n,C+m-k,ldC,W,k);
+                  TRMM('L','L','C','U',k,n,one,V+m-k,ldV,W,k);
                   if(m>k)
-                     gemm('C','N',k,n,m-k,one,V,ldV,C,ldC,one,W,k);
-                  trmm('L','U',trans,'N',k,n,one,T,ldT,W,k);
+                     GEMM('C','N',k,n,m-k,one,V,ldV,C,ldC,one,W,k);
+                  TRMM('L','U',trans,'N',k,n,one,T,ldT,W,k);
                   if(m>k)
-                     gemm('N','N',m-k,n,k,-one,V,ldV,W,k,one,C,ldC);
-                  trmm('L','L','N','U',k,n,-one,V+m-k,ldV,W,k);
-                  lapeq(k,n,C+m-k,ldC,one,W,k);
+                     GEMM('N','N',m-k,n,k,-one,V,ldV,W,k,one,C,ldC);
+                  TRMM('L','L','N','U',k,n,-one,V+m-k,ldV,W,k);
+                  LAPEQ(k,n,C+m-k,ldC,one,W,k);
                }
                else if(side=='R')
                {
-                  lacpy('A',m,k,C+(n-k)*ldC,ldC,W,m);
-                  trmm('R','L','N','U',m,k,one,V+n-k,ldV,W,m);
+                  LACPY('A',m,k,C+(n-k)*ldC,ldC,W,m);
+                  TRMM('R','L','N','U',m,k,one,V+n-k,ldV,W,m);
                   if(n>k)
-                     gemm('N','N',m,k,n-k,one,C,ldC,V,ldV,one,W,m);
-                  trmm('R','U',trans,'N',m,k,one,T,ldT,W,m);
+                     GEMM('N','N',m,k,n-k,one,C,ldC,V,ldV,one,W,m);
+                  TRMM('R','U',trans,'N',m,k,one,T,ldT,W,m);
                   if(n>k)
-                     gemm('N','C',m-k,n,k,-one,V,ldV,W,m,one,C+k,ldC);
-                  trmm('R','L','C','U',n,k,-one,V+n-k,ldV,W,m);
-                  lapeq(n,k,C+(n-k)*ldC,ldC,one,W,m);
+                     GEMM('N','C',m-k,n,k,-one,V,ldV,W,m,one,C+k,ldC);
+                  TRMM('R','L','C','U',n,k,-one,V+n-k,ldV,W,m);
+                  LAPEQ(n,k,C+(n-k)*ldC,ldC,one,W,m);
                }
             }
          }
@@ -261,54 +261,54 @@ namespace LATL
             {
                if(side=='L')
                {
-                  lacpy('A',k,n,C,ldC,W,k);
-                  trmm('L','U','N','U',k,n,one,V,ldV,W,k);
+                  LACPY('A',k,n,C,ldC,W,k);
+                  TRMM('L','U','N','U',k,n,one,V,ldV,W,k);
                   if(m>k)
-                     gemm('N','N',k,n,m-k,one,V+k*ldV,ldV,C+k,ldC,one,W,k);
-                  trmm('L','U',trans,'N',k,n,one,T,ldT,W,k);
+                     GEMM('N','N',k,n,m-k,one,V+k*ldV,ldV,C+k,ldC,one,W,k);
+                  TRMM('L','U',trans,'N',k,n,one,T,ldT,W,k);
                   if(m>k)
-                     gemm('C','N',m-k,n,k,-one,V+k*ldV,ldV,W,k,one,C+k,ldC);
-                  trmm('L','U','C','U',k,n,-one,V,ldV,W,k);
-                  lapeq(k,n,C,ldC,one,W,k);
+                     GEMM('C','N',m-k,n,k,-one,V+k*ldV,ldV,W,k,one,C+k,ldC);
+                  TRMM('L','U','C','U',k,n,-one,V,ldV,W,k);
+                  LAPEQ(k,n,C,ldC,one,W,k);
                }
                else if(side=='R')
                {
-                  lacpy('A',m,k,C,ldC,W,m);
-                  trmm('R','U','C','U',m,k,one,V,ldV,W,m);
+                  LACPY('A',m,k,C,ldC,W,m);
+                  TRMM('R','U','C','U',m,k,one,V,ldV,W,m);
                   if(n>k)
-                     gemm('N','C',m,k,n-k,one,C+k*ldC,ldC,V+k*ldV,ldV,one,W,m);
-                  trmm('R','U',trans,'N',m,k,one,T,ldT,W,m);
+                     GEMM('N','C',m,k,n-k,one,C+k*ldC,ldC,V+k*ldV,ldV,one,W,m);
+                  TRMM('R','U',trans,'N',m,k,one,T,ldT,W,m);
                   if(n>k)
-                     gemm('N','N',m,n-k,k,-one,W,m,V+k*ldV,ldV,one,C+k*ldC,ldC);
-                  trmm('R','U','N','U',m,k,-one,V,ldV,W,m);
-                  lapeq(m,k,C,ldC,one,W,m);
+                     GEMM('N','N',m,n-k,k,-one,W,m,V+k*ldV,ldV,one,C+k*ldC,ldC);
+                  TRMM('R','U','N','U',m,k,-one,V,ldV,W,m);
+                  LAPEQ(m,k,C,ldC,one,W,m);
                }
             }
             else if(direct=='B')
             {
                if(side=='L')
                {
-                  lacpy('A',k,n,C+m-k,ldC,W,k);
-                  trmm('L','L','N','U',k,n,one,V+(m-k)*ldV,ldV,W,k);
+                  LACPY('A',k,n,C+m-k,ldC,W,k);
+                  TRMM('L','L','N','U',k,n,one,V+(m-k)*ldV,ldV,W,k);
                   if(m>k)
-                     gemm('N','N',k,n,m-k,one,V,ldV,C,ldC,one,W,k);
-                  trmm('L','L',trans,'N',k,n,one,T,ldT,W,k);
+                     GEMM('N','N',k,n,m-k,one,V,ldV,C,ldC,one,W,k);
+                  TRMM('L','L',trans,'N',k,n,one,T,ldT,W,k);
                   if(m>k)
-                     gemm('N','N',m-k,n,k,-one,V,ldV,W,k,one,C,ldC);
-                  trmm('L','L','N','U',k,n,-one,V+(m-k)*ldV,ldV,W,k);
-                  lapeq(k,n,C+m-k,ldC,one,W,k);
+                     GEMM('N','N',m-k,n,k,-one,V,ldV,W,k,one,C,ldC);
+                  TRMM('L','L','N','U',k,n,-one,V+(m-k)*ldV,ldV,W,k);
+                  LAPEQ(k,n,C+m-k,ldC,one,W,k);
                }
                else if(side=='R')
                {
-                  lacpy('A',m,k,C+(n-k)*ldC,ldC,W,m);
-                  trmm('R','L','C','U',m,k,one,V+(n-k)*ldV,ldV,W,m);
+                  LACPY('A',m,k,C+(n-k)*ldC,ldC,W,m);
+                  TRMM('R','L','C','U',m,k,one,V+(n-k)*ldV,ldV,W,m);
                   if(n>k)
-                     gemm('N','C',m,k,n-k,one,C,ldC,V,ldV,one,W,m);
-                  trmm('R','L',trans,'N',m,k,one,T,ldT,W,m);
+                     GEMM('N','C',m,k,n-k,one,C,ldC,V,ldV,one,W,m);
+                  TRMM('R','L',trans,'N',m,k,one,T,ldT,W,m);
                   if(n>k)
-                     gemm('N','N',m,n-k,k,-one,W,m,V,ldV,one,C,ldC);
-                  trmm('R','L','N','U',m,k,-one,V+(n-k)*ldV,ldV,W,m);
-                  lapeq(n,k,C+(n-k)*ldC,ldC,one,W,m);
+                     GEMM('N','N',m,n-k,k,-one,W,m,V,ldV,one,C,ldC);
+                  TRMM('R','L','N','U',m,k,-one,V+(n-k)*ldV,ldV,W,m);
+                  LAPEQ(n,k,C+(n-k)*ldC,ldC,one,W,m);
                }
             }
          }

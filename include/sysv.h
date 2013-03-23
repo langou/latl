@@ -45,7 +45,7 @@ namespace LATL
    /// @param ldB Column length of the matrix B.  ldB >= n
    
    template<typename real_t>
-   int_t sysv(const char uplo, const int_t n, const int_t nrhs, real_t * const A, int_t ldA, int_t * ipiv, bool * bsdv, real_t * const B, int_t ldB)
+   int_t SYSV(const char uplo, const int_t n, const int_t nrhs, real_t * const A, int_t ldA, int_t * ipiv, bool * bsdv, real_t * const B, int_t ldB)
    {
       if (uplo != 'U' && uplo != 'u' && uplo != 'L' && uplo != 'l')
          return -1;
@@ -58,10 +58,10 @@ namespace LATL
       if (ldB < n)
          return -8;
       
-      int_t info = LATL::sytrf(uplo, n, A, ldA, ipiv, bsdv);
+      int_t info = LATL::SYTRF(uplo, n, A, ldA, ipiv, bsdv);
       if (info == 0)
       {
-         info = LATL::sytrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
+         info = LATL::SYTRS(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
       }
       return info;
    }
@@ -94,9 +94,9 @@ namespace LATL
    /// @param ldB Column length of the matrix B.  ldB >= n
    
    template<typename real_t>
-   int_t sysv(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB)
+   int_t SYSV(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB)
    {
-      return LATL::sysv< complex<real_t> > (uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
+      return LATL::SYSV< complex<real_t> > (uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
    }
    
    /// @brief Computes the solution to a real system of linear equations
@@ -129,7 +129,7 @@ namespace LATL
    /// @param nb Block size for computing the factorization.
    
    template<typename real_t>
-   int_t sysv(const char uplo, const int_t n, const int_t nrhs, real_t * const A, int_t ldA, int_t * ipiv, bool * bsdv, real_t * const B, int_t ldB, int_t nb)
+   int_t SYSV(const char uplo, const int_t n, const int_t nrhs, real_t * const A, int_t ldA, int_t * ipiv, bool * bsdv, real_t * const B, int_t ldB, int_t nb)
    {
       if (uplo != 'U' && uplo != 'u' && uplo != 'L' && uplo != 'l')
          return -1;
@@ -142,10 +142,10 @@ namespace LATL
       if (ldB < n)
          return -8;
       
-      int_t info = LATL::sytrf(uplo, n, A, ldA, ipiv, bsdv, nb);
+      int_t info = LATL::SYTRF(uplo, n, A, ldA, ipiv, bsdv, nb);
       if (info == 0)
       {
-         info = LATL::sytrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
+         info = LATL::SYTRS(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
       }
       return info;
    }
@@ -180,9 +180,9 @@ namespace LATL
    /// @param nb Block size for computing the factorization.
    
    template<typename real_t>
-   int_t sysv(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB, int_t nb)
+   int_t SYSV(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB, int_t nb)
    {
-      return LATL::sysv< complex<real_t> > (uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB, nb);
+      return LATL::SYSV< complex<real_t> > (uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB, nb);
    }
 }
 #endif

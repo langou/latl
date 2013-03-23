@@ -68,7 +68,7 @@ namespace LATL
    /// @ingroup MATV
    
    template <typename real_t>
-   int sbmv(char uplo, int_t n, int_t k, real_t alpha, real_t *A, int_t ldA, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
+   int SBMV(char uplo, int_t n, int_t k, real_t alpha, real_t *A, int_t ldA, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
    {
       using std::min;
       using std::max;

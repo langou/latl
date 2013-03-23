@@ -46,12 +46,12 @@ namespace LATL
       if(n>0)
       {
          real_t tau;
-         larfg(n,x[0],x+incx,incx,tau);
+         LARFG(n,x[0],x+incx,incx,tau);
          real_t a11=x[0];
          x[0]=one;
-         real_t c=-tau*dot(n,x,incx,y,incy);
-         axpy(n,c,x,incx,y,incy);
-         larfg(n-1,y[incy],y+2*incy,incy,tau);
+         real_t c=-tau*DOT(n,x,incx,y,incy);
+         AXPY(n,c,x,incx,y,incy);
+         LARFG(n-1,y[incy],y+2*incy,incy,tau);
          real_t a12=y[0];
          real_t a22=y[incy];
          real_t ssmax;
@@ -87,12 +87,12 @@ namespace LATL
       if(n>0)
       {
          complex<real_t> tau;
-         larfg(n,x[0],x+incx,incx,tau);
+         LARFG(n,x[0],x+incx,incx,tau);
          complex<real_t> a11=x[0];
          x[0]=one;
-         complex<real_t> c=-conj(tau)*dotc(n,x,incx,y,incy);
-         axpy(n,c,x,incx,y,incy);
-         larfg(n-1,y[incy],y+2*incy,incy,tau);
+         complex<real_t> c=-conj(tau)*DOTC(n,x,incx,y,incy);
+         AXPY(n,c,x,incx,y,incy);
+         LARFG(n-1,y[incy],y+2*incy,incy,tau);
          complex<real_t> a12=y[0];
          complex<real_t> a22=y[incy];
          real_t ssmax;

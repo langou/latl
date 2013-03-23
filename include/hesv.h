@@ -46,7 +46,7 @@ namespace LATL
    /// @param ldB Column length of the matrix B.  ldB >= n
    
    template<typename real_t>
-   int_t hesv(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB)
+   int_t HESV(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB)
    {
       if (uplo != 'U' && uplo != 'u' && uplo != 'L' && uplo != 'l')
          return -1;
@@ -59,10 +59,10 @@ namespace LATL
       if (ldB < n)
          return -8;
       
-      int_t info = LATL::hetrf(uplo, n, A, ldA, ipiv, bsdv);
+      int_t info = LATL::HETRF(uplo, n, A, ldA, ipiv, bsdv);
       if (info == 0)
       {
-         info = LATL::hetrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
+         info = LATL::HETRS(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
       }
       return info;
    }
@@ -97,7 +97,7 @@ namespace LATL
    /// @param nb Block size for computing the factorization.
    
    template<typename real_t>
-   int_t hesv(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB, int_t nb)
+   int_t HESV(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB, int_t nb)
    {
       if (uplo != 'U' && uplo != 'u' && uplo != 'L' && uplo != 'l')
          return -1;
@@ -110,10 +110,10 @@ namespace LATL
       if (ldB < n)
          return -8;
       
-      int_t info = LATL::hetrf(uplo, n, A, ldA, ipiv, bsdv, nb);
+      int_t info = LATL::HETRF(uplo, n, A, ldA, ipiv, bsdv, nb);
       if (info == 0)
       {
-         info = LATL::hetrs(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
+         info = LATL::HETRS(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
       }
       return info;
    }

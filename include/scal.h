@@ -26,7 +26,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   void scal(int_t n, real_t alpha, real_t *x, int_t incx)
+   void SCAL(int_t n, real_t alpha, real_t *x, int_t incx)
    {
       int_t i,ix;
       if((n>0)&&(incx>0))
@@ -59,7 +59,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   void scal(int_t n, real_t alpha, complex<real_t> *x, int_t incx)
+   void SCAL(int_t n, real_t alpha, complex<real_t> *x, int_t incx)
    {
       int_t i,ix;
       if((n>0)&&(incx>0))
@@ -92,7 +92,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   void scal(int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx)
+   void SCAL(int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx)
    {
       int_t i,ix;
       if((n>0)&&(incx>0))

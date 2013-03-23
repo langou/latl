@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "herk.h"
 
-using LATL::herk;
+using LATL::HERK;
 using std::complex;
 
 int cherk_(char& uplo, char& trans, int &n, int& k, float& alpha, complex<float> *A, int &ldA, float &beta, complex<float> *C, int &ldC)
 {
-   int info=-herk<float>(uplo,trans,n,k,alpha,A,ldA,beta,C,ldC);
+   int info=-HERK<float>(uplo,trans,n,k,alpha,A,ldA,beta,C,ldC);
    if(info>0)
       xerbla_("CHERK ",info);
    return 0;

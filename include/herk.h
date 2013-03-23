@@ -48,7 +48,7 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-   int herk(char uplo, char trans, int_t n, int_t k, real_t alpha, complex<real_t> *A, int_t ldA, real_t beta, complex<real_t> *C, int_t ldC)
+   int HERK(char uplo, char trans, int_t n, int_t k, real_t alpha, complex<real_t> *A, int_t ldA, real_t beta, complex<real_t> *C, int_t ldC)
    {
       using std::real;
       using std::conj;
@@ -235,7 +235,7 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-   int herk(char uplo, char trans, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
+   int HERK(char uplo, char trans, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
    {
       using std::real;
       using std::conj;

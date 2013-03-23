@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "gemm.h"
 
-using LATL::gemm;
+using LATL::GEMM;
 
 int sgemm_(char& transA, char& transB, int &m, int &n, int& k, float& alpha, float *A, int &ldA, float *B, int &ldB, float &beta, float *C, int &ldC)
 {
-   int info=-gemm<float>(transA,transB,m,n,k,alpha,A,ldA,B,ldB,beta,C,ldC);
+   int info=-GEMM<float>(transA,transB,m,n,k,alpha,A,ldA,B,ldB,beta,C,ldC);
    if(info>0)
       xerbla_("SGEMM ",info);
    return 0;

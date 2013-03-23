@@ -23,7 +23,7 @@ namespace LATL
    /// @ingroup VEC
 
    template<typename real_t>
-   void lacgv(int_t n,complex<real_t> *x,int_t incx)
+   void LACGV(int_t n,complex<real_t> *x,int_t incx)
    {
       using std::conj;
 

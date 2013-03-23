@@ -67,8 +67,8 @@ namespace LATL
             jj += (j+1);
             
             if ( j > 0)
-               LATL::tpsv('U', 'T', 'N', j, AP, AP+jc, 1);
-            ajj = AP[jj] - LATL::dot(j, AP+jc, 1, AP+jc, 1);
+               LATL::TPSV('U', 'T', 'N', j, AP, AP+jc, 1);
+            ajj = AP[jj] - LATL::DOT(j, AP+jc, 1, AP+jc, 1);
             if (ajj <= zero)
             {
                AP[jj] = ajj;
@@ -92,8 +92,8 @@ namespace LATL
             
             if (j < n)
             {
-               LATL::scal(n-j-1, one/ajj, AP+jj+1, 1);
-               LATL::spr('L', n-j-1, -one, AP+jj+1, 1, AP+jj+n-j);
+               LATL::SCAL(n-j-1, one/ajj, AP+jj+1, 1);
+               LATL::SPR('L', n-j-1, -one, AP+jj+1, 1, AP+jj+n-j);
                jj = jj+n-j;
             }
          }
@@ -150,8 +150,8 @@ namespace LATL
             jj += (j+1);
             
             if ( j > 0)
-               LATL::tpsv('U', 'C', 'N', j, AP, AP+jc, 1);
-            ajj = real(AP[jj] - LATL::dotc(j, AP+jc, 1, AP+jc, 1));
+               LATL::TPSV('U', 'C', 'N', j, AP, AP+jc, 1);
+            ajj = real(AP[jj] - LATL::DOTC(j, AP+jc, 1, AP+jc, 1));
             if (ajj <= zero)
             {
                AP[jj] = ajj;
@@ -175,8 +175,8 @@ namespace LATL
             
             if (j < n)
             {
-               LATL::scal(n-j-1, one/ajj, AP+jj+1, 1);
-               LATL::hpr('L', n-j-1, -one, AP+jj+1, 1, AP+jj+n-j);
+               LATL::SCAL(n-j-1, one/ajj, AP+jj+1, 1);
+               LATL::HPR('L', n-j-1, -one, AP+jj+1, 1, AP+jj+n-j);
                jj = jj+n-j;
             }
          }

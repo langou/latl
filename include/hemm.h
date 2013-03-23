@@ -48,7 +48,7 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-   int hemm(char side, char uplo, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
+   int HEMM(char side, char uplo, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
    {
       using std::conj;
       using std::real;

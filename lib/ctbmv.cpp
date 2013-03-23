@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "tbmv.h"
 
-using LATL::tbmv;
+using LATL::TBMV;
 using std::complex;
 
 int ctbmv_(char& uplo, char& trans, char& diag, int &n, int& k, complex<float> *A, int &ldA, complex<float> *x, int& incx)
 {
-   int info=-tbmv<float>(uplo,trans,diag,n,k,A,ldA,x,incx);
+   int info=-TBMV<float>(uplo,trans,diag,n,k,A,ldA,x,incx);
    if(info>0)
       xerbla_("CTBMV ",info);
    return 0;

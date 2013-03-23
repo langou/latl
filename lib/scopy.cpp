@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "copy.h"
 
-using LATL::copy;
+using LATL::COPY;
 
 int scopy_(int &n, float *x, int& incx, float *y, int& incy)
 {
-   copy<float>(n,x,incx,y,incy);
+   COPY<float>(n,x,incx,y,incy);
    return 0;
 }
 

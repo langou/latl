@@ -41,7 +41,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int spr(char uplo, int_t n, real_t alpha, real_t *x, int_t incx, real_t *A)
+   int SPR(char uplo, int_t n, real_t alpha, real_t *x, int_t incx, real_t *A)
    {
       using std::toupper;
 
@@ -149,7 +149,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int spr(char uplo, int_t n, real_t alpha, real_t *x, int_t incx, real_t *y, int_t incy, real_t *A)
+   int SPR(char uplo, int_t n, real_t alpha, real_t *x, int_t incx, real_t *y, int_t incy, real_t *A)
    {
       using std::toupper;
 
@@ -270,9 +270,9 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int spr(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx, complex<real_t> *A)
+   int SPR(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx, complex<real_t> *A)
    {
-      return spr<complex<real_t> >(uplo,n,alpha,x,incx,A);
+      return SPR<complex<real_t> >(uplo,n,alpha,x,incx,A);
    }
 }
 #endif

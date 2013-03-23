@@ -43,7 +43,7 @@ namespace LATL
    /// @ingroup MATM
    
    template <typename real_t>
-   int ttmm(char uplo, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB, real_t beta, real_t *C, int_t ldC)
+   int TTMM(char uplo, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB, real_t beta, real_t *C, int_t ldC)
    {
       const real_t zero(0.0);
       using std::toupper;
@@ -161,9 +161,9 @@ namespace LATL
    /// @ingroup MATM
    
    template <typename real_t>
-   int ttmm(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
+   int TTMM(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
    {
-      return ttmm< complex<real_t> >(uplo,n,alpha,A,ldA,B,ldB,beta,C,ldC);
+      return TTMM< complex<real_t> >(uplo,n,alpha,A,ldA,B,ldB,beta,C,ldC);
    }
 }
 

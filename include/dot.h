@@ -27,7 +27,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   real_t dot(int_t n, real_t *x, int_t incx, real_t *y, int_t incy)
+   real_t DOT(int_t n, real_t *x, int_t incx, real_t *y, int_t incy)
    {
       real_t sum(0.0);
       int_t i,ix,iy;
@@ -72,7 +72,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t,typename xreal_t>
-   real_t dotx(int_t n, real_t b, real_t *x, int_t incx, real_t *y, int_t incy)
+   real_t DOTX(int_t n, real_t b, real_t *x, int_t incx, real_t *y, int_t incy)
    {
       xreal_t sum(b);
       real_t sumf;
@@ -113,7 +113,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t, typename xreal_t>
-   xreal_t dotx(int_t n, real_t *x, int_t incx, real_t *y, int_t incy)
+   xreal_t DOTX(int_t n, real_t *x, int_t incx, real_t *y, int_t incy)
    {
       xreal_t sum(0.0);
       int_t i,ix,iy;
@@ -156,7 +156,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   complex<real_t> dotc(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)
+   complex<real_t> DOTC(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)
    {
       using std::conj;
       complex<real_t> sum(0.0,0.0);
@@ -194,7 +194,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   complex<real_t> dot(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)
+   complex<real_t> DOT(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)
    {
       complex<real_t> sum(0.0,0.0);
       int_t i,ix,iy;

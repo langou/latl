@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "tbsv.h"
 
-using LATL::tbsv;
+using LATL::TBSV;
 
 int dtbsv_(char& uplo, char& trans, char& diag, int &n, int& k, double *A, int &ldA, double *x, int& incx)
 {
-   int info=-tbsv<double>(uplo,trans,diag,n,k,A,ldA,x,incx);
+   int info=-TBSV<double>(uplo,trans,diag,n,k,A,ldA,x,incx);
    if(info>0)
       xerbla_("DTBSV ",info);
    return 0;

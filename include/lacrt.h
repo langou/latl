@@ -33,7 +33,7 @@ namespace LATL
    /// @ingroup VEC
    
    template<typename real_t>
-   void lacrt(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y,int_t incy,complex<real_t> c, complex<real_t> s)
+   void LACRT(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y,int_t incy,complex<real_t> c, complex<real_t> s)
    {
       if(n>0)
       {

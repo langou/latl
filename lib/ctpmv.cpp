@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "tpmv.h"
 
-using LATL::tpmv;
+using LATL::TPMV;
 
 int ctpmv_(char& uplo, char& trans, char& diag, int &n, complex<float> *A, complex<float> *x, int& incx)
 {
-   int info=-tpmv<float>(uplo,trans,diag,n,A,x,incx);
+   int info=-TPMV<float>(uplo,trans,diag,n,A,x,incx);
    if(info>0)
       xerbla_("CTPMV ",info);
    return 0;

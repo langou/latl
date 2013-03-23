@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "ger.h"
 
-using LATL::gerc;
+using LATL::GERC;
 using std::complex;
 
 int cgerc_(int &m, int &n, complex<float> &alpha, complex<float> *x, int& incx, complex<float> *y, int& incy, complex<float> *A, int &ldA)
 {
-   int info=-gerc<float>(m,n,alpha,x,incx,y,incy,A,ldA);
+   int info=-GERC<float>(m,n,alpha,x,incx,y,incy,A,ldA);
    if(info!=0)
       xerbla_("CGERC  ",info);
    return 0;

@@ -56,7 +56,7 @@ namespace LATL
    /// @ingroup MATV
    
    template <typename real_t>
-   int gbmv(char trans, int_t m, int_t n, int_t kl, int_t ku, real_t alpha, real_t *A, int_t lda, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
+   int GBMV(char trans, int_t m, int_t n, int_t kl, int_t ku, real_t alpha, real_t *A, int_t lda, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
    {
       using std::min;
       using std::max;
@@ -242,7 +242,7 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int gbmv(char trans, int_t m, int_t n, int_t kl, int_t ku, complex<real_t> alpha, complex<real_t> *A, int_t lda, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)
+   int GBMV(char trans, int_t m, int_t n, int_t kl, int_t ku, complex<real_t> alpha, complex<real_t> *A, int_t lda, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)
    {
       using std::conj;
       using std::min;

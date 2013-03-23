@@ -41,7 +41,7 @@ namespace LATL
    /// column j of the matrix has been exchanged with column jpiv[j].
    
    template<typename real_t>
-   int getc2(int_t n, real_t *A, int_t ldA, int_t *ipiv, int_t *jpiv)
+   int GETC2(int_t n, real_t *A, int_t ldA, int_t *ipiv, int_t *jpiv)
    {
       using std::numeric_limits;
       using std::abs;
@@ -52,7 +52,7 @@ namespace LATL
 
       real_t smlnum = numeric_limits<real_t>::min()/eps;
       real_t bignum = one/smlnum;
-      labad(smlnum, bignum);
+      LABAD(smlnum, bignum);
 
       int info=0;
       int_t ipv=0;
@@ -79,10 +79,10 @@ namespace LATL
          if(i==0)
             smin=max(eps*xmax,smlnum);
          if(ipv!=i)
-            swap(n,A+ipv,ldA,A+i,ldA);
+            SWAP(n,A+ipv,ldA,A+i,ldA);
          ipiv[i]=ipv;
          if(jpv!=i)
-            swap(n,A+ldA*jpv,1,A+ldA*i,1);
+            SWAP(n,A+ldA*jpv,1,A+ldA*i,1);
          jpiv[i]=jpv;
          if(abs(A[i+i*ldA])<smin)
          {
@@ -91,7 +91,7 @@ namespace LATL
          }
          for(int_t j=i+1;j<n;j++)
             A[j+i*ldA]=A[j+i*ldA]/A[i+i*ldA];
-         ger(n-i-1,n-i-1,-one,A+i+1+i*ldA,1,A+i+(i+1)*ldA,ldA,A+i+1+(i+1)*ldA,ldA);
+         GER(n-i-1,n-i-1,-one,A+i+1+i*ldA,1,A+i+(i+1)*ldA,ldA,A+i+1+(i+1)*ldA,ldA);
       }
       if(abs(A[n-1+(n-1)*ldA])<smin)
       {
@@ -122,7 +122,7 @@ namespace LATL
    /// column j of the matrix has been exchanged with column jpiv[j].
 
    template<typename real_t>
-   int getc2(int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, int_t *jpiv)
+   int GETC2(int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, int_t *jpiv)
    {
       using std::numeric_limits;
       using std::abs;
@@ -134,7 +134,7 @@ namespace LATL
 
       real_t smlnum = numeric_limits<real_t>::min()/eps;
       real_t bignum = one/smlnum;
-      labad(smlnum, bignum);
+      LABAD(smlnum, bignum);
 
       int info=0;
       int_t ipv=0;
@@ -161,10 +161,10 @@ namespace LATL
          if(i==0)
             smin=max(eps*xmax,smlnum);
          if(ipv!=i)
-            swap(n,A+ipv,ldA,A+i,ldA);
+            SWAP(n,A+ipv,ldA,A+i,ldA);
          ipiv[i]=ipv;
          if(jpv!=i)
-            swap(n,A+ldA*jpv,1,A+ldA*i,1);
+            SWAP(n,A+ldA*jpv,1,A+ldA*i,1);
          jpiv[i]=jpv;
          if(abs(A[i+i*ldA])<smin)
          {
@@ -173,7 +173,7 @@ namespace LATL
          }
          for(int_t j=i+1;j<n;j++)
             A[j+i*ldA]=A[j+i*ldA]/A[i+i*ldA];
-         ger(n-i-1,n-i-1,minus_one,A+i+1+i*ldA,1,A+i+(i+1)*ldA,ldA,A+i+1+(i+1)*ldA,ldA);
+         GER(n-i-1,n-i-1,minus_one,A+i+1+i*ldA,1,A+i+(i+1)*ldA,ldA,A+i+1+(i+1)*ldA,ldA);
       }
       if(abs(A[n-1+(n-1)*ldA])<smin)
       {

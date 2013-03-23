@@ -33,11 +33,11 @@ namespace LATL
    /// @param ldT Leading dimension of the matrix T.  ldT>=n
 
    template<typename real_t>
-   int geqrf(int_t m,int_t n,real_t *A,int_t ldA,real_t *T,int_t ldT)
+   int GEQRF(int_t m,int_t n,real_t *A,int_t ldA,real_t *T,int_t ldT)
    {
-      using LATL::larfg;
-      using LATL::gemm;
-      using LATL::trmm;
+      using LATL::LARFG;
+      using LATL::GEMM;
+      using LATL::TRMM;
       const real_t one(1.0);
       if(n<0)
          return -2;
@@ -50,14 +50,14 @@ namespace LATL
       
       if(n==1)
       {
-         larfg(m,A[0],A+1,1,T[0]);
+         LARFG(m,A[0],A+1,1,T[0]);
       }
       else
       {
          int_t n1=n/2;
          int_t n2=n-n1;
          
-         geqrf(m,n1,A,ldA,T,ldT);
+         GEQRF(m,n1,A,ldA,T,ldT);
          
          real_t *A1=A+n1*ldA;
          real_t *T1=T+n1*ldT;
@@ -72,11 +72,11 @@ namespace LATL
             T2+=ldT;
          }
          
-         trmm('L','L','T','U',n1,n2,one,A,ldA,T1,ldT);
-         gemm('T','N',n1,n2,m-n1,one,A+n1,ldA,A1+n1,ldA,one,T1,ldT);
-         trmm('L','U','T','N',n1,n2,one,T,ldT,T1,ldT);
-         gemm('N','N',m-n1,n2,n1,-one,A+n1,ldA,T1,ldT,one,A1+n1,ldA);
-         trmm('L','L','N','U',n1,n2,one,A,ldA,T1,ldT);
+         TRMM('L','L','T','U',n1,n2,one,A,ldA,T1,ldT);
+         GEMM('T','N',n1,n2,m-n1,one,A+n1,ldA,A1+n1,ldA,one,T1,ldT);
+         TRMM('L','U','T','N',n1,n2,one,T,ldT,T1,ldT);
+         GEMM('N','N',m-n1,n2,n1,-one,A+n1,ldA,T1,ldT,one,A1+n1,ldA);
+         TRMM('L','L','N','U',n1,n2,one,A,ldA,T1,ldT);
          
          A2=A1;
          T2=T1;
@@ -88,7 +88,7 @@ namespace LATL
             T2+=ldT;
          }
          
-         geqrf(m-n1,n2,A1+n1,ldA,T1+n1,ldT);
+         GEQRF(m-n1,n2,A1+n1,ldA,T1+n1,ldT);
          
          A2=A;
          for(int_t i=0;i<n1;i++)
@@ -102,10 +102,10 @@ namespace LATL
             A2+=ldA;
          }
          
-         trmm('R','L','N','U',n1,n2,one,A1+n1,ldA,T1,ldT);
-         gemm('T','N',n1,n2,m-n,one,A+n,ldA,A1+n,ldA,one,T1,ldT);
-         trmm('L','U','N','N',n1,n2,-one,T,ldT,T1,ldT);
-         trmm('R','U','N','N',n1,n2,one,T1+n1,ldT,T1,ldT);
+         TRMM('R','L','N','U',n1,n2,one,A1+n1,ldA,T1,ldT);
+         GEMM('T','N',n1,n2,m-n,one,A+n,ldA,A1+n,ldA,one,T1,ldT);
+         TRMM('L','U','N','N',n1,n2,-one,T,ldT,T1,ldT);
+         TRMM('R','U','N','N',n1,n2,one,T1+n1,ldT,T1,ldT);
       }
       return 0;
    }
@@ -124,7 +124,7 @@ namespace LATL
    /// @param nb Block size.  0<nb<=min(m,n)
 
    template<typename real_t>
-   int geqrf(int_t m, int_t n, real_t *A, int_t ldA, real_t *T, int_t ldT, int_t nb)
+   int GEQRF(int_t m, int_t n, real_t *A, int_t ldA, real_t *T, int_t ldT, int_t nb)
    {
       using std::min;
       int_t k=min(m,n);
@@ -147,9 +147,9 @@ namespace LATL
       {
          int_t ib=min(k-i,nb);
          B+=ib*ldA;
-         geqrf(m-i,ib,A+i,ldA,T,ldT);
+         GEQRF(m-i,ib,A+i,ldA,T,ldT);
          if(i+ib<n)
-            larfb('L','T','F','C',m-i,n-i-ib,ib,A+i,ldA,T,ldT,B+i,ldA,W);
+            LARFB('L','T','F','C',m-i,n-i-ib,ib,A+i,ldA,T,ldT,B+i,ldA,W);
          A=B;
       }
       delete [] W;
@@ -169,11 +169,11 @@ namespace LATL
    /// @param ldT Leading dimension of the matrix T.  ldT>=n
 
    template<typename real_t>
-   int geqrf(int_t m,int_t n,complex<real_t> *A,int_t ldA,complex<real_t> *T,int_t ldT)
+   int GEQRF(int_t m,int_t n,complex<real_t> *A,int_t ldA,complex<real_t> *T,int_t ldT)
    {
-      using LATL::larfg;
-      using LATL::gemm;
-      using LATL::trmm;
+      using LATL::LARFG;
+      using LATL::GEMM;
+      using LATL::TRMM;
       using std::conj;
       const complex<real_t> one(1.0);
       if(n<0)
@@ -187,14 +187,14 @@ namespace LATL
 
       if(n==1)
       {
-         larfg(m,A[0],A+1,1,T[0]);
+         LARFG(m,A[0],A+1,1,T[0]);
       }
       else
       {
          int_t n1=n/2;
          int_t n2=n-n1;
 
-         geqrf(m,n1,A,ldA,T,ldT);
+         GEQRF(m,n1,A,ldA,T,ldT);
 
          complex<real_t> *A1=A+n1*ldA;
          complex<real_t> *T1=T+n1*ldT;
@@ -209,11 +209,11 @@ namespace LATL
             T2+=ldT;
          }
 
-         trmm('L','L','T','U',n1,n2,one,A,ldA,T1,ldT);
-         gemm('C','N',n1,n2,m-n1,one,A+n1,ldA,A1+n1,ldA,one,T1,ldT);
-         trmm('L','U','C','N',n1,n2,one,T,ldT,T1,ldT);
-         gemm('N','N',m-n1,n2,n1,-one,A+n1,ldA,T1,ldT,one,A1+n1,ldA);
-         trmm('L','L','N','U',n1,n2,one,A,ldA,T1,ldT);
+         TRMM('L','L','T','U',n1,n2,one,A,ldA,T1,ldT);
+         GEMM('C','N',n1,n2,m-n1,one,A+n1,ldA,A1+n1,ldA,one,T1,ldT);
+         TRMM('L','U','C','N',n1,n2,one,T,ldT,T1,ldT);
+         GEMM('N','N',m-n1,n2,n1,-one,A+n1,ldA,T1,ldT,one,A1+n1,ldA);
+         TRMM('L','L','N','U',n1,n2,one,A,ldA,T1,ldT);
 
          A2=A1;
          T2=T1;
@@ -225,7 +225,7 @@ namespace LATL
             T2+=ldT;
          }
 
-         geqrf(m-n1,n2,A1+n1,ldA,T1+n1,ldT);
+         GEQRF(m-n1,n2,A1+n1,ldA,T1+n1,ldT);
 
          A2=A;
          for(int_t i=0;i<n1;i++)
@@ -239,10 +239,10 @@ namespace LATL
             A2+=ldA;
          }
 
-         trmm('R','L','N','U',n1,n2,one,A1+n1,ldA,T1,ldT);
-         gemm('C','N',n1,n2,m-n,one,A+n,ldA,A1+n,ldA,one,T1,ldT);
-         trmm('L','U','N','N',n1,n2,-one,T,ldT,T1,ldT);
-         trmm('R','U','N','N',n1,n2,one,T1+n1,ldT,T1,ldT);
+         TRMM('R','L','N','U',n1,n2,one,A1+n1,ldA,T1,ldT);
+         GEMM('C','N',n1,n2,m-n,one,A+n,ldA,A1+n,ldA,one,T1,ldT);
+         TRMM('L','U','N','N',n1,n2,-one,T,ldT,T1,ldT);
+         TRMM('R','U','N','N',n1,n2,one,T1+n1,ldT,T1,ldT);
       }
       return 0;
    }
@@ -261,7 +261,7 @@ namespace LATL
    /// @param nb Block size.  0<nb<=min(m,n)
 
    template<typename real_t>
-   int geqrf(int_t m, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *T, int_t ldT, int_t nb)
+   int GEQRF(int_t m, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *T, int_t ldT, int_t nb)
    {
       using std::min;
       int_t k=min(m,n);
@@ -284,9 +284,9 @@ namespace LATL
       {
          int_t ib=min(k-i,nb);
          B+=ib*ldA;
-         geqrf(m-i,ib,A+i,ldA,T,ldT);
+         GEQRF(m-i,ib,A+i,ldA,T,ldT);
          if(i+ib<n)
-            larfb('L','C','F','C',m-i,n-i-ib,ib,A+i,ldA,T,ldT,B+i,ldA,W);
+            LARFB('L','C','F','C',m-i,n-i-ib,ib,A+i,ldA,T,ldT,B+i,ldA,W);
          A=B;
       }
       delete [] W;

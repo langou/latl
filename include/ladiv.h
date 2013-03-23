@@ -30,7 +30,7 @@ namespace LATL
    /// @ingroup SCAL
 
    template<typename real_t>
-   void ladiv(real_t a, real_t b, real_t c, real_t d, real_t &p, real_t &q)
+   void LADIV(real_t a, real_t b, real_t c, real_t d, real_t &p, real_t &q)
    {
       using std::abs;
       real_t e,f;
@@ -58,13 +58,13 @@ namespace LATL
    /// @ingroup SCAL
 
    template<typename real_t>
-   complex<real_t> ladiv(complex<real_t> x, complex<real_t> y)
+   complex<real_t> LADIV(complex<real_t> x, complex<real_t> y)
    {
       using std::abs;
       using std::real;
       using std::imag;
       real_t zr,zi;
-      ladiv<real_t>(real(x),imag(x),real(y),imag(y),zr,zi);
+      LADIV<real_t>(real(x),imag(x),real(y),imag(y),zr,zi);
       return complex<real_t>(zr,zi);
    }
 

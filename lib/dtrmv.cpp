@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "trmv.h"
 
-using LATL::trmv;
+using LATL::TRMV;
 
 int dtrmv_(char& uplo, char& trans, char& diag, int &n, double *A, int &ldA, double *x, int& incx)
 {
-   int info=-trmv<double>(uplo,trans,diag,n,A,ldA,x,incx);
+   int info=-TRMV<double>(uplo,trans,diag,n,A,ldA,x,incx);
    if(info>0)
       xerbla_("DTRMV ",info);
    return 0;

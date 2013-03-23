@@ -39,7 +39,7 @@ namespace LATL
    /// @ingroup TRF
    
    template< typename real_t >
-   int lagtf(const int_t n, real_t * const A, const real_t lambda, real_t * const B, real_t * const C, real_t tol, real_t * const D, int_t * const IN)
+   int LAGTF(const int_t n, real_t * const A, const real_t lambda, real_t * const B, real_t * const C, real_t tol, real_t * const D, int_t * const IN)
    {
       using std::numeric_limits;
 

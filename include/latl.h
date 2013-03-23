@@ -9,7 +9,7 @@
 #ifndef _latl_h
 #define _latl_h
 
-/// @file latl.h Global types used in latl.
+/// @file latl.h Global types used in LATL.
 
 #include <complex>
 using std::complex;
@@ -17,7 +17,7 @@ using std::complex;
 
 namespace LATL
 {
-   /// Integer type used in latl namespace.
+   /// Integer type used in LATL namespace.
    
    typedef std::ptrdiff_t int_t;
 }

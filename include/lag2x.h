@@ -33,7 +33,7 @@ namespace LATL
    /// @ingroup MAT
    
    template<typename real_t,typename xreal_t>
-   int lag2x(int_t m,int_t n,real_t *A,int_t ldA,xreal_t *B,int_t ldB)
+   int LAG2X(int_t m,int_t n,real_t *A,int_t ldA,xreal_t *B,int_t ldB)
    {
       if(m<0)
          return -1;
@@ -72,9 +72,9 @@ namespace LATL
    /// @ingroup MAT
    
    template<typename real_t,typename xreal_t>
-   int lag2x(int_t m,int_t n,complex<real_t> *A,int_t ldA,complex<xreal_t> *B,int_t ldB)
+   int LAG2X(int_t m,int_t n,complex<real_t> *A,int_t ldA,complex<xreal_t> *B,int_t ldB)
    {
-      return lag2x< complex<real_t>, complex<xreal_t> >(m,n,A,ldA,B,ldB);
+      return LAG2X< complex<real_t>, complex<xreal_t> >(m,n,A,ldA,B,ldB);
    }
 }
 

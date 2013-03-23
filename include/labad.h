@@ -31,7 +31,7 @@ namespace LATL
    /// @ingroup SCAL
    
    template<typename real_t>
-   void labad(real_t &small, real_t &large)
+   void LABAD(real_t &small, real_t &large)
    {
       using std::log10;
       using std::sqrt;

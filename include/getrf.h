@@ -45,7 +45,7 @@ namespace LATL
    /// @param pivot Permutation matrix size min(m,n).  On exit, row k of A was exchanged with pivot[k].
 
    template< typename real_t>
-   int_t getrf(const int_t m, const int_t n, real_t * const A, const int_t ldA,  int_t *const pivot)
+   int_t GETRF(const int_t m, const int_t n, real_t * const A, const int_t ldA,  int_t *const pivot)
    {
       using std::numeric_limits;
       using std::abs;
@@ -70,19 +70,19 @@ namespace LATL
 
       for (int_t j = 0; j < std::min(m,n); ++j)
       {
-         jp = j + LATL::imax(m-j, Ajj, 1);
+         jp = j + LATL::IMAX(m-j, Ajj, 1);
          pivot[j]=jp;
          if (A[ldA*j+jp] != zero)
          {
             if (jp != j)
             {
-               LATL::swap(n, A+j, ldA, A+jp, ldA);
+               LATL::SWAP(n, A+j, ldA, A+jp, ldA);
             }
             if (j < m)
             {
                if (abs(Ajj[0]) >= sfmin)
                {
-                  LATL::scal(m-j-1, one/Ajj[0], Ajjp1, 1);
+                  LATL::SCAL(m-j-1, one/Ajj[0], Ajjp1, 1);
                }
                else
                {
@@ -102,7 +102,7 @@ namespace LATL
          }
          if (j < std::min(m,n))
          {
-            LATL::ger(m-j-1, n-j-1, -one, Ajjp1, 1, Ajj+ldA, ldA, Ajjp1+ldA, ldA);
+            LATL::GER(m-j-1, n-j-1, -one, Ajjp1, 1, Ajj+ldA, ldA, Ajjp1+ldA, ldA);
          }
          Ajj+= (ldA+1);
          Ajjp1 = Ajj+1;
@@ -131,7 +131,7 @@ namespace LATL
    /// @param pivot Permutation matrix size min(m,n).  On exit, row k of A was exchanged with pivot[k].
 
    template< typename real_t>
-   int_t getrf(const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA,  int_t * const pivot)
+   int_t GETRF(const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA,  int_t * const pivot)
    {
       using std::numeric_limits;
       using std::abs;
@@ -156,19 +156,19 @@ namespace LATL
 
       for (int_t j = 0; j < std::min(m,n); ++j)
       {
-         jp = j + LATL::imax(m-j, Ajj, 1);
+         jp = j + LATL::IMAX(m-j, Ajj, 1);
          pivot[j]=jp;
          if (A[ldA*j+jp] != zero)
          {
             if (jp != j)
             {
-               LATL::swap(n, A+j, ldA, A+jp, ldA);
+               LATL::SWAP(n, A+j, ldA, A+jp, ldA);
             }
             if (j < m)
             {
                if (abs(Ajj[0]) >= sfmin)
                {
-                  LATL::scal(m-j-1, one/Ajj[0], Ajjp1, 1);
+                  LATL::SCAL(m-j-1, one/Ajj[0], Ajjp1, 1);
                }
                else
                {
@@ -188,7 +188,7 @@ namespace LATL
          }
          if (j < std::min(m,n))
          {
-            LATL::ger(m-j-1, n-j-1, -one, Ajjp1, 1, Ajj+ldA, ldA, Ajjp1+ldA, ldA);
+            LATL::GER(m-j-1, n-j-1, -one, Ajjp1, 1, Ajj+ldA, ldA, Ajjp1+ldA, ldA);
          }
          Ajj+= (ldA+1);
          Ajjp1 = Ajj+1;
@@ -218,7 +218,7 @@ namespace LATL
    /// @param nb Block size.
 
    template< typename real_t >
-   int_t getrf( const int_t m, const int_t n, real_t * const A, const int_t ldA, int_t * const pivot, int_t nb )
+   int_t GETRF( const int_t m, const int_t n, real_t * const A, const int_t ldA, int_t * const pivot, int_t nb )
    {
       using std::abs;
       if (m < 0)
@@ -237,14 +237,14 @@ namespace LATL
       int_t smaller = std::min(m,n);
       if((nb<2)||(nb>=smaller))
       {
-         info = LATL::getrf(m, n, A, ldA, pivot);
+         info = LATL::GETRF(m, n, A, ldA, pivot);
       }
       else
       {
          for (int_t j = 0; j < smaller; j+= nb)
          {
             int_t jb = std::min(smaller-j, nb);
-            int_t temp = getrf(m-j, jb, Ajj, ldA, pivot+j);
+            int_t temp = GETRF(m-j, jb, Ajj, ldA, pivot+j);
             for (int_t k = j; k < std::min(m, j+jb); ++k)
             {
                pivot[k] += j;
@@ -265,11 +265,11 @@ namespace LATL
             if ((j+jb) < n)
             {
                LATL::laswp(n-j-jb, A+ldA*(j+jb), ldA, j, j+jb-1, pivot, 1);
-               LATL::trsm('L', 'L', 'N', 'U', jb, n-j-jb, one, Ajj, ldA, Ajj+ldA*jb, ldA);
+               LATL::TRSM('L', 'L', 'N', 'U', jb, n-j-jb, one, Ajj, ldA, Ajj+ldA*jb, ldA);
                
                if ((j+jb) < m)
                {
-                  LATL::gemm('N', 'N', m-j-jb, n-j-jb, jb, -one, Ajj+jb, ldA, Ajj+ldA*jb, ldA, one, Ajj+ldA*jb+jb, ldA);
+                  LATL::GEMM('N', 'N', m-j-jb, n-j-jb, jb, -one, Ajj+jb, ldA, Ajj+ldA*jb, ldA, one, Ajj+ldA*jb+jb, ldA);
                }
             }
             Ajj += jb*ldA+jb;
@@ -301,9 +301,9 @@ namespace LATL
    /// @param nb Block size.
 
    template< typename real_t >
-   int_t getrf( const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const pivot, int_t nb)
+   int_t GETRF( const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const pivot, int_t nb)
    {
-      return LATL::getrf< complex<real_t> > (m, n, A, ldA, pivot, nb);
+      return LATL::GETRF< complex<real_t> > (m, n, A, ldA, pivot, nb);
    }
    
 }

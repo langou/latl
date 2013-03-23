@@ -44,7 +44,7 @@ namespace LATL
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t lahef(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, complex<real_t> * Work)
+   int_t LAHEF(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, complex<real_t> * Work)
    {
       using std::abs;
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
@@ -85,11 +85,11 @@ namespace LATL
             
             if (nb < n && k <= n-nb )
                break;
-            LATL::copy(k, Ak, 1, Wkw, 1);
+            LATL::COPY(k, Ak, 1, Wkw, 1);
             Wkw[k] = real(Ak[k]);
             if (k < n-1)
             {
-               LATL::gemv('N', k+1, n-k-1, -onec, Ak+ldA, ldA, Wkw+ldWork+k, ldWork, onec, Wkw, 1);
+               LATL::GEMV('N', k+1, n-k-1, -onec, Ak+ldA, ldA, Wkw+ldWork+k, ldWork, onec, Wkw, 1);
             }
             
             kstep = 1;
@@ -98,7 +98,7 @@ namespace LATL
             
             if (k > 0)
             {
-               imax = LATL::imax(k, Wkw, 1);
+               imax = LATL::IMAX(k, Wkw, 1);
                colmax = abs(real(Wkw[imax]))+abs(imag(Wkw[imax]));
             }
             else
@@ -124,21 +124,21 @@ namespace LATL
                else
                {
                   Aimax = A + ldA*imax;
-                  LATL::copy(imax, Aimax, 1, Wkwm1, 1);
+                  LATL::COPY(imax, Aimax, 1, Wkwm1, 1);
                   Wkwm1[imax] = real(Aimax[imax]);
-                  LATL::copy(k-imax, Aimax+ldA+imax, ldA, Wkwm1+imax+1, 1);
-                  LATL::lacgv(k-imax, Wkwm1+imax+1, 1);
+                  LATL::COPY(k-imax, Aimax+ldA+imax, ldA, Wkwm1+imax+1, 1);
+                  LATL::LACGV(k-imax, Wkwm1+imax+1, 1);
                   if (k < n-1)
                   {
-                     LATL::gemv('N', k+1, n-k-1, -onec, Ak+ldA, ldA, Wkw+ldWork+imax, ldWork, onec, Wkwm1, 1);
+                     LATL::GEMV('N', k+1, n-k-1, -onec, Ak+ldA, ldA, Wkw+ldWork+imax, ldWork, onec, Wkwm1, 1);
                      Wkwm1[imax] = real(Wkwm1[imax]);
                   }
                   
-                  jmax = imax+1 + LATL::imax(k-imax, Wkwm1+imax+1, 1);
+                  jmax = imax+1 + LATL::IMAX(k-imax, Wkwm1+imax+1, 1);
                   rowmax = abs(real(Wkwm1[jmax]))+abs(imag(Wkwm1[jmax]));
                   if (imax > 0)
                   {
-                     jmax = LATL::imax(imax, Wkwm1, 1);
+                     jmax = LATL::IMAX(imax, Wkwm1, 1);
                      rowmax = std::max(rowmax, abs(real(Wkwm1[jmax]))+abs(imag(Wkwm1[jmax])));
                   }
                   
@@ -147,7 +147,7 @@ namespace LATL
                   else if (abs(real(Wkwm1[imax])) >= alpha*rowmax)
                   {
                      kp = imax;
-                     LATL::copy(k+1, Wkwm1, 1, Wkw, 1);
+                     LATL::COPY(k+1, Wkwm1, 1, Wkw, 1);
                   }
                   else
                   {
@@ -164,22 +164,22 @@ namespace LATL
                if (kp != kk)
                {
                   Akp[kp] = real(Akk[kk]);
-                  LATL::copy(k-kp-1, Akk+kp+1, 1, Akp + ldA + kp, ldA);
-                  LATL::lacgv(kk-kp-1, Akp+ldA+kp, ldA);
-                  LATL::copy(kp, Akk, 1, Akp, 1);
+                  LATL::COPY(k-kp-1, Akk+kp+1, 1, Akp + ldA + kp, ldA);
+                  LATL::LACGV(kk-kp-1, Akp+ldA+kp, ldA);
+                  LATL::COPY(kp, Akk, 1, Akp, 1);
                   if (kk < n-1)
                   {
-                     LATL::swap(n-kk-1, Akk+ldA+kk, ldA, Akk+ldA+kp, ldA);
+                     LATL::SWAP(n-kk-1, Akk+ldA+kk, ldA, Akk+ldA+kp, ldA);
                   }
-                  LATL::swap(n-kk, Wkkw+kk, ldWork, Wkkw+kp, ldWork);
+                  LATL::SWAP(n-kk, Wkkw+kk, ldWork, Wkkw+kp, ldWork);
                }
                
                if (kstep == 1)
                {
-                  LATL::copy(k+1, Wkw, 1, Ak, 1);
+                  LATL::COPY(k+1, Wkw, 1, Ak, 1);
                   r1 = one/real(Ak[k]);
-                  LATL::scal(k, r1, Ak, 1);
-                  LATL::lacgv(k, Wkw, 1);
+                  LATL::SCAL(k, r1, Ak, 1);
+                  LATL::LACGV(k, Wkw, 1);
                }
                else
                {
@@ -200,8 +200,8 @@ namespace LATL
                   Ak[k-1] = Wkw[k-1];
                   Ak[k] = Wkw[k];
                   
-                  LATL::lacgv(k, Wkw, 1);
-                  LATL::lacgv(k-1, Wkwm1, 1);
+                  LATL::LACGV(k, Wkw, 1);
+                  LATL::LACGV(k-1, Wkwm1, 1);
                }
                
             }
@@ -228,11 +228,11 @@ namespace LATL
             for (int_t jj = j; jj < j+jb; ++jj)
             {
                Ajj[jj] = real(Ajj[jj]);
-               LATL::gemv('N', jj-j+1, n-k-1,-onec, Ak+ldA+j, ldA, Wkw+ldWork+jj, ldWork, onec, A+jj*ldA+j, 1);
+               LATL::GEMV('N', jj-j+1, n-k-1,-onec, Ak+ldA+j, ldA, Wkw+ldWork+jj, ldWork, onec, A+jj*ldA+j, 1);
                Ajj[jj] = real(Ajj[jj]);
                Ajj += ldA;
             }
-            LATL::gemm('N', 'T', j, jb, n-k-1, -onec, Ak+ldA, ldA, Wkw+ldWork+j, ldWork, onec, A+j*ldA, ldA);
+            LATL::GEMM('N', 'T', j, jb, n-k-1, -onec, Ak+ldA, ldA, Wkw+ldWork+j, ldWork, onec, A+j*ldA, ldA);
          }
          
          kp1 = k+1;
@@ -247,7 +247,7 @@ namespace LATL
             ++kp1;
             if (jp != jtemp && kp1 < n)
             {
-               LATL::swap(n-kp1, A+ldA*kp1+jp, ldA, A+ldA*kp1+jtemp, ldA);
+               LATL::SWAP(n-kp1, A+ldA*kp1+jp, ldA, A+ldA*kp1+jtemp, ldA);
             }
          }
          kb = n-k-1;
@@ -270,9 +270,9 @@ namespace LATL
             Wk[k] = real(Ak[k]);
             if (k < n-1)
             {
-               LATL::copy(n-k-1, Ak+k+1, 1, Wk+k+1, 1);
+               LATL::COPY(n-k-1, Ak+k+1, 1, Wk+k+1, 1);
             }
-            LATL::gemv('N', n-k, k, -onec, A+k, ldA, Work+k, ldWork, onec, Wk+k, 1);
+            LATL::GEMV('N', n-k, k, -onec, A+k, ldA, Work+k, ldWork, onec, Wk+k, 1);
             Wk[k] = real(Wk[k]);
             
             kstep = 1;
@@ -281,7 +281,7 @@ namespace LATL
             
             if (k < n-1)
             {
-               imax = k+1 + LATL::imax(n-k-1, Wk+k+1, 1);
+               imax = k+1 + LATL::IMAX(n-k-1, Wk+k+1, 1);
                colmax = abs(real(Wk[imax]))+abs(imag(Wk[imax]));
             }
             else
@@ -303,21 +303,21 @@ namespace LATL
                else
                {
                   Aimax = A+ldA*imax;
-                  LATL::copy(imax-k, Ak+imax, ldA, Wkp1+k, 1);
-                  LATL::lacgv(imax-k, Wkp1+k, 1);
+                  LATL::COPY(imax-k, Ak+imax, ldA, Wkp1+k, 1);
+                  LATL::LACGV(imax-k, Wkp1+k, 1);
                   Wkp1[imax] = real(Aimax[imax]);
                   if (imax < n)
                   {
-                     LATL::copy(n-imax-1, Aimax+imax+1, 1, Wkp1+imax+1, 1);
+                     LATL::COPY(n-imax-1, Aimax+imax+1, 1, Wkp1+imax+1, 1);
                   }
-                  LATL::gemv('N', n-k, k, -onec, A+k, ldA, Work+imax, ldWork, onec, Wkp1+k, 1);
+                  LATL::GEMV('N', n-k, k, -onec, A+k, ldA, Work+imax, ldWork, onec, Wkp1+k, 1);
                   Wkp1[imax] = real(Wkp1[imax]);
                   
-                  jmax = k + LATL::imax(imax-k, Wkp1+k, 1);
+                  jmax = k + LATL::IMAX(imax-k, Wkp1+k, 1);
                   rowmax = abs(real(Wkp1[jmax]))+abs(imag(Wkp1[jmax]));
                   if (imax < n-1)
                   {
-                     jmax = imax+1+LATL::imax(n-imax-1, Wkp1+imax+1, 1);
+                     jmax = imax+1+LATL::IMAX(n-imax-1, Wkp1+imax+1, 1);
                      rowmax = std::max(rowmax, abs(real(Wkp1[jmax]))+abs(imag(Wkp1[jmax])));
                   }
                   
@@ -328,7 +328,7 @@ namespace LATL
                   else if ( abs(real(Wkp1[imax])) >= alpha*rowmax)
                   {
                      kp = imax;
-                     LATL::copy(n-k, Wkp1+k, 1, Wk+k, 1);
+                     LATL::COPY(n-k, Wkp1+k, 1, Wk+k, 1);
                   }
                   else
                   {
@@ -343,24 +343,24 @@ namespace LATL
                if (kp != kk)
                {
                   Akp[kp] = real(Akk[kk]);
-                  LATL::copy(kp-kk-1, Akk+kk+1, 1, Akk+ldA+kp, ldA);
-                  LATL::lacgv(kp-kk-1, Akk+ldA+kp, ldA);
+                  LATL::COPY(kp-kk-1, Akk+kk+1, 1, Akk+ldA+kp, ldA);
+                  LATL::LACGV(kp-kk-1, Akk+ldA+kp, ldA);
                   if (kp < n-1)
                   {
-                     LATL::copy(n-kp-1, Akk+kp+1, 1, A+ldA*kp+kp+1, 1);
+                     LATL::COPY(n-kp-1, Akk+kp+1, 1, A+ldA*kp+kp+1, 1);
                   }
-                  LATL::swap(kk, A+kk, ldA, A+kp, ldA);
-                  LATL::swap(kk+1, Work+kk, ldWork, Work+kp, ldWork);
+                  LATL::SWAP(kk, A+kk, ldA, A+kp, ldA);
+                  LATL::SWAP(kk+1, Work+kk, ldWork, Work+kp, ldWork);
                }
                
                if (kstep == 1)
                {
-                  LATL::copy(n-k, Wk+k, 1, Ak+k, 1);
+                  LATL::COPY(n-k, Wk+k, 1, Ak+k, 1);
                   if (k < n-1)
                   {
                      r1 = one/real(Ak[k]);
-                     LATL::scal(n-k-1, r1, Ak+k+1, 1);
-                     LATL::lacgv(n-k-1, Wk+k+1, 1);
+                     LATL::SCAL(n-k-1, r1, Ak+k+1, 1);
+                     LATL::LACGV(n-k-1, Wk+k+1, 1);
                   }
                }
                else
@@ -382,8 +382,8 @@ namespace LATL
                   Ak[k+1] = Wk[k+1];
                   Akp1[k+1] = Wkp1[k+1];
                   
-                  LATL::lacgv(n-k-1, Wk+k+1, 1);
-                  LATL::lacgv(n-k-2, Wkp1+k+2, 1);
+                  LATL::LACGV(n-k-1, Wk+k+1, 1);
+                  LATL::LACGV(n-k-2, Wkp1+k+2, 1);
                }
             }
             
@@ -408,13 +408,13 @@ namespace LATL
             for (int_t jj = j; jj < j+jb; ++jj)
             {
                Ajj = A + ldA*jj;
-               LATL::gemv('N', j+jb-jj, k, -onec, A+jj, ldA, Work+jj, ldWork, onec, Ajj+jj, 1);
+               LATL::GEMV('N', j+jb-jj, k, -onec, A+jj, ldA, Work+jj, ldWork, onec, Ajj+jj, 1);
                Ajj[jj] = real(Ajj[jj]);
             }
             
             if (j+jb < n)
             {
-               LATL::gemm('N', 'T', n-j-jb, jb, k, -onec, A+j+jb, ldA, Work+j, ldWork, onec, A+j*ldA+j+jb, ldA);
+               LATL::GEMM('N', 'T', n-j-jb, jb, k, -onec, A+j+jb, ldA, Work+j, ldWork, onec, A+j*ldA+j+jb, ldA);
             }
          }
          
@@ -430,7 +430,7 @@ namespace LATL
             --km1;
             if (jp != jtemp && km1 >= 0)
             {
-               LATL::swap(km1+1, A+jp, ldA, A+jtemp, ldA);
+               LATL::SWAP(km1+1, A+jp, ldA, A+jtemp, ldA);
             }
          }
          kb = k;

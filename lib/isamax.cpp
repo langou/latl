@@ -9,9 +9,9 @@
 #include "blas.h"
 #include "imax.h"
 
-using LATL::imax;
+using LATL::IMAX;
 
 int isamax_(int &n, float *x, int& incx)
 {
-   return imax<float>(n,x,incx)+1;
+   return IMAX<float>(n,x,incx)+1;
 }

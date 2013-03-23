@@ -9,11 +9,11 @@
 #include "lapack.h"
 #include "ladiv.h"
 
-using LATL::ladiv;
+using LATL::LADIV;
 
 int dladiv_(double &A, double &B, double &C, double &D, double &P, double &Q)
 {
-   ladiv<double>(A,B,C,D,P,Q);
+   LADIV<double>(A,B,C,D,P,Q);
    return 0;
 }
 

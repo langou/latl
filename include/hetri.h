@@ -23,7 +23,7 @@ namespace LATL
    ///
    
    template <typename real_t>
-   int_t hetri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv)
+   int_t HETRI(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv)
    {
       
       using std::toupper;
@@ -68,9 +68,9 @@ namespace LATL
                
                if(k>1)
                {
-                  copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
-                  hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dotc( k-1, work, 1, A+(k-1)*ldA, 1);
+                  COPY<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
+                  HEMV<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOTC( k-1, work, 1, A+(k-1)*ldA, 1);
                }
                kstep = 1;
             }
@@ -87,13 +87,13 @@ namespace LATL
                
                if(k>1)
                {
-                  copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
-                  hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dotc( k-1, work, 1, A+(k-1)*ldA, 1);
-                  A[(k-1)+k*ldA] -= dotc( k-1, A+(k-1)*ldA, 1, A+k*ldA, 1);
-                  copy<real_t>( k-1, A+k*ldA, 1, work, 1);
-                  hemv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+k*ldA, 1);
-                  A[k+k*ldA] -= dotc( k-1, work, 1, A+k*ldA, 1);
+                  COPY<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
+                  HEMV<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOTC( k-1, work, 1, A+(k-1)*ldA, 1);
+                  A[(k-1)+k*ldA] -= DOTC( k-1, A+(k-1)*ldA, 1, A+k*ldA, 1);
+                  COPY<real_t>( k-1, A+k*ldA, 1, work, 1);
+                  HEMV<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+k*ldA, 1);
+                  A[k+k*ldA] -= DOTC( k-1, work, 1, A+k*ldA, 1);
                }
                kstep = 2;
             }
@@ -101,7 +101,7 @@ namespace LATL
             int_t kp = ipiv[k-1];
             if(kp != k-1)
             {
-               swap<real_t>( kp, A+(k-1)*ldA, 1, A+kp*ldA, 1);
+               SWAP<real_t>( kp, A+(k-1)*ldA, 1, A+kp*ldA, 1);
                for(int_t j=kp+2;j<=k-1;j++)
                {
                   complex<real_t> temp = conj(A[(j-1)+(k-1)*ldA]);
@@ -134,9 +134,9 @@ namespace LATL
                
                if(k<n)
                {
-                  copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
-                  hemv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dotc( n-k, work, 1, A+k+(k-1)*ldA, 1);
+                  COPY<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
+                  HEMV<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOTC( n-k, work, 1, A+k+(k-1)*ldA, 1);
                }
                kstep = 1;
             }
@@ -153,13 +153,13 @@ namespace LATL
                
                if(k<n)
                {
-                  copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
-                  hemv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dotc( n-k, work, 1, A+k+(k-1)*ldA, 1);
-                  A[(k-1)+(k-2)*ldA] -= dotc( n-k, A+k+(k-1)*ldA, 1, A+k+(k-2)*ldA, 1);
-                  copy<real_t>( n-k, A+k+(k-2)*ldA, 1, work, 1);
-                  hemv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-2)*ldA, 1);
-                  A[(k-2)+(k-2)*ldA] -= dotc( n-k, work, 1, A+k+(k-2)*ldA, 1);
+                  COPY<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
+                  HEMV<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOTC( n-k, work, 1, A+k+(k-1)*ldA, 1);
+                  A[(k-1)+(k-2)*ldA] -= DOTC( n-k, A+k+(k-1)*ldA, 1, A+k+(k-2)*ldA, 1);
+                  COPY<real_t>( n-k, A+k+(k-2)*ldA, 1, work, 1);
+                  HEMV<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-2)*ldA, 1);
+                  A[(k-2)+(k-2)*ldA] -= DOTC( n-k, work, 1, A+k+(k-2)*ldA, 1);
                }
                kstep = 2;
             }
@@ -167,7 +167,7 @@ namespace LATL
             int_t kp = ipiv[k-1];
             if(kp != k-1)
             {
-               swap<real_t>( n-kp-1, A+kp+1+(k-1)*ldA, 1, A+kp+1+kp*ldA, 1);
+               SWAP<real_t>( n-kp-1, A+kp+1+(k-1)*ldA, 1, A+kp+1+kp*ldA, 1);
                for(int_t j=k+1;j<=kp;j++)
                {
                   complex<real_t> temp = conj(A[(j-1)+(k-1)*ldA]);

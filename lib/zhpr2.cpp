@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "hpr.h"
 
-using LATL::hpr;
+using LATL::HPR;
 using std::complex;
 
 int zhpr2_(char& uplo, int &n, complex<double> &alpha, complex<double> *x, int& incx, complex<double> *y, int& incy, complex<double> *A)
 {
-   int info=-hpr<double>(uplo,n,alpha,x,incx,y,incy,A);
+   int info=-HPR<double>(uplo,n,alpha,x,incx,y,incy,A);
    if(info>0)
       xerbla_("ZHPR2  ",info);
    return 0;

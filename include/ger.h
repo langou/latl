@@ -38,7 +38,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int ger(int_t m, int_t n, real_t alpha, real_t *x, int_t incx, real_t *y, int_t incy, real_t *A, int_t ldA)
+   int GER(int_t m, int_t n, real_t alpha, real_t *x, int_t incx, real_t *y, int_t incy, real_t *A, int_t ldA)
    {
       const real_t zero(0.0);
       int_t i,j,kx,jy,ix;
@@ -107,7 +107,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int ger(int_t m, int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy, complex<real_t> *A, int_t ldA)
+   int GER(int_t m, int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy, complex<real_t> *A, int_t ldA)
    {
       using std::conj;
 
@@ -179,7 +179,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   int gerc(int_t m, int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy, complex<real_t> *A, int_t ldA)
+   int GERC(int_t m, int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy, complex<real_t> *A, int_t ldA)
    {
       const complex<real_t> zero(0.0,0.0);
       int_t i,j,kx,jy,ix;

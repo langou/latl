@@ -77,8 +77,8 @@ namespace LATL
             kn = std::min(kd, n-j-1);
             if (kn > 0)
             {
-               LATL::scal(kn, one/ajj, ABjp1+kd-1, kld);
-               LATL::syr('U', kn, -one, ABjp1+kd-1, kld, ABjp1+kd, kld);
+               LATL::SCAL(kn, one/ajj, ABjp1+kd-1, kld);
+               LATL::SYR('U', kn, -one, ABjp1+kd-1, kld, ABjp1+kd, kld);
             }
             ABj += ldAB;
             ABjp1 += ldAB;
@@ -95,8 +95,8 @@ namespace LATL
             kn = std::min(kd, n-j-1);
             if (kn > 0)
             {
-               LATL::scal(kn, one/ajj, ABj+1, 1);
-               LATL::syr('L', kn, -one, ABj+1, 1, ABjp1, kld);
+               LATL::SCAL(kn, one/ajj, ABj+1, 1);
+               LATL::SYR('L', kn, -one, ABj+1, 1, ABjp1, kld);
             }
             ABj += ldAB;
             ABjp1 += ldAB;
@@ -161,10 +161,10 @@ namespace LATL
             kn = std::min(kd, n-j-1);
             if (kn > 0)
             {
-               LATL::scal(kn, one/ajj, ABjp1+kd-1, kld);
-               LATL::lacgv(kn, ABjp1+kd-1, kld);
-               LATL::her('U', kn, -one, ABjp1+kd-1, kld, ABjp1+kd, kld);
-               LATL::lacgv(kn, ABjp1+kd, kld);
+               LATL::SCAL(kn, one/ajj, ABjp1+kd-1, kld);
+               LATL::LACGV(kn, ABjp1+kd-1, kld);
+               LATL::HER('U', kn, -one, ABjp1+kd-1, kld, ABjp1+kd, kld);
+               LATL::LACGV(kn, ABjp1+kd, kld);
             }
             ABj += ldAB;
             ABjp1 += ldAB;
@@ -184,8 +184,8 @@ namespace LATL
             kn = std::min(kd, n-j-1);
             if (kn > 0)
             {
-               LATL::scal(kn, one/ajj, ABj+1, 1);
-               LATL::her('L', kn, -one, ABj+1, 1, ABjp1, kld);
+               LATL::SCAL(kn, one/ajj, ABj+1, 1);
+               LATL::HER('L', kn, -one, ABj+1, 1, ABjp1, kld);
             }
             ABj += ldAB;
             ABjp1 += ldAB;
@@ -267,8 +267,8 @@ namespace LATL
                   
                   if (i2 > 0)
                   {
-                     LATL::trsm('L', 'U', 'T', 'N', ib, i2, one, ABi+kd, kld, ABi+ldAB*ib+kd-ib, kld);
-                     LATL::syrk('U', 'T', i2, ib, -one, ABi+ldAB*ib+kd-ib, kld, one, ABi+ldAB*ib+kd, kld);
+                     LATL::TRSM('L', 'U', 'T', 'N', ib, i2, one, ABi+kd, kld, ABi+ldAB*ib+kd-ib, kld);
+                     LATL::SYRK('U', 'T', i2, ib, -one, ABi+ldAB*ib+kd-ib, kld, one, ABi+ldAB*ib+kd, kld);
                   }
                   
                   if (i3 > 0)
@@ -284,12 +284,12 @@ namespace LATL
                         }
                         Worktemp += ldWork;
                      }
-                     LATL::trsm('L', 'U', 'T', 'N', ib, i3, one, ABi+kd, kld, Work, ldWork);
+                     LATL::TRSM('L', 'U', 'T', 'N', ib, i3, one, ABi+kd, kld, Work, ldWork);
                      
                      if (i2 > 0)
-                        LATL::gemm('T', 'N', i2, i3, ib, -one, ABi+ldAB*ib+kd-ib, kld, Work, ldWork, one, ABi+ldAB*kd+ib, kld);
+                        LATL::GEMM('T', 'N', i2, i3, ib, -one, ABi+ldAB*ib+kd-ib, kld, Work, ldWork, one, ABi+ldAB*kd+ib, kld);
                      
-                     LATL::syrk('U', 'T', i3, ib, -one, Work, ldWork, one, ABi+ldAB*kd+kd, kld);
+                     LATL::SYRK('U', 'T', i3, ib, -one, Work, ldWork, one, ABi+ldAB*kd+kd, kld);
                      
                      Worktemp = Work;
                      for (int_t jj = 0; jj < i3; ++jj)
@@ -333,8 +333,8 @@ namespace LATL
                   
                   if (i2 > 0)
                   {
-                     LATL::trsm('R', 'L', 'T', 'N', i2, ib, one, ABi, kld, ABi+ib, kld);
-                     LATL::syrk('L', 'N', i2, ib, -one, ABi+ib, kld, one, ABi+ldAB*ib, kld);
+                     LATL::TRSM('R', 'L', 'T', 'N', i2, ib, one, ABi, kld, ABi+ib, kld);
+                     LATL::SYRK('L', 'N', i2, ib, -one, ABi+ib, kld, one, ABi+ldAB*ib, kld);
                   }
                   
                   if (i3 > 0)
@@ -351,12 +351,12 @@ namespace LATL
                         Worktemp += ldWork;
                      }
                      
-                     LATL::trsm('R', 'L', 'T', 'N', i3, ib, one, ABi, kld, Work, ldWork);
+                     LATL::TRSM('R', 'L', 'T', 'N', i3, ib, one, ABi, kld, Work, ldWork);
                      if (i2 > 0)
                      {
-                        LATL::gemm('N', 'T', i3, i2, ib, -one, Work, ldWork, ABi+ib, kld, one, ABi+ldAB*ib+kd-ib, kld);
+                        LATL::GEMM('N', 'T', i3, i2, ib, -one, Work, ldWork, ABi+ib, kld, one, ABi+ldAB*ib+kd-ib, kld);
                      }
-                     LATL::syrk('L', 'N', i3, ib, -one, Work, ldWork, one, ABi+ldAB*kd, kld);
+                     LATL::SYRK('L', 'N', i3, ib, -one, Work, ldWork, one, ABi+ldAB*kd, kld);
                      
                      Worktemp = Work;
                      for (int_t jj = 0; jj < ib; ++jj)
@@ -450,8 +450,8 @@ namespace LATL
                   
                   if (i2 > 0)
                   {
-                     LATL::trsm('L', 'U', 'C', 'N', ib, i2, onec, ABi+kd, kld, ABi+ldAB*ib+kd-ib, kld);
-                     LATL::herk('U', 'C', i2, ib, -one, ABi+ldAB*ib+kd-ib, kld, one, ABi+ldAB*ib+kd, kld);
+                     LATL::TRSM('L', 'U', 'C', 'N', ib, i2, onec, ABi+kd, kld, ABi+ldAB*ib+kd-ib, kld);
+                     LATL::HERK('U', 'C', i2, ib, -one, ABi+ldAB*ib+kd-ib, kld, one, ABi+ldAB*ib+kd, kld);
                   }
                   
                   if (i3 > 0)
@@ -467,12 +467,12 @@ namespace LATL
                         }
                         Worktemp += ldWork;
                      }
-                     LATL::trsm('L', 'U', 'C', 'N', ib, i3, onec, ABi+kd, kld, Work, ldWork);
+                     LATL::TRSM('L', 'U', 'C', 'N', ib, i3, onec, ABi+kd, kld, Work, ldWork);
                      
                      if (i2 > 0)
-                        LATL::gemm('C', 'N', i2, i3, ib, -onec, ABi+ldAB*ib+kd-ib, kld, Work, ldWork, onec, ABi+ldAB*kd+ib, kld);
+                        LATL::GEMM('C', 'N', i2, i3, ib, -onec, ABi+ldAB*ib+kd-ib, kld, Work, ldWork, onec, ABi+ldAB*kd+ib, kld);
                      
-                     LATL::herk('U', 'C', i3, ib, -one, Work, ldWork, one, ABi+ldAB*kd+kd, kld);
+                     LATL::HERK('U', 'C', i3, ib, -one, Work, ldWork, one, ABi+ldAB*kd+kd, kld);
                      
                      Worktemp = Work;
                      for (int_t jj = 0; jj < i3; ++jj)
@@ -516,8 +516,8 @@ namespace LATL
                   
                   if (i2 > 0)
                   {
-                     LATL::trsm('R', 'L', 'C', 'N', i2, ib, onec, ABi, kld, ABi+ib, kld);
-                     LATL::herk('L', 'N', i2, ib, -one, ABi+ib, kld, one, ABi+ldAB*ib, kld);
+                     LATL::TRSM('R', 'L', 'C', 'N', i2, ib, onec, ABi, kld, ABi+ib, kld);
+                     LATL::HERK('L', 'N', i2, ib, -one, ABi+ib, kld, one, ABi+ldAB*ib, kld);
                   }
                   
                   if (i3 > 0)
@@ -534,12 +534,12 @@ namespace LATL
                         Worktemp += ldWork;
                      }
                      
-                     LATL::trsm('R', 'L', 'C', 'N', i3, ib, onec, ABi, kld, Work, ldWork);
+                     LATL::TRSM('R', 'L', 'C', 'N', i3, ib, onec, ABi, kld, Work, ldWork);
                      if (i2 > 0)
                      {
-                        LATL::gemm('N', 'C', i3, i2, ib, -onec, Work, ldWork, ABi+ib, kld, onec, ABi+ldAB*ib+kd-ib, kld);
+                        LATL::GEMM('N', 'C', i3, i2, ib, -onec, Work, ldWork, ABi+ib, kld, onec, ABi+ldAB*ib+kd-ib, kld);
                      }
-                     LATL::herk('L', 'N', i3, ib, -one, Work, ldWork, one, ABi+ldAB*kd, kld);
+                     LATL::HERK('L', 'N', i3, ib, -one, Work, ldWork, one, ABi+ldAB*kd, kld);
                      
                      Worktemp = Work;
                      for (int_t jj = 0; jj < ib; ++jj)

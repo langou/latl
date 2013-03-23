@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "trsv.h"
 
-using LATL::trsv;
+using LATL::TRSV;
 
 int dtrsv_(char& uplo, char& trans, char& diag, int &n, double *A, int &ldA, double *x, int& incx)
 {
-   int info=-trsv<double>(uplo,trans,diag,n,A,ldA,x,incx);
+   int info=-TRSV<double>(uplo,trans,diag,n,A,ldA,x,incx);
    if(info>0)
       xerbla_("DTRSV ",info);
    return 0;

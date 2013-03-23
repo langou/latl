@@ -44,7 +44,7 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int gemv(char trans, int_t m, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
+   int GEMV(char trans, int_t m, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
    {
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -204,7 +204,7 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int gemv(char trans, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)
+   int GEMV(char trans, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)
    {
       using std::conj;
       const complex<real_t> one(1.0,0.0);

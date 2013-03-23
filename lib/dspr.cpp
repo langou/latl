@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "spr.h"
 
-using LATL::spr;
+using LATL::SPR;
 
 int dspr_(char& uplo, int &n, double &alpha, double *x, int& incx, double *A)
 {
-   int info=-spr<double>(uplo,n,alpha,x,incx,A);
+   int info=-SPR<double>(uplo,n,alpha,x,incx,A);
    if(info>0)
       xerbla_("DSPR  ",info);
    return 0;

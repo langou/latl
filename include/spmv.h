@@ -44,7 +44,7 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int spmv(char uplo, int_t n, real_t alpha, real_t *A, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
+   int SPMV(char uplo, int_t n, real_t alpha, real_t *A, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
    {
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -220,9 +220,9 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int spmv(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *A, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)
+   int SPMV(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *A, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)
    {
-      return spmv< complex<real_t> >(uplo,n,alpha,A,x,incx,beta,y,incy);
+      return SPMV< complex<real_t> >(uplo,n,alpha,A,x,incx,beta,y,incy);
    }
 }
 #endif

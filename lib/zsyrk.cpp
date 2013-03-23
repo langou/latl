@@ -10,11 +10,11 @@
 #include "syrk.h"
 
 using std::complex;
-using LATL::syrk;
+using LATL::SYRK;
 
 int zsyrk_(char& uplo, char& trans, int &n, int& k, complex<double> &alpha, complex<double> *A, int &ldA, complex<double> &beta, complex<double> *C, int &ldC)
 {
-   int info=-syrk<double>(uplo,trans,n,k,alpha,A,ldA,beta,C,ldC);
+   int info=-SYRK<double>(uplo,trans,n,k,alpha,A,ldA,beta,C,ldC);
    if(info>0)
       xerbla_("ZSYRK ",info);
    return 0;

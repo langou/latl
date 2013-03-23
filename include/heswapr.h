@@ -36,7 +36,7 @@ namespace LATL
    /// @param j Second index for row and column transposition. 0<=j<n
    
    template<typename real_t>
-   int heswapr(char uplo,int_t n,complex<real_t> *A,int_t ldA,int_t i,int_t j)
+   int HESWAPR(char uplo,int_t n,complex<real_t> *A,int_t ldA,int_t i,int_t j)
    {
       using std::conj;
       using std::toupper;
@@ -59,7 +59,7 @@ namespace LATL
          complex<real_t> *aj=A+j*ldA;
          complex<real_t> *ak;
          complex<real_t> t;
-         LATL::swap(i-1,ai,1,aj,1);
+         LATL::SWAP(i-1,ai,1,aj,1);
          t=ai[i];
          ai[i]=aj[j];
          aj[j]=t;
@@ -87,7 +87,7 @@ namespace LATL
          complex<real_t> *aj=A+j*ldA;
          complex<real_t> *ak;
          complex<real_t> t;
-         LATL::swap(i-1,A+i,ldA,A+j,ldA);
+         LATL::SWAP(i-1,A+i,ldA,A+j,ldA);
          t=ai[i];
          ai[i]=aj[j];
          aj[j]=t;

@@ -73,7 +73,7 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int tbmv(char uplo, char trans, char diag, int_t n, int_t k, real_t *A, int_t ldA, real_t *x, int_t incx)
+   int TBMV(char uplo, char trans, char diag, int_t n, int_t k, real_t *A, int_t ldA, real_t *x, int_t incx)
    {
       using std::min;
       using std::max;
@@ -309,7 +309,7 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int tbmv(char uplo, char trans, char diag, int_t n, int_t k, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx)
+   int TBMV(char uplo, char trans, char diag, int_t n, int_t k, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx)
    {
       using std::conj;
       using std::min;

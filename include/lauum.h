@@ -65,12 +65,12 @@ namespace LATL
          for(int_t i=0;i<n-1;i++)
          {
             real_t a=A[i];
-            A[i]=dot<real_t>(n-i,A+i,ldA,A+i,ldA);
-            gemv<real_t>('N',i,n-i-1,one,B,ldA,B+i,ldA,a,A,1);
+            A[i]=DOT<real_t>(n-i,A+i,ldA,A+i,ldA);
+            GEMV<real_t>('N',i,n-i-1,one,B,ldA,B+i,ldA,a,A,1);
             A+=ldA;
             B+=ldA;
          }
-         scal<real_t>(n,A[n-1],A,1);
+         SCAL<real_t>(n,A[n-1],A,1);
       }
       else
       {
@@ -78,11 +78,11 @@ namespace LATL
          for(int_t i=0;i<n-1;i++)
          {
             real_t a=A[i];
-            A[i]=dot<real_t>(n-i,A+i,1,A+i,1);
-            gemv<real_t>('T',n-i-1,i,one,B+i+1,ldA,A+i+1,1,a,B+i,ldA);
+            A[i]=DOT<real_t>(n-i,A+i,1,A+i,1);
+            GEMV<real_t>('T',n-i-1,i,one,B+i+1,ldA,A+i+1,1,a,B+i,ldA);
             A+=ldA;
          }
-         scal<real_t>(n,A[n-1],B+n-1,ldA);
+         SCAL<real_t>(n,A[n-1],B+n-1,ldA);
       }
       return 0;
    }
@@ -130,15 +130,15 @@ namespace LATL
          for(int_t i=0;i<n-1;i++)
          {
             real_t a=real(A[i]);
-            A[i]=a*a+real(dotc<real_t>(n-i-1,B+i,ldA,B+i,ldA));
-            lacgv<real_t>(n-i-1,B+i,ldA);
-            gemv<real_t>('N',i,n-i-1,one,B,ldA,B+i,ldA,a,A,1);
-            lacgv<real_t>(n-i-1,B+i,ldA);
+            A[i]=a*a+real(DOTC<real_t>(n-i-1,B+i,ldA,B+i,ldA));
+            LACGV<real_t>(n-i-1,B+i,ldA);
+            GEMV<real_t>('N',i,n-i-1,one,B,ldA,B+i,ldA,a,A,1);
+            LACGV<real_t>(n-i-1,B+i,ldA);
             A+=ldA;
             B+=ldA;
          }
          real_t a=real(A[n-1]);
-         scal<real_t>(n,a,A,1);
+         SCAL<real_t>(n,a,A,1);
          A[n-1]=a*a;
       }
       else
@@ -147,14 +147,14 @@ namespace LATL
          for(int_t i=0;i<n-1;i++)
          {
             real_t a=real(A[i]);
-            A[i]=a*a+real(dotc<real_t>(n-i-1,A+i+1,1,A+i+1,1));
-            lacgv<real_t>(i,B+i,ldA);
-            gemv<real_t>('C',n-i-1,i,one,B+i+1,ldA,A+i+1,1,a,B+i,ldA);
-            lacgv<real_t>(i,B+i,ldA);
+            A[i]=a*a+real(DOTC<real_t>(n-i-1,A+i+1,1,A+i+1,1));
+            LACGV<real_t>(i,B+i,ldA);
+            GEMV<real_t>('C',n-i-1,i,one,B+i+1,ldA,A+i+1,1,a,B+i,ldA);
+            LACGV<real_t>(i,B+i,ldA);
             A+=ldA;
          }
          real_t a=real(A[n-1]);
-         scal<real_t>(n,a,B+n-1,ldA);
+         SCAL<real_t>(n,a,B+n-1,ldA);
          A[n-1]=a*a;
       }
       return 0;
@@ -204,14 +204,14 @@ namespace LATL
             for(int_t i=0;i<n;i+=nb)
             {
                int_t ib=std::min(nb,n-i);
-               trmm<real_t>('R','U','T','N',i,ib,one,A+i,ldA,A,ldA);
+               TRMM<real_t>('R','U','T','N',i,ib,one,A+i,ldA,A,ldA);
                lauum<real_t>('U',ib,A+i,ldA);
                int_t j=i+ib;
                if(j<n)
                {
                   real_t *B=A+ib*ldA;
-                  gemm<real_t>('N','T',i,ib,n-j,one,B,ldA,B+i,ldA,one,A,ldA);
-                  syrk<real_t>('U','N',ib,n-j,one,B+i,ldA,one,A+i,ldA);
+                  GEMM<real_t>('N','T',i,ib,n-j,one,B,ldA,B+i,ldA,one,A,ldA);
+                  SYRK<real_t>('U','N',ib,n-j,one,B+i,ldA,one,A+i,ldA);
                }
                A+=ib*ldA;
             }
@@ -222,13 +222,13 @@ namespace LATL
             for(int_t i=0;i<n;i+=nb)
             {
                int_t ib=std::min(nb,n-i);
-               trmm<real_t>('L','L','T','N',ib,i,one,A+i,ldA,B+i,ldA);
+               TRMM<real_t>('L','L','T','N',ib,i,one,A+i,ldA,B+i,ldA);
                lauum<real_t>('L',ib,A+i,ldA);
                int_t j=i+ib;
                if(j<n)
                {
-                  gemm<real_t>('T','N',ib,i,n-j,one,A+j,ldA,B+j,ldA,one,B+i,ldA);
-                  syrk<real_t>('L','T',ib,n-j,one,A+j,ldA,one,A+i,ldA);
+                  GEMM<real_t>('T','N',ib,i,n-j,one,A+j,ldA,B+j,ldA,one,B+i,ldA);
+                  SYRK<real_t>('L','T',ib,n-j,one,A+j,ldA,one,A+i,ldA);
                }
                A+=ib*ldA;
             }
@@ -284,14 +284,14 @@ namespace LATL
             for(int_t i=0;i<n;i+=nb)
             {
                int_t ib=std::min(nb,n-i);
-               trmm<real_t>('R','U','C','N',i,ib,one,A+i,ldA,A,ldA);
+               TRMM<real_t>('R','U','C','N',i,ib,one,A+i,ldA,A,ldA);
                lauum<real_t>('U',ib,A+i,ldA);
                int_t j=i+ib;
                if(j<n)
                {
                   complex<real_t> *B=A+ib*ldA;
-                  gemm<real_t>('N','C',i,ib,n-j,one,B,ldA,B+i,ldA,one,A,ldA);
-                  herk<real_t>('U','N',ib,n-j,real(one),B+i,ldA,real(one),A+i,ldA);
+                  GEMM<real_t>('N','C',i,ib,n-j,one,B,ldA,B+i,ldA,one,A,ldA);
+                  HERK<real_t>('U','N',ib,n-j,real(one),B+i,ldA,real(one),A+i,ldA);
                }
                A+=ib*ldA;
             }
@@ -302,13 +302,13 @@ namespace LATL
             for(int_t i=0;i<n;i+=nb)
             {
                int_t ib=std::min(nb,n-i);
-               trmm<real_t>('L','L','C','N',ib,i,one,A+i,ldA,B+i,ldA);
+               TRMM<real_t>('L','L','C','N',ib,i,one,A+i,ldA,B+i,ldA);
                lauum<real_t>('L',ib,A+i,ldA);
                int_t j=i+ib;
                if(j<n)
                {
-                  gemm<real_t>('C','N',ib,i,n-j,one,A+j,ldA,B+j,ldA,one,B+i,ldA);
-                  herk<real_t>('L','C',ib,n-j,real(one),A+j,ldA,real(one),A+i,ldA);
+                  GEMM<real_t>('C','N',ib,i,n-j,one,A+j,ldA,B+j,ldA,one,B+i,ldA);
+                  HERK<real_t>('L','C',ib,n-j,real(one),A+j,ldA,real(one),A+i,ldA);
                }
                A+=ib*ldA;
             }

@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "trmm.h"
 
-using LATL::trmm;
+using LATL::TRMM;
 
 int ctrmm_(char& side, char& uplo, char& trans, char& diag, int &m, int &n, complex<float> &alpha, complex<float> *A, int &ldA, complex<float> *B, int &ldB)
 {
-   int info=-trmm<float>(side,uplo,trans,diag,m,n,alpha,A,ldA,B,ldB);
+   int info=-TRMM<float>(side,uplo,trans,diag,m,n,alpha,A,ldA,B,ldB);
    if(info!=0)
       xerbla_("CTRMM ",info);
    return 0;

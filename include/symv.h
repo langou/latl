@@ -43,7 +43,7 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int symv(char uplo, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
+   int SYMV(char uplo, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
    {
       using std::toupper;
 
@@ -223,9 +223,9 @@ namespace LATL
    /// @ingroup MATV
 
    template <typename real_t>
-   int symv(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)
+   int SYMV(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)
    {
-      return symv<complex<real_t> >(uplo,n,alpha,A,ldA,x,incx,beta,y,incy);
+      return SYMV<complex<real_t> >(uplo,n,alpha,A,ldA,x,incx,beta,y,incy);
    }
    
 }

@@ -27,7 +27,7 @@ namespace LATL
    /// @brief Computes the inverse of a symmetric indefinite matrix.
    ///
    /// A using the factorization A = U D U' or A = L D L' computed by
-   /// LATL::sytrf, the inverse of the symmetric indefinite matrix is returned in
+   /// LATL::SYTRF, the inverse of the symmetric indefinite matrix is returned in
    /// either the upper, U, or lower, L, part of the matrix A.
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
@@ -39,18 +39,18 @@ namespace LATL
    /// @param n The order of the triangular factor U or L.  n >= 0.
    /// @param A Real triangular matrix of order n.
    /// On entry, the block diagonal matrix D and the multipliers used to obtain
-   /// the factor U or L as computed by LATL::sytrf.  On exit, if upper 
+   /// the factor U or L as computed by LATL::SYTRF.  On exit, if upper 
    /// trianglar, A is overwritten with the upper triangle of the inverse of A;
    /// if lower trianglar, A is overwritten with the lower triangle of the
    /// inverse of A.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
-   /// interchanges and the block structure of D as determined by LATL::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::SYTRF.
    /// @param work Workspace vector of length n (optional).  If not used, workspace will be allocated
    /// and deallocated internally.
 
    template <typename real_t>
-   int_t sytri(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv, real_t *work=NULL)
+   int_t SYTRI(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv, real_t *work=NULL)
    {
       using std::abs;
       using std::toupper;
@@ -97,9 +97,9 @@ namespace LATL
 
                if(k>1)
                {
-                  copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
-                  symv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dot( k-1, work, 1, A+(k-1)*ldA, 1);
+                  COPY<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOT( k-1, work, 1, A+(k-1)*ldA, 1);
                }
                kstep = 1;
             }
@@ -116,13 +116,13 @@ namespace LATL
 
                if(k>1)
                {
-                  copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
-                  symv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dot( k-1, work, 1, A+(k-1)*ldA, 1);
-                  A[(k-1)+k*ldA] -= dot( k-1, A+(k-1)*ldA, 1, A+k*ldA, 1);
-                  copy<real_t>( k-1, A+k*ldA, 1, work, 1);
-                  symv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+k*ldA, 1);
-                  A[k+k*ldA] -= dot( k-1, work, 1, A+k*ldA, 1);
+                  COPY<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOT( k-1, work, 1, A+(k-1)*ldA, 1);
+                  A[(k-1)+k*ldA] -= DOT( k-1, A+(k-1)*ldA, 1, A+k*ldA, 1);
+                  COPY<real_t>( k-1, A+k*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+k*ldA, 1);
+                  A[k+k*ldA] -= DOT( k-1, work, 1, A+k*ldA, 1);
                }
                kstep = 2;
             }
@@ -130,8 +130,8 @@ namespace LATL
             int_t kp = ipiv[k-1];
             if(kp != k-1)
             {
-               swap<real_t>( kp, A+(k-1)*ldA, 1, A+kp*ldA, 1);
-               swap<real_t>( k-kp-2, A+(kp+1)+(k-1)*ldA, 1, A+kp+(kp+1)*ldA, ldA);
+               SWAP<real_t>( kp, A+(k-1)*ldA, 1, A+kp*ldA, 1);
+               SWAP<real_t>( k-kp-2, A+(kp+1)+(k-1)*ldA, 1, A+kp+(kp+1)*ldA, ldA);
                temp = A[(k-1)+(k-1)*ldA];
                A[(k-1)+(k-1)*ldA] = A[kp+kp*ldA];
                A[kp+kp*ldA] = temp;
@@ -156,9 +156,9 @@ namespace LATL
 
                if(k<n)
                {
-                  copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
-                  symv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dot( n-k, work, 1, A+k+(k-1)*ldA, 1);
+                  COPY<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOT( n-k, work, 1, A+k+(k-1)*ldA, 1);
                }
                kstep = 1;
             }
@@ -175,13 +175,13 @@ namespace LATL
 
                if(k<n)
                {
-                  copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
-                  symv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dot( n-k, work, 1, A+k+(k-1)*ldA, 1);
-                  A[(k-1)+(k-2)*ldA] -= dot( n-k, A+k+(k-1)*ldA, 1, A+k+(k-2)*ldA, 1);
-                  copy<real_t>( n-k, A+k+(k-2)*ldA, 1, work, 1);
-                  symv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-2)*ldA, 1);
-                  A[(k-2)+(k-2)*ldA] -= dot( n-k, work, 1, A+k+(k-2)*ldA, 1);
+                  COPY<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOT( n-k, work, 1, A+k+(k-1)*ldA, 1);
+                  A[(k-1)+(k-2)*ldA] -= DOT( n-k, A+k+(k-1)*ldA, 1, A+k+(k-2)*ldA, 1);
+                  COPY<real_t>( n-k, A+k+(k-2)*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-2)*ldA, 1);
+                  A[(k-2)+(k-2)*ldA] -= DOT( n-k, work, 1, A+k+(k-2)*ldA, 1);
                }
                kstep = 2;
             }
@@ -190,8 +190,8 @@ namespace LATL
             if(kp != k-1)
             {
                if(kp<n-1)
-                  swap<real_t>( n-kp-1, A+kp+1+(k-1)*ldA,1,A+kp+1+kp*ldA,1);
-               swap<real_t>( kp-k,A+k+(k-1)*ldA,1,A+kp+k*ldA,ldA);
+                  SWAP<real_t>( n-kp-1, A+kp+1+(k-1)*ldA,1,A+kp+1+kp*ldA,1);
+               SWAP<real_t>( kp-k,A+k+(k-1)*ldA,1,A+kp+k*ldA,ldA);
                temp = A[(k-1)+(k-1)*ldA];
                A[(k-1)+(k-1)*ldA] = A[kp+kp*ldA];
                A[kp+kp*ldA] = temp;
@@ -214,7 +214,7 @@ namespace LATL
    /// @brief Computes the inverse of a symmetric indefinite matrix.
    ///
    /// A using the factorization A = U D U.' or A = L D L.' computed by
-   /// LATL::sytrf, the inverse of the symmetric indefinite matrix is returned in
+   /// LATL::SYTRF, the inverse of the symmetric indefinite matrix is returned in
    /// either the upper, U, or lower, L, part of the matrix A.
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
@@ -226,18 +226,18 @@ namespace LATL
    /// @param n The order of the triangular factor U or L.  n >= 0.
    /// @param A Complex triangular matrix of order n.
    /// On entry, the block diagonal matrix D and the multipliers used to obtain
-   /// the factor U or L as computed by LATL::sytrf.  On exit, if upper 
+   /// the factor U or L as computed by LATL::SYTRF.  On exit, if upper 
    /// trianglar, A is overwritten with the upper triangle of the inverse of A;
    /// if lower trianglar, A is overwritten with the lower triangle of the
    /// inverse of A.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
-   /// interchanges and the block structure of D as determined by LATL::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::SYTRF.
    /// @param work Workspace vector of length n (optional).  If not used, workspace will be allocated
    /// and deallocated internally.
 
    template <typename real_t>
-   int_t sytri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv, complex<real_t> *work=NULL)
+   int_t SYTRI(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv, complex<real_t> *work=NULL)
    {
       using std::toupper;
       uplo=toupper(uplo);
@@ -283,9 +283,9 @@ namespace LATL
 
                if(k>1)
                {
-                  copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
-                  symv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dot( k-1, work, 1, A+(k-1)*ldA, 1);
+                  COPY<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOT( k-1, work, 1, A+(k-1)*ldA, 1);
                }
                kstep = 1;
             }
@@ -302,13 +302,13 @@ namespace LATL
 
                if(k>1)
                {
-                  copy<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
-                  symv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dot( k-1, work, 1, A+(k-1)*ldA, 1);
-                  A[(k-1)+k*ldA] -= dot( k-1, A+(k-1)*ldA, 1, A+k*ldA, 1);
-                  copy<real_t>( k-1, A+k*ldA, 1, work, 1);
-                  symv<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+k*ldA, 1);
-                  A[k+k*ldA] -= dot( k-1, work, 1, A+k*ldA, 1);
+                  COPY<real_t>( k-1, A+(k-1)*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOT( k-1, work, 1, A+(k-1)*ldA, 1);
+                  A[(k-1)+k*ldA] -= DOT( k-1, A+(k-1)*ldA, 1, A+k*ldA, 1);
+                  COPY<real_t>( k-1, A+k*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, k-1, -one, A, ldA, work, 1, zero, A+k*ldA, 1);
+                  A[k+k*ldA] -= DOT( k-1, work, 1, A+k*ldA, 1);
                }
                kstep = 2;
             }
@@ -316,8 +316,8 @@ namespace LATL
             int_t kp = ipiv[k-1];
             if(kp != k-1)
             {
-               swap<real_t>( kp, A+(k-1)*ldA, 1, A+kp*ldA, 1);
-               swap<real_t>( k-kp-2, A+(kp+1)+(k-1)*ldA, 1, A+kp+(kp+1)*ldA, ldA);
+               SWAP<real_t>( kp, A+(k-1)*ldA, 1, A+kp*ldA, 1);
+               SWAP<real_t>( k-kp-2, A+(kp+1)+(k-1)*ldA, 1, A+kp+(kp+1)*ldA, ldA);
                temp = A[(k-1)+(k-1)*ldA];
                A[(k-1)+(k-1)*ldA] = A[kp+kp*ldA];
                A[kp+kp*ldA] = temp;
@@ -342,9 +342,9 @@ namespace LATL
 
                if(k<n)
                {
-                  copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
-                  symv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dot( n-k, work, 1, A+k+(k-1)*ldA, 1);
+                  COPY<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOT( n-k, work, 1, A+k+(k-1)*ldA, 1);
                }
                kstep = 1;
             }
@@ -361,13 +361,13 @@ namespace LATL
 
                if(k<n)
                {
-                  copy<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
-                  symv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
-                  A[(k-1)+(k-1)*ldA] -= dot( n-k, work, 1, A+k+(k-1)*ldA, 1);
-                  A[(k-1)+(k-2)*ldA] -= dot( n-k, A+k+(k-1)*ldA, 1, A+k+(k-2)*ldA, 1);
-                  copy<real_t>( n-k, A+k+(k-2)*ldA, 1, work, 1);
-                  symv<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-2)*ldA, 1);
-                  A[(k-2)+(k-2)*ldA] -= dot( n-k, work, 1, A+k+(k-2)*ldA, 1);
+                  COPY<real_t>( n-k, A+k+(k-1)*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-1)*ldA, 1);
+                  A[(k-1)+(k-1)*ldA] -= DOT( n-k, work, 1, A+k+(k-1)*ldA, 1);
+                  A[(k-1)+(k-2)*ldA] -= DOT( n-k, A+k+(k-1)*ldA, 1, A+k+(k-2)*ldA, 1);
+                  COPY<real_t>( n-k, A+k+(k-2)*ldA, 1, work, 1);
+                  SYMV<real_t>( uplo, n-k, -one, A+k+k*ldA, ldA, work, 1, zero, A+k+(k-2)*ldA, 1);
+                  A[(k-2)+(k-2)*ldA] -= DOT( n-k, work, 1, A+k+(k-2)*ldA, 1);
                }
                kstep = 2;
             }
@@ -376,8 +376,8 @@ namespace LATL
             if(kp != k-1)
             {
                if(kp<n-1)
-                  swap<real_t>( n-kp-1, A+kp+1+(k-1)*ldA,1,A+kp+1+kp*ldA,1);
-               swap<real_t>( kp-k,A+k+(k-1)*ldA,1,A+kp+k*ldA,ldA);
+                  SWAP<real_t>( n-kp-1, A+kp+1+(k-1)*ldA,1,A+kp+1+kp*ldA,1);
+               SWAP<real_t>( kp-k,A+k+(k-1)*ldA,1,A+kp+k*ldA,ldA);
                temp = A[(k-1)+(k-1)*ldA];
                A[(k-1)+(k-1)*ldA] = A[kp+kp*ldA];
                A[kp+kp*ldA] = temp;
@@ -401,7 +401,7 @@ namespace LATL
    /// @brief Computes the inverse of a real symmetric indefinite matrix.
    ///
    /// A using the factorization A = U D U' or A = L D L' computed by
-   /// LATL::sytrf, the inverse of the symmetric indefinite matrix is returned in
+   /// LATL::SYTRF, the inverse of the symmetric indefinite matrix is returned in
    /// either the upper, U, or lower, L, part of the matrix A.
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
@@ -413,21 +413,21 @@ namespace LATL
    /// @param n The order of the triangular factor U or L.  n >= 0.
    /// @param A Real triangular matrix of order n.
    /// On entry, the block diagonal matrix D and the multipliers used to obtain
-   /// the factor U or L as computed by LATL::sytrf.  On exit, if upper 
+   /// the factor U or L as computed by LATL::SYTRF.  On exit, if upper 
    /// trianglar, A is overwritten with the upper triangle of the inverse of A;
    /// if lower trianglar, A is overwritten with the lower triangle of the
    /// inverse of A.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
-   /// interchanges and the block structure of D as determined by LATL::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::SYTRF.
    /// @param bsdv is a boolean array with dimension n.  Details of the 
-   /// interchanges and the block structure of D as determined by LATL::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::SYTRF.
    /// @param nb Block size.
    /// @param work Workspace vector of length (n+nb+1)*(nb+3) (optional).
    /// If not used, workspace will be allocated and deallocated internally.
 
    template <typename real_t>
-   int_t sytri(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb, real_t *work=NULL )
+   int_t SYTRI(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb, real_t *work=NULL )
    {
       using std::abs;
       using std::toupper;
@@ -454,14 +454,14 @@ namespace LATL
          return 0;
       else if((nb<=1) || (nb>=n))
       {
-         sytri<real_t>( uplo, n, A, ldA, ipiv, bsdv );
+         SYTRI<real_t>( uplo, n, A, ldA, ipiv, bsdv );
          return 0;
       }
 
       bool allocate=(work==NULL)?1:0;
       if(allocate)
          work = new real_t[ldwork*(nb+3)];
-      syconv<real_t>( uplo, 'C', n, A, ldA, ipiv, bsdv, work );
+      SYCONV<real_t>( uplo, 'C', n, A, ldA, ipiv, bsdv, work );
 
       real_t *Aii;
       if(uplo == 'U')
@@ -490,7 +490,7 @@ namespace LATL
 
       if(uplo == 'U')
       {
-         trtri<real_t>( uplo, 'U', n, A, ldA, nb );
+         TRTRI<real_t>( uplo, 'U', n, A, ldA, nb );
 
          k = 0;
          while(k<n)
@@ -591,17 +591,17 @@ namespace LATL
                }
             }
 
-            trmm<real_t>( 'L', 'U', 'T', 'U', nnb, nnb, one, A+cut+cut*ldA, ldA, work+u11+1, n+nb+1 );
+            TRMM<real_t>( 'L', 'U', 'T', 'U', nnb, nnb, one, A+cut+cut*ldA, ldA, work+u11+1, n+nb+1 );
             for(i=0;i<nnb;i++)
                for(j=i;j<nnb;j++)
                   A[cut+i+(cut+j)*ldA] = work[u11+i+1+j*ldwork];
 
-            gemm<real_t>( 'T', 'N', nnb, nnb, cut, one, A+cut*ldA, ldA, work, n+nb+1, zero, work+u11+1, n+nb+1 );
+            GEMM<real_t>( 'T', 'N', nnb, nnb, cut, one, A+cut*ldA, ldA, work, n+nb+1, zero, work+u11+1, n+nb+1 );
             for(i=0;i<nnb;i++)
                for(j=i;j<nnb;j++)
                   A[cut+i+(cut+j)*ldA] = A[cut+i+(cut+j)*ldA] + work[u11+i+1+j*ldwork];
 
-            trmm<real_t>( 'L', 'U', 'T', 'U', cut, nnb, one, A, ldA, work, n+nb+1 );
+            TRMM<real_t>( 'L', 'U', 'T', 'U', cut, nnb, one, A, ldA, work, n+nb+1 );
 
             for(i=0;i<cut;i++)
                for(j=0;j<nnb;j++)
@@ -615,17 +615,17 @@ namespace LATL
             if(bsdv[i] == 0)
             {
                if(i<ip)
-                  syswapr( uplo, n, A, ldA, i, ip );
+                  SYSWAPR( uplo, n, A, ldA, i, ip );
                if(i>ip)
-                  syswapr( uplo, n, A, ldA, ip, i );
+                  SYSWAPR( uplo, n, A, ldA, ip, i );
             }
             else
             {
                i++;
                if((i-1) < ip)
-                  syswapr( uplo, n, A, ldA, i-1, ip );
+                  SYSWAPR( uplo, n, A, ldA, i-1, ip );
                if((i-1) > ip)
-                  syswapr( uplo, n, A, ldA, ip, i-1 );
+                  SYSWAPR( uplo, n, A, ldA, ip, i-1 );
             }
             i++;
          }
@@ -633,7 +633,7 @@ namespace LATL
       else
       {
 
-         trtri<real_t>( 'L', 'U', n, A, ldA, nb );
+         TRTRI<real_t>( 'L', 'U', n, A, ldA, nb );
 
          k = n-1;
          while(k>=0)
@@ -732,7 +732,7 @@ namespace LATL
                }
             }
 
-            trmm<real_t>( 'L', 'L', 'T', 'U', nnb, nnb, one, A+cut+cut*ldA, ldA, work+u11+1, n+nb+1 );
+            TRMM<real_t>( 'L', 'L', 'T', 'U', nnb, nnb, one, A+cut+cut*ldA, ldA, work+u11+1, n+nb+1 );
 
             for(i=0;i<nnb;i++)
                for(j=0;j<=i;j++)
@@ -740,13 +740,13 @@ namespace LATL
 
             if((cut+nnb) < n)
             {
-               gemm<real_t>( 'T', 'N', nnb, nnb, n-nnb-cut, one, A+cut+nnb+cut*ldA, ldA, work, n+nb+1, zero, work+u11+1, n+nb+1 );
+               GEMM<real_t>( 'T', 'N', nnb, nnb, n-nnb-cut, one, A+cut+nnb+cut*ldA, ldA, work, n+nb+1, zero, work+u11+1, n+nb+1 );
 
                for(i=0;i<nnb;i++)
                   for(j=0;j<=i;j++)
                      A[cut+i+(cut+j)*ldA] = A[cut+i+(cut+j)*ldA] + work[u11+i+1+j*ldwork];
 
-               trmm<real_t>( 'L', 'L', 'T', 'U', n-nnb-cut, nnb, one, A+cut+nnb+(cut+nnb)*ldA, ldA, work, n+nb+1 );
+               TRMM<real_t>( 'L', 'L', 'T', 'U', n-nnb-cut, nnb, one, A+cut+nnb+(cut+nnb)*ldA, ldA, work, n+nb+1 );
 
                for(i=0;i<n-cut-nnb;i++)
                   for(j=0;j<nnb;j++)
@@ -769,16 +769,16 @@ namespace LATL
             if(bsdv[i] == 0)
             {
                if(i<ip)
-                  syswapr( uplo, n, A, ldA, i, ip );
+                  SYSWAPR( uplo, n, A, ldA, i, ip );
                if(i>ip)
-                  syswapr( uplo, n, A, ldA, ip, i );
+                  SYSWAPR( uplo, n, A, ldA, ip, i );
             }
             else
             {
                if(i < ip)
-                  syswapr( uplo, n, A, ldA, i, ip );
+                  SYSWAPR( uplo, n, A, ldA, i, ip );
                if(i > ip)
-                  syswapr( uplo, n, A, ldA, ip, i );
+                  SYSWAPR( uplo, n, A, ldA, ip, i );
                i--;
             }
             i--;
@@ -793,7 +793,7 @@ namespace LATL
    /// @brief Computes the inverse of a complex symmetric indefinite matrix.
    ///
    /// A using the factorization A = U D U' or A = L D L' computed by
-   /// LATL::sytrf, the inverse of the symmetric indefinite matrix is returned in
+   /// LATL::SYTRF, the inverse of the symmetric indefinite matrix is returned in
    /// either the upper, U, or lower, L, part of the matrix A.
    /// @tparam real_t Floating point type.
    /// @return 0 if success.
@@ -805,21 +805,21 @@ namespace LATL
    /// @param n The order of the triangular factor U or L.  n >= 0.
    /// @param A Complex triangular matrix of order n.
    /// On entry, the block diagonal matrix D and the multipliers used to obtain
-   /// the factor U or L as computed by LATL::sytrf.  On exit, if upper 
+   /// the factor U or L as computed by LATL::SYTRF.  On exit, if upper 
    /// trianglar, A is overwritten with the upper triangle of the inverse of A;
    /// if lower trianglar, A is overwritten with the lower triangle of the
    /// inverse of A.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
-   /// interchanges and the block structure of D as determined by LATL::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::SYTRF.
    /// @param bsdv is a boolean array with dimension n.  Details of the 
-   /// interchanges and the block structure of D as determined by LATL::sytrf.
+   /// interchanges and the block structure of D as determined by LATL::SYTRF.
    /// @param nb Block size.
    /// @param work Workspace vector of length (n+nb+1)*(nb+3) (optional).
    /// If not used, workspace will be allocated and deallocated internally.
 
    template <typename real_t>
-   int_t sytri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb, complex<real_t> *work=NULL )
+   int_t SYTRI(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb, complex<real_t> *work=NULL )
    {
       using std::abs;
       using std::toupper;
@@ -846,14 +846,14 @@ namespace LATL
          return 0;
       else if((nb<=1) || (nb>=n))
       {
-         sytri<real_t>( uplo, n, A, ldA, ipiv, bsdv );
+         SYTRI<real_t>( uplo, n, A, ldA, ipiv, bsdv );
          return 0;
       }
 
       bool allocate=(work==NULL)?1:0;
       if(allocate)
          work = new complex<real_t>[ldwork*(nb+3)];
-      syconv<real_t>( uplo, 'C', n, A, ldA, ipiv, bsdv, work );
+      SYCONV<real_t>( uplo, 'C', n, A, ldA, ipiv, bsdv, work );
 
       complex<real_t> *Aii;
       if(uplo == 'U')
@@ -882,7 +882,7 @@ namespace LATL
 
       if(uplo == 'U')
       {
-         trtri<real_t>( uplo, 'U', n, A, ldA, nb );
+         TRTRI<real_t>( uplo, 'U', n, A, ldA, nb );
 
          k = 0;
          while(k<n)
@@ -983,17 +983,17 @@ namespace LATL
                }
             }
 
-            trmm<real_t>( 'L', 'U', 'T', 'U', nnb, nnb, one, A+cut+cut*ldA, ldA, work+u11+1, n+nb+1 );
+            TRMM<real_t>( 'L', 'U', 'T', 'U', nnb, nnb, one, A+cut+cut*ldA, ldA, work+u11+1, n+nb+1 );
             for(i=0;i<nnb;i++)
                for(j=i;j<nnb;j++)
                   A[cut+i+(cut+j)*ldA] = work[u11+i+1+j*ldwork];
 
-            gemm<real_t>( 'T', 'N', nnb, nnb, cut, one, A+cut*ldA, ldA, work, n+nb+1, zero, work+u11+1, n+nb+1 );
+            GEMM<real_t>( 'T', 'N', nnb, nnb, cut, one, A+cut*ldA, ldA, work, n+nb+1, zero, work+u11+1, n+nb+1 );
             for(i=0;i<nnb;i++)
                for(j=i;j<nnb;j++)
                   A[cut+i+(cut+j)*ldA] = A[cut+i+(cut+j)*ldA] + work[u11+i+1+j*ldwork];
 
-            trmm<real_t>( 'L', 'U', 'T', 'U', cut, nnb, one, A, ldA, work, n+nb+1 );
+            TRMM<real_t>( 'L', 'U', 'T', 'U', cut, nnb, one, A, ldA, work, n+nb+1 );
 
             for(i=0;i<cut;i++)
                for(j=0;j<nnb;j++)
@@ -1007,17 +1007,17 @@ namespace LATL
             if(bsdv[i] == 0)
             {
                if(i<ip)
-                  syswapr( uplo, n, A, ldA, i, ip );
+                  SYSWAPR( uplo, n, A, ldA, i, ip );
                if(i>ip)
-                  syswapr( uplo, n, A, ldA, ip, i );
+                  SYSWAPR( uplo, n, A, ldA, ip, i );
             }
             else
             {
                i++;
                if((i-1) < ip)
-                  syswapr( uplo, n, A, ldA, i-1, ip );
+                  SYSWAPR( uplo, n, A, ldA, i-1, ip );
                if((i-1) > ip)
-                  syswapr( uplo, n, A, ldA, ip, i-1 );
+                  SYSWAPR( uplo, n, A, ldA, ip, i-1 );
             }
             i++;
          }
@@ -1025,7 +1025,7 @@ namespace LATL
       else
       {
 
-         trtri<real_t>( 'L', 'U', n, A, ldA, nb );
+         TRTRI<real_t>( 'L', 'U', n, A, ldA, nb );
 
          k = n-1;
          while(k>=0)
@@ -1124,7 +1124,7 @@ namespace LATL
                }
             }
 
-            trmm<real_t>( 'L', 'L', 'T', 'U', nnb, nnb, one, A+cut+cut*ldA, ldA, work+u11+1, n+nb+1 );
+            TRMM<real_t>( 'L', 'L', 'T', 'U', nnb, nnb, one, A+cut+cut*ldA, ldA, work+u11+1, n+nb+1 );
 
             for(i=0;i<nnb;i++)
                for(j=0;j<=i;j++)
@@ -1132,13 +1132,13 @@ namespace LATL
 
             if((cut+nnb) < n)
             {
-               gemm<real_t>( 'T', 'N', nnb, nnb, n-nnb-cut, one, A+cut+nnb+cut*ldA, ldA, work, n+nb+1, zero, work+u11+1, n+nb+1 );
+               GEMM<real_t>( 'T', 'N', nnb, nnb, n-nnb-cut, one, A+cut+nnb+cut*ldA, ldA, work, n+nb+1, zero, work+u11+1, n+nb+1 );
 
                for(i=0;i<nnb;i++)
                   for(j=0;j<=i;j++)
                      A[cut+i+(cut+j)*ldA] = A[cut+i+(cut+j)*ldA] + work[u11+i+1+j*ldwork];
 
-               trmm<real_t>( 'L', 'L', 'T', 'U', n-nnb-cut, nnb, one, A+cut+nnb+(cut+nnb)*ldA, ldA, work, n+nb+1 );
+               TRMM<real_t>( 'L', 'L', 'T', 'U', n-nnb-cut, nnb, one, A+cut+nnb+(cut+nnb)*ldA, ldA, work, n+nb+1 );
 
                for(i=0;i<n-cut-nnb;i++)
                   for(j=0;j<nnb;j++)
@@ -1161,16 +1161,16 @@ namespace LATL
             if(bsdv[i] == 0)
             {
                if(i<ip)
-                  syswapr( uplo, n, A, ldA, i, ip );
+                  SYSWAPR( uplo, n, A, ldA, i, ip );
                if(i>ip)
-                  syswapr( uplo, n, A, ldA, ip, i );
+                  SYSWAPR( uplo, n, A, ldA, ip, i );
             }
             else
             {
                if(i < ip)
-                  syswapr( uplo, n, A, ldA, i, ip );
+                  SYSWAPR( uplo, n, A, ldA, i, ip );
                if(i > ip)
-                  syswapr( uplo, n, A, ldA, ip, i );
+                  SYSWAPR( uplo, n, A, ldA, ip, i );
                i--;
             }
             i--;

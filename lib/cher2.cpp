@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "her.h"
 
-using LATL::her;
+using LATL::HER;
 using std::complex;
 
 int cher2_(char& uplo, int &n, complex<float> &alpha, complex<float> *x, int& incx, complex<float> *y, int& incy,complex<float> *A, int &ldA)
 {
-   int info=-her<float>(uplo,n,alpha,x,incx,y,incy,A,ldA);
+   int info=-HER<float>(uplo,n,alpha,x,incx,y,incy,A,ldA);
    if(info>0)
       xerbla_("CHER2  ",info);
    return 0;

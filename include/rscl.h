@@ -30,8 +30,8 @@ namespace LATL
    void rscl(int_t n, real_t a, real_t *x, int_t incx)
    {
       using std::numeric_limits;
-      using LATL::labad;
-      using LATL::scal;
+      using LATL::LABAD;
+      using LATL::SCAL;
       const real_t one(1.0);
       const real_t zero(0.0);
       real_t a_inv;
@@ -40,7 +40,7 @@ namespace LATL
       {
          real_t small_num=numeric_limits<real_t>::min();
          real_t big_num=one/small_num;
-         labad<real_t>(small_num,big_num);
+         LABAD<real_t>(small_num,big_num);
          real_t den=a;
          real_t num=one;
          bool done=0;
@@ -65,7 +65,7 @@ namespace LATL
                a_inv=num/den;
                done=1;
             }
-            scal(n,a_inv,x,incx);
+            SCAL(n,a_inv,x,incx);
          }
       }
    }
@@ -82,8 +82,8 @@ namespace LATL
    void rscl(int_t n, real_t a, complex<real_t> *x, int_t incx)
    {
       using std::numeric_limits;
-      using LATL::labad;
-      using LATL::scal;
+      using LATL::LABAD;
+      using LATL::SCAL;
       const real_t one(1.0);
       const real_t zero(0.0);
       real_t a_inv;
@@ -92,7 +92,7 @@ namespace LATL
       {
          real_t small_num=numeric_limits<real_t>::min();
          real_t big_num=one/small_num;
-         labad<real_t>(small_num,big_num);
+         LABAD<real_t>(small_num,big_num);
          real_t den=a;
          real_t num=one;
          bool done=0;
@@ -117,7 +117,7 @@ namespace LATL
                a_inv=num/den;
                done=1;
             }
-            scal(n,a_inv,x,incx);
+            SCAL(n,a_inv,x,incx);
          }
       }
    }

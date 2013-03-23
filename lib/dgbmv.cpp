@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "gbmv.h"
 
-using LATL::gbmv;
+using LATL::GBMV;
 
 int dgbmv_(char& trans, int &m, int &n, int& kL, int& kU, double &alpha, double *A, int &ldA, double *x, int& incx, double &beta, double *y, int& incy)
 {
-   int info=-gbmv<double>(trans,m,n,kL,kU,alpha,A,ldA,x,incx,beta,y,incy);
+   int info=-GBMV<double>(trans,m,n,kL,kU,alpha,A,ldA,x,incx,beta,y,incy);
    if(info>0)
       xerbla_("DGBMV ",info);
    return 0;

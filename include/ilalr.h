@@ -26,7 +26,7 @@ namespace LATL
    /// @ingroup MAT
 
    template<typename real_t>
-   int_t ilalr(int_t m, int_t n, real_t *A, int_t ldA)
+   int_t ILALR(int_t m, int_t n, real_t *A, int_t ldA)
    {
       using std::max;
       const real_t zero(0.0);
@@ -55,7 +55,7 @@ namespace LATL
    /// @ingroup MAT
 
    template<typename real_t>
-   int_t ilalr(int_t m, int_t n, complex<real_t> *A, int_t ldA)
+   int_t ILALR(int_t m, int_t n, complex<real_t> *A, int_t ldA)
    {
       using std::max;
       const complex<real_t> zero(0.0,0.0);

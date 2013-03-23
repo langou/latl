@@ -8,12 +8,12 @@
 #include "blas.h"
 #include "syrk.h"
 
-using LATL::syrk;
+using LATL::SYRK;
 using std::complex;
 
 int csyr2k_(char& uplo, char& trans, int &n, int& k, complex<float> &alpha, complex<float> *A, int &ldA, complex<float> *B, int &ldB, complex<float> &beta, complex<float> *C, int &ldC)
 {
-   int info=-syrk<float>(uplo,trans,n,k,alpha,A,ldA,B,ldB,beta,C,ldC);
+   int info=-SYRK<float>(uplo,trans,n,k,alpha,A,ldA,B,ldB,beta,C,ldC);
    if(info>0)
       xerbla_("CSYR2K ",info);
    return 0;

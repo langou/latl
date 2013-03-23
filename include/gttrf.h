@@ -35,7 +35,7 @@ namespace LATL
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t gttrf(const int_t n, real_t * const DL, real_t * const D, real_t * const DU, real_t * const DU2, int_t * const IPIV)
+   int_t GTTRF(const int_t n, real_t * const DL, real_t * const D, real_t * const DU, real_t * const DU2, int_t * const IPIV)
    {
       if (n < 0)
          return -1;
@@ -123,7 +123,7 @@ namespace LATL
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t gttrf(const int_t n, complex<real_t> * const DL, complex<real_t> * const D, complex<real_t> * const DU, complex<real_t> * const DU2, int_t * const IPIV)
+   int_t GTTRF(const int_t n, complex<real_t> * const DL, complex<real_t> * const D, complex<real_t> * const DU, complex<real_t> * const DU2, int_t * const IPIV)
    {
       if (n < 0)
          return -1;

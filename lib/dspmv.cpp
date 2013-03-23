@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "spmv.h"
 
-using LATL::spmv;
+using LATL::SPMV;
 
 int dspmv_(char& uplo, int &n, double &alpha, double *A, double *x, int& incx, double &beta, double *y, int& incy)
 {
-   int info=-spmv<double>(uplo,n,alpha,A,x,incx,beta,y,incy);
+   int info=-SPMV<double>(uplo,n,alpha,A,x,incx,beta,y,incy);
    if(info>0)
       xerbla_("DSPMV ",info);
    return 0;

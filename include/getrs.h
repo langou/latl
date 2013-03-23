@@ -37,7 +37,7 @@ namespace LATL
    /// @ingroup SOLV
    
    template<typename real_t>
-   int getrs( const char trans, const int_t n, const int_t colB, real_t * const A, const int_t ldA, int_t * const IPIV, real_t * const B, const int_t ldB)
+   int GETRS( const char trans, const int_t n, const int_t colB, real_t * const A, const int_t ldA, int_t * const IPIV, real_t * const B, const int_t ldB)
    {
       bool notrans = ((trans == 'N') || (trans == 'n'));
       if ( !notrans && (trans != 'T') && (trans != 't') && (trans != 'C') && (trans != 'c'))
@@ -59,13 +59,13 @@ namespace LATL
       if (notrans)
       {
          LATL::laswp(colB, B, ldB, 0, n-1, IPIV);
-         LATL::trsm('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
-         LATL::trsm('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
       }
       else
       {
-         LATL::trsm('L', 'U', 'T', 'N', n, colB, one, A, ldA, B, ldB);
-         LATL::trsm('L', 'L', 'T', 'U', n, colB, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'U', 'T', 'N', n, colB, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'L', 'T', 'U', n, colB, one, A, ldA, B, ldB);
          LATL::laswp(colB, B, ldB, 0, n-1, IPIV, -1);
       }
       return 0;
@@ -90,7 +90,7 @@ namespace LATL
    /// @ingroup SOLV
 
    template < typename real_t>
-   int getrs( const char trans, const int_t n, const int_t colB, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, complex<real_t> * const B, const int_t ldB)
+   int GETRS( const char trans, const int_t n, const int_t colB, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, complex<real_t> * const B, const int_t ldB)
    {
       bool notrans = ((trans == 'N') || (trans == 'n'));
       if ( !notrans && (trans != 'T') && (trans != 't') && (trans != 'C') && (trans!= 'c'))
@@ -112,13 +112,13 @@ namespace LATL
       if (notrans)
       {
          LATL::laswp(colB, B, ldB, 0, n-1, IPIV);
-         LATL::trsm('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
-         LATL::trsm('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
       }
       else
       {
-         LATL::trsm('L', 'U', trans, 'N', n, colB, one, A, ldA, B, ldB);
-         LATL::trsm('L', 'L', trans, 'U', n, colB, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'U', trans, 'N', n, colB, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'L', trans, 'U', n, colB, one, A, ldA, B, ldB);
          LATL::laswp(colB, B, ldB, 0, n-1, IPIV, -1);
       }
       return 0;

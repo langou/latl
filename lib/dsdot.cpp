@@ -9,9 +9,9 @@
 #include "blas.h"
 #include "dot.h"
 
-using LATL::dotx;
+using LATL::DOTX;
 
 double dsdot_(int &n, float *x, int& incx, float *y, int& incy)
 {
-   return dotx<float,double>(n,x,incx,y,incy);
+   return DOTX<float,double>(n,x,incx,y,incy);
 }

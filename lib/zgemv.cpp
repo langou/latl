@@ -9,12 +9,12 @@
 #include "blas.h"
 #include "gemv.h"
 
-using LATL::gemv;
+using LATL::GEMV;
 using std::complex;
 
 int zgemv_(char& trans, int &m, int &n, complex<double> &alpha, complex<double> *A, int &ldA, complex<double> *x, int& incx, complex<double> &beta, complex<double> *y, int& incy)
 {
-   int info=-gemv<double>(trans,m,n,alpha,A,ldA,x,incx,beta,y,incy);
+   int info=-GEMV<double>(trans,m,n,alpha,A,ldA,x,incx,beta,y,incy);
    if(info>0)
       xerbla_("ZGEMV ",info);
    return 0;

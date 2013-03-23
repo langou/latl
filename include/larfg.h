@@ -51,7 +51,7 @@ namespace LATL
    /// @ingroup HOUS
 
    template<typename real_t>
-   void larfg(int_t n, real_t &alpha, real_t *x, int_t incx, real_t &tau)
+   void LARFG(int_t n, real_t &alpha, real_t *x, int_t incx, real_t &tau)
    {
       using std::abs;
       using std::numeric_limits;
@@ -75,7 +75,7 @@ namespace LATL
                while(abs(beta)<safemin)
                {
                   knt++;
-                  scal<real_t>(n-1,rsafemin,x,incx);
+                  SCAL<real_t>(n-1,rsafemin,x,incx);
                   beta*=rsafemin;
                   alpha*=rsafemin;
                }
@@ -84,7 +84,7 @@ namespace LATL
                beta=(alpha<zero)?temp:-temp;
             }
             tau=(beta-alpha)/beta;
-            scal<real_t>(n-1,one/(alpha-beta),x,incx);
+            SCAL<real_t>(n-1,one/(alpha-beta),x,incx);
             for(int_t j=0;j<knt;j++)
                beta*=safemin;
             alpha=beta;
@@ -122,7 +122,7 @@ namespace LATL
    /// @ingroup HOUS
    
    template<typename real_t>
-   void larfg(int_t n, complex<real_t> &alpha, complex<real_t> *x, int_t incx, complex<real_t> &tau)
+   void LARFG(int_t n, complex<real_t> &alpha, complex<real_t> *x, int_t incx, complex<real_t> &tau)
    {
       using std::real;
       using std::imag;
@@ -149,7 +149,7 @@ namespace LATL
                while(abs(beta)<safemin)
                {
                   knt++;
-                  scal<real_t>(n-1,rsafemin,x,incx);
+                  SCAL<real_t>(n-1,rsafemin,x,incx);
                   beta*=rsafemin;
                   alpha*=rsafemin;
                }
@@ -158,8 +158,8 @@ namespace LATL
                beta=(real(alpha)<zero)?temp:-temp;
             }
             tau=complex<real_t>((beta-real(alpha))/beta,-imag(alpha)/beta);
-            alpha=ladiv<real_t>(complex<real_t>(one,zero),alpha-beta);
-            scal<real_t>(n-1,alpha,x,incx);
+            alpha=LADIV<real_t>(complex<real_t>(one,zero),alpha-beta);
+            SCAL<real_t>(n-1,alpha,x,incx);
             for(int_t j=0;j<knt;j++)
                beta*=safemin;
             alpha=beta;

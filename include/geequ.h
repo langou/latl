@@ -39,7 +39,7 @@ namespace LATL
    /// @ingroup COND
    
    template< typename real_t>
-   int geequ(const int_t m, const int_t n, real_t * const A, const int_t ldA, real_t * const R, real_t * const C, real_t &rowcnd, real_t &colcnd, real_t &amax)
+   int GEEEQU(const int_t m, const int_t n, real_t * const A, const int_t ldA, real_t * const R, real_t * const C, real_t &rowcnd, real_t &colcnd, real_t &amax)
    {
       using std::numeric_limits;
       
@@ -179,7 +179,7 @@ namespace LATL
    /// @ingroup COND
 
    template< typename real_t>
-   int geequ(const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, real_t * const R, real_t * const C, real_t &rowcnd, real_t &colcnd, real_t &amax)
+   int GEEEQU(const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, real_t * const R, real_t * const C, real_t &rowcnd, real_t &colcnd, real_t &amax)
    {
       using std::numeric_limits;
 

@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "tbmv.h"
 
-using LATL::tbmv;
+using LATL::TBMV;
 
 int dtbmv_(char& uplo, char& trans, char& diag, int &n, int& k, double *A, int &ldA, double *x, int& incx)
 {
-   int info=-tbmv<double>(uplo,trans,diag,n,k,A,ldA,x,incx);
+   int info=-TBMV<double>(uplo,trans,diag,n,k,A,ldA,x,incx);
    if(info>0)
       xerbla_("DTBMV ",info);
    return 0;

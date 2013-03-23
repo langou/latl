@@ -41,7 +41,7 @@ namespace LATL
    /// @param IPIV Integer array deminsion min(m, n).  The pivot indices, 0 <= i <= min(m, n), row i was interchanged with row IPIV(i).
 
    template< typename real_t>
-   int_t gbtrf(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const IPIV)
+   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const IPIV)
    {
       if (m < 0)
          return -1;
@@ -84,20 +84,20 @@ namespace LATL
 
          ABj = AB+ldAB*j;
          km = std::min(kL, m-j-1);
-         jp = LATL::imax(km+1, ABj+kV, 1);
+         jp = LATL::IMAX(km+1, ABj+kV, 1);
          IPIV[j] = jp+j;
          if (ABj[kV+jp] != zero)
          {
             jU = std::max(jU, std::min(j+kU+jp, n-1));
             if (jp != 0)
             {
-               LATL::swap(jU-j+1, ABj+kV+jp, ldAB-1, ABj+kV, ldAB-1);
+               LATL::SWAP(jU-j+1, ABj+kV+jp, ldAB-1, ABj+kV, ldAB-1);
             }
             if (km > 0)
             {
-               LATL::scal(km, one/ABj[kV], ABj+kV+1, 1);
+               LATL::SCAL(km, one/ABj[kV], ABj+kV+1, 1);
                if (jU > j)
-                  LATL::ger(km, jU-j, -one, ABj+kV+1, 1, ABj+ldAB+kV-1, ldAB-1, ABj+ldAB+kV, ldAB-1);
+                  LATL::GER(km, jU-j, -one, ABj+kV+1, 1, ABj+ldAB+kV-1, ldAB-1, ABj+ldAB+kV, ldAB-1);
             }
          }
          else
@@ -127,9 +127,9 @@ namespace LATL
    /// @param IPIV Integer array deminsion min(m, n).  The pivot indices, 0 <= i <= min(m, n), row i was interchanged with row IPIV(i).
 
    template< typename real_t>
-   int_t gbtrf(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const IPIV)
+   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const IPIV)
    {
-      return LATL::gbtrf< complex<real_t> > (m, n, kL, kU, AB, ldAB, IPIV);
+      return LATL::GBTRF< complex<real_t> > (m, n, kL, kU, AB, ldAB, IPIV);
    }
 
    /// @brief Computes an LU factorization of a real m-by-n band matrix A using partial pivoting with row interchanges.
@@ -149,7 +149,7 @@ namespace LATL
    /// @param nb Block size.
 
    template< typename real_t>
-   int_t gbtrf(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const IPIV, const int_t nb)
+   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const IPIV, const int_t nb)
    {
       if (m < 0)
          return -1;
@@ -167,7 +167,7 @@ namespace LATL
       
       int_t info = 0;
       if (nb > kL || nb <= 1)
-         info = LATL::gbtrf(m, n, kL, kU, AB, ldAB, IPIV);
+         info = LATL::GBTRF(m, n, kL, kU, AB, ldAB, IPIV);
       else
       {
          const real_t zero(0.0);
@@ -226,7 +226,7 @@ namespace LATL
                
                ABjj = AB+ldAB*jj;
                km = std::min(kL, m-jj-1);
-               jp = LATL::imax(km+1, ABjj+kV, 1);
+               jp = LATL::IMAX(km+1, ABjj+kV, 1);
                IPIV[jj] = jp+jj-j;
                if (ABjj[kV+jp] != zero)
                {
@@ -235,20 +235,20 @@ namespace LATL
                   {
                      if ((jp+jj) < (j+kL))
                      {
-                        LATL::swap(jb, ABj+kV+jj-j, ldAB-1, ABj+kV+jp+jj-j, ldAB-1);
+                        LATL::SWAP(jb, ABj+kV+jj-j, ldAB-1, ABj+kV+jp+jj-j, ldAB-1);
                      }
                      else
                      {
-                        LATL::swap(jj-j, ABj+kV+jj-j, ldAB-1, Work31+jp+jj-j-kL, ldWork);
-                        LATL::swap(j+jb-jj, ABjj+kV, ldAB-1, ABjj+kV+jp, ldAB-1);
+                        LATL::SWAP(jj-j, ABj+kV+jj-j, ldAB-1, Work31+jp+jj-j-kL, ldWork);
+                        LATL::SWAP(j+jb-jj, ABjj+kV, ldAB-1, ABjj+kV+jp, ldAB-1);
                      }
                   }
-                  LATL::scal(km, one/ABjj[kV], ABjj+kV+1, 1);
+                  LATL::SCAL(km, one/ABjj[kV], ABjj+kV+1, 1);
                   
                   jm = std::min(jU, j+jb-1);
                   if (jm > jj)
                   {
-                     LATL::ger(km, jm-jj, -one, ABjj+kV+1, 1, ABjj+ldAB+kV-1, ldAB-1, ABjj+ldAB+kV, ldAB-1);
+                     LATL::GER(km, jm-jj, -one, ABjj+kV+1, 1, ABjj+ldAB+kV-1, ldAB-1, ABjj+ldAB+kV, ldAB-1);
                   }
                }
                else
@@ -259,7 +259,7 @@ namespace LATL
                nw = std::min(jj-j+1, i3);
                if (nw > 0)
                {
-                  LATL::copy(nw, ABjj+kV+kL-jj+j, 1, Work31+ldWork*(jj-j), 1);
+                  LATL::COPY(nw, ABjj+kV+kL-jj+j, 1, Work31+ldWork*(jj-j), 1);
                }
             }
             
@@ -300,11 +300,11 @@ namespace LATL
                if (j2 > 0)
                {
                   real_t * ABjjb = ABj + ldAB*jb;
-                  LATL::trsm('L', 'L', 'N', 'U', jb, j2, one, ABj+kV, ldAB-1, ABjjb+kV-jb, ldAB-1);
+                  LATL::TRSM('L', 'L', 'N', 'U', jb, j2, one, ABj+kV, ldAB-1, ABjjb+kV-jb, ldAB-1);
                   if (i2 > 0)
-                     LATL::gemm('N', 'N', i2, j2, jb, -one, ABj+kV+jb, ldAB-1, ABjjb+kV-jb, ldAB-1, one, ABjjb+kV, ldAB-1);
+                     LATL::GEMM('N', 'N', i2, j2, jb, -one, ABj+kV+jb, ldAB-1, ABjjb+kV-jb, ldAB-1, one, ABjjb+kV, ldAB-1);
                   if (i3 > 0)
-                     LATL::gemm('N', 'N', i3, j2, jb, -one, Work31, ldWork, ABjjb+kV-jb, ldAB-1, one, ABjjb+kV+kL-jb, ldAB-1);
+                     LATL::GEMM('N', 'N', i3, j2, jb, -one, Work31, ldWork, ABjjb+kV-jb, ldAB-1, one, ABjjb+kV+kL-jb, ldAB-1);
                }
                
                std::cout << "j3: " << j3 << std::endl;
@@ -323,15 +323,15 @@ namespace LATL
                   }
                   
                   ABjkv = ABj+ldAB*kV;
-                  LATL::trsm('L', 'L', 'N', 'U', jb, j3, one, ABj+kV, ldAB-1, Work13, ldWork);
+                  LATL::TRSM('L', 'L', 'N', 'U', jb, j3, one, ABj+kV, ldAB-1, Work13, ldWork);
                   
                   if (i2 > 0)
                   {
-                     LATL::gemm('N', 'N', i2, j3, jb, -one, ABj+kV+jb, ldAB-1, Work13, ldWork, one, ABjkv+jb+1, ldAB-1);
+                     LATL::GEMM('N', 'N', i2, j3, jb, -one, ABj+kV+jb, ldAB-1, Work13, ldWork, one, ABjkv+jb+1, ldAB-1);
                   }
                   if (i3 > 0)
                   {
-                  latl:gemm('N', 'N', i3, j3, jb, -one, Work31, ldWork, Work13, ldWork, one, ABjkv+kL, ldAB-1);
+                  latl:GEMM('N', 'N', i3, j3, jb, -one, Work31, ldWork, Work13, ldWork, one, ABjkv+kL, ldAB-1);
                   }
                   
                   temp13 = Work13;
@@ -361,17 +361,17 @@ namespace LATL
                {
                   if (jp+jj < j+kL)
                   {
-                     LATL::swap(jj-j, ABj+kV+jj-j, ldAB-1, ABj+kV+jp+jj-j, ldAB-1);
+                     LATL::SWAP(jj-j, ABj+kV+jj-j, ldAB-1, ABj+kV+jp+jj-j, ldAB-1);
                   }
                   else
                   {
-                     LATL::swap(jj-j, ABj+kV+jj-j, ldAB-1, Work31+jp+jj-j-kL, ldWork);
+                     LATL::SWAP(jj-j, ABj+kV+jj-j, ldAB-1, Work31+jp+jj-j-kL, ldWork);
                   }
                }
                nw = std::min(i3, jj-j+1);
                if (nw > 0)
                {
-                  LATL::copy(nw, Work31+(jj-j)*ldWork, 1, AB+ldAB*jj+kV+kL-jj+j, 1);
+                  LATL::COPY(nw, Work31+(jj-j)*ldWork, 1, AB+ldAB*jj+kV+kL-jj+j, 1);
                }
             }
          }
@@ -399,9 +399,9 @@ namespace LATL
    /// @param nb Block size.
    
    template< typename real_t>
-   int_t gbtrf(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const IPIV, const int_t nb)
+   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const IPIV, const int_t nb)
    {
-      return LATL::gbtrf< complex<real_t> > (m, n, kL, kU, AB, ldAB, IPIV, nb);
+      return LATL::GBTRF< complex<real_t> > (m, n, kL, kU, AB, ldAB, IPIV, nb);
    }
 }
 

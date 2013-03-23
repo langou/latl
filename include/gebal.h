@@ -65,7 +65,7 @@ namespace LATL
    /// D[j] is the scaling factor applied to row and column j.
    
    template<typename real_t>
-   int gebal(char job, int_t n, real_t *A, int_t ldA, int_t &ilo, int_t &ihi, int_t *P, real_t *D)
+   int GEBAL(char job, int_t n, real_t *A, int_t ldA, int_t &ilo, int_t &ihi, int_t *P, real_t *D)
    {
       using std::toupper;
       using std::abs;
@@ -127,8 +127,8 @@ namespace LATL
          P[m]=j;
          if(j!=m)
          {
-            swap(l,A+j*ldA,1,A+m*ldA,1);
-            swap(n-k,A+j+k*ldA,ldA,A+m+k*ldA,ldA);
+            SWAP(l,A+j*ldA,1,A+m*ldA,1);
+            SWAP(n-k,A+j+k*ldA,ldA,A+m+k*ldA,ldA);
          }
 
          
@@ -152,9 +152,9 @@ namespace LATL
                }
                Aj+=ldA;
             }
-            int_t ica=imax(l,Ai,1);
+            int_t ica=IMAX(l,Ai,1);
             real_t ca=abs(Ai[ics]);
-            int_t ira=imax(n-k,Ak,ldA);
+            int_t ira=IMAX(n-k,Ak,ldA);
             real_t ra=abs(Ak[ira]);
             if((c!=zero)&&(r!=zero))
             {

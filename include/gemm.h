@@ -52,7 +52,7 @@ namespace LATL
    /// @ingroup MATM
 
    template<typename real_t>
-   int gemm(char transA, char transB, int_t m, int_t n, int_t k, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB, real_t beta, real_t *C, int_t ldC)
+   int GEMM(char transA, char transB, int_t m, int_t n, int_t k, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB, real_t beta, real_t *C, int_t ldC)
    {
       using std::toupper;
       const real_t zero(0.0);
@@ -218,7 +218,7 @@ namespace LATL
    /// @ingroup MATM
 
    template<typename real_t>
-   int gemm(char transA, char transB, int_t m, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
+   int GEMM(char transA, char transB, int_t m, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
    {
       using std::conj;
       using std::toupper;

@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "syr.h"
 
-using LATL::syr;
+using LATL::SYR;
 
 int ssyr2_(char& uplo, int &n, float& alpha, float *x, int& incx, float *y, int& incy, float *A, int &ldA)
 {
-   int info=-syr<float>(uplo,n,alpha,x,incx,y,incy,A,ldA);
+   int info=-SYR<float>(uplo,n,alpha,x,incx,y,incy,A,ldA);
    if(info>0)
       xerbla_("SSYR2 ",info);
    return 0;

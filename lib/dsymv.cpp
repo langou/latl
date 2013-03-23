@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "symv.h"
 
-using LATL::symv;
+using LATL::SYMV;
 
 int dsymv_(char& uplo, int &n, double &alpha, double *A, int &ldA, double *x, int& incx, double &beta, double *y, int& incy)
 {
-   int info=-symv<double>(uplo,n,alpha,A,ldA,x,incx,beta,y,incy);
+   int info=-SYMV<double>(uplo,n,alpha,A,ldA,x,incx,beta,y,incy);
    if(info!=0)
       xerbla_("DSYMV ",info);
    return 0;

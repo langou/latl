@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "tpsv.h"
 
-using LATL::tpsv;
+using LATL::TPSV;
 
 int dtpsv_(char& uplo, char& trans, char& diag, int &n, double *A, double *x, int& incx)
 {
-   int info=-tpsv<double>(uplo,trans,diag,n,A,x,incx);
+   int info=-TPSV<double>(uplo,trans,diag,n,A,x,incx);
    if(info>0)
       xerbla_("DTPSV ",info);
    return 0;

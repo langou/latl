@@ -35,13 +35,13 @@ namespace LATL
       const real_t one(1.0);
       if (uplo == 'U' || uplo == 'u')
       {
-         LATL::trsm('L', 'U', 'T', 'N', n, nrhs, one, A, ldA, B, ldB);
-         LATL::trsm('L', 'U', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'U', 'T', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'U', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
       }
       else
       {
-         LATL::trsm('L', 'L', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
-         LATL::trsm('L', 'L', 'T', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'L', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'L', 'T', 'N', n, nrhs, one, A, ldA, B, ldB);
       }
       return 0;
    }
@@ -65,13 +65,13 @@ namespace LATL
       const complex<real_t> one(1.0);
       if (uplo == 'U' || uplo == 'u')
       {
-         LATL::trsm('L', 'U', 'C', 'N', n, nrhs, one, A, ldA, B, ldB);
-         LATL::trsm('L', 'U', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'U', 'C', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'U', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
       }
       else
       {
-         LATL::trsm('L', 'L', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
-         LATL::trsm('L', 'L', 'C', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'L', 'N', 'N', n, nrhs, one, A, ldA, B, ldB);
+         LATL::TRSM('L', 'L', 'C', 'N', n, nrhs, one, A, ldA, B, ldB);
       }
       return 0;
    }

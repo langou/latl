@@ -9,9 +9,9 @@
 #include "blas.h"
 #include "asum.h"
 
-using LATL::asum;
+using LATL::ASUM;
 
 float scasum_(int &n, complex<float> *x, int& incx)
 {
-   return asum<float>(n,x,incx);
+   return ASUM<float>(n,x,incx);
 }

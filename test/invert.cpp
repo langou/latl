@@ -74,9 +74,9 @@ real_t general(int nb,bool resi,bool prnt)
    matrix_t *C=new matrix_t[n*n];
    matrix_t *D=new matrix_t[n*n];
    int_t *ipiv=new int_t[n];
-   lacpy<real_t>(uplo,n,n,A,n,B,n);
-   int info=getrf<real_t>(n,n,A,n,ipiv,nb);
-   info=getri<real_t>(n,A,n,ipiv,nb);
+   LACPY<real_t>(uplo,n,n,A,n,B,n);
+   int info=GETRF<real_t>(n,n,A,n,ipiv,nb);
+   info=GETRI<real_t>(n,A,n,ipiv,nb);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -86,8 +86,8 @@ real_t general(int nb,bool resi,bool prnt)
       print<real_t>(n,n,A,n);
    laset<real_t>(uplo,n,n,zero,one,C,n);
    laset<real_t>(uplo,n,n,zero,one,D,n);
-   gemm<real_t>('n','n',n,n,n,one,A,n,B,n,-one,C,n);
-   gemm<real_t>('n','n',n,n,n,one,B,n,A,n,-one,D,n);
+   GEMM<real_t>('n','n',n,n,n,one,A,n,B,n,-one,C,n);
+   GEMM<real_t>('n','n',n,n,n,one,B,n,A,n,-one,D,n);
    residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
    real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
@@ -119,9 +119,9 @@ real_t symmetric(int nb,char uplo,bool resi,bool prnt)
    matrix_t *D=new matrix_t[n*n];
    int_t *ipiv=new int_t[n];
    bool *block=new bool[n];
-   lacpy<real_t>('a',n,n,A,n,B,n);
-   int info=sytrf<real_t>(uplo,n,A,n,ipiv,block,nb);
-   info=sytri<real_t>(uplo,n,A,n,ipiv,block,nb);
+   LACPY<real_t>('a',n,n,A,n,B,n);
+   int info=SYTRF<real_t>(uplo,n,A,n,ipiv,block,nb);
+   info=SYTRI<real_t>(uplo,n,A,n,ipiv,block,nb);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -131,8 +131,8 @@ real_t symmetric(int nb,char uplo,bool resi,bool prnt)
       print<real_t>(n,n,A,n);
    laset<real_t>('a',n,n,zero,one,C,n);
    laset<real_t>('a',n,n,zero,one,D,n);
-   symm<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
-   symm<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
+   SYMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
+   SYMM<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
    residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
    real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
@@ -165,9 +165,9 @@ real_t hermitian(int nb,char uplo,bool resi,bool prnt)
    complex<real_t> *D=new complex<real_t>[n*n];
    int_t *ipiv=new int_t[n];
    bool *block=new bool[n];
-   lacpy<real_t>('a',n,n,A,n,B,n);
-   int info=hetrf<real_t>(uplo,n,A,n,ipiv,block,nb);
-   info=hetri<real_t>(uplo,n,A,n,ipiv,block);
+   LACPY<real_t>('a',n,n,A,n,B,n);
+   int info=HETRF<real_t>(uplo,n,A,n,ipiv,block,nb);
+   info=HETRI<real_t>(uplo,n,A,n,ipiv,block);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -177,8 +177,8 @@ real_t hermitian(int nb,char uplo,bool resi,bool prnt)
       print<real_t>(n,n,A,n);
    laset<real_t>('a',n,n,zero,one,C,n);
    laset<real_t>('a',n,n,zero,one,D,n);
-   hemm<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
-   hemm<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
+   HEMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
+   HEMM<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
    residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
    real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
@@ -209,7 +209,7 @@ real_t symmetric_positive(int nb,char uplo,bool resi,bool prnt)
    real_t *B=new real_t[n*n];
    real_t *C=new real_t[n*n];
    real_t *D=new real_t[n*n];
-   lacpy<real_t>('a',n,n,A,n,B,n);
+   LACPY<real_t>('a',n,n,A,n,B,n);
    int info=potrf<real_t>(uplo,n,A,n,nb);
    if(info>0)
    {
@@ -226,8 +226,8 @@ real_t symmetric_positive(int nb,char uplo,bool resi,bool prnt)
       print<real_t>(n,n,A,n);
    laset<real_t>('a',n,n,zero,one,C,n);
    laset<real_t>('a',n,n,zero,one,D,n);
-   symm<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
-   symm<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
+   SYMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
+   SYMM<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
    residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
    real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
@@ -256,7 +256,7 @@ real_t hermitian_positive(int nb,char uplo,bool resi,bool prnt)
    complex<real_t> *B=new complex<real_t>[n*n];
    complex<real_t> *C=new complex<real_t>[n*n];
    complex<real_t> *D=new complex<real_t>[n*n];
-   lacpy<real_t>('a',n,n,A,n,B,n);
+   LACPY<real_t>('a',n,n,A,n,B,n);
    int info=potrf<real_t>(uplo,n,A,n,nb);
    if(info>0)
    {
@@ -273,8 +273,8 @@ real_t hermitian_positive(int nb,char uplo,bool resi,bool prnt)
       print<real_t>(n,n,A,n);
    laset<real_t>('a',n,n,zero,one,C,n);
    laset<real_t>('a',n,n,zero,one,D,n);
-   hemm<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
-   hemm<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
+   HEMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
+   HEMM<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
    residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
    real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
@@ -303,8 +303,8 @@ real_t triangular(int nb,char uplo, char diag,bool resi,bool prnt)
    matrix_t *B=new matrix_t[n*n];
    matrix_t *C=new matrix_t[n*n];
    matrix_t *D=new matrix_t[n*n];
-   lacpy<real_t>(uplo,n,n,A,n,B,n);
-   int info=trtri<real_t>(uplo,diag,n,A,n,nb);
+   LACPY<real_t>(uplo,n,n,A,n,B,n);
+   int info=TRTRI<real_t>(uplo,diag,n,A,n,nb);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
@@ -317,8 +317,8 @@ real_t triangular(int nb,char uplo, char diag,bool resi,bool prnt)
    if(diag=='u')
       for(int i=0;i<n;i++)
          A[i+i*n]=B[i+i*n]=one;
-   ttmm<real_t>(uplo,n,one,A,n,B,n,-one,C,n);
-   ttmm<real_t>(uplo,n,one,B,n,A,n,-one,D,n);
+   TTMM<real_t>(uplo,n,one,A,n,B,n,-one,C,n);
+   TTMM<real_t>(uplo,n,one,B,n,A,n,-one,D,n);
    residual=max(lantr<real_t>('m',uplo,'n',n,n,C,n),lantr<real_t>('m',uplo,'n',n,n,D,n));
    real_t condition=lantr<real_t>('i',uplo,diag,n,n,A,n)*lantr<real_t>('i',uplo,diag,n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();

@@ -25,7 +25,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   void swap(int_t n, real_t *x, int_t incx, real_t *y, int_t incy)
+   void SWAP(int_t n, real_t *x, int_t incx, real_t *y, int_t incy)
    {
       real_t temp;
       int_t i,ix,iy;
@@ -66,9 +66,9 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   void swap(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)
+   void SWAP(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)
    {
-      swap< complex<real_t> >(n,x,incx,y,incy);
+      SWAP< complex<real_t> >(n,x,incx,y,incy);
    }
 }
 

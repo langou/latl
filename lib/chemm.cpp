@@ -10,11 +10,11 @@
 #include "hemm.h"
 
 using std::complex;
-using LATL::hemm;
+using LATL::HEMM;
 
 int chemm_(char& side, char& uplo, int &m, int &n, complex<float> &alpha, complex<float> *A, int &ldA, complex<float> *B, int &ldB, complex<float> &beta, complex<float> *C, int &ldC)
 {
-   int info=-hemm<float>(side,uplo,m,n,alpha,A,ldA,B,ldB,beta,C,ldC);
+   int info=-HEMM<float>(side,uplo,m,n,alpha,A,ldA,B,ldB,beta,C,ldC);
    if(info>0)
       xerbla_("CHEMM ",info);
    return 0;
