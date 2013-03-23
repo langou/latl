@@ -49,7 +49,6 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return value;
-      bool allocate=(Work==NULL)?1:0;
 
       if (normType == 'M' || normType == 'm')
       {
@@ -100,6 +99,7 @@ namespace latl
       {
          real_t sum(0.0), temp(0.0);
          complex<real_t> * Aj = A;
+         bool allocate=(Work==NULL)?1:0;
          if(allocate)
             Work = new real_t[n];
          for (int_t i = 0; i < n; ++i)

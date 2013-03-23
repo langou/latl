@@ -47,7 +47,6 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return value;
-      bool allocate=(Work==NULL)?1:0;
 
       if (normType == 'M' || normType == 'm')
       {
@@ -87,6 +86,7 @@ namespace latl
       else if (normType == 'O' || normType == 'o' || normType == '1' || normType == 'I' || normType == 'i')
       {
          real_t * Aj = AP;
+         bool allocate=(Work==NULL)?1:0;
          if(allocate)
             Work = new real_t[n];
          real_t temp, sum;
@@ -246,7 +246,6 @@ namespace latl
       real_t value(0.0);
       if (n == 0)
          return value;
-      bool allocate=(Work==NULL)?1:0;
 
       if (normType == 'M' || normType == 'm')
       {
@@ -286,6 +285,7 @@ namespace latl
       else if (normType == 'O' || normType == 'o' || normType == '1' || normType == 'I' || normType == 'i')
       {
          complex<real_t> * Aj = AP;
+         bool allocate=(Work==NULL)?1:0;
          if(allocate)
             Work = new real_t[n];
          real_t temp, sum;

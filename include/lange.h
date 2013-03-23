@@ -49,8 +49,6 @@ namespace latl
       if (m == 0 || n == 0)
          return zero;
 
-      bool allocate=(Work==NULL)?1:0;
-
       if (normType == 'M' || normType == 'm')
       {
          real_t * Aj = A;
@@ -91,6 +89,7 @@ namespace latl
       }
       else if (normType == 'I' || normType == 'i')
       {
+         bool allocate=(Work==NULL)?1:0;
          if(allocate)
             Work = new real_t[m];
          real_t temp=zero;
@@ -168,7 +167,6 @@ namespace latl
       if (m == 0 || n == 0)
          return zero;
 
-      bool allocate=(Work==NULL)?1:0;
 
       if (normType == 'M' || normType == 'm')
       {
@@ -211,6 +209,7 @@ namespace latl
       }
       else if (normType == 'I' || normType == 'i')
       {
+         bool allocate=(Work==NULL)?1:0;
          if(allocate)
             Work = new real_t[m];
          real_t temp=zero;
