@@ -9,10 +9,10 @@
 #include "blas.h"
 #include "nrm2.h"
 
-using LATL::nrm2;
+using LATL::NRM2;
 
 float scnrm2_(int &n, complex<float> *x, int& incx)
 {
-   return nrm2<float>(n,x,incx);
+   return NRM2<float>(n,x,incx);
 }
 

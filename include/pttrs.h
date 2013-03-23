@@ -17,7 +17,7 @@
 namespace LATL
 {
    template< typename real_t>
-   int_t pttrs(const int_t n, const int_t nrhs, real_t * const D, real_t * const E, real_t * const B, const int_t ldB, const int_t nb)
+   int_t PTTRS(const int_t n, const int_t nrhs, real_t * const D, real_t * const E, real_t * const B, const int_t ldB, const int_t nb)
    {
       if ( n < 0)
          return -1;
@@ -30,21 +30,21 @@ namespace LATL
          return 0;
       using std::min;
       if (nb >= nrhs)
-         LATL::ptts2(n, nrhs, D, E, B, ldB);
+         LATL::PTTS2(n, nrhs, D, E, B, ldB);
       else
       {
          real_t * Bj = B;
          for (int_t j = 0; j < nrhs; j += nb)
          {
             int_t jb = min(nrhs-j, nb);
-            LATL::ptts2(n, jb, D, E, Bj, ldB);
+            LATL::PTTS2(n, jb, D, E, Bj, ldB);
             Bj += ldB*nb;
          }
       }
    }
    
    template< typename real_t>
-   int_t pttrs(const char uplo, const int_t n, const int_t nrhs, real_t * const D, complex<real_t> * const E, complex<real_t> * const B, const int_t ldB, const int_t nb)
+   int_t PTTRS(const char uplo, const int_t n, const int_t nrhs, real_t * const D, complex<real_t> * const E, complex<real_t> * const B, const int_t ldB, const int_t nb)
    {
       if (uplo != 'U' && uplo != 'u' && uplo != 'L' && uplo != 'l')
          return -1;
@@ -62,14 +62,14 @@ namespace LATL
       if (uplo == 'U' || uplo == 'u')
          iuplo = 1;
       if (nb > nrhs)
-         LATL::ptts2(iuplo, n, nrhs, D, E, B, ldB);
+         LATL::PTTS2(iuplo, n, nrhs, D, E, B, ldB);
       else
       {
          complex<real_t> * Bj = B;
          for (int_t j = 0; j < nrhs; j += nb)
          {
             int_t jb = min(nrhs-j, nb);
-            LATL::ptts2(iuplo, n, jb, D, E, Bj, ldB);
+            LATL::PTTS2(iuplo, n, jb, D, E, Bj, ldB);
             Bj += ldB*nb;
          }
       }

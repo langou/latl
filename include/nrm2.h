@@ -25,7 +25,7 @@ namespace LATL
    /// @ingroup VEC
    
    template <typename real_t>
-   real_t nrm2(int_t n, real_t *x, int_t incx)
+   real_t NRM2(int_t n, real_t *x, int_t incx)
    {
       using std::abs;
       using std::sqrt;
@@ -77,7 +77,7 @@ namespace LATL
    /// @ingroup VEC
 
    template <typename real_t>
-   real_t nrm2(int_t n, complex<real_t> *x, int_t incx)
+   real_t NRM2(int_t n, complex<real_t> *x, int_t incx)
    {
       using std::abs;
       using std::real;

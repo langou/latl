@@ -27,7 +27,7 @@ namespace LATL
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t pttrf(const int_t n, real_t * const D, real_t * const E)
+   int_t PTTRF(const int_t n, real_t * const D, real_t * const E)
    {
       if (n < 0)
          return -1;
@@ -102,7 +102,7 @@ namespace LATL
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t pttrf(const int_t n, real_t * const D, complex<real_t> * const E)
+   int_t PTTRF(const int_t n, real_t * const D, complex<real_t> * const E)
    {
       if (n < 0)
          return -1;

@@ -193,13 +193,13 @@ int main(int argc, char** argv)
       }
       if(outfile==NULL)
       {
-         LATL::print<real_t>(m,n,A,m);
+         LATL::PRINT<real_t>(m,n,A,m);
       }
       else
       {
          std::ofstream out(outfile);
          if(out)
-            LATL::print<real_t>(m,n,A,m,out);
+            LATL::PRINT<real_t>(m,n,A,m,out);
          else
          {
             cerr << "Cannot open output file." << endl;
@@ -241,13 +241,13 @@ int main(int argc, char** argv)
       }
       if(outfile==NULL)
       {
-         LATL::print<real_t>(m,n,A,m);
+         LATL::PRINT<real_t>(m,n,A,m);
       }
       else
       {
          std::ofstream out(outfile);
          if(out)
-            LATL::print<real_t>(m,n,A,m,out);
+            LATL::PRINT<real_t>(m,n,A,m,out);
          else
          {
             cerr << "Cannot open output file." << endl;

@@ -44,7 +44,7 @@ namespace LATL
    /// @ingroup TRF
 
    template< typename real_t>
-   int_t pbtrf(const char uplo, const int_t n, const int_t kd, real_t * const AB, const int_t ldAB)
+   int_t PBTRF(const char uplo, const int_t n, const int_t kd, real_t * const AB, const int_t ldAB)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -125,7 +125,7 @@ namespace LATL
    /// @ingroup TRF
 
    template< typename real_t>
-   int_t pbtrf(const char uplo, const int_t n, const int_t kd, complex<real_t> * const AB, const int_t ldAB)
+   int_t PBTRF(const char uplo, const int_t n, const int_t kd, complex<real_t> * const AB, const int_t ldAB)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -214,7 +214,7 @@ namespace LATL
    /// @param nb Block size.
    
    template< typename real_t>
-   int_t pbtrf(const char uplo, const int_t n, const int_t kd, real_t * const AB, const int_t ldAB, const int_t nb)
+   int_t PBTRF(const char uplo, const int_t n, const int_t kd, real_t * const AB, const int_t ldAB, const int_t nb)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -229,7 +229,7 @@ namespace LATL
          return 0;
       
       if (nb <= 1 || nb > kd)
-         return LATL::pbtrf(uplo, n, kd, AB, ldAB);
+         return LATL::PBTRF(uplo, n, kd, AB, ldAB);
       else
       {
          const real_t one(1.0);
@@ -253,7 +253,7 @@ namespace LATL
             {
                ib = std::min(nb, n-i);
                
-               info = LATL::potrf(uplo, ib, ABi+kd, kld);
+               info = LATL::POTRF(uplo, ib, ABi+kd, kld);
                
                if (info != 0)
                {
@@ -321,7 +321,7 @@ namespace LATL
             {
                ib = std::min(nb, n-i);
                
-               info = LATL::potrf(uplo, ib, ABi, kld);
+               info = LATL::POTRF(uplo, ib, ABi, kld);
                if (info != 0)
                {
                   return info+i;
@@ -397,7 +397,7 @@ namespace LATL
    /// @param nb Block size.
    
    template< typename real_t>
-   int_t pbtrf(const char uplo, const int_t n, const int_t kd, complex<real_t> * const AB, const int_t ldAB, const int_t nb)
+   int_t PBTRF(const char uplo, const int_t n, const int_t kd, complex<real_t> * const AB, const int_t ldAB, const int_t nb)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -412,7 +412,7 @@ namespace LATL
          return 0;
       
       if (nb <= 1 || nb > kd)
-         return LATL::pbtrf(uplo, n, kd, AB, ldAB);
+         return LATL::PBTRF(uplo, n, kd, AB, ldAB);
       else
       {
          const real_t one(1.0);
@@ -437,7 +437,7 @@ namespace LATL
             {
                ib = std::min(nb, n-i);
                
-               info = LATL::potrf(uplo, ib, ABi+kd, kld);
+               info = LATL::POTRF(uplo, ib, ABi+kd, kld);
                
                if (info != 0)
                {
@@ -504,7 +504,7 @@ namespace LATL
             {
                ib = std::min(nb, n-i);
                
-               info = LATL::potrf(uplo, ib, ABi, kld);
+               info = LATL::POTRF(uplo, ib, ABi, kld);
                if (info != 0)
                {
                   return info+i;

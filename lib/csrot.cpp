@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "rot.h"
 
-using LATL::rot;
+using LATL::ROT;
 
 int csrot_(int &n, complex<float> *x, int& incx, complex<float> *y, int& incy, float& C, float& S)
 {
-   rot<float>(n,x,incx,y,incy,C,S);
+   ROT<float>(n,x,incx,y,incy,C,S);
    return 0;
 }
 

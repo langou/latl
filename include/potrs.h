@@ -17,7 +17,7 @@
 namespace LATL
 {
    template< typename real_t>
-   int_t potrs( const char uplo, const int_t n, const int_t nrhs, real_t * const A, const int_t ldA, real_t * const B, const int_t ldB)
+   int_t POTRS( const char uplo, const int_t n, const int_t nrhs, real_t * const A, const int_t ldA, real_t * const B, const int_t ldB)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -47,7 +47,7 @@ namespace LATL
    }
    
    template< typename real_t>
-   int_t potrs( const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, complex<real_t> * const B, const int_t ldB)
+   int_t POTRS( const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, complex<real_t> * const B, const int_t ldB)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;

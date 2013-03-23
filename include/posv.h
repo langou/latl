@@ -15,7 +15,7 @@
 namespace LATL
 {
    template<typename real_t>
-   int_t posv(const char uplo, const int_t n, const int_t nrhs, real_t * const A, const int_t ldA, real_t * const B, const int_t ldB)
+   int_t POSV(const char uplo, const int_t n, const int_t nrhs, real_t * const A, const int_t ldA, real_t * const B, const int_t ldB)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -28,16 +28,16 @@ namespace LATL
       if (ldB < n)
          return -7;
       int_t info = 0;
-      info = LATL::potrf(uplo, n, A, ldA);
+      info = LATL::POTRF(uplo, n, A, ldA);
       if (info == 0)
-          info = LATL::potrs(uplo, n, nrhs, A, ldA, B, ldB);
+          info = LATL::POTRS(uplo, n, nrhs, A, ldA, B, ldB);
       return info;
    }
    
    template<typename real_t>
-   int_t posv(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, complex<real_t> * const B, const int_t ldB)
+   int_t POSV(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, complex<real_t> * const B, const int_t ldB)
    {
-      return LATL::posv< complex<real_t> >(uplo, n, nrhs, A, ldA, B, ldB);
+      return LATL::POSV< complex<real_t> >(uplo, n, nrhs, A, ldA, B, ldB);
    }
 }
 

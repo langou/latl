@@ -31,7 +31,7 @@ namespace LATL
    /// @ingroup ROT
 
    template <typename real_t>
-   void rotg(real_t &x, real_t &y, real_t &c, real_t &s)
+   void ROTG(real_t &x, real_t &y, real_t &c, real_t &s)
    {
       using std::abs;
       using std::sqrt;
@@ -89,7 +89,7 @@ namespace LATL
    /// @ingroup ROT
 
    template <typename real_t>
-   void rotg(complex<real_t> &x,complex<real_t> y, real_t &c, complex<real_t> &s)
+   void ROTG(complex<real_t> &x,complex<real_t> y, real_t &c, complex<real_t> &s)
    {
       using std::conj;
       using std::sqrt;

@@ -9,10 +9,10 @@
 #include "blas.h"
 #include "nrm2.h"
 
-using LATL::nrm2;
+using LATL::NRM2;
 
 double dznrm2_(int &n, complex<double> *x, int& incx)
 {
-   return nrm2<double>(n,x,incx);
+   return NRM2<double>(n,x,incx);
 }
 

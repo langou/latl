@@ -33,7 +33,7 @@ namespace LATL
    /// @ingroup ROT
    
    template <typename real_t>
-   void rot(int_t n, real_t *x, int_t incx, real_t *y, int_t incy, real_t c, real_t s)
+   void ROT(int_t n, real_t *x, int_t incx, real_t *y, int_t incy, real_t c, real_t s)
    {
       real_t temp;
       int_t i,ix,iy;
@@ -82,7 +82,7 @@ namespace LATL
    /// @ingroup ROT
 
    template <typename real_t>
-   void rot(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy, real_t c, complex<real_t> s)
+   void ROT(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy, real_t c, complex<real_t> s)
    {
       using std::conj;
       complex<real_t> temp;

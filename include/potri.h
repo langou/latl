@@ -40,7 +40,7 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-      int_t potri(char uplo, int_t n, real_t *A, int_t ldA, int_t nb=40)
+      int_t POTRI(char uplo, int_t n, real_t *A, int_t ldA, int_t nb=40)
       {
 
          using std::toupper;
@@ -86,7 +86,7 @@ namespace LATL
    /// @ingroup MATM
 
    template <typename real_t>
-      int_t potri(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t nb=40)
+      int_t POTRI(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t nb=40)
       {
 
          using std::toupper;

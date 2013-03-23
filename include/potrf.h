@@ -42,7 +42,7 @@ namespace LATL
    /// @param ldA Column length of matrix A. ldA >= n
 
    template< typename real_t>
-   int_t potrf(const char uplo, const int_t n, real_t * A, const int_t ldA)
+   int_t POTRF(const char uplo, const int_t n, real_t * A, const int_t ldA)
    {
       using std::isnan;
       using std::sqrt;
@@ -122,7 +122,7 @@ namespace LATL
    /// @param ldA Column length of matrix A. ldA >= n
 
    template< typename real_t>
-   int_t potrf(const char uplo, const int_t n, complex<real_t> * A, const int_t ldA)
+   int_t POTRF(const char uplo, const int_t n, complex<real_t> * A, const int_t ldA)
    {
       using std::sqrt;
       using std::isnan;
@@ -209,7 +209,7 @@ namespace LATL
    /// @param nb Block size.
    
    template< typename real_t>
-   int_t potrf(const char uplo, const int_t n, real_t * const A, const int_t ldA, const int_t nb)
+   int_t POTRF(const char uplo, const int_t n, real_t * const A, const int_t ldA, const int_t nb)
    {
       using std::sqrt;
       using std::isnan;
@@ -224,7 +224,7 @@ namespace LATL
          return 0;
       
       if (nb <= 1 || nb >= n)
-         return LATL::potrf(uplo, n, A, ldA);
+         return LATL::POTRF(uplo, n, A, ldA);
       else
       {
          int_t info = 0, jb;
@@ -236,7 +236,7 @@ namespace LATL
             {
                jb = std::min( nb, n-j);
                LATL::SYRK('U', 'T', jb, j, -one, Aj, ldA, one, Aj+j, ldA);
-               info = LATL::potrf('U', jb, Aj+j, ldA);
+               info = LATL::POTRF('U', jb, Aj+j, ldA);
                if (info != 0)
                   return info+j;
                if (j+jb < n)
@@ -253,7 +253,7 @@ namespace LATL
             {
                jb = std::min(nb, n-j);
                LATL::SYRK('L', 'N', jb, j, -one, A+j, ldA, one, Aj+j, ldA);
-               info = LATL::potrf('L', jb, Aj+j, ldA);
+               info = LATL::POTRF('L', jb, Aj+j, ldA);
                if (info != 0)
                   return info+j;
                if (j+jb < n)
@@ -287,7 +287,7 @@ namespace LATL
    /// @param nb Block size.
 
    template< typename real_t>
-   int_t potrf(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, const int_t nb)
+   int_t POTRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, const int_t nb)
    {
       using std::sqrt;
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
@@ -301,7 +301,7 @@ namespace LATL
          return 0;
       
       if (nb <= 1 || nb >= n)
-         return LATL::potrf(uplo, n, A, ldA);
+         return LATL::POTRF(uplo, n, A, ldA);
       else
       {
          int_t info = 0, jb;
@@ -314,7 +314,7 @@ namespace LATL
             {
                jb = std::min( nb, n-j);
                LATL::HERK('U', 'C', jb, j, -one, Aj, ldA, one, Aj+j, ldA);
-               info = LATL::potrf('U', jb, Aj+j, ldA);
+               info = LATL::POTRF('U', jb, Aj+j, ldA);
                if (info != 0)
                   return info+j;
                if (j+jb < n)
@@ -331,7 +331,7 @@ namespace LATL
             {
                jb = std::min(nb, n-j);
                LATL::HERK('L', 'N', jb, j, -one, A+j, ldA, one, Aj+j, ldA);
-               info = LATL::potrf('L', jb, Aj+j, ldA);
+               info = LATL::POTRF('L', jb, Aj+j, ldA);
                if (info != 0)
                   return info+j;
                if (j+jb < n)

@@ -25,7 +25,7 @@ namespace LATL
    ///        [  c  s ] [ f ]  =  [ r ]   
    ///        [ -s  c ] [ g ]     [ 0 ]
    /// where c^2+s^2=1.
-   /// This is a slower, more accurate version of LATL::rotg with the following other differences:
+   /// This is a slower, more accurate version of LATL::ROTG with the following other differences:
    ///
    ///        * f and g are unchanged on return.
    ///        * if g=0, then c=1 and s=0.
@@ -132,7 +132,7 @@ namespace LATL
    ///        [       c  s ] [ f ]  =  [ r ]   
    ///        [ -conj(s) c ] [ g ]     [ 0 ]
    /// where c^2+|s|^2=1.
-   /// This is a faster version of complex LATL::rotg with the following differences:
+   /// This is a faster version of complex LATL::ROTG with the following differences:
    ///
    ///        * f and g are unchanged on return.
    ///        * if g=0, then c=1 and s=0.

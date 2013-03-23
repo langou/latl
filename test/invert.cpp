@@ -83,7 +83,7 @@ real_t general(int nb,bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      print<real_t>(n,n,A,n);
+      PRINT<real_t>(n,n,A,n);
    laset<real_t>(uplo,n,n,zero,one,C,n);
    laset<real_t>(uplo,n,n,zero,one,D,n);
    GEMM<real_t>('n','n',n,n,n,one,A,n,B,n,-one,C,n);
@@ -128,7 +128,7 @@ real_t symmetric(int nb,char uplo,bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      print<real_t>(n,n,A,n);
+      PRINT<real_t>(n,n,A,n);
    laset<real_t>('a',n,n,zero,one,C,n);
    laset<real_t>('a',n,n,zero,one,D,n);
    SYMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
@@ -174,7 +174,7 @@ real_t hermitian(int nb,char uplo,bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      print<real_t>(n,n,A,n);
+      PRINT<real_t>(n,n,A,n);
    laset<real_t>('a',n,n,zero,one,C,n);
    laset<real_t>('a',n,n,zero,one,D,n);
    HEMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
@@ -210,20 +210,20 @@ real_t symmetric_positive(int nb,char uplo,bool resi,bool prnt)
    real_t *C=new real_t[n*n];
    real_t *D=new real_t[n*n];
    LACPY<real_t>('a',n,n,A,n,B,n);
-   int info=potrf<real_t>(uplo,n,A,n,nb);
+   int info=POTRF<real_t>(uplo,n,A,n,nb);
    if(info>0)
    {
       cerr << "input matrix is not positive definite" << endl;
       exit(0);
    }
-   info=potri<real_t>(uplo,n,A,n,nb);
+   info=POTRI<real_t>(uplo,n,A,n,nb);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
       exit(0);
    }
    if(prnt)
-      print<real_t>(n,n,A,n);
+      PRINT<real_t>(n,n,A,n);
    laset<real_t>('a',n,n,zero,one,C,n);
    laset<real_t>('a',n,n,zero,one,D,n);
    SYMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
@@ -257,20 +257,20 @@ real_t hermitian_positive(int nb,char uplo,bool resi,bool prnt)
    complex<real_t> *C=new complex<real_t>[n*n];
    complex<real_t> *D=new complex<real_t>[n*n];
    LACPY<real_t>('a',n,n,A,n,B,n);
-   int info=potrf<real_t>(uplo,n,A,n,nb);
+   int info=POTRF<real_t>(uplo,n,A,n,nb);
    if(info>0)
    {
       cerr << "input matrix is not positive definite" << endl;
       exit(0);
    }
-   info=potri<real_t>(uplo,n,A,n,nb);
+   info=POTRI<real_t>(uplo,n,A,n,nb);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
       exit(0);
    }
    if(prnt)
-      print<real_t>(n,n,A,n);
+      PRINT<real_t>(n,n,A,n);
    laset<real_t>('a',n,n,zero,one,C,n);
    laset<real_t>('a',n,n,zero,one,D,n);
    HEMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
@@ -311,7 +311,7 @@ real_t triangular(int nb,char uplo, char diag,bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      print<real_t>(uplo,diag,n,A,n);
+      PRINT<real_t>(uplo,diag,n,A,n);
    laset<real_t>(uplo,n,n,zero,one,C,n);
    laset<real_t>(uplo,n,n,zero,one,D,n);
    if(diag=='u')

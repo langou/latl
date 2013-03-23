@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "rot.h"
 
-using LATL::rot;
+using LATL::ROT;
 
 int drot_(int &n, double *x, int& incx, double *y, int& incy, double& C, double& S)
 {
-   rot<double>(n,x,incx,y,incy,C,S);
+   ROT<double>(n,x,incx,y,incy,C,S);
    return 0;
 }
 

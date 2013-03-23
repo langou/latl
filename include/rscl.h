@@ -27,7 +27,7 @@ namespace LATL
    /// @ingroup VEC
    
    template<typename real_t> 
-   void rscl(int_t n, real_t a, real_t *x, int_t incx)
+   void RSCL(int_t n, real_t a, real_t *x, int_t incx)
    {
       using std::numeric_limits;
       using LATL::LABAD;
@@ -79,7 +79,7 @@ namespace LATL
    /// @ingroup VEC
    
    template<typename real_t> 
-   void rscl(int_t n, real_t a, complex<real_t> *x, int_t incx)
+   void RSCL(int_t n, real_t a, complex<real_t> *x, int_t incx)
    {
       using std::numeric_limits;
       using LATL::LABAD;

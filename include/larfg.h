@@ -65,7 +65,7 @@ namespace LATL
       if(n>0)
       {
          int_t knt=0;
-         real_t xnorm=nrm2<real_t>(n-1,x,incx);
+         real_t xnorm=NRM2<real_t>(n-1,x,incx);
          if(xnorm>zero)
          {
             real_t temp=abs(lapy2(alpha,xnorm));
@@ -79,7 +79,7 @@ namespace LATL
                   beta*=rsafemin;
                   alpha*=rsafemin;
                }
-               xnorm=nrm2<real_t>(n-1,x,incx);
+               xnorm=NRM2<real_t>(n-1,x,incx);
                temp=abs(lapy2(alpha,xnorm));
                beta=(alpha<zero)?temp:-temp;
             }
@@ -139,7 +139,7 @@ namespace LATL
       if(n>0)
       {
          int_t knt=0;      
-         real_t xnorm=nrm2<real_t>(n-1,x,incx);
+         real_t xnorm=NRM2<real_t>(n-1,x,incx);
          if((xnorm!=zero)||(imag(alpha)!=zero))
          {
             real_t temp=abs(lapy3(real(alpha),imag(alpha),xnorm));
@@ -153,7 +153,7 @@ namespace LATL
                   beta*=rsafemin;
                   alpha*=rsafemin;
                }
-               xnorm=nrm2<real_t>(n-1,x,incx);
+               xnorm=NRM2<real_t>(n-1,x,incx);
                temp=abs(lapy3(real(alpha),imag(alpha),xnorm));
                beta=(real(alpha)<zero)?temp:-temp;
             }

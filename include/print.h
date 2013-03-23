@@ -31,7 +31,7 @@ namespace LATL
    /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
 
    template <typename real_t>
-   int print(int m, int n, real_t *A, int ldA,std::ostream &outfile=std::cout)
+   int PRINT(int m, int n, real_t *A, int ldA,std::ostream &outfile=std::cout)
    {
       if(m<0)
          return -1;
@@ -73,7 +73,7 @@ namespace LATL
    /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
 
    template <typename real_t>
-   int print(int m, int n, complex<real_t> *A, int ldA,std::ostream &outfile=std::cout)
+   int PRINT(int m, int n, complex<real_t> *A, int ldA,std::ostream &outfile=std::cout)
    {
       if(m<0)
          return -1;
@@ -123,7 +123,7 @@ namespace LATL
    /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
 
    template <typename real_t>
-   int print(char uplo, char diag, int n, real_t *A, int ldA,std::ostream &outfile=std::cout)
+   int PRINT(char uplo, char diag, int n, real_t *A, int ldA,std::ostream &outfile=std::cout)
    {
       const real_t zero=0.0;
       const real_t one=1.0;
@@ -203,7 +203,7 @@ namespace LATL
    /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
 
    template <typename real_t>
-   int print(char uplo, char diag, int n, complex<real_t> *A, int ldA,std::ostream &outfile=std::cout)
+   int PRINT(char uplo, char diag, int n, complex<real_t> *A, int ldA,std::ostream &outfile=std::cout)
    {
       const real_t zero=0.0;
       const real_t one=1.0;

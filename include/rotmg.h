@@ -27,7 +27,7 @@ namespace LATL
    ///        ------------    ------------    -------------    ---------
    ///        [ h11  h12 ]    [  1   h12 ]    [ h11    1  ]    [ 1   0 ]
    ///        [ h21  h22 ]    [ h21   1  ]    [ -1    h22 ]    [ 0   1 ]
-   /// and is used in the application routine LATL::rotm.
+   /// and is used in the application routine LATL::ROTM.
    /// @tparam real_t Floating point type.
    /// @param d1 Real scalar.
    /// @param d2 Real scalar.
@@ -37,7 +37,7 @@ namespace LATL
    /// @ingroup ROT
    
    template <typename real_t>
-   int rotmg(real_t &d1, real_t &d2, real_t &x1, real_t y1, real_t *param)
+   int ROTMG(real_t &d1, real_t &d2, real_t &x1, real_t y1, real_t *param)
    {
       using std::abs;
 

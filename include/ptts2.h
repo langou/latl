@@ -17,7 +17,7 @@
 namespace LATL
 {
    template<typename real_t>
-   int_t ptts2(const int_t n, const int_t nrhs, real_t * const D, real_t * const E, real_t * const B, const int_t ldB)
+   int_t PTTS2(const int_t n, const int_t nrhs, real_t * const D, real_t * const E, real_t * const B, const int_t ldB)
    {
       if (n < 0)
          return -1;
@@ -49,7 +49,7 @@ namespace LATL
    }
    
    template<typename real_t>
-   int_t ptts2(bool iuplo, const int_t n, const int_t nrhs, real_t * const D, complex<real_t> * const E, complex<real_t> * const B, const int_t ldB)
+   int_t PTTS2(bool iuplo, const int_t n, const int_t nrhs, real_t * const D, complex<real_t> * const E, complex<real_t> * const B, const int_t ldB)
    {
       if ( n < 0)
          return -1;

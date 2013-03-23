@@ -9,11 +9,11 @@
 #include "blas.h"
 #include "rotm.h"
 
-using LATL::rotm;
+using LATL::ROTM;
 
 int srotm_(int&n , float *x, int& incx, float *y, int& incy, float *param)
 {
    float flag=param[0];
-   rotm<float>(n,x,incx,y,incy,flag,param+1);
+   ROTM<float>(n,x,incx,y,incy,flag,param+1);
    return 0;
 }

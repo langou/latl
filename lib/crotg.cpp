@@ -9,10 +9,10 @@
 #include "blas.h"
 #include "rotg.h"
 
-using LATL::rotg;
+using LATL::ROTG;
 
 int crotg_(complex<float>& a,complex<float>& b, float& c, complex<float>& s)
 {
-   rotg<float>(a,b,c,s);
+   ROTG<float>(a,b,c,s);
    return 0;
 }

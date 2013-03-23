@@ -47,7 +47,7 @@ namespace LATL
    /// @ingroup TRF
 
    template< typename real_t>
-   int pstrf(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * const PIV, int_t &rank, const real_t tol)
+   int PSTRF(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * const PIV, int_t &rank, const real_t tol)
    {
       using std::numeric_limits;
 
@@ -252,7 +252,7 @@ namespace LATL
    /// @param tol User defined tolerance.  If tol < 0, the n*U*max(Ak[k]) will be used.  The algorithm terminates at the k-1st step if the pivot <= tol.
    /// @ingroup TRF
 
-   template< typename real_t> int_t pstrf(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const PIV, int_t &rank, const real_t tol)
+   template< typename real_t> int_t PSTRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const PIV, int_t &rank, const real_t tol)
    {
       using std::numeric_limits;
 
@@ -483,7 +483,7 @@ namespace LATL
    /// @param nb Block size.
    
    template< typename real_t>
-   int pstrf(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * PIV, int_t &rank, const real_t tol, const int_t nb)
+   int PSTRF(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * PIV, int_t &rank, const real_t tol, const int_t nb)
    {
       using std::numeric_limits;
 
@@ -499,7 +499,7 @@ namespace LATL
       
       if (nb <= 1 || nb >= n)
       {
-         return LATL::pstrf(uplo, n, A, ldA, PIV, rank, tol);
+         return LATL::PSTRF(uplo, n, A, ldA, PIV, rank, tol);
       }
       for (int_t i = 0; i < n; ++i)
       {
@@ -730,7 +730,7 @@ namespace LATL
    /// @param nb Block size.
 
    template< typename real_t>
-   int pstrf(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * PIV, int_t &rank, const real_t tol, const int_t nb)
+   int PSTRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * PIV, int_t &rank, const real_t tol, const int_t nb)
    {
       using std::numeric_limits;
 
@@ -746,7 +746,7 @@ namespace LATL
       
       if (nb <= 1 || nb >= n)
       {
-         return LATL::pstrf(uplo, n, A, ldA, PIV, rank, tol);
+         return LATL::PSTRF(uplo, n, A, ldA, PIV, rank, tol);
       }
       for (int_t i = 0; i < n; ++i)
       {
