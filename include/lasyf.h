@@ -46,7 +46,7 @@ namespace LATL
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t lasyf(const char uplo, const int_t n, const int_t nb, int_t &kb, real_t * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, real_t * Work)
+   int_t LASYF(const char uplo, const int_t n, const int_t nb, int_t &kb, real_t * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, real_t * Work)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -426,7 +426,7 @@ namespace LATL
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t lasyf(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, complex<real_t> *Work)
+   int_t LASYF(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, complex<real_t> *Work)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;

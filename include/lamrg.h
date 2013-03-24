@@ -34,7 +34,7 @@ namespace LATL
    /// @ingroup VEC
    
    template<typename real_t>
-   void lamrg(int_t n1, int_t n2, real_t *a, bool s1, bool s2, int_t *index)
+   void LAMRG(int_t n1, int_t n2, real_t *a, bool s1, bool s2, int_t *index)
    {
       int_t n1sv=n1;
       int_t n2sv=n2;

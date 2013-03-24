@@ -33,7 +33,7 @@ namespace LATL
    /// @ingroup VEC
    
    template<typename real_t> 
-   void larnv(int_t dist,int_t n,real_t *x,uint32_t s=0)
+   void LARNV(int_t dist,int_t n,real_t *x,uint32_t s=0)
    {
       std::random_device device;
       std::mt19937 generator(device());
@@ -75,7 +75,7 @@ namespace LATL
    /// @ingroup VEC
    
    template<typename real_t> 
-   void larnv(int_t dist,int_t n,complex<real_t> *x,uint32_t s=0)
+   void LARNV(int_t dist,int_t n,complex<real_t> *x,uint32_t s=0)
    {
       const real_t zero=0.0;
       const real_t one=1.0;

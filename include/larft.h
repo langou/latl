@@ -82,7 +82,7 @@ namespace LATL
    /// @param ldT Column length of the matrix T.  ldT >= k.
 
    template<typename real_t>
-   int larft(char direct, char storeV, int_t n, int_t k, real_t *V, int_t ldV, real_t *tau, real_t *T, int_t ldT)
+   int LARFT(char direct, char storeV, int_t n, int_t k, real_t *V, int_t ldV, real_t *tau, real_t *T, int_t ldT)
    {
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -249,7 +249,7 @@ namespace LATL
    /// @param ldT Column length of the matrix T.  ldT >= k.
    
    template<typename real_t>
-   int larft(char direct, char storeV, int_t n, int_t k, complex<real_t> *V, int_t ldV, complex<real_t> *tau, complex<real_t> *T, int_t ldT)
+   int LARFT(char direct, char storeV, int_t n, int_t k, complex<real_t> *V, int_t ldV, complex<real_t> *tau, complex<real_t> *T, int_t ldT)
    {
       const complex<real_t> one(1.0);
       const complex<real_t> zero(0.0);

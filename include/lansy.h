@@ -39,7 +39,7 @@ namespace LATL
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lansy(const char normType, const char uplo, const int_t n, real_t * const A, const int_t ldA, real_t *Work=NULL)
+   real_t LANSY(const char normType, const char uplo, const int_t n, real_t * const A, const int_t ldA, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -156,7 +156,7 @@ namespace LATL
             for (int_t j = 1; j < n; ++j)
             {
                Aj += ldA;
-               LATL::lassq(j, Aj, 1, scale, sum);
+               LATL::LASSQ(j, Aj, 1, scale, sum);
             }
          }
          else
@@ -164,12 +164,12 @@ namespace LATL
             for (int_t j = 0; j < n-1; ++j)
             {
                Aj += 1;
-               LATL::lassq(n-j-1, Aj, 1, scale, sum);
+               LATL::LASSQ(n-j-1, Aj, 1, scale, sum);
                Aj += ldA;
             }
          }
          sum *= 2;
-         LATL::lassq(n, A, ldA+1, scale, sum);
+         LATL::LASSQ(n, A, ldA+1, scale, sum);
          value = scale*sqrt(sum);
       }
       return value;
@@ -197,7 +197,7 @@ namespace LATL
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lansy(const char normType, const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, real_t *Work=NULL)
+   real_t LANSY(const char normType, const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -316,7 +316,7 @@ namespace LATL
             for (int_t j = 1; j < n; ++j)
             {
                Aj += ldA;
-               LATL::lassq(j, Aj, 1, scale, sum);
+               LATL::LASSQ(j, Aj, 1, scale, sum);
             }
          }
          else
@@ -324,12 +324,12 @@ namespace LATL
             for (int_t j = 0; j < n-1; ++j)
             {
                Aj += 1;
-               LATL::lassq(n-j-1, Aj, 1, scale, sum);
+               LATL::LASSQ(n-j-1, Aj, 1, scale, sum);
                Aj += ldA;
             }
          }
          sum *= 2;
-         LATL::lassq(n, A, ldA+1, scale, sum);
+         LATL::LASSQ(n, A, ldA+1, scale, sum);
          value = scale*sqrt(sum);
       }
       return value;

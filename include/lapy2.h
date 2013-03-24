@@ -24,7 +24,7 @@ namespace LATL
    /// @ingroup SCAL
    
    template<typename real_t>
-   real_t lapy2(real_t x, real_t y)
+   real_t LAPY2(real_t x, real_t y)
    {
       using std::abs;
       using std::sqrt;

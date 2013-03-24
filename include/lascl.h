@@ -48,7 +48,7 @@ namespace LATL
    /// @param ldA The column length of the matrix A.
    
    template<typename real_t>
-   int lascl(char type,int_t kl,int_t ku,real_t b,real_t a,int_t m,int_t n,real_t *A,int_t ldA)
+   int LASCL(char type,int_t kl,int_t ku,real_t b,real_t a,int_t m,int_t n,real_t *A,int_t ldA)
    {
       using std::toupper;
       using std::isnan;
@@ -221,7 +221,7 @@ namespace LATL
    /// @param ldA The column length of the matrix A.
    
    template<typename real_t>
-   int_t lascl(char type,int_t kl,int_t ku,real_t b,real_t a,int_t m,int_t n,complex<real_t> *A,int_t ldA)
+   int_t LASCL(char type,int_t kl,int_t ku,real_t b,real_t a,int_t m,int_t n,complex<real_t> *A,int_t ldA)
    {
       using std::toupper;
       using std::isnan;

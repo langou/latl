@@ -25,7 +25,7 @@ namespace LATL
    /// @ingroup VEC
    
    template<typename real_t>
-   void laruv(int_t n, real_t *x)
+   void LARUV(int_t n, real_t *x)
    {
       std::random_device device;
       std::mt19937 generator(device());

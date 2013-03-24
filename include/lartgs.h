@@ -38,10 +38,10 @@ namespace LATL
    /// @ingroup ROT
    
    template<typename real_t>
-   void lartgs(real_t x, real_t y, real_t sigma, real_t &c, real_t &s)
+   void LARTGS(real_t x, real_t y, real_t sigma, real_t &c, real_t &s)
    {
       using std::numeric_limits;
-      using LATL::lartgp;
+      using LATL::LARTGP;
       using std::abs;
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -77,7 +77,7 @@ namespace LATL
          Z=S*(abs(x)-sigma)*(S+sigma/x);
          W=s*y;
       }
-      lartgp<real_t>(W,Z,s,c,R);
+      LARTGP<real_t>(W,Z,s,c,R);
    }
 }
 

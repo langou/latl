@@ -9,12 +9,12 @@
 #include "lapack.h"
 #include "lauum.h"
 
-using LATL::lauum;
+using LATL::LAUUM;
 
 int zlauum_(char &uplo,int &n,complex<double> *A,int &ldA,int &info)
 {
    int nb=80;
-   info=lauum<double>(uplo,n,A,ldA,nb);
+   info=LAUUM<double>(uplo,n,A,ldA,nb);
    if(info!=0)
    {
       info=-info;

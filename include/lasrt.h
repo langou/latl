@@ -32,7 +32,7 @@ namespace LATL
    /// @param d Pointer to real vector of length n.
    
    template<typename real_t>
-   int lasrt(char direction,int_t n,real_t *d)
+   int LASRT(char direction,int_t n,real_t *d)
    {
       direction=std::toupper(direction);
       if((direction!='I')&&(direction!='D'))

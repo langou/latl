@@ -59,7 +59,7 @@ namespace LATL
          info=TRTRI<real_t>( uplo, 'N', n, A, ldA, nb);
          if (info != 0) 
             return info;
-         info=lauum<real_t>( uplo, n, A, ldA, nb);
+         info=LAUUM<real_t>( uplo, n, A, ldA, nb);
          return info;
       }
 
@@ -105,7 +105,7 @@ namespace LATL
          info=TRTRI<real_t>( uplo, 'N', n, A, ldA, nb);
          if (info != 0) 
             return info;
-         info=lauum<real_t>( uplo, n, A, ldA, nb);
+         info=LAUUM<real_t>( uplo, n, A, ldA, nb);
          return info;
       }
 }

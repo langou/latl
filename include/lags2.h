@@ -61,8 +61,8 @@ namespace LATL
    void LAGS2(bool upper,real_t a1,real_t a2,real_t a3,real_t b1,real_t b2,real_t b3,real_t &csu,real_t &snu,real_t &csv,real_t &snv,real_t &csq,real_t &snq)
    {
       using std::abs;
-      using LATL::lartg;
-      using LATL::lasv2;
+      using LATL::LARTG;
+      using LATL::LASV2;
 
       const real_t zero=0.0;
       real_t s1,s2,snr,csr,snl,csl;
@@ -71,7 +71,7 @@ namespace LATL
          real_t a=a1*b3;
          real_t d=a3*b1;
          real_t b=a2*b1-a1*b2;
-         lasv2(a,b,d,s1,s2,snr,csr,snl,csl);
+         LASV2(a,b,d,s1,s2,snr,csr,snl,csl);
          if((abs(csl)>=abs(snl))||(abs(csr)>=abs(snr)))
          {
             real_t ua11r=csl*a1;
@@ -84,13 +84,13 @@ namespace LATL
             if((abs(ua11r)+abs(ua12))!=zero)
             {
                if(aua12/(abs(ua11r)+abs(ua12))<=avb12/(abs(vb11r)+abs(vb12)))
-                  lartg(-ua11r,ua12,csq,snq,r);
+                  LARTG(-ua11r,ua12,csq,snq,r);
                else
-                  lartg(-vb11r,vb12,csq,snq,r);
+                  LARTG(-vb11r,vb12,csq,snq,r);
             }
             else
             {
-               lartg(-vb11r,vb12,csq,snq,r);
+               LARTG(-vb11r,vb12,csq,snq,r);
             }
             csu=csl;
             snu=-snl;
@@ -109,13 +109,13 @@ namespace LATL
             if((abs(ua21)+abs(ua22))!=zero)
             {
                if(aua22/(abs(ua21)+abs(ua22))<=avb22/(abs(vb21)+abs(vb22)))
-                  lartg(-ua21,ua22,csq,snq,r);
+                  LARTG(-ua21,ua22,csq,snq,r);
                else
-                  lartg(-vb21,vb22,csq,snq,r);
+                  LARTG(-vb21,vb22,csq,snq,r);
             }
             else
             {
-               lartg(-vb21,vb22,csq,snq,r);
+               LARTG(-vb21,vb22,csq,snq,r);
             }
             csu=snl;
             snu=csl;
@@ -128,7 +128,7 @@ namespace LATL
          real_t a=a1*b3;
          real_t d=a3*b1;
          real_t c=a2*b3-a3*b2;
-         lasv2(a,c,d,s1,s2,snr,csr,snl,csl);
+         LASV2(a,c,d,s1,s2,snr,csr,snl,csl);
          if((abs(csr)>=abs(snr))||(abs(csl)>=abs(snl)))
          {
             real_t ua21=-snr*a1+csr*a2;
@@ -141,13 +141,13 @@ namespace LATL
             if((abs(ua21)+abs(ua22r))!=zero)
             {
                if(aua21/(abs(ua21)+abs(ua22r))<=avb21/(abs(vb21)+abs(vb22r)))
-                  lartg(ua22r,ua21,csq,snq,r);
+                  LARTG(ua22r,ua21,csq,snq,r);
                else
-                  lartg(vb22r,vb21,csq,snq,r);
+                  LARTG(vb22r,vb21,csq,snq,r);
             }
             else
             {
-               lartg(vb22r,vb21,csq,snq,r);
+               LARTG(vb22r,vb21,csq,snq,r);
             }
             csu=csr;
             snu=-snr;
@@ -166,13 +166,13 @@ namespace LATL
             if((abs(ua11)+abs(ua12))!=zero)
             {
                if(aua11/(abs(ua11)+abs(ua12))<=avb11/(abs(vb11)+abs(vb12)))
-                  lartg(ua12,ua11,csq,snq,r);
+                  LARTG(ua12,ua11,csq,snq,r);
                else
-                  lartg(vb12,vb11,csq,snq,r);
+                  LARTG(vb12,vb11,csq,snq,r);
             }
             else
             {
-               lartg(vb12,vb11,csq,snq,r);
+               LARTG(vb12,vb11,csq,snq,r);
             }
             csu=snr;
             snu=csr;
@@ -234,8 +234,8 @@ namespace LATL
       using std::imag;
       using std::abs;
       using std::conj;
-      using LATL::lartg;
-      using LATL::lasv2;
+      using LATL::LARTG;
+      using LATL::LASV2;
       
       const real_t zero=0.0;
       const real_t one=1.0;
@@ -248,7 +248,7 @@ namespace LATL
          complex<real_t> b=a2*b1-a1*b2;
          real_t fb=abs(b);
          complex<real_t> d1=(fb==zero)?one:b/fb;
-         lasv2(a,fb,d,s1,s2,snr,csr,snl,csl);
+         LASV2(a,fb,d,s1,s2,snr,csr,snl,csl);
          if((abs(csl)>=abs(snl))||(abs(csr)>=abs(snr)))
          {
             real_t ua11r=csl*a1;
@@ -258,13 +258,13 @@ namespace LATL
             real_t aua12=abs(csl)*abs(a2)+abs(snl)*abs(a3);
             real_t avb12=abs(csr)*abs(b2)+abs(snr)*abs(b3);
             if((abs(ua11r)+abs(ua12))==zero)
-               lartg(-complex<real_t>(vb11r),conj(vb12),csq,snq,r);
+               LARTG(-complex<real_t>(vb11r),conj(vb12),csq,snq,r);
             else if((abs(vb11r)+abs(vb12))==zero ) 
-               lartg( -complex<real_t>(ua11r),conj(ua12),csq,snq,r);
+               LARTG( -complex<real_t>(ua11r),conj(ua12),csq,snq,r);
             else if(aua12/(abs(ua11r)+abs(ua12))<=avb12/(abs(vb11r)+abs(vb12)))
-               lartg( -complex<real_t>(ua11r),conj(ua12),csq,snq,r);
+               LARTG( -complex<real_t>(ua11r),conj(ua12),csq,snq,r);
             else
-               lartg( -complex<real_t>(vb11r),conj(vb12),csq,snq,r);
+               LARTG( -complex<real_t>(vb11r),conj(vb12),csq,snq,r);
             csu=csl;
             snu=-d1*snl;
             csv=csr;
@@ -279,13 +279,13 @@ namespace LATL
             real_t aua22=abs(snl)*abs(a2)+abs(csl)*abs(a3);
             real_t avb22=abs(snr)*abs(b2)+abs(csr)*abs(b3);
             if((abs(ua21)+abs(ua22))==zero)
-               lartg(-conj(vb21),conj(vb22),csq,snq,r);
+               LARTG(-conj(vb21),conj(vb22),csq,snq,r);
             else if((abs(vb21)+abs(vb22))==zero)
-               lartg(-conj(ua21),conj(ua22),csq,snq,r);
+               LARTG(-conj(ua21),conj(ua22),csq,snq,r);
             else if(aua22/(abs(ua21)+abs(ua22))<=avb22/(abs(vb21)+abs(vb22)))
-               lartg(-conj(ua21),conj(ua22),csq,snq,r);
+               LARTG(-conj(ua21),conj(ua22),csq,snq,r);
             else
-               lartg(-conj(vb21),conj(vb22),csq,snq,r);
+               LARTG(-conj(vb21),conj(vb22),csq,snq,r);
             csu=snl;
             snu=d1*csl;
             csv=snr;
@@ -299,7 +299,7 @@ namespace LATL
          complex<real_t> c=a2*b3-a3*b2;
          real_t fc=abs(c);
          complex<real_t> d1=(fc==zero)?one:c/fc;
-         lasv2(a,fc,d,s1,s2,snr,csr,snl,csl);
+         LASV2(a,fc,d,s1,s2,snr,csr,snl,csl);
          if((abs(csr)>=abs(snr))||(abs(csl)>=abs(snl)))
          {
             complex<real_t> ua21=-d1*snr*a1+csr*a2;
@@ -309,13 +309,13 @@ namespace LATL
             real_t aua21=abs(snr)*abs(a1)+abs(csr)*abs(a2);
             real_t avb21=abs(snl)*abs(b1)+abs(csl)*abs(b2);
             if((abs(ua21)+abs(ua22r))==zero)
-               lartg(complex<real_t>(vb22r ),vb21,csq,snq,r);
+               LARTG(complex<real_t>(vb22r ),vb21,csq,snq,r);
             else if((abs(vb21)+abs(vb22r))==zero)
-               lartg(complex<real_t>(ua22r),ua21,csq,snq,r);
+               LARTG(complex<real_t>(ua22r),ua21,csq,snq,r);
             else if(aua21/(abs(ua21)+abs(ua22r))<=avb21/(abs(vb21)+abs(vb22r)))
-               lartg(complex<real_t>(ua22r),ua21,csq,snq,r);
+               LARTG(complex<real_t>(ua22r),ua21,csq,snq,r);
             else
-               lartg(complex<real_t>(vb22r),vb21,csq,snq,r);
+               LARTG(complex<real_t>(vb22r),vb21,csq,snq,r);
             csu=csr;
             snu=-conj(d1)*snr;
             csv=csl;
@@ -330,13 +330,13 @@ namespace LATL
             real_t aua11=abs(csr)*abs(a1)+abs(snr)*abs(a2);
             real_t avb11=abs(csl)*abs(b1)+abs(snl)*abs(b2);
             if((abs(ua11)+abs(ua12))==zero)
-               lartg(vb12,vb11,csq,snq,r);
+               LARTG(vb12,vb11,csq,snq,r);
             else if((abs(vb11)+abs(vb12))==zero)
-               lartg(ua12,ua11,csq,snq,r);
+               LARTG(ua12,ua11,csq,snq,r);
             else if(aua11/(abs(ua11)+abs(ua12))<=avb11/(abs(vb11)+abs(vb12)))
-               lartg(ua12,ua11,csq,snq,r);
+               LARTG(ua12,ua11,csq,snq,r);
             else
-               lartg(vb12,vb11,csq,snq,r);
+               LARTG(vb12,vb11,csq,snq,r);
             csu=snr;
             snu=conj(d1)*csr;
             csv=snl;

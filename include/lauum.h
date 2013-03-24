@@ -44,7 +44,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=n.
 
    template <typename real_t>
-   int lauum(char uplo, int_t n, real_t *A, int_t ldA)
+   int LAUUM(char uplo, int_t n, real_t *A, int_t ldA)
    {
       using std::toupper;
       const real_t one(1.0);
@@ -108,7 +108,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=n.
 
    template <typename real_t>
-   int lauum(char uplo, int_t n, complex<real_t> *A, int_t ldA)
+   int LAUUM(char uplo, int_t n, complex<real_t> *A, int_t ldA)
    {
       using std::toupper;
       using std::real;
@@ -180,7 +180,7 @@ namespace LATL
    /// @param nb Block size.
    
    template <typename real_t>
-   int lauum(char uplo, int_t n, real_t *A, int_t ldA, int_t nb)
+   int LAUUM(char uplo, int_t n, real_t *A, int_t ldA, int_t nb)
    {
       using std::toupper;
       const real_t one(1.0);
@@ -196,7 +196,7 @@ namespace LATL
          return 0;
       
       if((nb<2)||(nb>n))
-         lauum<real_t>(uplo,n,A,ldA);
+         LAUUM<real_t>(uplo,n,A,ldA);
       else
       {
          if(uplo=='U')
@@ -205,7 +205,7 @@ namespace LATL
             {
                int_t ib=std::min(nb,n-i);
                TRMM<real_t>('R','U','T','N',i,ib,one,A+i,ldA,A,ldA);
-               lauum<real_t>('U',ib,A+i,ldA);
+               LAUUM<real_t>('U',ib,A+i,ldA);
                int_t j=i+ib;
                if(j<n)
                {
@@ -223,7 +223,7 @@ namespace LATL
             {
                int_t ib=std::min(nb,n-i);
                TRMM<real_t>('L','L','T','N',ib,i,one,A+i,ldA,B+i,ldA);
-               lauum<real_t>('L',ib,A+i,ldA);
+               LAUUM<real_t>('L',ib,A+i,ldA);
                int_t j=i+ib;
                if(j<n)
                {
@@ -259,7 +259,7 @@ namespace LATL
    /// @param nb Block size.
    
    template <typename real_t>
-   int lauum(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t nb)
+   int LAUUM(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t nb)
    {
       using std::toupper;
       using std::real;
@@ -276,7 +276,7 @@ namespace LATL
          return 0;
       
       if((nb<2)||(nb>n))
-         lauum<real_t>(uplo,n,A,ldA);
+         LAUUM<real_t>(uplo,n,A,ldA);
       else
       {
          if(uplo=='U')
@@ -285,7 +285,7 @@ namespace LATL
             {
                int_t ib=std::min(nb,n-i);
                TRMM<real_t>('R','U','C','N',i,ib,one,A+i,ldA,A,ldA);
-               lauum<real_t>('U',ib,A+i,ldA);
+               LAUUM<real_t>('U',ib,A+i,ldA);
                int_t j=i+ib;
                if(j<n)
                {
@@ -303,7 +303,7 @@ namespace LATL
             {
                int_t ib=std::min(nb,n-i);
                TRMM<real_t>('L','L','C','N',ib,i,one,A+i,ldA,B+i,ldA);
-               lauum<real_t>('L',ib,A+i,ldA);
+               LAUUM<real_t>('L',ib,A+i,ldA);
                int_t j=i+ib;
                if(j<n)
                {

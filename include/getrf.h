@@ -255,16 +255,16 @@ namespace LATL
             }
             if (j+jb < m)
             {
-               LATL::laswp(j, A, ldA, j, j+jb-1, pivot, 1);
+               LATL::LASWP(j, A, ldA, j, j+jb-1, pivot, 1);
             }
             else
             {
-               LATL::laswp(j, A, ldA, j, m-1, pivot, 1);
+               LATL::LASWP(j, A, ldA, j, m-1, pivot, 1);
             }
             
             if ((j+jb) < n)
             {
-               LATL::laswp(n-j-jb, A+ldA*(j+jb), ldA, j, j+jb-1, pivot, 1);
+               LATL::LASWP(n-j-jb, A+ldA*(j+jb), ldA, j, j+jb-1, pivot, 1);
                LATL::TRSM('L', 'L', 'N', 'U', jb, n-j-jb, one, Ajj, ldA, Ajj+ldA*jb, ldA);
                
                if ((j+jb) < m)

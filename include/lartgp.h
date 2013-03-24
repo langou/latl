@@ -39,7 +39,7 @@ namespace LATL
    /// @ingroup ROT
    
    template<typename real_t>
-   void lartgp(real_t f, real_t g, real_t &c, real_t &s, real_t &r)
+   void LARTGP(real_t f, real_t g, real_t &c, real_t &s, real_t &r)
    {
       using std::abs;
       using std::sqrt;

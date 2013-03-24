@@ -32,7 +32,7 @@ namespace LATL
    /// @ingroup SCAL
 
    template<typename real_t>
-   void las2(real_t f,real_t g,real_t h,real_t &ssmin,real_t &ssmax)
+   void LAS2(real_t f,real_t g,real_t h,real_t &ssmin,real_t &ssmax)
    {
       using std::abs;
       using std::max;

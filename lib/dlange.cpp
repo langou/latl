@@ -9,9 +9,9 @@
 #include "lapack.h"
 #include "lange.h"
 
-using LATL::lange;
+using LATL::LANGE;
 
 double dlange_(char &norm,int &m,int &n,double *A,int &ldA,double *work)
 {
-   return lange<double>(norm,m,n,A,ldA,work);
+   return LANGE<double>(norm,m,n,A,ldA,work);
 }

@@ -38,7 +38,7 @@ namespace LATL
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lansp(const char normType, const char uplo, const int_t n, real_t * const AP, real_t *Work=NULL)
+   real_t LANSP(const char normType, const char uplo, const int_t n, real_t * const AP, real_t *Work=NULL)
    {
       using std::abs;
       using std::isnan;
@@ -157,7 +157,7 @@ namespace LATL
             for (int_t j = 1; j < n; ++j)
             {
                Aj += j;
-               LATL::lassq(j, Aj, 1, scale, sum);
+               LATL::LASSQ(j, Aj, 1, scale, sum);
             }
             sum *= 2;
             Aj = AP;
@@ -186,7 +186,7 @@ namespace LATL
             Aj += 1;
             for (int_t j = 0; j < n-1; ++j)
             {
-               LATL::lassq(n-j-1, Aj, 1, scale, sum);
+               LATL::LASSQ(n-j-1, Aj, 1, scale, sum);
                Aj += n-j;
             }
             sum *= 2;
@@ -237,7 +237,7 @@ namespace LATL
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lansp(const char normType, const char uplo, const int_t n, complex<real_t> * const AP, real_t *Work=NULL)
+   real_t LANSP(const char normType, const char uplo, const int_t n, complex<real_t> * const AP, real_t *Work=NULL)
    {
       using std::abs;
       using std::isnan;
@@ -356,7 +356,7 @@ namespace LATL
             for (int_t j = 1; j < n; ++j)
             {
                Aj += j;
-               LATL::lassq(j, Aj, 1, scale, sum);
+               LATL::LASSQ(j, Aj, 1, scale, sum);
             }
             sum *= 2;
             Aj = AP;
@@ -401,7 +401,7 @@ namespace LATL
             Aj += 1;
             for (int_t j = 0; j < n-1; ++j)
             {
-               LATL::lassq(n-j-1, Aj, 1, scale, sum);
+               LATL::LASSQ(n-j-1, Aj, 1, scale, sum);
                Aj += n-j;
             }
             sum *= 2;

@@ -58,7 +58,7 @@ namespace LATL
       
       if (notrans)
       {
-         LATL::laswp(colB, B, ldB, 0, n-1, IPIV);
+         LATL::LASWP(colB, B, ldB, 0, n-1, IPIV);
          LATL::TRSM('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
          LATL::TRSM('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
       }
@@ -66,7 +66,7 @@ namespace LATL
       {
          LATL::TRSM('L', 'U', 'T', 'N', n, colB, one, A, ldA, B, ldB);
          LATL::TRSM('L', 'L', 'T', 'U', n, colB, one, A, ldA, B, ldB);
-         LATL::laswp(colB, B, ldB, 0, n-1, IPIV, -1);
+         LATL::LASWP(colB, B, ldB, 0, n-1, IPIV, -1);
       }
       return 0;
    }
@@ -111,7 +111,7 @@ namespace LATL
       
       if (notrans)
       {
-         LATL::laswp(colB, B, ldB, 0, n-1, IPIV);
+         LATL::LASWP(colB, B, ldB, 0, n-1, IPIV);
          LATL::TRSM('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
          LATL::TRSM('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
       }
@@ -119,7 +119,7 @@ namespace LATL
       {
          LATL::TRSM('L', 'U', trans, 'N', n, colB, one, A, ldA, B, ldB);
          LATL::TRSM('L', 'L', trans, 'U', n, colB, one, A, ldA, B, ldB);
-         LATL::laswp(colB, B, ldB, 0, n-1, IPIV, -1);
+         LATL::LASWP(colB, B, ldB, 0, n-1, IPIV, -1);
       }
       return 0;
    }

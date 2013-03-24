@@ -28,7 +28,7 @@ namespace LATL
    /// @param[in] infile Input stream from which to read matrix.  Defaults to standard input.
    
    template <typename real_t>
-   real_t *load(int &m,int &n,std::istream &infile=std::cin)
+   real_t *LOAD(int &m,int &n,std::istream &infile=std::cin)
    {
       using std::string;
       using std::queue;
@@ -87,7 +87,7 @@ namespace LATL
    /// @param[in] infile Input stream from which to read matrix.  Defaults to standard input.
    
    template <typename real_t>
-   real_t *load(char &uplo,int &n,std::istream &infile=std::cin)
+   real_t *LOAD(char &uplo,int &n,std::istream &infile=std::cin)
    {
       using std::string;
       using std::queue;

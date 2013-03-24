@@ -36,7 +36,7 @@ namespace LATL
    /// @ingroup MAT
 
    template<typename real_t>
-   int_t laneg(int_t n, real_t *d, real_t *lld, real_t sigma, int_t r)
+   int_t LANEG(int_t n, real_t *d, real_t *lld, real_t sigma, int_t r)
    {
       const real_t zero(0.0);
       const real_t one(1.0);

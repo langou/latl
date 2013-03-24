@@ -37,7 +37,7 @@ namespace LATL
    /// @ingroup COND
    
    template< typename real_t>
-   void laqge(const int_t m, const int_t n, real_t * const A, const int_t ldA, real_t * const R, real_t * const C, const real_t rowcnd, const real_t colcnd, const real_t amax, char &equed)
+   void LAQGE(const int_t m, const int_t n, real_t * const A, const int_t ldA, real_t * const R, real_t * const C, const real_t rowcnd, const real_t colcnd, const real_t amax, char &equed)
    {
       if ( m <= 0 or n <= 0)
       {
@@ -116,7 +116,7 @@ namespace LATL
    /// @ingroup COND
 
    template< typename real_t>
-   void laqge(const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, real_t * const R, real_t * const C, const real_t rowcnd, const real_t colcnd, const real_t amax, char &equed)
+   void LAQGE(const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, real_t * const R, real_t * const C, const real_t rowcnd, const real_t colcnd, const real_t amax, char &equed)
    {
       
       if ( m <= 0 or n <= 0)

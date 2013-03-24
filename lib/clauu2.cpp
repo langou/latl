@@ -9,11 +9,11 @@
 #include "lapack.h"
 #include "lauum.h"
 
-using LATL::lauum;
+using LATL::LAUUM;
 
 int clauu2_(char &uplo,int &n,complex<float> *A,int &ldA,int &info)
 {
-   info=lauum<float>(uplo,n,A,ldA);
+   info=LAUUM<float>(uplo,n,A,ldA);
    if(info!=0)
    {
       info=-info;

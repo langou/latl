@@ -51,7 +51,7 @@ namespace LATL
       using std::min;
       using std::max;
       using std::copysign;
-      using LATL::lapy2;
+      using LATL::LAPY2;
       const real_t zero=0.0;
       const real_t one=1.0;
       const real_t half=0.5;
@@ -90,7 +90,7 @@ namespace LATL
             z=p+copysign(sqrt(scale)*sqrt(z),p);
             a=d+z;
             d=d-(bcmax/z)*bcmis;
-            real_t tau=lapy2(c,z);
+            real_t tau=LAPY2(c,z);
             cs=z/tau;
             sn=c/tau;
             b=b-c;
@@ -99,7 +99,7 @@ namespace LATL
          else
          {
             real_t sigma=b+c;
-            real_t tau=lapy2(sigma,temp);
+            real_t tau=LAPY2(sigma,temp);
             cs=sqrt(half*(one+abs(sigma)/tau));
             sn=-(p/(tau*cs))*copysign(one,sigma);
             real_t A=a*cs+b*sn;

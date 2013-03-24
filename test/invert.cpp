@@ -64,7 +64,7 @@ real_t general(int nb,bool resi,bool prnt)
    const matrix_t one(1.0);
    const matrix_t zero(0.0);
    real_t residual;
-   matrix_t *A=load<matrix_t>(m,n);
+   matrix_t *A=LOAD<matrix_t>(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -84,12 +84,12 @@ real_t general(int nb,bool resi,bool prnt)
    }
    if(prnt)
       PRINT<real_t>(n,n,A,n);
-   laset<real_t>(uplo,n,n,zero,one,C,n);
-   laset<real_t>(uplo,n,n,zero,one,D,n);
+   LASET<real_t>(uplo,n,n,zero,one,C,n);
+   LASET<real_t>(uplo,n,n,zero,one,D,n);
    GEMM<real_t>('n','n',n,n,n,one,A,n,B,n,-one,C,n);
    GEMM<real_t>('n','n',n,n,n,one,B,n,A,n,-one,D,n);
-   residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
-   real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
+   residual=max(LANGE<real_t>('m',n,n,C,n),LANGE<real_t>('m',n,n,D,n));
+   real_t condition=LANGE<real_t>('i',n,n,A,n)*LANGE<real_t>('i',n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
    delete [] ipiv;
    delete [] D;
@@ -108,7 +108,7 @@ real_t symmetric(int nb,char uplo,bool resi,bool prnt)
    const matrix_t one(1.0);
    const matrix_t zero(0.0);
    real_t residual;
-   matrix_t *A=load<matrix_t>(m,n);
+   matrix_t *A=LOAD<matrix_t>(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -129,12 +129,12 @@ real_t symmetric(int nb,char uplo,bool resi,bool prnt)
    }
    if(prnt)
       PRINT<real_t>(n,n,A,n);
-   laset<real_t>('a',n,n,zero,one,C,n);
-   laset<real_t>('a',n,n,zero,one,D,n);
+   LASET<real_t>('a',n,n,zero,one,C,n);
+   LASET<real_t>('a',n,n,zero,one,D,n);
    SYMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
    SYMM<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
-   residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
-   real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
+   residual=max(LANGE<real_t>('m',n,n,C,n),LANGE<real_t>('m',n,n,D,n));
+   real_t condition=LANGE<real_t>('i',n,n,A,n)*LANGE<real_t>('i',n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
    delete [] block;
    delete [] ipiv;
@@ -154,7 +154,7 @@ real_t hermitian(int nb,char uplo,bool resi,bool prnt)
    const complex<real_t> one(1.0);
    const complex<real_t> zero(0.0);
    real_t residual;
-   complex<real_t> *A=load< complex<real_t> >(m,n);
+   complex<real_t> *A=LOAD< complex<real_t> >(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -175,12 +175,12 @@ real_t hermitian(int nb,char uplo,bool resi,bool prnt)
    }
    if(prnt)
       PRINT<real_t>(n,n,A,n);
-   laset<real_t>('a',n,n,zero,one,C,n);
-   laset<real_t>('a',n,n,zero,one,D,n);
+   LASET<real_t>('a',n,n,zero,one,C,n);
+   LASET<real_t>('a',n,n,zero,one,D,n);
    HEMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
    HEMM<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
-   residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
-   real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
+   residual=max(LANGE<real_t>('m',n,n,C,n),LANGE<real_t>('m',n,n,D,n));
+   real_t condition=LANGE<real_t>('i',n,n,A,n)*LANGE<real_t>('i',n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
    delete [] block;
    delete [] ipiv;
@@ -200,7 +200,7 @@ real_t symmetric_positive(int nb,char uplo,bool resi,bool prnt)
    const real_t one(1.0);
    const real_t zero(0.0);
    real_t residual;
-   real_t *A=load<real_t>(m,n);
+   real_t *A=LOAD<real_t>(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -224,12 +224,12 @@ real_t symmetric_positive(int nb,char uplo,bool resi,bool prnt)
    }
    if(prnt)
       PRINT<real_t>(n,n,A,n);
-   laset<real_t>('a',n,n,zero,one,C,n);
-   laset<real_t>('a',n,n,zero,one,D,n);
+   LASET<real_t>('a',n,n,zero,one,C,n);
+   LASET<real_t>('a',n,n,zero,one,D,n);
    SYMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
    SYMM<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
-   residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
-   real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
+   residual=max(LANGE<real_t>('m',n,n,C,n),LANGE<real_t>('m',n,n,D,n));
+   real_t condition=LANGE<real_t>('i',n,n,A,n)*LANGE<real_t>('i',n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
    delete [] D;
    delete [] C;
@@ -247,7 +247,7 @@ real_t hermitian_positive(int nb,char uplo,bool resi,bool prnt)
    const complex<real_t> one(1.0);
    const complex<real_t> zero(0.0);
    real_t residual;
-   complex<real_t> *A=load< complex<real_t> >(m,n);
+   complex<real_t> *A=LOAD< complex<real_t> >(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -271,12 +271,12 @@ real_t hermitian_positive(int nb,char uplo,bool resi,bool prnt)
    }
    if(prnt)
       PRINT<real_t>(n,n,A,n);
-   laset<real_t>('a',n,n,zero,one,C,n);
-   laset<real_t>('a',n,n,zero,one,D,n);
+   LASET<real_t>('a',n,n,zero,one,C,n);
+   LASET<real_t>('a',n,n,zero,one,D,n);
    HEMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
    HEMM<real_t>('r',uplo,n,n,one,A,n,B,n,-one,D,n);
-   residual=max(lange<real_t>('m',n,n,C,n),lange<real_t>('m',n,n,D,n));
-   real_t condition=lange<real_t>('i',n,n,A,n)*lange<real_t>('i',n,n,B,n);
+   residual=max(LANGE<real_t>('m',n,n,C,n),LANGE<real_t>('m',n,n,D,n));
+   real_t condition=LANGE<real_t>('i',n,n,A,n)*LANGE<real_t>('i',n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
    delete [] D;
    delete [] C;
@@ -294,7 +294,7 @@ real_t triangular(int nb,char uplo, char diag,bool resi,bool prnt)
    const matrix_t one(1.0);
    const matrix_t zero(0.0);
    real_t residual;
-   matrix_t *A=load<matrix_t>(m,n);
+   matrix_t *A=LOAD<matrix_t>(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -312,15 +312,15 @@ real_t triangular(int nb,char uplo, char diag,bool resi,bool prnt)
    }
    if(prnt)
       PRINT<real_t>(uplo,diag,n,A,n);
-   laset<real_t>(uplo,n,n,zero,one,C,n);
-   laset<real_t>(uplo,n,n,zero,one,D,n);
+   LASET<real_t>(uplo,n,n,zero,one,C,n);
+   LASET<real_t>(uplo,n,n,zero,one,D,n);
    if(diag=='u')
       for(int i=0;i<n;i++)
          A[i+i*n]=B[i+i*n]=one;
    TTMM<real_t>(uplo,n,one,A,n,B,n,-one,C,n);
    TTMM<real_t>(uplo,n,one,B,n,A,n,-one,D,n);
-   residual=max(lantr<real_t>('m',uplo,'n',n,n,C,n),lantr<real_t>('m',uplo,'n',n,n,D,n));
-   real_t condition=lantr<real_t>('i',uplo,diag,n,n,A,n)*lantr<real_t>('i',uplo,diag,n,n,B,n);
+   residual=max(LANTR<real_t>('m',uplo,'n',n,n,C,n),LANTR<real_t>('m',uplo,'n',n,n,D,n));
+   real_t condition=LANTR<real_t>('i',uplo,diag,n,n,A,n)*LANTR<real_t>('i',uplo,diag,n,n,B,n);
    real_t eps=numeric_limits<real_t>::epsilon();
    delete [] D;
    delete [] C;

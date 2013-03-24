@@ -39,7 +39,7 @@ namespace LATL
    /// @ingroup NORM
 
    template< typename real_t>
-   real_t lange(char normType, int_t m, int_t n, real_t *A, int_t ldA, real_t * Work=NULL)
+   real_t LANGE(char normType, int_t m, int_t n, real_t *A, int_t ldA, real_t * Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -128,7 +128,7 @@ namespace LATL
          real_t scale(0.0), sum(1.0), * Aj = A;
          for (int_t j = 0; j < n; ++j)
          {
-            LATL::lassq(m, Aj, 1, scale, sum);
+            LATL::LASSQ(m, Aj, 1, scale, sum);
             Aj += ldA;
          }
          value = scale*sqrt(sum);
@@ -158,7 +158,7 @@ namespace LATL
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lange(char normType, int_t m, int_t n, complex<real_t> *A, int_t ldA, real_t * Work=NULL)
+   real_t LANGE(char normType, int_t m, int_t n, complex<real_t> *A, int_t ldA, real_t * Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -249,7 +249,7 @@ namespace LATL
          complex< real_t> * Aj = A;
          for (int_t j = 0; j < n; ++j)
          {
-            LATL::lassq(m, Aj, 1, scale, sum);
+            LATL::LASSQ(m, Aj, 1, scale, sum);
             Aj += ldA;
          }
          value = scale*sqrt(sum);

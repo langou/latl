@@ -55,7 +55,7 @@ namespace LATL
          real_t a12=y[0];
          real_t a22=y[incy];
          real_t ssmax;
-         las2(a11,a12,a22,ssmin,ssmax);
+         LAS2(a11,a12,a22,ssmin,ssmax);
       }
    }
 
@@ -96,7 +96,7 @@ namespace LATL
          complex<real_t> a12=y[0];
          complex<real_t> a22=y[incy];
          real_t ssmax;
-         las2(abs(a11),abs(a12),abs(a22),ssmin,ssmax);
+         LAS2(abs(a11),abs(a12),abs(a22),ssmin,ssmax);
       }
    }
 }

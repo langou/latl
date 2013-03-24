@@ -9,9 +9,9 @@
 #include "lapack.h"
 #include "lange.h"
 
-using LATL::lange;
+using LATL::LANGE;
 
 float slange_(char &norm,int &m,int &n,float *A,int &ldA,float *work)
 {
-   return lange<float>(norm,m,n,A,ldA,work);
+   return LANGE<float>(norm,m,n,A,ldA,work);
 }

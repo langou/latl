@@ -112,7 +112,7 @@ namespace LATL
          for(i=ilo;i<ihi-nx;i+=nb)
          {
             ib = min( nb, ihi-i );
-            lahr2( ihi+1, i+1, ib, A+i*ldA, ldA, tau+i, T, n, work, n);
+            LAHR2( ihi+1, i+1, ib, A+i*ldA, ldA, tau+i, T, n, work, n);
             ei = A[i+ib+(i+ib-1)*ldA];
             A[i+ib+(i+ib-1)*ldA] = 1.0;
             GEMM<real_t>( 'N', 'T', ihi+1, ihi-i-ib+1, ib, -1.0, work, n, A+i+ib+i*ldA, ldA, 1.0, A+(i+ib)*ldA, ldA);
@@ -221,7 +221,7 @@ namespace LATL
          for(i=ilo;i<ihi-nx;i+=nb)
          {
             ib = min( nb, ihi-i );
-            lahr2( ihi+1, i+1, ib, A+i*ldA, ldA, tau+i, T, n, work, n);
+            LAHR2( ihi+1, i+1, ib, A+i*ldA, ldA, tau+i, T, n, work, n);
             ei = A[i+ib+(i+ib-1)*ldA];
             A[i+ib+(i+ib-1)*ldA] = 1.0;
             GEMM<real_t>( 'N', 'C', ihi+1, ihi-i-ib+1, ib, -1.0, work, n, A+i+ib+i*ldA, ldA, 1.0, A+(i+ib)*ldA, ldA);

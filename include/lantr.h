@@ -41,7 +41,7 @@ namespace LATL
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lantr(const char normType, const char uplo, const char diag, const int_t m, const int_t n, real_t * const A, const int_t ldA, real_t *Work=NULL)
+   real_t LANTR(const char normType, const char uplo, const char diag, const int_t m, const int_t n, real_t * const A, const int_t ldA, real_t *Work=NULL)
    {
       using std::min;
       using std::max;
@@ -285,7 +285,7 @@ namespace LATL
                Aj += ldA;
                for (int_t j = 1; j < n; ++j)
                {
-                  LATL::lassq(min(m, j), Aj, 1, scale, sum);
+                  LATL::LASSQ(min(m, j), Aj, 1, scale, sum);
                   Aj += ldA;
                }
             }
@@ -294,7 +294,7 @@ namespace LATL
                scale = zero;
                for (int_t j = 0; j < n; ++j)
                {
-                  LATL::lassq(min(m, j+1), Aj, 1, scale, sum);
+                  LATL::LASSQ(min(m, j+1), Aj, 1, scale, sum);
                   Aj += ldA;
                }
             }
@@ -307,7 +307,7 @@ namespace LATL
                Aj += 1;
                for (int_t j = 0; j < n; ++j)
                {
-                  LATL::lassq(m-j-1, Aj, 1, scale, sum);
+                  LATL::LASSQ(m-j-1, Aj, 1, scale, sum);
                   Aj += ldA+1;
                }
             }
@@ -316,7 +316,7 @@ namespace LATL
                scale = zero;
                for (int_t j = 0; j < n; ++j)
                {
-                  LATL::lassq(m-j, Aj, 1, scale, sum);
+                  LATL::LASSQ(m-j, Aj, 1, scale, sum);
                   Aj += ldA+1;
                }
             }
@@ -350,7 +350,7 @@ namespace LATL
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t lantr(const char normType, const char uplo, const char diag, const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, real_t *Work=NULL)
+   real_t LANTR(const char normType, const char uplo, const char diag, const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, real_t *Work=NULL)
    {
       using std::min;
       using std::max;
@@ -596,7 +596,7 @@ namespace LATL
                Aj += ldA;
                for (int_t j = 1; j < n; ++j)
                {
-                  LATL::lassq(min(m, j), Aj, 1, scale, sum);
+                  LATL::LASSQ(min(m, j), Aj, 1, scale, sum);
                   Aj += ldA;
                }
             }
@@ -605,7 +605,7 @@ namespace LATL
                scale = zero;
                for (int_t j = 0; j < n; ++j)
                {
-                  LATL::lassq(min(m, j+1), Aj, 1, scale, sum);
+                  LATL::LASSQ(min(m, j+1), Aj, 1, scale, sum);
                   Aj += ldA;
                }
             }
@@ -618,7 +618,7 @@ namespace LATL
                Aj += 1;
                for (int_t j = 0; j < n; ++j)
                {
-                  LATL::lassq(m-j-1, Aj, 1, scale, sum);
+                  LATL::LASSQ(m-j-1, Aj, 1, scale, sum);
                   Aj += ldA+1;
                }
             }
@@ -627,7 +627,7 @@ namespace LATL
                scale = zero;
                for (int_t j = 0; j < n; ++j)
                {
-                  LATL::lassq(m-j, Aj, 1, scale, sum);
+                  LATL::LASSQ(m-j, Aj, 1, scale, sum);
                   Aj += ldA+1;
                }
             }

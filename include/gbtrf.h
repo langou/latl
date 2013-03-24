@@ -269,7 +269,7 @@ namespace LATL
                
                j2 = std::min(jU-j+1, kV)-jb;
                j3 = std::max(0, jU-j-kV+1);
-               LATL::laswp(j2, ABj+ldAB*jb+kV-jb, ldAB-1, 0, jb-1, IPIV+j);
+               LATL::LASWP(j2, ABj+ldAB*jb+kV-jb, ldAB-1, 0, jb-1, IPIV+j);
                
                for (int_t i = j; i < j+jb; ++i)
                {

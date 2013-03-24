@@ -40,7 +40,7 @@ namespace LATL
    /// @ingroup ROT
    
    template<typename real_t>
-   void lartg(real_t f, real_t g, real_t &c, real_t &s, real_t &r)
+   void LARTG(real_t f, real_t g, real_t &c, real_t &s, real_t &r)
    {
       using std::numeric_limits;
       using std::conj;
@@ -52,7 +52,7 @@ namespace LATL
       using std::sqrt;
       using std::abs;
       using std::trunc;
-      using LATL::lapy2;
+      using LATL::LAPY2;
       
       const real_t zero=0.0;
       const real_t one=1.0;
@@ -146,7 +146,7 @@ namespace LATL
    /// @ingroup ROT
    
    template<typename real_t>
-   void lartg(complex<real_t> f, complex<real_t> g, real_t &c, complex<real_t> &s, complex<real_t> &r)
+   void LARTG(complex<real_t> f, complex<real_t> g, real_t &c, complex<real_t> &s, complex<real_t> &r)
    {
       using std::numeric_limits;
       using std::conj;
@@ -158,7 +158,7 @@ namespace LATL
       using std::sqrt;
       using std::abs;
       using std::trunc;
-      using LATL::lapy2;
+      using LATL::LAPY2;
 
       const real_t zero(0.0);
       const real_t one(1.0);
@@ -203,19 +203,19 @@ namespace LATL
             if(f==czero)
             {
                c=zero;
-               r=lapy2(real(g),imag(g));
-               s=conj(G)/lapy2(real(G),imag(G));
+               r=LAPY2(real(g),imag(g));
+               s=conj(G)/LAPY2(real(G),imag(G));
             }
             else
             {
-               real_t F2S=lapy2(real(F),imag(F));
+               real_t F2S=LAPY2(real(F),imag(F));
                real_t G2S=sqrt(G2);
                c=F2S/G2S;
                complex<real_t> ff;
                if(max(abs(real(f)),abs(imag(f)))>one)
-                  ff=f/lapy2(real(f),imag(f));
+                  ff=f/LAPY2(real(f),imag(f));
                else
-                  ff=SafeMax*f/lapy2(real(f),imag(f));
+                  ff=SafeMax*f/LAPY2(real(f),imag(f));
                s=ff*conj(G)/G2S;
                r=c*f+s*g;
             }

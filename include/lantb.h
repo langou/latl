@@ -64,7 +64,7 @@ namespace LATL
    /// @ingroup NORM
    
    template <typename real_t>
-   real_t lantb(const char normType, const char uplo, const char diag, const int_t n, const int_t k, real_t * const AB, const int_t ldAB, real_t *Work=NULL)
+   real_t LANTB(const char normType, const char uplo, const char diag, const int_t n, const int_t k, real_t * const AB, const int_t ldAB, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -324,7 +324,7 @@ namespace LATL
                   ABj += ldAB+k-1;
                   for (int_t j = 1; j < n; ++j)
                   {
-                     LATL::lassq(min(j, k), ABj, 1, scale, sum);
+                     LATL::LASSQ(min(j, k), ABj, 1, scale, sum);
                      if (k-j > 0)
                         ABj += ldAB-1;
                      else
@@ -339,7 +339,7 @@ namespace LATL
                ABj += k;
                for (int_t j = 0; j < n; ++j)
                {
-                  LATL::lassq(min(j, k)+1, ABj, 1, scale, sum);
+                  LATL::LASSQ(min(j, k)+1, ABj, 1, scale, sum);
                   if (k-j > 0)
                      ABj += ldAB-1;
                   else
@@ -358,7 +358,7 @@ namespace LATL
                {
                   for (int_t j = 0; j < n-1; ++j)
                   {
-                     LATL::lassq(min(k, n-j-1), ABj, 1, scale, sum);
+                     LATL::LASSQ(min(k, n-j-1), ABj, 1, scale, sum);
                      ABj += ldAB;
                   }
                }
@@ -369,7 +369,7 @@ namespace LATL
                sum = 1.0;
                for (int_t j = 0; j < n; ++j)
                {
-                  LATL::lassq(min(k+1, n-j), ABj, 1, scale, sum);
+                  LATL::LASSQ(min(k+1, n-j), ABj, 1, scale, sum);
                   ABj += ldAB;
                }
             }
@@ -426,7 +426,7 @@ namespace LATL
    /// @ingroup NORM
    
    template <typename real_t>
-   real_t lantb(const char normType, const char uplo, const char diag, const int_t n, const int_t k, complex<real_t> * const AB, const int_t ldAB, real_t *Work=NULL)
+   real_t LANTB(const char normType, const char uplo, const char diag, const int_t n, const int_t k, complex<real_t> * const AB, const int_t ldAB, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -687,7 +687,7 @@ namespace LATL
                   ABj += ldAB+k-1;
                   for (int_t j = 1; j < n; ++j)
                   {
-                     LATL::lassq(min(j, k), ABj, 1, scale, sum);
+                     LATL::LASSQ(min(j, k), ABj, 1, scale, sum);
                      if (k-j > 0)
                         ABj += ldAB-1;
                      else
@@ -702,7 +702,7 @@ namespace LATL
                ABj += k;
                for (int_t j = 0; j < n; ++j)
                {
-                  LATL::lassq(min(j, k)+1, ABj, 1, scale, sum);
+                  LATL::LASSQ(min(j, k)+1, ABj, 1, scale, sum);
                   if (k-j > 0)
                      ABj += ldAB-1;
                   else
@@ -721,7 +721,7 @@ namespace LATL
                {
                   for (int_t j = 0; j < n-1; ++j)
                   {
-                     LATL::lassq(min(k, n-j-1), ABj, 1, scale, sum);
+                     LATL::LASSQ(min(k, n-j-1), ABj, 1, scale, sum);
                      ABj += ldAB;
                   }
                }
@@ -732,7 +732,7 @@ namespace LATL
                sum = 1.0;
                for (int_t j = 0; j < n; ++j)
                {
-                  LATL::lassq(min(k+1, n-j), ABj, 1, scale, sum);
+                  LATL::LASSQ(min(k+1, n-j), ABj, 1, scale, sum);
                   ABj += ldAB;
                }
             }

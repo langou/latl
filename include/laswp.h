@@ -29,7 +29,7 @@ namespace LATL
    /// @ingroup MAT
    
    template< typename real_t>
-   int laswp(const int_t n, real_t * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int_t inc=1)
+   int LASWP(const int_t n, real_t * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int_t inc=1)
    {
       const int_t b=32;
       int_t i1, i2, i0;
@@ -109,9 +109,9 @@ namespace LATL
    /// @ingroup MAT
    
    template< typename real_t>
-   int laswp(const int_t n, complex<real_t> * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int_t inc=1)
+   int LASWP(const int_t n, complex<real_t> * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int_t inc=1)
    {
-      return laswp< complex<real_t> >(n,A,ldA,k1,k2,IPIV,inc);
+      return LASWP< complex<real_t> >(n,A,ldA,k1,k2,IPIV,inc);
    }
 }
 #endif

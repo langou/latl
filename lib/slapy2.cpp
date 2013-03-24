@@ -9,11 +9,11 @@
 #include "lapack.h"
 #include "lapy2.h"
 
-using LATL::lapy2;
+using LATL::LAPY2;
 
 float slapy2_(float &x, float &y)
 {
-   return lapy2<float>(x,y);
+   return LAPY2<float>(x,y);
 }
 
 

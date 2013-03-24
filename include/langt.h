@@ -37,7 +37,7 @@ namespace LATL
    /// @ingroup NORM
 
    template <typename real_t>
-   real_t langt(const char normType, const int_t n, real_t * const DL, real_t * const D, real_t * const DU)
+   real_t LANGT(const char normType, const int_t n, real_t * const DL, real_t * const D, real_t * const DU)
    {
       using std::isnan;
       using std::abs;
@@ -123,11 +123,11 @@ namespace LATL
          real_t scale = zero;
          real_t sum = one;
          
-         LATL::lassq(n, D, 1, scale, sum);
+         LATL::LASSQ(n, D, 1, scale, sum);
          if (n > 1)
          {
-            LATL::lassq(n-1, DL, 1, scale, sum);
-            LATL::lassq(n-1, DU, 1, scale, sum);
+            LATL::LASSQ(n-1, DL, 1, scale, sum);
+            LATL::LASSQ(n-1, DU, 1, scale, sum);
          }
          value = scale*sqrt(sum);
       }
@@ -154,7 +154,7 @@ namespace LATL
    /// @ingroup NORM
    
    template <typename real_t>
-   real_t langt(const char normType, const int_t n, complex<real_t> * const DL, complex<real_t> * const D, complex<real_t> * const DU)
+   real_t LANGT(const char normType, const int_t n, complex<real_t> * const DL, complex<real_t> * const D, complex<real_t> * const DU)
    {
       const real_t zero = 0.0;
       const real_t one = 1.0;
@@ -237,11 +237,11 @@ namespace LATL
          real_t scale = zero;
          real_t sum = one;
       
-         LATL::lassq(n, D, 1, scale, sum);
+         LATL::LASSQ(n, D, 1, scale, sum);
          if (n > 1)
          {
-            LATL::lassq(n-1, DL, 1, scale, sum);
-            LATL::lassq(n-1, DU, 1, scale, sum);
+            LATL::LASSQ(n-1, DL, 1, scale, sum);
+            LATL::LASSQ(n-1, DU, 1, scale, sum);
          }
          value = scale*sqrt(sum);
       }

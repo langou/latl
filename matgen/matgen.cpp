@@ -65,7 +65,7 @@ int main(int argc, char** argv)
    using std::exp;
    using std::log;
    using std::log2;
-   using LATL::larnv;
+   using LATL::LARNV;
    int m=1;
    int n=1;
    int arg=1;
@@ -171,7 +171,7 @@ int main(int argc, char** argv)
       complex<real_t> *A=new complex<real_t>[m*n];
       if((dist>0)&&(dist<6))
       {
-         larnv(dist,m*n,A,s);
+         LARNV(dist,m*n,A,s);
          if(symmetric||hermitian)
          {
             for(int i=0;i<n;i++)
@@ -223,7 +223,7 @@ int main(int argc, char** argv)
       }
       else if((dist>0)&&(dist<4))
       {
-         larnv(dist,m*n,A,s);
+         LARNV(dist,m*n,A,s);
          if(symmetric)
          {
             for(int i=0;i<n;i++)

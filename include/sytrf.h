@@ -69,7 +69,7 @@ namespace LATL
          {
             if ( k > nb)
             {
-               temp = LATL::lasyf(uplo, k, nb, kb, A, ldA, IPIV, BSDV, Work);
+               temp = LATL::LASYF(uplo, k, nb, kb, A, ldA, IPIV, BSDV, Work);
             }
             else
             {
@@ -94,7 +94,7 @@ namespace LATL
             Akk = A+ldA*k+k;
             if ( k < n-nb)
             {
-               temp = LATL::lasyf(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k, Work);
+               temp = LATL::LASYF(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k, Work);
             }
             else
             {

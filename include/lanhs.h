@@ -37,7 +37,7 @@ namespace LATL
    /// @ingroup NORM
    
    template <typename real_t>
-   real_t lanhs( const char normType, const int_t n, real_t * A, const int_t ldA, real_t *Work=NULL)
+   real_t LANHS( const char normType, const int_t n, real_t * A, const int_t ldA, real_t *Work=NULL)
    {
       using std::min;
       using std::isnan;
@@ -126,7 +126,7 @@ namespace LATL
          real_t * Aj = A;
          for (int_t j = 0; j < n; ++j)
          {
-            LATL::lassq(min(n, j+2), Aj, 1, scale, sum);
+            LATL::LASSQ(min(n, j+2), Aj, 1, scale, sum);
             Aj += ldA;
          }
          value = scale * sqrt(sum);
@@ -155,7 +155,7 @@ namespace LATL
    /// @ingroup NORM
    
    template <typename real_t>
-   real_t lanhs( const char normType, const int_t n, complex<real_t> * A, const int_t ldA, real_t *Work=NULL)
+   real_t LANHS( const char normType, const int_t n, complex<real_t> * A, const int_t ldA, real_t *Work=NULL)
    {
       using std::min;
       using std::isnan;
@@ -246,7 +246,7 @@ namespace LATL
          complex<real_t> * Aj = A;
          for (int_t j = 0; j < n; ++j)
          {
-            LATL::lassq(min(n, j+2), Aj, 1, scale, sum);
+            LATL::LASSQ(min(n, j+2), Aj, 1, scale, sum);
             Aj += ldA;
          }
          value = scale * sqrt(sum);

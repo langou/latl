@@ -33,7 +33,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.
    
    template<typename real_t>
-   int laset(char uplo,int_t m,int_t n,real_t alpha,real_t beta,real_t *A,int_t ldA)
+   int LASET(char uplo,int_t m,int_t n,real_t alpha,real_t beta,real_t *A,int_t ldA)
    {
       using std::toupper;
       uplo=toupper(uplo);
@@ -91,9 +91,9 @@ namespace LATL
    /// @param ldA Column length of the matrix A.
    
    template<typename real_t>
-   int laset(char uplo,int_t m,int_t n,complex<real_t> alpha,complex<real_t> beta,complex<real_t> *A,int_t ldA)
+   int LASET(char uplo,int_t m,int_t n,complex<real_t> alpha,complex<real_t> beta,complex<real_t> *A,int_t ldA)
    {
-      return laset< complex<real_t> >(uplo,m,n,alpha,beta,A,ldA);
+      return LASET< complex<real_t> >(uplo,m,n,alpha,beta,A,ldA);
    }
 }
 

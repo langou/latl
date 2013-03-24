@@ -103,7 +103,7 @@ namespace LATL
    /// Mathematical Software, 32(2):180-194, June 2006.
    ///
    template <typename real_t>
-   int_t lahr2( int_t n, int_t k, int_t nb, real_t *A, int_t ldA, real_t *tau, real_t *T, int_t ldT, real_t *Y, int_t ldY )
+   int_t LAHR2( int_t n, int_t k, int_t nb, real_t *A, int_t ldA, real_t *tau, real_t *T, int_t ldT, real_t *Y, int_t ldY )
    {
       using std::min;
       int_t i;
@@ -217,7 +217,7 @@ namespace LATL
    /// Mathematical Software, 32(2):180-194, June 2006.
    ///
    template <typename real_t>
-   int_t lahr2( int_t n, int_t k, int_t nb, complex<real_t> *A, int_t ldA, complex<real_t> *tau, complex<real_t> *T, int_t ldT, complex<real_t> *Y, int_t ldY )
+   int_t LAHR2( int_t n, int_t k, int_t nb, complex<real_t> *A, int_t ldA, complex<real_t> *tau, complex<real_t> *T, int_t ldT, complex<real_t> *Y, int_t ldY )
    {
       using std::min;
       int_t i;

@@ -68,7 +68,7 @@ namespace LATL
          real_t xnorm=NRM2<real_t>(n-1,x,incx);
          if(xnorm>zero)
          {
-            real_t temp=abs(lapy2(alpha,xnorm));
+            real_t temp=abs(LAPY2(alpha,xnorm));
             real_t beta=(alpha<zero)?temp:-temp;
             if(abs(beta)<safemin)
             {
@@ -80,7 +80,7 @@ namespace LATL
                   alpha*=rsafemin;
                }
                xnorm=NRM2<real_t>(n-1,x,incx);
-               temp=abs(lapy2(alpha,xnorm));
+               temp=abs(LAPY2(alpha,xnorm));
                beta=(alpha<zero)?temp:-temp;
             }
             tau=(beta-alpha)/beta;
@@ -142,7 +142,7 @@ namespace LATL
          real_t xnorm=NRM2<real_t>(n-1,x,incx);
          if((xnorm!=zero)||(imag(alpha)!=zero))
          {
-            real_t temp=abs(lapy3(real(alpha),imag(alpha),xnorm));
+            real_t temp=abs(LAPY3(real(alpha),imag(alpha),xnorm));
             real_t beta=(real(alpha)<zero)?temp:-temp;
             if(abs(beta)<safemin)
             {
@@ -154,7 +154,7 @@ namespace LATL
                   alpha*=rsafemin;
                }
                xnorm=NRM2<real_t>(n-1,x,incx);
-               temp=abs(lapy3(real(alpha),imag(alpha),xnorm));
+               temp=abs(LAPY3(real(alpha),imag(alpha),xnorm));
                beta=(real(alpha)<zero)?temp:-temp;
             }
             tau=complex<real_t>((beta-real(alpha))/beta,-imag(alpha)/beta);

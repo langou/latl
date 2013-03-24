@@ -19,7 +19,7 @@ namespace LATL
    
    /// @brief Calculates the sum of the squares of elements of a real-valued vector.
    ///
-   /// lassq() returns the values scl and ssq such that
+   /// LASSQ() returns the values scl and ssq such that
    ///
    ///      (scl^2)*ssq = (x0)^2 + (x1)^2 + (x2)^2 + ... + (x[n-1])^2 + (scale)^2*sumsq
    ///
@@ -36,7 +36,7 @@ namespace LATL
    /// @ingroup VEC
    
    template< typename real_t>
-   void lassq( const int_t n, real_t * const X, const int_t incx, real_t &scale, real_t &sumsq)
+   void LASSQ( const int_t n, real_t * const X, const int_t incx, real_t &scale, real_t &sumsq)
    {
       using std::abs;
       using std::isnan;
@@ -73,7 +73,7 @@ namespace LATL
    
    /// @brief Calculates the sum of the squares of elements of a complex-valued vector.
    ///
-   /// lassq() returns the values scl and ssq such that
+   /// LASSQ() returns the values scl and ssq such that
    ///
    ///      (scl^2)*ssq = (x0)^2 + (x1)^2 + (x2)^2 + ... + (x[n-1])^2 + (scale)^2*sumsq
    ///
@@ -90,7 +90,7 @@ namespace LATL
    /// @ingroup VEC
    
    template< typename real_t>
-   void lassq( const int_t n, complex<real_t> * const X, const int_t incx, real_t &scale, real_t &sumsq)
+   void LASSQ( const int_t n, complex<real_t> * const X, const int_t incx, real_t &scale, real_t &sumsq)
    {
       using std::abs;
       using std::isnan;

@@ -40,7 +40,7 @@ namespace LATL
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t langb(const char normType, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, real_t *Work=NULL)
+   real_t LANGB(const char normType, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -134,7 +134,7 @@ namespace LATL
          {
             L = max(intzero,j-kU);
             K = kU -j+L;
-            LATL::lassq(min(n, j+kL+1)-L, ABj+K, 1, scale, sum);
+            LATL::LASSQ(min(n, j+kL+1)-L, ABj+K, 1, scale, sum);
             ABj += ldAB;
          }
          value = scale*sqrt(sum);
@@ -165,7 +165,7 @@ namespace LATL
    /// @ingroup NORM
    
    template< typename real_t>
-   real_t langb(const char normType, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, real_t *Work=NULL)
+   real_t LANGB(const char normType, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, real_t *Work=NULL)
    {
       using std::isnan;
       using std::abs;
@@ -261,7 +261,7 @@ namespace LATL
          {
             L = max(intzero,j-kU);
             K = kU -j+L;
-            LATL::lassq(min(n, j+kL+1)-L, ABj+K, 1, scale, sum);
+            LATL::LASSQ(min(n, j+kL+1)-L, ABj+K, 1, scale, sum);
             ABj += ldAB;
          }
          value = scale*sqrt(sum);

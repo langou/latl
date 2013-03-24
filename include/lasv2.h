@@ -43,7 +43,7 @@ namespace LATL
    /// @ingroup SCAL
    
    template<typename real_t>
-   void lasv2(real_t f,real_t g,real_t h,real_t &ssmin,real_t &ssmax,real_t &snr,real_t &csr,real_t &snl,real_t &csl)
+   void LASV2(real_t f,real_t g,real_t h,real_t &ssmin,real_t &ssmax,real_t &snr,real_t &csr,real_t &snl,real_t &csl)
    {
       using std::sqrt;
       using std::abs;

@@ -187,7 +187,7 @@ namespace LATL
                   if (k > 1)
                   {
                      complex<real_t> * Akm1 = A+ldA*(k-1);
-                     real_t d = LATL::lapy2(real(Ak[k-1]),imag(Ak[k-1]));
+                     real_t d = LATL::LAPY2(real(Ak[k-1]),imag(Ak[k-1]));
                      real_t d22 = real(Akm1[k-1])/d;
                      real_t d11 = real(Ak[k])/d;
                      real_t tt = one/(d11*d22-one);
@@ -334,7 +334,7 @@ namespace LATL
                {
                   if (k < n-2)
                   {
-                     real_t d = LATL::lapy2(real(Ak[k+1]),imag(Ak[k+1]));
+                     real_t d = LATL::LAPY2(real(Ak[k+1]),imag(Ak[k+1]));
                      real_t d11 = real(Akp1[k+1])/d;
                      real_t d22 = real(Ak[k])/d;
                      complex<real_t> d21 = Ak[k+1]/d;
