@@ -37,7 +37,7 @@ namespace LATL
    /// @ingroup MAT
 
    template<typename real_t>
-   int lapmt(bool forw,int_t m,int_t n,real_t *X,int_t ldX,int_t *k)
+   int LAPMT(bool forw,int_t m,int_t n,real_t *X,int_t ldX,int_t *k)
    {
       if(m<0)
          return -2;
@@ -127,9 +127,9 @@ namespace LATL
    /// @ingroup MAT
    
    template<typename real_t>
-   int lapmt(bool forw,int_t m,int_t n,complex<real_t> *X,int_t ldX,int_t *k)
+   int LAPMT(bool forw,int_t m,int_t n,complex<real_t> *X,int_t ldX,int_t *k)
    {
-      return lapmt< complex<real_t> >(forw,m,n,X,ldX,k);
+      return LAPMT< complex<real_t> >(forw,m,n,X,ldX,k);
    }
 }
 

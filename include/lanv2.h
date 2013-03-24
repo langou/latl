@@ -44,7 +44,7 @@ namespace LATL
    /// @ingroup SCAL
    
    template<typename real_t>
-   void lanv2(real_t &a,real_t &b,real_t &c,real_t &d,real_t &rt1r,real_t &rt1i,real_t &rt2r,real_t &rt2i,real_t &cs,real_t &sn)
+   void LANV2(real_t &a,real_t &b,real_t &c,real_t &d,real_t &rt1r,real_t &rt1i,real_t &rt2r,real_t &rt2i,real_t &cs,real_t &sn)
    {
       using std::abs;
       using std::sqrt;

@@ -38,7 +38,7 @@ namespace LATL
    /// @ingroup VEC
    
    template<typename real_t>
-   void lapll(int_t n,real_t *x,int_t incx,real_t *y,int_t incy,real_t &ssmin)
+   void LAPLL(int_t n,real_t *x,int_t incx,real_t *y,int_t incy,real_t &ssmin)
    {
       const real_t one=1.0;
       const real_t zero=0.0;
@@ -78,7 +78,7 @@ namespace LATL
    /// @ingroup VEC
    
    template<typename real_t>
-   void lapll(int_t n,complex<real_t> *x,int_t incx,complex<real_t> *y,int_t incy,real_t &ssmin)
+   void LAPLL(int_t n,complex<real_t> *x,int_t incx,complex<real_t> *y,int_t incy,real_t &ssmin)
    {
       using std::conj;
       const real_t one=1.0;
