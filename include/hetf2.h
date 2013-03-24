@@ -38,15 +38,15 @@ namespace LATL
    /// @param n The order of the matrix A.  n >= 0
    /// @param A Complex matrix size ldA-by-n. On entry, the Hermitian matrix A.  On exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L.
    /// @param ldA The column length of the array A.
-   /// @param IPIV Integer array size n.  On exit, contains the details of the interchanges and the block structure of D.
-   /// @param BSDV Boolean array size n.
-   /// If uplo=='U' and BSDV[k] and BSDV[k-1] are true, then rows and
-   /// columns k-1 and IPIV[k] were interchanged and D(k-1:k,k-1:k) is a 2-by-2 diagonal block.
-   /// If uplo=='L' and BSDV[k] and BSDV[k+1] are true, then rows and columns k+1 and IPIV[k]
+   /// @param ipiv Integer array size n.  On exit, contains the details of the interchanges and the block structure of D.
+   /// @param bsdv Boolean array size n.
+   /// If uplo=='U' and bsdv[k] and bsdv[k-1] are true, then rows and
+   /// columns k-1 and ipiv[k] were interchanged and D(k-1:k,k-1:k) is a 2-by-2 diagonal block.
+   /// If uplo=='L' and bsdv[k] and bsdv[k+1] are true, then rows and columns k+1 and ipiv[k]
    /// were interchanged and D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
 
    template <typename real_t>
-   int_t HETF2(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV)
+   int_t HETF2(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv)
    {
       if (uplo != 'U' && uplo != 'u' && uplo != 'L' && uplo != 'l')
          return -1;
@@ -72,7 +72,7 @@ namespace LATL
       real_t colmax = 0, absakk, r1;
       
       for (int_t i = 0; i < n; ++i)
-         BSDV[i] = 0;
+         bsdv[i] = 0;
       
       if (uplo == 'U' || uplo == 'u')
       {
@@ -212,14 +212,14 @@ namespace LATL
             }
             if (kstep == 1)
             {
-               IPIV[k] = kp;
+               ipiv[k] = kp;
             }
             else
             {
-               IPIV[k] = kp;
-               IPIV[k-1] = kp;
-               BSDV[k] = 1;
-               BSDV[k-1] = 1;
+               ipiv[k] = kp;
+               ipiv[k-1] = kp;
+               bsdv[k] = 1;
+               bsdv[k-1] = 1;
             }
             
             k = k-kstep;
@@ -358,14 +358,14 @@ namespace LATL
                }
                if (kstep == 1)
                {
-                  IPIV[k] = kp;
+                  ipiv[k] = kp;
                }
                else
                {
-                  IPIV[k] = kp;
-                  IPIV[k+1] = kp;
-                  BSDV[k] = 1;
-                  BSDV[k+1] = 1;
+                  ipiv[k] = kp;
+                  ipiv[k+1] = kp;
+                  bsdv[k] = 1;
+                  bsdv[k+1] = 1;
                }
             }
             k += kstep;

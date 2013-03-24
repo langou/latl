@@ -39,12 +39,13 @@ namespace LATL
    /// @param kb The number of columns of A that were actually factored.  kb is either nb-1 or nb, or n if n <= nb.
    /// @param A Complex array size ldA-by-n.  On entry, the Hermitian matrix A.   On exit, A contains details of the partial factorization.
    /// @param ldA Column length of the array A.  ldA >= n
-   /// @param IPIV Integer array size n. On exit, details of the interchanges of D. If uplo = 'U', the last kb elements of IPIV and BSDV are set, and if uplo = 'L', the first kb elements of IPIV and BSDV are set.
-   /// @param BSDV Bool array size n. On exit, contains the details of the block structure of D.  If BSDV[k] = 0, then rows and columns k and IPIV[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If BSDV[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and IPIV[k] = IPIV[k-1], then rows and columns k-1 and IPIV[k] were interchanged.  If uplo = 'L' and IPIV[k] = IPIV[k+1], then rows and columns k+1 and IPIV[k] were interchanged.
+   /// @param ipiv Integer array size n. On exit, details of the interchanges of D. If uplo = 'U', the last kb elements of ipiv and bsdv are set, and if uplo = 'L', the first kb elements of ipiv and bsdv are set.
+   /// @param bsdv Bool array size n. On exit, contains the details of the block structure of D.  If bsdv[k] = 0, then rows and columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If bsdv[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were interchanged.  If uplo = 'L' and ipiv[k] = ipiv[k+1], then rows and columns k+1 and ipiv[k] were interchanged.
+   /// @param Work Complex array size n-by-nb.
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t LAHEF(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, complex<real_t> * Work)
+   int_t LAHEF(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv, complex<real_t> * Work)
    {
       using std::abs;
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
@@ -207,15 +208,15 @@ namespace LATL
             }
             if (kstep == 1)
             {
-               IPIV[k] = kp;
-               BSDV[k] = 0;
+               ipiv[k] = kp;
+               bsdv[k] = 0;
             }
             else
             {
-               IPIV[k] = kp;
-               IPIV[k-1] = kp;
-               BSDV[k] = 1;
-               BSDV[k-1] = 1;
+               ipiv[k] = kp;
+               ipiv[k-1] = kp;
+               bsdv[k] = 1;
+               bsdv[k-1] = 1;
             }
             
             k -= kstep;
@@ -239,8 +240,8 @@ namespace LATL
          while (kp1 < n)
          {
             jtemp = kp1;
-            jp = IPIV[kp1];
-            if (BSDV[kp1] == 1)
+            jp = ipiv[kp1];
+            if (bsdv[kp1] == 1)
             {
                ++kp1;
             }
@@ -389,15 +390,15 @@ namespace LATL
             
             if (kstep == 1)
             {
-               IPIV[k] = kp;
-               BSDV[k] = 0;
+               ipiv[k] = kp;
+               bsdv[k] = 0;
             }
             else
             {
-               IPIV[k] = kp;
-               IPIV[k+1] = kp;
-               BSDV[k] = 1;
-               BSDV[k+1] = 1;
+               ipiv[k] = kp;
+               ipiv[k+1] = kp;
+               bsdv[k] = 1;
+               bsdv[k+1] = 1;
             }
             
             k += kstep;
@@ -422,8 +423,8 @@ namespace LATL
          while (km1 >= 0)
          {
             jtemp = km1;
-            jp = IPIV[km1];
-            if (BSDV[km1] == 1)
+            jp = ipiv[km1];
+            if (bsdv[km1] == 1)
             {
                --km1;
             }

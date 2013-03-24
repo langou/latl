@@ -36,14 +36,14 @@ namespace LATL
    /// @param colB Number of columns in matrix B.  colB >= 0
    /// @param A Real matrix size ldA-by-n.  On exit, the factors L and U.
    /// @param ldA Column length of the matrix A. ldA >= n
-   /// @param IPIV Integer array of length n.  Defines the permutation matrix P; row i of the matrix was interchanged with row IPIV(i).
+   /// @param ipiv Integer array of length n.  Defines the permutation matrix P; row i of the matrix was interchanged with row ipiv(i).
    /// @param B Real matrix size n-by-colB.  On exit, the solution matrix X.
    /// @param ldB Column length of the matrix B. ldB >= n
    /// @param nb Block size, optional.  Default value is 80.
    /// @ingroup SOLV
    
    template< typename real_t >
-   int_t GESV(const int_t n, const int_t colB, real_t * const A, const int_t ldA, int_t * const IPIV, real_t * const B, const int_t ldB, int_t nb=32)
+   int_t GESV(const int_t n, const int_t colB, real_t * const A, const int_t ldA, int_t * const ipiv, real_t * const B, const int_t ldB, int_t nb=32)
    {
       if (n < 0)
          return -1;
@@ -55,10 +55,10 @@ namespace LATL
          return -7;
       
       int_t info = 0;
-      info = LATL::GETRF<real_t>(n, n, A, ldA, IPIV, nb);
+      info = LATL::GETRF<real_t>(n, n, A, ldA, ipiv, nb);
       if (info == 0)
       {
-         info = LATL::GETRS('N', n, colB, A, ldA, IPIV, B, ldB);
+         info = LATL::GETRS('N', n, colB, A, ldA, ipiv, B, ldB);
       }
       return info;
    }
@@ -82,14 +82,14 @@ namespace LATL
    /// @param colB Number of columns in matrix B.  colB >= 0
    /// @param A Complex matrix size ldA-by-n.  On exit, the factors L and U.
    /// @param ldA Column length of the matrix A. ldA >= n
-   /// @param IPIV Integer array of length n.  Defines the permutation matrix P; row i of the matrix was interchanged with row IPIV(i).
+   /// @param ipiv Integer array of length n.  Defines the permutation matrix P; row i of the matrix was interchanged with row ipiv(i).
    /// @param B Complex matrix size n-by-colB.  On exit, the solution matrix X.
    /// @param ldB Column length of the matrix B. ldB >= n
    /// @param nb Block size, optional.  Default value is 80.
    /// @ingroup SOLV
    
    template< typename real_t >
-   int_t GESV(const int_t n, const int_t colB, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, complex<real_t> * const B, const int_t ldB, int_t nb=32)
+   int_t GESV(const int_t n, const int_t colB, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, complex<real_t> * const B, const int_t ldB, int_t nb=32)
    {
       if (n < 0)
          return -1;
@@ -101,10 +101,10 @@ namespace LATL
          return -7;
       
       int_t info = 0;
-      info = LATL::GETRF<real_t>(n, n, A, ldA, IPIV, nb);
+      info = LATL::GETRF<real_t>(n, n, A, ldA, ipiv, nb);
       if (info == 0)
       {
-         info = LATL::GETRS('N', n, colB, A, ldA, IPIV, B, ldB);
+         info = LATL::GETRS('N', n, colB, A, ldA, ipiv, B, ldB);
       }
       return info;
    }

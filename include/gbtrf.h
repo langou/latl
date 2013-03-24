@@ -38,10 +38,10 @@ namespace LATL
    ///
    /// On exit, U is stored as an upper triangular band matrix with kL + kU superdiagonals in rows 0 to kL+kU.  Multipliers used during the factorization are stored in rows kL+kU+1 to 2*kL+kU.
    /// @param ldAB Column length of the array AB.  ldAB >= 2*kL+kU
-   /// @param IPIV Integer array deminsion min(m, n).  The pivot indices, 0 <= i <= min(m, n), row i was interchanged with row IPIV(i).
+   /// @param ipiv Integer array deminsion min(m, n).  The pivot indices, 0 <= i <= min(m, n), row i was interchanged with row ipiv(i).
 
    template< typename real_t>
-   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const IPIV)
+   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const ipiv)
    {
       if (m < 0)
          return -1;
@@ -85,7 +85,7 @@ namespace LATL
          ABj = AB+ldAB*j;
          km = std::min(kL, m-j-1);
          jp = LATL::IMAX(km+1, ABj+kV, 1);
-         IPIV[j] = jp+j;
+         ipiv[j] = jp+j;
          if (ABj[kV+jp] != zero)
          {
             jU = std::max(jU, std::min(j+kU+jp, n-1));
@@ -124,12 +124,12 @@ namespace LATL
    ///
    /// On exit, U is stored as an upper triangular band matrix with kL + kU superdiagonals in rows 0 to kL+kU.  Multipliers used during the factorization are stored in rows kL+kU+1 to 2*kL+kU.
    /// @param ldAB Column length of the array AB.  ldAB >= 2*kL+kU
-   /// @param IPIV Integer array deminsion min(m, n).  The pivot indices, 0 <= i <= min(m, n), row i was interchanged with row IPIV(i).
+   /// @param ipiv Integer array deminsion min(m, n).  The pivot indices, 0 <= i <= min(m, n), row i was interchanged with row ipiv(i).
 
    template< typename real_t>
-   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const IPIV)
+   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const ipiv)
    {
-      return LATL::GBTRF< complex<real_t> > (m, n, kL, kU, AB, ldAB, IPIV);
+      return LATL::GBTRF< complex<real_t> > (m, n, kL, kU, AB, ldAB, ipiv);
    }
 
    /// @brief Computes an LU factorization of a real m-by-n band matrix A using partial pivoting with row interchanges.
@@ -145,11 +145,11 @@ namespace LATL
    /// @param kU The number of superdiagonals within the band of A.  kU >= 0.
    /// @param AB Real matrix size ldAB-by-n.  On entry, the matrix A in band storage, in rows kL to 2*kL+kU.  Rows 0 to kL need not be set.  On exit, the factor U is stored as an upper triangular band matrix with kL+kU superdiagonals in rows 0 to kL+kU, and the multipliers using during the factorization are stored in rows kL+kU+1 to 2*kL+kU.
    /// @param ldAB Column length of matrix A.  ldAB >= 2*kL+kU+1
-   /// @param IPIV Permutation matrix size min(m,n).  On exit, row k of A was exchanged with IPIV[k].
+   /// @param ipiv Permutation matrix size min(m,n).  On exit, row k of A was exchanged with ipiv[k].
    /// @param nb Block size.
 
    template< typename real_t>
-   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const IPIV, const int_t nb)
+   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const ipiv, const int_t nb)
    {
       if (m < 0)
          return -1;
@@ -167,7 +167,7 @@ namespace LATL
       
       int_t info = 0;
       if (nb > kL || nb <= 1)
-         info = LATL::GBTRF(m, n, kL, kU, AB, ldAB, IPIV);
+         info = LATL::GBTRF(m, n, kL, kU, AB, ldAB, ipiv);
       else
       {
          const real_t zero(0.0);
@@ -227,7 +227,7 @@ namespace LATL
                ABjj = AB+ldAB*jj;
                km = std::min(kL, m-jj-1);
                jp = LATL::IMAX(km+1, ABjj+kV, 1);
-               IPIV[jj] = jp+jj-j;
+               ipiv[jj] = jp+jj-j;
                if (ABjj[kV+jp] != zero)
                {
                   jU = std::max(jU, std::min(jj+kU+jp, n-1));
@@ -269,11 +269,11 @@ namespace LATL
                
                j2 = std::min(jU-j+1, kV)-jb;
                j3 = std::max(0, jU-j-kV+1);
-               LATL::LASWP(j2, ABj+ldAB*jb+kV-jb, ldAB-1, 0, jb-1, IPIV+j);
+               LATL::LASWP(j2, ABj+ldAB*jb+kV-jb, ldAB-1, 0, jb-1, ipiv+j);
                
                for (int_t i = j; i < j+jb; ++i)
                {
-                  IPIV[i] += j;
+                  ipiv[i] += j;
                }
                
                k2 = j+jb+j2;  //k2 = fortran k2
@@ -285,7 +285,7 @@ namespace LATL
                   //temp1 = fortran jj - 1
                   for (int_t ii = j+i; ii < j+jb; ++ii)
                   {
-                     ip = IPIV[ii];
+                     ip = ipiv[ii];
                      if (ip != ii)
                      {
                         temp = ABt[kV+ii-temp1];
@@ -350,13 +350,13 @@ namespace LATL
             {
                for (int_t i = j; i < j+jb; ++i)
                {
-                  IPIV[i] += j;
+                  ipiv[i] += j;
                }
             }
             
             for (int_t jj = j+jb-1; jj >= j; --jj)
             {
-               jp = IPIV[jj] - jj;
+               jp = ipiv[jj] - jj;
                if (jp != 0)
                {
                   if (jp+jj < j+kL)
@@ -395,13 +395,13 @@ namespace LATL
    /// @param kU The number of superdiagonals within the band of A.  kU >= 0.
    /// @param AB Complex matrix size ldAB-by-n.  On entry, the matrix A in band storage, in rows kL to 2*kL+kU.  Rows 0 to kL need not be set.  On exit, the factor U is stored as an upper triangular band matrix with kL+kU superdiagonals in rows 0 to kL+kU, and the multipliers using during the factorization are stored in rows kL+kU+1 to 2*kL+kU.
    /// @param ldAB Column length of matrix A.  ldAB >= 2*kL+kU+1
-   /// @param IPIV Permutation matrix size min(m,n).  On exit, row k of A was exchanged with IPIV[k].
+   /// @param ipiv Permutation matrix size min(m,n).  On exit, row k of A was exchanged with ipiv[k].
    /// @param nb Block size.
    
    template< typename real_t>
-   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const IPIV, const int_t nb)
+   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const ipiv, const int_t nb)
    {
-      return LATL::GBTRF< complex<real_t> > (m, n, kL, kU, AB, ldAB, IPIV, nb);
+      return LATL::GBTRF< complex<real_t> > (m, n, kL, kU, AB, ldAB, ipiv, nb);
    }
 }
 

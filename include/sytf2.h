@@ -39,15 +39,15 @@ namespace LATL
    /// @param A Real symmetric matrix size ldA-by-n.  On entry, the symmetric matrix A.
    /// On exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L.
    /// @param ldA Column length of the array A.  ldA >= n
-   /// @param IPIV Integer array size n.  On exit, contains the details of the interchanges of D.
-   /// @param BSDV Bool array size n.  On exit, contains the details of the block structure of D.
-   /// If BSDV[k] = 0, then rows and columns k and IPIV[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.
-   /// If BSDV[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and IPIV[k] = IPIV[k-1],
-   /// then rows and columns k-1 and IPIV[k] were interchanged.  If uplo = 'L' and IPIV[k] = IPIV[k+1],
-   /// then rows and columns k+1 and IPIV[k] were interchanged.
+   /// @param ipiv Integer array size n.  On exit, contains the details of the interchanges of D.
+   /// @param bsdv Bool array size n.  On exit, contains the details of the block structure of D.
+   /// If bsdv[k] = 0, then rows and columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.
+   /// If bsdv[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and ipiv[k] = ipiv[k-1],
+   /// then rows and columns k-1 and ipiv[k] were interchanged.  If uplo = 'L' and ipiv[k] = ipiv[k+1],
+   /// then rows and columns k+1 and ipiv[k] were interchanged.
    
    template<typename real_t>
-   int_t SYTF2(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * IPIV, bool * BSDV)
+   int_t SYTF2(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * ipiv, bool * bsdv)
    {
       using std::abs;
       using std::isnan;
@@ -72,7 +72,7 @@ namespace LATL
       
       for (int_t i = 0; i < n; ++i)
       {
-         BSDV[i] = 0;
+         bsdv[i] = 0;
       }
       
       if (uplo == 'U' || uplo == 'u')
@@ -188,14 +188,14 @@ namespace LATL
             }
             if (kstep == 1)
             {
-               IPIV[k] = kp;
+               ipiv[k] = kp;
             }
             else
             {
-               IPIV[k] = kp;
-               IPIV[k-1] = kp;
-               BSDV[k] = 1;
-               BSDV[k-1] = 1;
+               ipiv[k] = kp;
+               ipiv[k-1] = kp;
+               bsdv[k] = 1;
+               bsdv[k-1] = 1;
             }
             
             k -= kstep;
@@ -311,13 +311,13 @@ namespace LATL
                }
             }
             if (kstep == 1)
-               IPIV[k] = kp;
+               ipiv[k] = kp;
             else
             {
-               IPIV[k] = kp;
-               IPIV[k+1] = kp;
-               BSDV[k] = 1;
-               BSDV[k+1] = 1;
+               ipiv[k] = kp;
+               ipiv[k+1] = kp;
+               bsdv[k] = 1;
+               bsdv[k+1] = 1;
             }
             
             k += kstep;
@@ -343,14 +343,14 @@ namespace LATL
    /// @param A Complex array size ldA-by-n.  On entry, the symmetric matrix A.  On exit, the block diagonal matrix D and the
    /// multipliers used to obtain the factor U or L.
    /// @param ldA Column length of the array A.  ldA >= n
-   /// @param IPIV Integer array size n.  On exit, contains the details of the interchanges of D.
-   /// @param BSDV Bool array size n.  On exit, contains the details of the block structure of D.  If BSDV[k] = 0, then rows and
-   /// columns k and IPIV[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If BSDV[k] = 1, then k is part of a 2-by-2
-   /// diagonal block.  In a 2 by 2 block, if uplo = 'U', and IPIV[k] = IPIV[k-1], then rows and columns k-1 and IPIV[k] were
-   /// interchanged.  If uplo = 'L' and IPIV[k] = IPIV[k+1], then rows and columns k+1 and IPIV[k] were interchanged.
+   /// @param ipiv Integer array size n.  On exit, contains the details of the interchanges of D.
+   /// @param bsdv Bool array size n.  On exit, contains the details of the block structure of D.  If bsdv[k] = 0, then rows and
+   /// columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If bsdv[k] = 1, then k is part of a 2-by-2
+   /// diagonal block.  In a 2 by 2 block, if uplo = 'U', and ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were
+   /// interchanged.  If uplo = 'L' and ipiv[k] = ipiv[k+1], then rows and columns k+1 and ipiv[k] were interchanged.
    
    template<typename real_t>
-   int_t SYTF2(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * IPIV, bool * BSDV)
+   int_t SYTF2(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * ipiv, bool * bsdv)
    {
       using std::abs;
       using std::isnan;
@@ -378,7 +378,7 @@ namespace LATL
       
       for (int_t i = 0; i < n; ++i)
       {
-         BSDV[i] = 0;
+         bsdv[i] = 0;
       }
       
       if (uplo == 'U' || uplo == 'u')
@@ -494,14 +494,14 @@ namespace LATL
             }
             if (kstep == 1)
             {
-               IPIV[k] = kp;
+               ipiv[k] = kp;
             }
             else
             {
-               IPIV[k] = kp;
-               IPIV[k-1] = kp;
-               BSDV[k] = 1;
-               BSDV[k-1] = 1;
+               ipiv[k] = kp;
+               ipiv[k-1] = kp;
+               bsdv[k] = 1;
+               bsdv[k-1] = 1;
             }
             
             k -= kstep;
@@ -618,13 +618,13 @@ namespace LATL
                }
             }
             if (kstep == 1)
-               IPIV[k] = kp;
+               ipiv[k] = kp;
             else
             {
-               IPIV[k] = kp;
-               IPIV[k+1] = kp;
-               BSDV[k] = 1;
-               BSDV[k+1] = 1;
+               ipiv[k] = kp;
+               ipiv[k+1] = kp;
+               bsdv[k] = 1;
+               bsdv[k+1] = 1;
             }
             
             k += kstep;

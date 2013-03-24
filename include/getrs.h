@@ -31,13 +31,13 @@ namespace LATL
    /// @param colB Number of columns of the matrix B.  colB >= 0
    /// @param A Real matrix size ldA-by-n.  Should already contain factors L and U from the factorization A = P*L*U computed by getrf.
    /// @param ldA Column length of matrix A.  ldA >= n
-   /// @param IPIV Permutation matrix size min(m,n), computed by getrf.  In A, row k of A was exchanged with IPIV[k].
+   /// @param ipiv Permutation matrix size min(m,n), computed by getrf.  In A, row k of A was exchanged with ipiv[k].
    /// @param B Real matrix size ldB-by-colB.  On exit, the solution matrix X.
    /// @param ldB Column length of B.  ldB >= n
    /// @ingroup SOLV
    
    template<typename real_t>
-   int GETRS( const char trans, const int_t n, const int_t colB, real_t * const A, const int_t ldA, int_t * const IPIV, real_t * const B, const int_t ldB)
+   int GETRS( const char trans, const int_t n, const int_t colB, real_t * const A, const int_t ldA, int_t * const ipiv, real_t * const B, const int_t ldB)
    {
       bool notrans = ((trans == 'N') || (trans == 'n'));
       if ( !notrans && (trans != 'T') && (trans != 't') && (trans != 'C') && (trans != 'c'))
@@ -58,7 +58,7 @@ namespace LATL
       
       if (notrans)
       {
-         LATL::LASWP(colB, B, ldB, 0, n-1, IPIV);
+         LATL::LASWP(colB, B, ldB, 0, n-1, ipiv);
          LATL::TRSM('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
          LATL::TRSM('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
       }
@@ -66,7 +66,7 @@ namespace LATL
       {
          LATL::TRSM('L', 'U', 'T', 'N', n, colB, one, A, ldA, B, ldB);
          LATL::TRSM('L', 'L', 'T', 'U', n, colB, one, A, ldA, B, ldB);
-         LATL::LASWP(colB, B, ldB, 0, n-1, IPIV, -1);
+         LATL::LASWP(colB, B, ldB, 0, n-1, ipiv, -1);
       }
       return 0;
    }
@@ -84,13 +84,13 @@ namespace LATL
    /// @param colB Number of columns of the matrix B.  colB >= 0
    /// @param A Complex matrix size ldA-by-n.  Should already contain factors L and U from the factorization A = P*L*U computed by getrf.
    /// @param ldA Column length of matrix A.  ldA >= n
-   /// @param IPIV Permutation matrix size min(m,n), computed by getrf.  In A, row k of A was exchanged with IPIV[k].
+   /// @param ipiv Permutation matrix size min(m,n), computed by getrf.  In A, row k of A was exchanged with ipiv[k].
    /// @param B Complex matrix size ldB-by-colB.  On exit, the solution matrix X.
    /// @param ldB Column length of B.  ldB >= n
    /// @ingroup SOLV
 
    template < typename real_t>
-   int GETRS( const char trans, const int_t n, const int_t colB, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, complex<real_t> * const B, const int_t ldB)
+   int GETRS( const char trans, const int_t n, const int_t colB, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, complex<real_t> * const B, const int_t ldB)
    {
       bool notrans = ((trans == 'N') || (trans == 'n'));
       if ( !notrans && (trans != 'T') && (trans != 't') && (trans != 'C') && (trans!= 'c'))
@@ -111,7 +111,7 @@ namespace LATL
       
       if (notrans)
       {
-         LATL::LASWP(colB, B, ldB, 0, n-1, IPIV);
+         LATL::LASWP(colB, B, ldB, 0, n-1, ipiv);
          LATL::TRSM('L', 'L', 'N', 'U', n, colB, one, A, ldA, B, ldB);
          LATL::TRSM('L', 'U', 'N', 'N', n, colB, one, A, ldA, B, ldB);
       }
@@ -119,7 +119,7 @@ namespace LATL
       {
          LATL::TRSM('L', 'U', trans, 'N', n, colB, one, A, ldA, B, ldB);
          LATL::TRSM('L', 'L', trans, 'U', n, colB, one, A, ldA, B, ldB);
-         LATL::LASWP(colB, B, ldB, 0, n-1, IPIV, -1);
+         LATL::LASWP(colB, B, ldB, 0, n-1, ipiv, -1);
       }
       return 0;
    }

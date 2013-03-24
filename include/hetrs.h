@@ -27,8 +27,8 @@ namespace LATL
    /// @param nrhs Number of columns of the matrix B.  nrhs >= 0
    /// @param A Complex Hermitian matrix size ldA-by-n.  On entry, should contain factors L (or U) and D from the factorization A computed by hetrf.
    /// @param ldA Column length of matrix A.  ldA >= n
-   /// @param IPIV Integer array size n.  On entry, contains the details of the interchanges.
-   /// @param BSDV Bool array size n.  On entry, contains the details of the block structure of D.
+   /// @param ipiv Integer array size n.  On entry, contains the details of the interchanges.
+   /// @param bsdv Bool array size n.  On entry, contains the details of the block structure of D.
    /// @param B Real matrix size ldB-by-nrhs.  On exit, the solution matrix X.
    /// @param ldB Column length of B.  ldB >= n
    /// @ingroup SOLV

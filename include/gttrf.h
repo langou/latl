@@ -31,11 +31,11 @@ namespace LATL
    /// @param D Real array, size n.  On entry, D must contain the diagonal elements of A.  On exit, D is overwritten by the n diagonal elements of the upper triangular matrix U from the LU factorization of A.
    /// @param DU Real array, size (n-1).  On entry, DU must contain the (n-1) superdiagonal elements of A.  On exit, DU is overwritten by the (n-1) elements of the first superdiagonal of U.
    /// @param DU2 Real array, size (n-2).  On exit, DU2 is overwritten by the n-2 elements of the second superdiagonal of U.
-   /// @param IPIV Integer array, size n.  The pivot indices; for 0 <= i < n, row i of the matrix was interchanged with row IPIV[i].  IPIV[i] will always be either i or i+1; IPIV[i] = i indicates a row interchange was not required.
+   /// @param ipiv Integer array, size n.  The pivot indices; for 0 <= i < n, row i of the matrix was interchanged with row ipiv[i].  ipiv[i] will always be either i or i+1; ipiv[i] = i indicates a row interchange was not required.
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t GTTRF(const int_t n, real_t * const DL, real_t * const D, real_t * const DU, real_t * const DU2, int_t * const IPIV)
+   int_t GTTRF(const int_t n, real_t * const DL, real_t * const D, real_t * const DU, real_t * const DU2, int_t * const ipiv)
    {
       if (n < 0)
          return -1;
@@ -45,7 +45,7 @@ namespace LATL
       
       const real_t zero(0.0);
       for (int_t i = 0; i < n; ++i)
-         IPIV[i] = i;
+         ipiv[i] = i;
       for (int_t i = 0; i < n-2; ++i)
          DU2[i] = zero;
       
@@ -70,7 +70,7 @@ namespace LATL
             D[i+1] = temp - DL[i]*D[i+1];
             DU2[i] = DU[i+1];
             DU[i+1] = -DL[i]*DU[i+1];
-            ++IPIV[i];
+            ++ipiv[i];
          }
       }
       if (n > 1)
@@ -92,7 +92,7 @@ namespace LATL
             temp = DU[i];
             DU[i] = D[i+1];
             D[i+1] = temp - DL[i]*D[i+1];
-            ++IPIV[i];
+            ++ipiv[i];
          }
       }
       for (int_t i = 0; i < n; ++i)
@@ -119,11 +119,11 @@ namespace LATL
    /// @param D Complex array, size n.  On entry, D must contain the diagonal elements of A.  On exit, D is overwritten by the n diagonal elements of the upper triangular matrix U from the LU factorization of A.
    /// @param DU Complex array, size (n-1).  On entry, DU must contain the (n-1) superdiagonal elements of A.  On exit, DU is overwritten by the (n-1) elements of the first superdiagonal of U.
    /// @param DU2 Complex array, size (n-2).  On exit, DU2 is overwritten by the n-2 elements of the second superdiagonal of U.
-   /// @param IPIV Integer array, size n.  The pivot indices; for 0 <= i < n, row i of the matrix was interchanged with row IPIV[i].  IPIV[i] will always be either i or i+1; IPIV[i] = i indicates a row interchange was not required.
+   /// @param ipiv Integer array, size n.  The pivot indices; for 0 <= i < n, row i of the matrix was interchanged with row ipiv[i].  ipiv[i] will always be either i or i+1; ipiv[i] = i indicates a row interchange was not required.
    /// @ingroup TRF
    
    template< typename real_t>
-   int_t GTTRF(const int_t n, complex<real_t> * const DL, complex<real_t> * const D, complex<real_t> * const DU, complex<real_t> * const DU2, int_t * const IPIV)
+   int_t GTTRF(const int_t n, complex<real_t> * const DL, complex<real_t> * const D, complex<real_t> * const DU, complex<real_t> * const DU2, int_t * const ipiv)
    {
       if (n < 0)
          return -1;
@@ -133,7 +133,7 @@ namespace LATL
       
       const real_t zero(0.0);
       for (int_t i = 0; i < n; ++i)
-         IPIV[i] = i;
+         ipiv[i] = i;
       for (int_t i = 0; i < n-2; ++i)
          DU2[i] = zero;
       
@@ -158,7 +158,7 @@ namespace LATL
             D[i+1] = temp - DL[i]*D[i+1];
             DU2[i] = DU[i+1];
             DU[i+1] = -DL[i]*DU[i+1];
-            ++IPIV[i];
+            ++ipiv[i];
          }
       }
       if (n > 1)
@@ -180,7 +180,7 @@ namespace LATL
             temp = DU[i];
             DU[i] = D[i+1];
             D[i+1] = temp - DL[i]*D[i+1];
-            ++IPIV[i];
+            ++ipiv[i];
          }
       }
       for (int_t i = 0; i < n; ++i)

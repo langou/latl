@@ -27,14 +27,14 @@ namespace LATL
    /// @param nrhs Number of columns of the matrix B.  nrhs >= 0
    /// @param A Real matrix size ldA-by-n.  On entry, should contain factors L (or U) and D from the factorization A computed by sytrf.
    /// @param ldA Column length of matrix A.  ldA >= n
-   /// @param IPIV Integer array size n.  On entry, contains the details of the interchanges.
-   /// @param BSDV Bool array size n.  On entry, contains the details of the block structure of D.
+   /// @param ipiv Integer array size n.  On entry, contains the details of the interchanges.
+   /// @param bsdv Bool array size n.  On entry, contains the details of the block structure of D.
    /// @param B Real matrix size ldB-by-nrhs.  On exit, the solution matrix X.
    /// @param ldB Column length of B.  ldB >= n
    /// @ingroup SOLV
    
    template<typename real_t>
-   int_t SYTRS(const char uplo, const int_t n, const int_t nrhs, real_t * const A, const int_t ldA, int_t * IPIV, bool * BSDV, real_t * const B, const int_t ldB)
+   int_t SYTRS(const char uplo, const int_t n, const int_t nrhs, real_t * const A, const int_t ldA, int_t * ipiv, bool * bsdv, real_t * const B, const int_t ldB)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -50,15 +50,15 @@ namespace LATL
       if (n == 0 || nrhs == 0)
          return 0;
       real_t * Work = new real_t[n];
-      LATL::SYCONV(uplo, 'C', n, A, ldA, IPIV, BSDV, Work);
+      LATL::SYCONV(uplo, 'C', n, A, ldA, ipiv, bsdv, Work);
       const real_t one(1.0);
       if (uplo == 'U' || uplo == 'u')
       {
          int_t k = n-1, kp;
          while (k >= 0)
          {
-            kp = IPIV[k];
-            if (BSDV[k] == 0)
+            kp = ipiv[k];
+            if (bsdv[k] == 0)
             {
                if (kp != k)
                   LATL::SWAP(nrhs, B+k, ldB, B+kp, ldB);
@@ -66,7 +66,7 @@ namespace LATL
             }
             else
             {
-               if (kp == IPIV[k-1])
+               if (kp == ipiv[k-1])
                {
                   LATL::SWAP(nrhs, B+k-1, ldB, B+kp, ldB);
                }
@@ -80,13 +80,13 @@ namespace LATL
          while (i >= 0)
          {
             Ai = A+ldA*i;
-            if (BSDV[i] == 0)
+            if (bsdv[i] == 0)
             {
                LATL::SCAL(nrhs, one/Ai[i], B+i, ldB);
             }
             else if (i > 0)
             {
-               if (IPIV[i-1] == IPIV[i])
+               if (ipiv[i-1] == ipiv[i])
                {
                   real_t * Aim1 = Ai - ldA;
                   real_t akm1k = Work[i];
@@ -111,8 +111,8 @@ namespace LATL
          k = 0;
          while (k < n)
          {
-            kp = IPIV[k];
-            if (BSDV[k] == 0)
+            kp = ipiv[k];
+            if (bsdv[k] == 0)
             {
                if (kp != k)
                {
@@ -122,7 +122,7 @@ namespace LATL
             }
             else
             {
-               if (k < n-1 && kp == IPIV[k+1])
+               if (k < n-1 && kp == ipiv[k+1])
                {
                   LATL::SWAP(nrhs, B+k, ldB, B+kp, ldB);
                }
@@ -135,17 +135,17 @@ namespace LATL
          int_t k = 0, kp;
          while (k < n)
          {
-            if (BSDV[k] == 0)
+            if (bsdv[k] == 0)
             {
-               kp = IPIV[k];
+               kp = ipiv[k];
                if (kp != k)
                   LATL::SWAP(nrhs, B+k, ldB, B+kp, ldB);
                ++k;
             }
             else
             {
-               kp = IPIV[k+1];
-               if (kp == IPIV[k])
+               kp = ipiv[k+1];
+               if (kp == ipiv[k])
                {
                   LATL::SWAP(nrhs, B+k+1, ldB, B+kp, ldB);
                }
@@ -157,7 +157,7 @@ namespace LATL
          while (i < n)
          {
             real_t * Ai = A+ldA*i;
-            if (BSDV[i] == 0)
+            if (bsdv[i] == 0)
             {
                LATL::SCAL(nrhs, one/Ai[i], B+i, ldB);
             }
@@ -185,8 +185,8 @@ namespace LATL
          k = n-1;
          while (k >= 0)
          {
-            kp = IPIV[k];
-            if (BSDV[k] == 0)
+            kp = ipiv[k];
+            if (bsdv[k] == 0)
             {
                if (kp != k)
                {
@@ -196,7 +196,7 @@ namespace LATL
             }
             else
             {
-               if (k > 0 && kp == IPIV[k-1])
+               if (k > 0 && kp == ipiv[k-1])
                {
                   LATL::SWAP(nrhs, B+k, ldB, B+kp, ldB);
                }
@@ -205,7 +205,7 @@ namespace LATL
          }
       }
    
-      LATL::SYCONV(uplo, 'R', n, A, ldA, IPIV, BSDV, Work);
+      LATL::SYCONV(uplo, 'R', n, A, ldA, ipiv, bsdv, Work);
       delete [] Work;
       return 0;
    }
@@ -218,16 +218,16 @@ namespace LATL
    /// @param nrhs Number of columns of the matrix B.  nrhs >= 0
    /// @param A Complex matrix size ldA-by-n.  On entry, should contain factors L (or U) and D from the factorization A computed by sytrf.
    /// @param ldA Column length of matrix A.  ldA >= n
-   /// @param IPIV Integer array size n.  On entry, contains the details of the interchanges.
-   /// @param BSDV Bool array size n.  On entry, contains the details of the block structure of D.
+   /// @param ipiv Integer array size n.  On entry, contains the details of the interchanges.
+   /// @param bsdv Bool array size n.  On entry, contains the details of the block structure of D.
    /// @param B Real matrix size ldB-by-nrhs.  On exit, the solution matrix X.
    /// @param ldB Column length of B.  ldB >= n
    /// @ingroup SOLV
    
    template<typename real_t>
-   int_t SYTRS(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, complex<real_t> * const B, const int_t ldB)
+   int_t SYTRS(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv, complex<real_t> * const B, const int_t ldB)
    {
-      return LATL::SYTRS< complex<real_t> >(uplo, n, nrhs, A, ldA, IPIV, BSDV, B, ldB);
+      return LATL::SYTRS< complex<real_t> >(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
    }
 }
 

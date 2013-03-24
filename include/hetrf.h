@@ -33,13 +33,13 @@ namespace LATL
    /// @param n Order of the matrix A.  n >= 0
    /// @param A Complex array size ldA-by-n.  On entry, the Hermitian matrix A.  On exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L.
    /// @param ldA Column length of the array A.
-   /// @param IPIV Integer array size n.  On exit, contains the details of the interchanges of D.
-   /// @param BSDV Bool array size n.  On exit, contains the details of the block structure of D.  If BSDV[k] = 0, then rows and columns k and IPIV[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If BSDV[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and IPIV[k] = IPIV[k-1], then rows and columns k-1 and IPIV[k] were interchanged.  If uplo = 'L' and IPIV[k] = IPIV[k+1], then rows and columns k+1 and IPIV[k] were interchanged.
+   /// @param ipiv Integer array size n.  On exit, contains the details of the interchanges of D.
+   /// @param bsdv Bool array size n.  On exit, contains the details of the block structure of D.  If bsdv[k] = 0, then rows and columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If bsdv[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were interchanged.  If uplo = 'L' and ipiv[k] = ipiv[k+1], then rows and columns k+1 and ipiv[k] were interchanged.
    /// @param nb Block size, optional.  Default value is 32.
    /// @ingroup TRF
 
    template< typename real_t >
-   int_t HETRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const IPIV, bool * const BSDV, const int_t nb = 32)
+   int_t HETRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv, const int_t nb = 32)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -61,11 +61,11 @@ namespace LATL
          {
             if ( k > nb)
             {
-               temp = LATL::LAHEF(uplo, k, nb, kb, A, ldA, IPIV, BSDV, Work);
+               temp = LATL::LAHEF(uplo, k, nb, kb, A, ldA, ipiv, bsdv, Work);
             }
             else
             {
-               temp = LATL::HETF2(uplo, k, A, ldA, IPIV, BSDV);
+               temp = LATL::HETF2(uplo, k, A, ldA, ipiv, bsdv);
                kb = k;
             }
             
@@ -86,12 +86,12 @@ namespace LATL
             Akk = A+ldA*k+k;
             if ( k < n-nb)
             {
-               temp = LATL::LAHEF(uplo, n-k, nb, kb, Akk, ldA, IPIV+k, BSDV+k, Work);
+               temp = LATL::LAHEF(uplo, n-k, nb, kb, Akk, ldA, ipiv+k, bsdv+k, Work);
             }
             else
             {
                kb = n-k;
-               temp = LATL::HETF2(uplo, kb, Akk, ldA, IPIV+k, BSDV+k);
+               temp = LATL::HETF2(uplo, kb, Akk, ldA, ipiv+k, bsdv+k);
             }
             
             if (info == 0 && temp != 0)
@@ -101,7 +101,7 @@ namespace LATL
             
             for (int_t j = k; j < k+kb; ++j)
             {
-               IPIV[j] += k;
+               ipiv[j] += k;
             }
             
             k += kb;

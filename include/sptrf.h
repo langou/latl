@@ -21,7 +21,7 @@
 namespace LATL
 {
    template<typename real_t>
-   int_t SPTRF( const int_t n, real_t * const AP, int_t * const IPIV, bool * const BSDV)
+   int_t SPTRF( const int_t n, real_t * const AP, int_t * const ipiv, bool * const bsdv)
    {
       /// @brief Computes the factorization of a real symmetric matrix A stored in packed format using the Bunch-Kaufman diagonal pivoting method:
       ///
@@ -35,8 +35,8 @@ namespace LATL
       /// @param n Order of the matrix A.  n >= 0
       /// @param AP Real array size n-by-(n+1)/2.  On entry, the upper triangle of the symmetric matrix A, packed columnwise in a linear array.  The jth column begins at AP + sum(0, j) = AP + j * (j+1)/2.
       /// On exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L, stored as a packed triangular matrix.
-      /// @param IPIV Integer array size n.  On exit, contains the details of the interchanges of D.
-      /// @param BSDV Bool array size n. On exit, contains the details of the block structure of D.  If BSDV[k] = 0, then rows and columns k and IPIV[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If BSDV[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if IPIV[k] = IPIV[k-1], then rows and columns k-1 and IPIV[k] were interchanged.
+      /// @param ipiv Integer array size n.  On exit, contains the details of the interchanges of D.
+      /// @param bsdv Bool array size n. On exit, contains the details of the block structure of D.  If bsdv[k] = 0, then rows and columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If bsdv[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were interchanged.
       /// @ingroup TRF
       
       if (n < 0)
@@ -187,15 +187,15 @@ namespace LATL
          }
          if (kstep == 1)
          {
-            IPIV[k] = kp;
-            BSDV[k] = 0;
+            ipiv[k] = kp;
+            bsdv[k] = 0;
          }
          else
          {
-            IPIV[k] = kp;
-            IPIV[k-1] = kp;
-            BSDV[k] = 1;
-            BSDV[k-1] = 1;
+            ipiv[k] = kp;
+            ipiv[k-1] = kp;
+            bsdv[k] = 1;
+            bsdv[k-1] = 1;
          }
          
          k -= kstep;
@@ -204,7 +204,7 @@ namespace LATL
    }
    
    template<typename real_t>
-   int_t SPTRF( const int_t n, complex<real_t> * const AP, int_t * const IPIV, bool * const BSDV)
+   int_t SPTRF( const int_t n, complex<real_t> * const AP, int_t * const ipiv, bool * const bsdv)
    {
       /// @brief Computes the factorization of a complex symmetric matrix A stored in packed format using the Bunch-Kaufman diagonal pivoting method:
       ///
@@ -218,8 +218,8 @@ namespace LATL
       /// @param n Order of the matrix A.  n >= 0
       /// @param AP Complex array size n-by-(n+1)/2.  On entry, the upper triangle of the symmetric matrix A, packed columnwise in a linear array.  The jth column begins at AP + sum(0, j) = AP + j * (j+1)/2.
       /// On exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L, stored as a packed triangular matrix.
-      /// @param IPIV Integer array size n.  On exit, contains the details of the interchanges of D.
-      /// @param BSDV Bool array size n. On exit, contains the details of the block structure of D.  If BSDV[k] = 0, then rows and columns k and IPIV[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If BSDV[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if IPIV[k] = IPIV[k-1], then rows and columns k-1 and IPIV[k] were interchanged.
+      /// @param ipiv Integer array size n.  On exit, contains the details of the interchanges of D.
+      /// @param bsdv Bool array size n. On exit, contains the details of the block structure of D.  If bsdv[k] = 0, then rows and columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If bsdv[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were interchanged.
       /// @ingroup TRF
       
       if (n < 0)
@@ -371,15 +371,15 @@ namespace LATL
          }
          if (kstep == 1)
          {
-            IPIV[k] = kp;
-            BSDV[k] = 0;
+            ipiv[k] = kp;
+            bsdv[k] = 0;
          }
          else
          {
-            IPIV[k] = kp;
-            IPIV[k-1] = kp;
-            BSDV[k] = 1;
-            BSDV[k-1] = 1;
+            ipiv[k] = kp;
+            ipiv[k-1] = kp;
+            bsdv[k] = 1;
+            bsdv[k-1] = 1;
          }
          
          k -= kstep;

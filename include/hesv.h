@@ -11,7 +11,6 @@
 
 /// @file hesv.h
 
-
 #include "hetrf.h"
 #include "hetrs.h"
 
@@ -33,15 +32,16 @@ namespace LATL
    /// The factored form of A is then used to solve the system of equations.
    /// @return 0 if success
    /// @return -i if the ith argument is invalid.
-   /// @return i+1 if the ith pivot is exactly zero.  The factorization has been completed, but the block diagonal matrix D is exactly singular and division by zero will occur if it is used to solve a system of equations.
+   /// @return i+1 if the ith pivot is exactly zero.  The factorization has been completed, but the block diagonal matrix D is
+   /// exactly singular and division by zero will occur if it is used to solve a system of equations.
    /// @tparam real_t Floating point type.
    /// @param uplo Indicates whether the symmetric matrix A is stored as upper triangular or lower triangular.  The other triangular part of A is not referenced.
    /// @param n Order of the matrix A.  n >= 0
    /// @param nrhs Number of columns of the matrix B.
    /// @param A Complex array size ldA-by-n.  On entry, the Hermitian matrix A.  On exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L.
    /// @param ldA Column length of the array A.
-   /// @param IPIV Integer array size n.  On exit, contains the details of the interchanges of D.
-   /// @param BSDV Bool array size n.  On exit, contains the details of the block structure of D.
+   /// @param ipiv Integer array size n.  On exit, contains the details of the interchanges of D.
+   /// @param bsdv Bool array size n.  On exit, contains the details of the block structure of D.
    /// @param B Complex array size n-by-nrhs.  On exit, contains the solution X.
    /// @param ldB Column length of the matrix B.  ldB >= n
    
@@ -83,15 +83,16 @@ namespace LATL
    /// The factored form of A is then used to solve the system of equations.
    /// @return 0 if success
    /// @return -i if the ith argument is invalid.
-   /// @return i+1 if the ith pivot is exactly zero.  The factorization has been completed, but the block diagonal matrix D is exactly singular and division by zero will occur if it is used to solve a system of equations.
+   /// @return i+1 if the ith pivot is exactly zero.  The factorization has been completed, but the block diagonal matrix D is
+   /// exactly singular and division by zero will occur if it is used to solve a system of equations.
    /// @tparam real_t Floating point type.
    /// @param uplo Indicates whether the symmetric matrix A is stored as upper triangular or lower triangular.  The other triangular part of A is not referenced.
    /// @param n Order of the matrix A.  n >= 0
    /// @param nrhs Number of columns of the matrix B.
    /// @param A Complex array size ldA-by-n.  On entry, the Hermitian matrix A.  On exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L.
    /// @param ldA Column length of the array A.
-   /// @param IPIV Integer array size n.  On exit, contains the details of the interchanges of D.
-   /// @param BSDV Bool array size n.  On exit, contains the details of the block structure of D.
+   /// @param ipiv Integer array size n.  On exit, contains the details of the interchanges of D.
+   /// @param bsdv Bool array size n.  On exit, contains the details of the block structure of D.
    /// @param B Complex array size n-by-nrhs.  On exit, contains the solution X.
    /// @param ldB Column length of the matrix B.  ldB >= n
    /// @param nb Block size for computing the factorization.

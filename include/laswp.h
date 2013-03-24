@@ -20,16 +20,16 @@ namespace LATL
    /// @param n Number of columns in matrix A.
    /// @param A Real matrix size ldA-by-n.  On exit, the permuted matrix.
    /// @param ldA Column length of A.
-   /// @param k1 The index of the first element of IPIV for a row interchange.
-   /// @param k2 The index of the final element of IPIV for a row interchange.
-   /// @param IPIV Integer array length at least k2+1.  For each k between k1 and k2,
-   /// IPIV[k] = L indicates an exchange of row k of A with row L.
-   /// @param inc Determines whether IPIV is read forward (inc=1) or backward (inc=-1).
+   /// @param k1 The index of the first element of ipiv for a row interchange.
+   /// @param k2 The index of the final element of ipiv for a row interchange.
+   /// @param ipiv Integer array length at least k2+1.  For each k between k1 and k2,
+   /// ipiv[k] = L indicates an exchange of row k of A with row L.
+   /// @param inc Determines whether ipiv is read forward (inc=1) or backward (inc=-1).
    /// (optional, default value is 1)
    /// @ingroup MAT
    
    template< typename real_t>
-   int LASWP(const int_t n, real_t * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int_t inc=1)
+   int LASWP(const int_t n, real_t * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const ipiv, int_t inc=1)
    {
       const int_t b=32;
       int_t i1, i2, i0;
@@ -56,7 +56,7 @@ namespace LATL
          ix = i0;
          for (int_t i = i1; i <= i2; i += inc)
          {
-            ip = IPIV[ix];
+            ip = ipiv[ix];
             if (ip != i)
             {
                real_t *Ak = Aj;
@@ -77,7 +77,7 @@ namespace LATL
          ix = i0;
          for (int_t i = i1; i <= i2; i+= inc)
          {
-            ip = IPIV[ix];
+            ip = ipiv[ix];
             if (ip != i)
             {
                real_t *Ak = A+nb*ldA;
@@ -100,18 +100,18 @@ namespace LATL
    /// @param n Number of columns in matrix A.
    /// @param A Complex matrix size ldA-by-n.  On exit, the permuted matrix.
    /// @param ldA Column length of A.
-   /// @param k1 The index of the first element of IPIV for a row interchange.
-   /// @param k2 The index of the final element of IPIV for a row interchange.
-   /// @param IPIV Integer array length at least k2+1.  For each k between k1 and k2,
-   /// IPIV[k] = L indicates an exchange of row k of A with row L.
-   /// @param inc Determines whether IPIV is read forward (inc=1) or backward (inc=-1).
+   /// @param k1 The index of the first element of ipiv for a row interchange.
+   /// @param k2 The index of the final element of ipiv for a row interchange.
+   /// @param ipiv Integer array length at least k2+1.  For each k between k1 and k2,
+   /// ipiv[k] = L indicates an exchange of row k of A with row L.
+   /// @param inc Determines whether ipiv is read forward (inc=1) or backward (inc=-1).
    /// (optional, default value is 1)
    /// @ingroup MAT
    
    template< typename real_t>
-   int LASWP(const int_t n, complex<real_t> * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const IPIV, int_t inc=1)
+   int LASWP(const int_t n, complex<real_t> * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const ipiv, int_t inc=1)
    {
-      return LASWP< complex<real_t> >(n,A,ldA,k1,k2,IPIV,inc);
+      return LASWP< complex<real_t> >(n,A,ldA,k1,k2,ipiv,inc);
    }
 }
 #endif

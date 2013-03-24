@@ -46,6 +46,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
    /// interchanges and the block structure of D as determined by LATL::SYTRF.
+   /// @param bsdv Bool array size n.  On entry, contains the details of the block structure of D.
    /// @param work Workspace vector of length n (optional).  If not used, workspace will be allocated
    /// and deallocated internally.
 
@@ -233,6 +234,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param ipiv is integer array with dimension n.  Details of the
    /// interchanges and the block structure of D as determined by LATL::SYTRF.
+   /// @param bsdv Bool array size n.  On entry, contains the details of the block structure of D.
    /// @param work Workspace vector of length n (optional).  If not used, workspace will be allocated
    /// and deallocated internally.
 
