@@ -2,9 +2,10 @@
 #### Makefile to build legacy BLAS+LAPACK interface library
 ####
 
-CC=/usr/local/bin/c++
+CC=clang++
 LATL=../include
-CFLAGS=-O3 -Wall -pedantic -std=c++11 -I$(LATL)
+CBLAS=-D__latl_cblas -I/System/Library/Frameworks/vecLib.framework/Headers/
+CFLAGS=-O3 -Wall -pedantic -std=c++11 -I$(LATL) $(CBLAS)
 LIBTOOL=ar cr
 LIB=../liblatl.a
 
