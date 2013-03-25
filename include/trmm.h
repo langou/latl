@@ -64,12 +64,11 @@ namespace LATL
       int_t i,j,k;
       real_t *a,*b,*bt;
       real_t t;
-      bool nounit;
       
       side=toupper(side);
       uplo=toupper(uplo);
       trans=toupper(trans);
-      nounit=(diag=='N')?1:0;
+      diag=toupper(diag);
       
       if((side!='L')&&(side!='R'))
          return -1;
@@ -89,7 +88,9 @@ namespace LATL
          return -11;
       else if((m==0)||(n==0))
          return 0;
-      
+
+      bool nounit=(diag=='N')?1:0;
+
       if(alpha==zero)
       {
          b=B;
@@ -342,12 +343,11 @@ namespace LATL
       int_t i,j,k;
       complex<real_t> *a,*b,*bt;
       complex<real_t> t;
-      bool nounit;
       
       side=toupper(side);
       uplo=toupper(uplo);
       trans=toupper(trans);
-      nounit=(diag=='N')?1:0;
+      diag=toupper(diag);
       
       if((side!='L')&&(side!='R'))
          return -1;
@@ -367,7 +367,9 @@ namespace LATL
          return -11;
       else if((m==0)||(n==0))
          return 0;
-      
+
+      bool nounit=(diag=='N')?1:0;
+
       if(alpha==zero)
       {
          b=B;
@@ -662,6 +664,156 @@ namespace LATL
       }
       return 0;
    }
-   
+
+#ifdef __latl_cblas
+#include <cblas.h>
+
+   template <> int TRMM<float>(char side, char uplo, char trans, char diag, int_t m, int_t n, float alpha, float *A, int_t ldA, float *B, int_t ldB)
+   {
+      using std::toupper;
+      side=toupper(side);
+      uplo=toupper(uplo);
+      trans=toupper(trans);
+      diag=toupper(diag);
+
+      if((side!='L')&&(side!='R'))
+         return -1;
+      else if((uplo!='U')&&(uplo!='L'))
+         return -2;
+      else if((trans!='N')&&(trans!='T')&&(trans!='C'))
+         return -3;
+      else if((diag!='U')&&(diag!='N'))
+         return -4;
+      else if(m<0)
+         return -5;
+      else if(n<0)
+         return -6;
+      else if(ldA<((side=='L')?m:n))
+         return -9;
+      else if(ldB<m)
+         return -11;
+      else if((m==0)||(n==0))
+         return 0;
+
+      const CBLAS_SIDE Side=(side=='L')?CblasLeft:CblasRight;
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+      const CBLAS_DIAG Diag=(diag=='N')?CblasNonUnit:CblasUnit;
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:CblasTrans;
+
+      cblas_strmm(CblasColMajor,Side,Uplo,Trans,Diag,m,n,alpha,A,ldA,B,ldB);
+      
+      return 0;
+   }
+
+   template <> int TRMM<double>(char side, char uplo, char trans, char diag, int_t m, int_t n, double alpha, double *A, int_t ldA, double *B, int_t ldB)
+   {
+      using std::toupper;
+      side=toupper(side);
+      uplo=toupper(uplo);
+      trans=toupper(trans);
+      diag=toupper(diag);
+
+      if((side!='L')&&(side!='R'))
+         return -1;
+      else if((uplo!='U')&&(uplo!='L'))
+         return -2;
+      else if((trans!='N')&&(trans!='T')&&(trans!='C'))
+         return -3;
+      else if((diag!='U')&&(diag!='N'))
+         return -4;
+      else if(m<0)
+         return -5;
+      else if(n<0)
+         return -6;
+      else if(ldA<((side=='L')?m:n))
+         return -9;
+      else if(ldB<m)
+         return -11;
+      else if((m==0)||(n==0))
+         return 0;
+
+      const CBLAS_SIDE Side=(side=='L')?CblasLeft:CblasRight;
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+      const CBLAS_DIAG Diag=(diag=='N')?CblasNonUnit:CblasUnit;
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:CblasTrans;
+
+      cblas_dtrmm(CblasColMajor,Side,Uplo,Trans,Diag,m,n,alpha,A,ldA,B,ldB);
+
+      return 0;
+   }
+   template <> int TRMM<float>(char side, char uplo, char trans, char diag, int_t m, int_t n, complex<float> alpha, complex<float> *A, int_t ldA, complex<float> *B, int_t ldB)
+   {
+      using std::toupper;
+      side=toupper(side);
+      uplo=toupper(uplo);
+      trans=toupper(trans);
+      diag=toupper(diag);
+
+      if((side!='L')&&(side!='R'))
+         return -1;
+      else if((uplo!='U')&&(uplo!='L'))
+         return -2;
+      else if((trans!='N')&&(trans!='T')&&(trans!='C'))
+         return -3;
+      else if((diag!='U')&&(diag!='N'))
+         return -4;
+      else if(m<0)
+         return -5;
+      else if(n<0)
+         return -6;
+      else if(ldA<((side=='L')?m:n))
+         return -9;
+      else if(ldB<m)
+         return -11;
+      else if((m==0)||(n==0))
+         return 0;
+
+      const CBLAS_SIDE Side=(side=='L')?CblasLeft:CblasRight;
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+      const CBLAS_DIAG Diag=(diag=='N')?CblasNonUnit:CblasUnit;
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_ctrmm(CblasColMajor,Side,Uplo,Trans,Diag,m,n,&alpha,A,ldA,B,ldB);
+
+      return 0;
+   }
+   template <> int TRMM<double>(char side, char uplo, char trans, char diag, int_t m, int_t n, complex<double> alpha, complex<double> *A, int_t ldA, complex<double> *B, int_t ldB)
+   {
+      using std::toupper;
+      side=toupper(side);
+      uplo=toupper(uplo);
+      trans=toupper(trans);
+      diag=toupper(diag);
+
+      if((side!='L')&&(side!='R'))
+         return -1;
+      else if((uplo!='U')&&(uplo!='L'))
+         return -2;
+      else if((trans!='N')&&(trans!='T')&&(trans!='C'))
+         return -3;
+      else if((diag!='U')&&(diag!='N'))
+         return -4;
+      else if(m<0)
+         return -5;
+      else if(n<0)
+         return -6;
+      else if(ldA<((side=='L')?m:n))
+         return -9;
+      else if(ldB<m)
+         return -11;
+      else if((m==0)||(n==0))
+         return 0;
+
+      const CBLAS_SIDE Side=(side=='L')?CblasLeft:CblasRight;
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+      const CBLAS_DIAG Diag=(diag=='N')?CblasNonUnit:CblasUnit;
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_ztrmm(CblasColMajor,Side,Uplo,Trans,Diag,m,n,&alpha,A,ldA,B,ldB);
+
+      return 0;
+   }
+#endif
+
 }
 #endif
