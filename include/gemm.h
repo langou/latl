@@ -453,5 +453,143 @@ namespace LATL
       }
       return 0;
    }
+
+
+#ifdef __latl_cblas
+#include <cblas.h>
+
+
+   inline CBLAS_TRANSPOSE ConvertTrans(char trans)
+   {
+      CBLAS_TRANSPOSE Trans;
+      if(trans=='T')
+         Trans=CblasTrans;
+      else if(trans=='C')
+         Trans=CblasConjTrans;
+      else
+         Trans=CblasNoTrans;
+      return Trans;
+   }
+
+   template<> int GEMM<float>(char transA, char transB, int_t m, int_t n, int_t k, float alpha, float *A, int_t ldA, float *B, int_t ldB, float beta, float *C, int_t ldC)
+   {
+      transA=toupper(transA);
+      transB=toupper(transB);
+
+      if((transA!='N')&&(transA!='T')&&(transA!='C'))
+         return -1;
+      else if((transB!='N')&&(transB!='T')&&(transB!='C'))
+         return -2;
+      else if(m<0)
+         return -3;
+      else if(n<0)
+         return -4;
+      else if(k<0)
+         return -5;
+      else if(ldA<((transA!='N')?k:m))
+         return -8;
+      else if(ldB<((transB!='N')?n:k))
+         return -10;
+      else if(ldC<m)
+         return -13;
+
+      const CBLAS_TRANSPOSE TransA=ConvertTrans(transA);
+      const CBLAS_TRANSPOSE TransB=ConvertTrans(transB);
+
+      cblas_sgemm(CblasColMajor,TransA,TransB,m,n,k,alpha,A,ldA,B,ldB,beta,C,ldC);
+
+      return 0;
+   }
+
+      template<> int GEMM<double>(char transA, char transB, int_t m, int_t n, int_t k, double alpha, double *A, int_t ldA, double *B, int_t ldB, double beta, double *C, int_t ldC)
+   {
+      transA=toupper(transA);
+      transB=toupper(transB);
+
+      if((transA!='N')&&(transA!='T')&&(transA!='C'))
+         return -1;
+      else if((transB!='N')&&(transB!='T')&&(transB!='C'))
+         return -2;
+      else if(m<0)
+         return -3;
+      else if(n<0)
+         return -4;
+      else if(k<0)
+         return -5;
+      else if(ldA<((transA!='N')?k:m))
+         return -8;
+      else if(ldB<((transB!='N')?n:k))
+         return -10;
+      else if(ldC<m)
+         return -13;
+
+      const CBLAS_TRANSPOSE TransA=ConvertTrans(transA);
+      const CBLAS_TRANSPOSE TransB=ConvertTrans(transB);
+
+      cblas_dgemm(CblasColMajor,TransA,TransB,m,n,k,alpha,A,ldA,B,ldB,beta,C,ldC);
+
+      return 0;
+   }
+
+   template<> int GEMM<float>(char transA, char transB, int_t m, int_t n, int_t k, complex<float> alpha, complex<float> *A, int_t ldA, complex<float> *B, int_t ldB, complex<float> beta, complex<float> *C, int_t ldC)
+   {
+      transA=toupper(transA);
+      transB=toupper(transB);
+
+      if((transA!='N')&&(transA!='T')&&(transA!='C'))
+         return -1;
+      else if((transB!='N')&&(transB!='T')&&(transB!='C'))
+         return -2;
+      else if(m<0)
+         return -3;
+      else if(n<0)
+         return -4;
+      else if(k<0)
+         return -5;
+      else if(ldA<((transA!='N')?k:m))
+         return -8;
+      else if(ldB<((transB!='N')?n:k))
+         return -10;
+      else if(ldC<m)
+         return -13;
+
+      const CBLAS_TRANSPOSE TransA=ConvertTrans(transA);
+      const CBLAS_TRANSPOSE TransB=ConvertTrans(transB);
+
+      cblas_cgemm(CblasColMajor,TransA,TransB,m,n,k,&alpha,A,ldA,B,ldB,&beta,C,ldC);
+
+      return 0;
+   }
+
+   template<> int GEMM<double>(char transA, char transB, int_t m, int_t n, int_t k, complex<double> alpha, complex<double> *A, int_t ldA, complex<double> *B, int_t ldB, complex<double> beta, complex<double> *C, int_t ldC)
+   {
+      transA=toupper(transA);
+      transB=toupper(transB);
+
+      if((transA!='N')&&(transA!='T')&&(transA!='C'))
+         return -1;
+      else if((transB!='N')&&(transB!='T')&&(transB!='C'))
+         return -2;
+      else if(m<0)
+         return -3;
+      else if(n<0)
+         return -4;
+      else if(k<0)
+         return -5;
+      else if(ldA<((transA!='N')?k:m))
+         return -8;
+      else if(ldB<((transB!='N')?n:k))
+         return -10;
+      else if(ldC<m)
+         return -13;
+
+      const CBLAS_TRANSPOSE TransA=ConvertTrans(transA);
+      const CBLAS_TRANSPOSE TransB=ConvertTrans(transB);
+
+      cblas_zgemm(CblasColMajor,TransA,TransB,m,n,k,&alpha,A,ldA,B,ldB,&beta,C,ldC);
+
+      return 0;
+   }
+#endif
 }
 #endif
