@@ -17,7 +17,6 @@
 
 namespace LATL
 {
-   
    /// @brief Solves a system of linear equations A * X = B.
    ///
    ///     A * X = B or A^T * X = B
