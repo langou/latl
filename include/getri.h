@@ -53,7 +53,7 @@ namespace LATL
 
          real_t *work=new real_t[n*nb];
 
-         int_t info=TRTRI<real_t>('U','N', n, A, ldA);
+         int_t info=TRTRI<real_t>('U','N', n, A, ldA, nb);
          if(info != 0)
             return info;
 
