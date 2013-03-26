@@ -22,9 +22,41 @@
 namespace LATL
 {
    /// @brief Reduces a general matrix A to upper Hessenberg form H by an orthogonal 
-   /// similarity transformation:  Q**T * A * Q = H
+   /// similarity transformation:  Q' * A * Q = H.
    ///
+   /// It is assumed that A is already upper triangular in rows
+   /// and columns 1:ILO-1 and IHI+1:N. ILO and IHI are normally
+   /// set by a previous call to GEBAL; otherwise they should be
+   /// set to 0 and N-1 respectively.
+   /// 0 <= ILO <= IHI < N
+   ///
+   /// The matrix Q is represented as a product of (ihi-ilo) elementary
+   /// reflectors
+   ///
+   ///       Q = H(ilo) H(ilo+1) . . . H(ihi-1).
+   /// Each H(i) has the form
+   ///
+   ///       H(i) = I - tau * v * v**T
+   /// where tau is a real scalar, and v is a real vector with
+   /// v(1:i) = 0, v(i+1) = 1 and v(ihi+1:n) = 0; v(i+2:ihi) is stored on
+   /// exit in A(i+2:ihi,i), and tau in TAU(i).
+   ///
+   /// The contents of A are illustrated by the following example, with
+   /// n = 7, ilo = 2 and ihi = 6:
+   ///
+   ///        on entry,                        on exit,
+   ///        ( a   a   a   a   a   a   a )    (  a   a   h   h   h   h   a )
+   ///        (     a   a   a   a   a   a )    (      a   h   h   h   h   a )
+   ///        (     a   a   a   a   a   a )    (      h   h   h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  h   h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  v3  h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  v3  v4  h   h   h )
+   ///        (                         a )    (                          a )
+   /// where a denotes an element of the original matrix A, h denotes a
+   /// modified element of the upper Hessenberg matrix H, and vi denotes an
+   /// element of the vector defining H(i).
    /// @return 0 if success.
+   /// @return -i if the ith argument is invalid.
    /// @param n Specifies the order of the matrix A.  n>=0
    /// @param ilo An integer.
    /// @param ihi An integer.
@@ -36,45 +68,10 @@ namespace LATL
    /// @param ldA Column length of matrix A.  ldA>=n
    /// @param tau Pointer to an array of dimension (N-1). The scalar factors of
    /// the elementary reflector.
-   ///
-   /// It is assumed that A is already upper triangular in rows
-   /// and columns 1:ILO-1 and IHI+1:N. ILO and IHI are normally
-   /// set by a previous call to GEBAL; otherwise they should be
-   /// set to 0 and N-1 respectively. 
-   /// 0 <= ILO <= IHI < N
-   ///
-   /// The matrix Q is represented as a product of (ihi-ilo) elementary
-   /// reflectors
-   ///
-   ///    Q = H(ilo) H(ilo+1) . . . H(ihi-1).
-   ///
-   /// Each H(i) has the form
-   ///
-   ///    H(i) = I - tau * v * v**T
-   ///
-   /// where tau is a real scalar, and v is a real vector with
-   /// v(1:i) = 0, v(i+1) = 1 and v(ihi+1:n) = 0; v(i+2:ihi) is stored on
-   /// exit in A(i+2:ihi,i), and tau in TAU(i).
-   ///
-   /// The contents of A are illustrated by the following example, with
-   /// n = 7, ilo = 2 and ihi = 6:
-   ///
-   /// on entry,                        on exit,
-   ///
-   /// ( a   a   a   a   a   a   a )    (  a   a   h   h   h   h   a )
-   /// (     a   a   a   a   a   a )    (      a   h   h   h   h   a )
-   /// (     a   a   a   a   a   a )    (      h   h   h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  h   h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  v3  h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  v3  v4  h   h   h )
-   /// (                         a )    (                          a )
-   ///
-   /// where a denotes an element of the original matrix A, h denotes a
-   /// modified element of the upper Hessenberg matrix H, and vi denotes an
-   /// element of the vector defining H(i).
-   
+   /// @param w Workspace vector of length n (optional).  If not used, workspace is managed internally.
+     
    template <typename real_t>
-   int_t GEHD2(int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau )
+   int GEHD2(int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau, real_t *w=NULL )
    {
 
       using std::min; 
@@ -92,7 +89,9 @@ namespace LATL
 
       int_t i;
       real_t alpha;
-      real_t *w=new real_t[max(n-ilo-1,ihi+1)];
+      bool allocate=(W==NULL)?1:0;
+      if(allocate)
+         w=new real_t[n];
       real_t *v = A+ilo+1+ilo*ldA;
       real_t *CR = A+(ilo+1)*ldA;
       real_t *CL = v+ldA;
@@ -108,14 +107,46 @@ namespace LATL
          CR += ldA;
          CL = v+ldA;
       }
-      delete [] w;
+      if(allocate)
+         delete [] w;
       return 0;
    }
 
    /// @brief Reduces a general matrix A to upper Hessenberg form H by an orthogonal 
-   /// similarity transformation:  Q**T * A * Q = H
+   /// similarity transformation:  Q.' * A * Q = H
    ///
+   /// It is assumed that A is already upper triangular in rows
+   /// and columns 1:ILO-1 and IHI+1:N. ILO and IHI are normally
+   /// set by a previous call to GEBAL; otherwise they should be
+   /// set to 0 and N-1 respectively.
+   /// 0 <= ILO <= IHI < N
+   ///
+   /// The matrix Q is represented as a product of (ihi-ilo) elementary
+   /// reflectors
+   ///
+   ///        Q = H(ilo) H(ilo+1) . . . H(ihi-1).
+   /// Each H(i) has the form
+   ///
+   ///        H(i) = I - tau * v * v**H
+   /// where tau is a complex scalar, and v is a complex vector with
+   /// v(1:i) = 0, v(i+1) = 1 and v(ihi+1:n) = 0; v(i+2:ihi) is stored on
+   /// exit in A(i+2:ihi,i), and tau in TAU(i).
+   /// The contents of A are illustrated by the following example, with
+   /// n = 7, ilo = 2 and ihi = 6:
+   ///
+   ///        on entry,                        on exit,
+   ///        ( a   a   a   a   a   a   a )    (  a   a   h   h   h   h   a )
+   ///        (     a   a   a   a   a   a )    (      a   h   h   h   h   a )
+   ///        (     a   a   a   a   a   a )    (      h   h   h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  h   h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  v3  h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  v3  v4  h   h   h )
+   ///        (                         a )    (                          a )
+   /// where a denotes an element of the original matrix A, h denotes a
+   /// modified element of the upper Hessenberg matrix H, and vi denotes an
+   /// element of the vector defining H(i).
    /// @return 0 if success.
+   /// @return -i if ith argument is invalid.
    /// @param n Specifies the order of the matrix A.  n>=0
    /// @param ilo An integer.
    /// @param ihi An integer.
@@ -127,45 +158,10 @@ namespace LATL
    /// @param ldA Column length of matrix A.  ldA>=n
    /// @param tau Pointer to an array of dimension (N-1). The scalar factors of
    /// the elementary reflector.
-   ///
-   /// It is assumed that A is already upper triangular in rows
-   /// and columns 1:ILO-1 and IHI+1:N. ILO and IHI are normally
-   /// set by a previous call to GEBAL; otherwise they should be
-   /// set to 0 and N-1 respectively. 
-   /// 0 <= ILO <= IHI < N
-   ///
-   /// The matrix Q is represented as a product of (ihi-ilo) elementary
-   /// reflectors
-   ///
-   ///    Q = H(ilo) H(ilo+1) . . . H(ihi-1).
-   ///
-   /// Each H(i) has the form
-   ///
-   ///    H(i) = I - tau * v * v**H
-   ///
-   /// where tau is a complex scalar, and v is a complex vector with
-   /// v(1:i) = 0, v(i+1) = 1 and v(ihi+1:n) = 0; v(i+2:ihi) is stored on
-   /// exit in A(i+2:ihi,i), and tau in TAU(i).
-   ///
-   /// The contents of A are illustrated by the following example, with
-   /// n = 7, ilo = 2 and ihi = 6:
-   ///
-   /// on entry,                        on exit,
-   ///
-   /// ( a   a   a   a   a   a   a )    (  a   a   h   h   h   h   a )
-   /// (     a   a   a   a   a   a )    (      a   h   h   h   h   a )
-   /// (     a   a   a   a   a   a )    (      h   h   h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  h   h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  v3  h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  v3  v4  h   h   h )
-   /// (                         a )    (                          a )
-   ///
-   /// where a denotes an element of the original matrix A, h denotes a
-   /// modified element of the upper Hessenberg matrix H, and vi denotes an
-   /// element of the vector defining H(i).
-   
+   /// @param w Workspace vector of length n (optional).  If not used, workspace is managed internally.
+
    template <typename real_t>
-   int_t GEHD2(int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau )
+   int_t GEHD2(int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau, complex<real_t> *w=NULL )
    {
 
       using std::min; 
@@ -184,7 +180,9 @@ namespace LATL
 
       int_t i;
       complex<real_t> alpha;
-      complex<real_t> *w=new complex<real_t>[max(n-ilo-1,ihi+1)];
+      bool allocate=(w==NULL)?1:0;
+      if(allocate)
+         w=new complex<real_t>[n];
       complex<real_t> *v = A+ilo+1+ilo*ldA;
       complex<real_t> *CR = A+(ilo+1)*ldA;
       complex<real_t> *CL = v+ldA;
@@ -200,7 +198,8 @@ namespace LATL
          CR += ldA;
          CL = v+ldA;
       }
-      delete [] w;
+      if(allocate)
+         delete [] w;
       return 0;
    }
 }
