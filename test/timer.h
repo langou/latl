@@ -11,20 +11,20 @@
 
 namespace LATL
 {
-  class Timer
-  {
-  public:
-    Timer();
-    ~Timer();
-    void Start();
-    void Stop();
-    double Time();
-    void Clear();
-  private:
-    double StopWatch;
-    double Total;
-    double Clock();
-  };
+   class Timer
+   {
+   public:
+      Timer();
+      ~Timer();
+      void Start();
+      void Stop();
+      double Time();
+      void Clear();
+   private:
+      double StopWatch;
+      double Total;
+      double Clock();
+   };
 }
 #endif
 
