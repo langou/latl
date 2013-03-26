@@ -9,6 +9,9 @@
 #ifndef _syr2_h
 #define _syr2_h
 
+/// @file syr2.h Performs outer product of two vectors.
+
+#include <cctype>
 #include "latl.h"
 
 namespace LATL
@@ -138,7 +141,6 @@ namespace LATL
       }
       return 0;
    }
-
 }
 
 #endif
