@@ -24,8 +24,39 @@
 namespace LATL
 {
    /// @brief Reduces a real general matrix A to upper Hessenberg form H by an
-   /// orthogonal similarity transformation:  Q**T * A * Q = H .
+   /// orthogonal similarity transformation:  Q' * A * Q = H .
+   ///
+   /// The matrix Q is represented as a product of (ihi-ilo) elementary
+   /// reflectors
+   ///
+   ///        Q = H(ilo) H(ilo+1) . . . H(ihi-1).
+   /// Each H(i) has the form
+   ///
+   ///        H(i) = I - tau * v * v'
+   ///
+   /// where tau is a real scalar, and v is a real vector with
+   /// v(1:i) = 0, v(i+1) = 1 and v(ihi+1:n) = 0; v(i+2:ihi) is stored on
+   /// exit in A(i+2:ihi,i), and tau in tau(i).
+   /// The contents of A are illustrated by the following example, with
+   /// n = 7, ilo = 1 and ihi = 5:
+   ///
+   ///        on entry,                        on exit,
+   ///        ( a   a   a   a   a   a   a )    (  a   a   h   h   h   h   a )
+   ///        (     a   a   a   a   a   a )    (      a   h   h   h   h   a )
+   ///        (     a   a   a   a   a   a )    (      h   h   h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  h   h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  v3  h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  v3  v4  h   h   h )
+   ///        (                         a )    (                          a )
+   /// where a denotes an element of the original matrix A, h denotes a
+   /// modified element of the upper Hessenberg matrix H, and vi denotes an
+   /// element of the vector defining H(i).
+   /// This file is a slight modification of LAPACK-3.0's DGEHRD
+   /// subroutine incorporating improvements proposed by Quintana-Orti and
+   /// Van de Geijn (2006). (See LATL::LAHR2.)
    /// @tparam real_t Floating point type.
+   /// @return 0 if success
+   /// @return -i if ith argument is invalid.
    /// @param n The order of the matrix A.  n >= 0.
    /// @param ilo Column index.
    /// @param ihi Column index. It is assumed that A is already upper 
@@ -43,42 +74,10 @@ namespace LATL
    /// the elementary reflectors.  Elements 0:ilo-1 and ihi:n-2 of tau are set
    /// to zero.
    /// @param nb Block size.  0<nb<=n
-   ///
-   /// The matrix Q is represented as a product of (ihi-ilo) elementary
-   /// reflectors
-   /// 
-   ///    Q = H(ilo) H(ilo+1) . . . H(ihi-1).
-   /// 
-   /// Each H(i) has the form
-   /// 
-   ///    H(i) = I - tau * v * v**T
-   /// 
-   /// where tau is a real scalar, and v is a real vector with
-   /// v(1:i) = 0, v(i+1) = 1 and v(ihi+1:n) = 0; v(i+2:ihi) is stored on
-   /// exit in A(i+2:ihi,i), and tau in tau(i).
-   /// 
-   /// The contents of A are illustrated by the following example, with
-   /// n = 7, ilo = 1 and ihi = 5:
-   /// 
-   /// on entry,                        on exit,
-   /// 
-   /// ( a   a   a   a   a   a   a )    (  a   a   h   h   h   h   a )
-   /// (     a   a   a   a   a   a )    (      a   h   h   h   h   a )
-   /// (     a   a   a   a   a   a )    (      h   h   h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  h   h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  v3  h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  v3  v4  h   h   h )
-   /// (                         a )    (                          a )
-   /// 
-   /// where a denotes an element of the original matrix A, h denotes a
-   /// modified element of the upper Hessenberg matrix H, and vi denotes an
-   /// element of the vector defining H(i).
-   /// 
-   /// This file is a slight modification of LAPACK-3.0's DGEHRD
-   /// subroutine incorporating improvements proposed by Quintana-Orti and
-   /// Van de Geijn (2006). (See DLAHR2.)
+   /// @param W Workspace vector of length 2*n*(nb+1) (optional).  If not used, workspace is managed internally.
+   
    template <typename real_t>
-   int_t GEHRD( int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau, int_t nb=32)
+   int GEHRD( int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau, int_t nb, real_t *W=NULL)
    {
 
       using std::min;
@@ -94,9 +93,13 @@ namespace LATL
       else if(ldA<n)
          return -5;
 
+      bool allocate=(W==NULL)?:1:0;
+      if(allocate)
+         W=new real_t[n*nb+n*(nb+1)+n];
+      real_t *T=W+n*nb;
+      real_t *w=T+n*(nb+1);
       real_t ei;
-      real_t *T=new real_t[n*(nb+1)];
-      real_t *work=new real_t[n*nb];
+
 
       for(i=0;i<ilo-1;i++)
          tau[i] = 0.0;
@@ -112,28 +115,59 @@ namespace LATL
          for(i=ilo;i<ihi-nx;i+=nb)
          {
             ib = min( nb, ihi-i );
-            LAHR2( ihi+1, i+1, ib, A+i*ldA, ldA, tau+i, T, n, work, n);
+            LAHR2( ihi+1, i+1, ib, A+i*ldA, ldA, tau+i, T, n, W, n);
             ei = A[i+ib+(i+ib-1)*ldA];
             A[i+ib+(i+ib-1)*ldA] = 1.0;
-            GEMM<real_t>( 'N', 'T', ihi+1, ihi-i-ib+1, ib, -1.0, work, n, A+i+ib+i*ldA, ldA, 1.0, A+(i+ib)*ldA, ldA);
+            GEMM<real_t>( 'N', 'T', ihi+1, ihi-i-ib+1, ib, -1.0, W, n, A+i+ib+i*ldA, ldA, 1.0, A+(i+ib)*ldA, ldA);
             A[i+ib+(i+ib-1)*ldA] = ei;
-            TRMM<real_t>( 'R', 'L', 'T', 'U', i+1, ib-1, 1.0, A+i+1+i*ldA, ldA, work, n);
+            TRMM<real_t>( 'R', 'L', 'T', 'U', i+1, ib-1, 1.0, A+i+1+i*ldA, ldA, W, n);
             for(j=0;j<ib-1;j++)
-               AXPY<real_t>( i+1, -1.0, work+n*j, 1, A+(i+j+1)*ldA, 1);
-            LARFB( 'L', 'T', 'F', 'C', ihi-i, n-i-ib, ib, A+i+1+i*ldA, ldA, T, n, A+i+1+(i+ib)*ldA, ldA, work);
+               AXPY<real_t>( i+1, -1.0, W+n*j, 1, A+(i+j+1)*ldA, 1);
+            LARFB( 'L', 'T', 'F', 'C', ihi-i, n-i-ib, ib, A+i+1+i*ldA, ldA, T, n, A+i+1+(i+ib)*ldA, ldA, W);
          }
       }
 
-      GEHD2( n, i, ihi, A, ldA, tau );
+      GEHD2( n, i, ihi, A, ldA, tau, w );
 
-      delete [] work;
+      if(allocate)
+         delete [] W;
       return 0;
 
    }
 
    /// @brief Reduces a complex general matrix A to upper Hessenberg form H by an
-   /// unitary similarity transformation:  Q**T * A * Q = H .
+   /// unitary similarity transformation:  Q'* A * Q = H .
+   ///
+   /// The matrix Q is represented as a product of (ihi-ilo) elementary
+   /// reflectors
+   ///
+   ///        Q = H(ilo) H(ilo+1) . . . H(ihi-1).
+   /// Each H(i) has the form
+   ///
+   ///        H(i) = I - tau * v * v'
+   /// where tau is a complex scalar, and v is a complex vector with
+   /// v(1:i) = 0, v(i+1) = 1 and v(ihi+1:n) = 0; v(i+2:ihi) is stored on
+   /// exit in A(i+2:ihi,i), and tau in tau(i).
+   /// The contents of A are illustrated by the following example, with
+   /// n = 7, ilo = 1 and ihi = 5:
+   ///
+   ///        on entry,                        on exit,
+   ///        ( a   a   a   a   a   a   a )    (  a   a   h   h   h   h   a )
+   ///        (     a   a   a   a   a   a )    (      a   h   h   h   h   a )
+   ///        (     a   a   a   a   a   a )    (      h   h   h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  h   h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  v3  h   h   h   h )
+   ///        (     a   a   a   a   a   a )    (      v2  v3  v4  h   h   h )
+   ///        (                         a )    (                          a )
+   /// where a denotes an element of the original matrix A, h denotes a
+   /// modified element of the upper Hessenberg matrix H, and vi denotes an
+   /// element of the vector defining H(i).
+   /// This file is a slight modification of LAPACK-3.0's DGEHRD
+   /// subroutine incorporating improvements proposed by Quintana-Orti and
+   /// Van de Geijn (2006). (See LATL::LAHR2.)
    /// @tparam real_t Floating point type.
+   /// @return 0 if success
+   /// @return -i if the ith argument is invalid.
    /// @param n The order of the matrix A.  n >= 0.
    /// @param ilo Column index.
    /// @param ihi Column index. It is assumed that A is already upper 
@@ -152,42 +186,10 @@ namespace LATL
    /// the elementary reflectors.  Elements 0:ilo-1 and ihi:n-2 of tau are set
    /// to zero.
    /// @param nb Block size.  0<nb<=n
-   ///
-   /// The matrix Q is represented as a product of (ihi-ilo) elementary
-   /// reflectors
-   /// 
-   ///    Q = H(ilo) H(ilo+1) . . . H(ihi-1).
-   /// 
-   /// Each H(i) has the form
-   /// 
-   ///    H(i) = I - tau * v * v**H
-   /// 
-   /// where tau is a complex scalar, and v is a complex vector with
-   /// v(1:i) = 0, v(i+1) = 1 and v(ihi+1:n) = 0; v(i+2:ihi) is stored on
-   /// exit in A(i+2:ihi,i), and tau in tau(i).
-   /// 
-   /// The contents of A are illustrated by the following example, with
-   /// n = 7, ilo = 1 and ihi = 5:
-   /// 
-   /// on entry,                        on exit,
-   /// 
-   /// ( a   a   a   a   a   a   a )    (  a   a   h   h   h   h   a )
-   /// (     a   a   a   a   a   a )    (      a   h   h   h   h   a )
-   /// (     a   a   a   a   a   a )    (      h   h   h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  h   h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  v3  h   h   h   h )
-   /// (     a   a   a   a   a   a )    (      v2  v3  v4  h   h   h )
-   /// (                         a )    (                          a )
-   /// 
-   /// where a denotes an element of the original matrix A, h denotes a
-   /// modified element of the upper Hessenberg matrix H, and vi denotes an
-   /// element of the vector defining H(i).
-   /// 
-   /// This file is a slight modification of LAPACK-3.0's DGEHRD
-   /// subroutine incorporating improvements proposed by Quintana-Orti and
-   /// Van de Geijn (2006). (See DLAHR2.)
+   /// @param W Workspace vector of length 2*n*(nb+1) (optional).  If not used, workspace is managed internally.
+
    template <typename real_t>
-   int_t GEHRD( int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau, int_t nb=32)
+   int GEHRD( int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau, int_t nb, complex<real_t> *W=NULL)
    {
 
       using std::min;
@@ -203,9 +205,12 @@ namespace LATL
       else if(ldA<n)
          return -5;
 
+      bool allocate=(W==NULL)?:1:0;
+      if(allocate)
+         W=new complex<real_t>[n*nb+n*(nb+1)+n];
+      complex<real_t> *T=W+n*nb;
+      complex<real_t> *w=T+n*(nb+1);
       complex<real_t> ei;
-      complex<real_t> *T=new complex<real_t>[n*(nb+1)];
-      complex<real_t> *work=new complex<real_t>[n*nb];
 
       for(i=0;i<ilo-1;i++)
          tau[i] = 0.0;
@@ -221,21 +226,22 @@ namespace LATL
          for(i=ilo;i<ihi-nx;i+=nb)
          {
             ib = min( nb, ihi-i );
-            LAHR2( ihi+1, i+1, ib, A+i*ldA, ldA, tau+i, T, n, work, n);
+            LAHR2( ihi+1, i+1, ib, A+i*ldA, ldA, tau+i, T, n, W, n);
             ei = A[i+ib+(i+ib-1)*ldA];
             A[i+ib+(i+ib-1)*ldA] = 1.0;
-            GEMM<real_t>( 'N', 'C', ihi+1, ihi-i-ib+1, ib, -1.0, work, n, A+i+ib+i*ldA, ldA, 1.0, A+(i+ib)*ldA, ldA);
+            GEMM<real_t>( 'N', 'C', ihi+1, ihi-i-ib+1, ib, -1.0, W, n, A+i+ib+i*ldA, ldA, 1.0, A+(i+ib)*ldA, ldA);
             A[i+ib+(i+ib-1)*ldA] = ei;
-            TRMM<real_t>( 'R', 'L', 'C', 'U', i+1, ib-1, 1.0, A+i+1+i*ldA, ldA, work, n);
+            TRMM<real_t>( 'R', 'L', 'C', 'U', i+1, ib-1, 1.0, A+i+1+i*ldA, ldA, W, n);
             for(j=0;j<ib-1;j++)
-               AXPY<real_t>( i+1, -1.0, work+n*j, 1, A+(i+j+1)*ldA, 1);
-            LARFB( 'L', 'C', 'F', 'C', ihi-i, n-i-ib, ib, A+i+1+i*ldA, ldA, T, n, A+i+1+(i+ib)*ldA, ldA, work);
+               AXPY<real_t>( i+1, -1.0, W+n*j, 1, A+(i+j+1)*ldA, 1);
+            LARFB( 'L', 'C', 'F', 'C', ihi-i, n-i-ib, ib, A+i+1+i*ldA, ldA, T, n, A+i+1+(i+ib)*ldA, ldA, W);
          }
       }
 
-      GEHD2( n, i, ihi, A, ldA, tau );
+      GEHD2( n, i, ihi, A, ldA, tau, w );
 
-      delete [] work;
+      if(allocate)
+         delete [] W;
       return 0;
 
    }
