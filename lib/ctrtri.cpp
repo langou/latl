@@ -13,7 +13,8 @@ using LATL::TRTRI;
 
 int ctrtri_(char &uplo,char &diag, int &n,complex<float> *A,int &ldA,int &info)
 {
-   info=TRTRI<float>(uplo,diag,n,A,ldA);
+   int nb=40;
+   info=TRTRI<float>(uplo,diag,n,A,ldA,nb);
    if(info!=0)
    {
       info=-info;

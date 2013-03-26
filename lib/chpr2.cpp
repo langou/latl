@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 University of Colorado Denver. All rights reserved.
 //
 #include "blas.h"
-#include "hpr.h"
+#include "hpr2.h"
 
-using LATL::HPR;
+using LATL::HPR2;
 using std::complex;
 
 int chpr2_(char& uplo, int &n, complex<float> &alpha, complex<float> *x, int& incx, complex<float> *y, int& incy, complex<float> *A)
 {
-   int info=-HPR<float>(uplo,n,alpha,x,incx,y,incy,A);
+   int info=-HPR2<float>(uplo,n,alpha,x,incx,y,incy,A);
    if(info>0)
       xerbla_("CHPR2  ",info);
    return 0;

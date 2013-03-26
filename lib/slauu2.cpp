@@ -7,13 +7,13 @@
 //
 
 #include "lapack.h"
-#include "lauum.h"
+#include "lauu2.h"
 
-using LATL::LAUUM;
+using LATL::LAUU2;
 
 int slauu2_(char &uplo,int &n,float *A,int &ldA,int &info)
 {
-   info=LAUUM<float>(uplo,n,A,ldA);
+   info=LAUU2<float>(uplo,n,A,ldA);
    if(info!=0)
    {
       info=-info;

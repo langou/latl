@@ -7,13 +7,13 @@
 //
 
 #include "blas.h"
-#include "spr.h"
+#include "spr2.h"
 
-using LATL::SPR;
+using LATL::SPR2;
 
 int dspr2_(char& uplo, int &n, double &alpha, double *x, int& incx, double *y, int& incy, double *A)
 {
-   int info=-SPR<double>(uplo,n,alpha,x,incx,y,incy,A);
+   int info=-SPR2<double>(uplo,n,alpha,x,incx,y,incy,A);
    if(info>0)
       xerbla_("DSPR2 ",info);
    return 0;

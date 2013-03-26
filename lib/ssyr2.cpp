@@ -7,13 +7,13 @@
 //
 
 #include "blas.h"
-#include "syr.h"
+#include "syr2.h"
 
-using LATL::SYR;
+using LATL::SYR2;
 
 int ssyr2_(char& uplo, int &n, float& alpha, float *x, int& incx, float *y, int& incy, float *A, int &ldA)
 {
-   int info=-SYR<float>(uplo,n,alpha,x,incx,y,incy,A,ldA);
+   int info=-SYR2<float>(uplo,n,alpha,x,incx,y,incy,A,ldA);
    if(info>0)
       xerbla_("SSYR2 ",info);
    return 0;

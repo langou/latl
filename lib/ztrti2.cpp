@@ -9,11 +9,11 @@
 #include "lapack.h"
 #include "trti2.h"
 
-using LATL::trti2;
+using LATL::TRTI2;
 
 int ztrti2_(char &uplo,char &diag, int &n,complex<double> *A,int &ldA,int &info)
 {
-   info=trti2<double>(uplo,diag,n,A,ldA);
+   info=TRTI2<double>(uplo,diag,n,A,ldA);
    if(info!=0)
    {
       info=-info;
