@@ -147,8 +147,6 @@ namespace LATL
       }
       else // direct=='B'
       {
-         real_t *T0=T;
-         real_t *V0=V;
          T+=(k-1)*ldT;
          V+=(k-1)*ldV;
          T[k-1]=tau[k-1];
@@ -315,8 +313,6 @@ namespace LATL
       }
       else // direct=='B'
       {
-         complex<real_t> *T0=T;
-         complex<real_t> *V0=V;
          T+=(k-1)*ldT;
          V+=(k-1)*ldV;
          T[k-1]=tau[k-1];
