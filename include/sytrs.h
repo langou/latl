@@ -31,10 +31,11 @@ namespace LATL
    /// @param bsdv Bool array size n.  On entry, contains the details of the block structure of D.
    /// @param B Real matrix size ldB-by-nrhs.  On exit, the solution matrix X.
    /// @param ldB Column length of B.  ldB >= n
+   /// @param Work Workspace vector of length n, optional.  Default value of NULL causes workspace to be managed internally.
    /// @ingroup SOLV
    
    template<typename real_t>
-   int_t SYTRS(const char uplo, const int_t n, const int_t nrhs, real_t * const A, const int_t ldA, int_t * ipiv, bool * bsdv, real_t * const B, const int_t ldB)
+   int_t SYTRS(const char uplo, const int_t n, const int_t nrhs, real_t * const A, const int_t ldA, int_t * ipiv, bool * bsdv, real_t * const B, const int_t ldB, real_t * Work = NULL)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -49,7 +50,9 @@ namespace LATL
       
       if (n == 0 || nrhs == 0)
          return 0;
-      real_t * Work = new real_t[n];
+      bool allocate = (Work==NULL)?1:0;
+      if(allocate)
+         Work = new real_t[n];
       LATL::SYCONV(uplo, 'C', n, A, ldA, ipiv, bsdv, Work);
       const real_t one(1.0);
       if (uplo == 'U' || uplo == 'u')
@@ -206,7 +209,8 @@ namespace LATL
       }
    
       LATL::SYCONV(uplo, 'R', n, A, ldA, ipiv, bsdv, Work);
-      delete [] Work;
+      if(allocate)
+         delete [] Work;
       return 0;
    }
 
@@ -222,10 +226,11 @@ namespace LATL
    /// @param bsdv Bool array size n.  On entry, contains the details of the block structure of D.
    /// @param B Real matrix size ldB-by-nrhs.  On exit, the solution matrix X.
    /// @param ldB Column length of B.  ldB >= n
+   /// @param Work Workspace vector of length n, optional.  Default value of NULL causes workspace to be managed internally.
    /// @ingroup SOLV
    
    template<typename real_t>
-   int_t SYTRS(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv, complex<real_t> * const B, const int_t ldB)
+   int_t SYTRS(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv, complex<real_t> * const B, const int_t ldB, complex<real_t> * Work = NULL)
    {
       return LATL::SYTRS< complex<real_t> >(uplo, n, nrhs, A, ldA, ipiv, bsdv, B, ldB);
    }
