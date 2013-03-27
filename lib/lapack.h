@@ -141,6 +141,10 @@ extern "C"
    int dsytf2_(char &uplo,int &n,double *A,int &ldA,int *ipiv,int &info);
    int csytf2_(char &uplo,int &n,complex<float> *A,int &ldA,int *ipiv,int &info);
    int zsytf2_(char &uplo,int &n,complex<double> *A,int &ldA,int *ipiv,int &info);
+   int sgeqrf_(int &m,int &n,float *A,int &ldA,float *tau,float *work,int &lwork,int &info);
+   int dgeqrf_(int &m,int &n,double *A,int &ldA,double *tau,double *work,int &lwork,int &info);
+   int cgeqrf_(int &m,int &n,complex<float> *A,int &ldA,complex<float> *tau,complex<float> *work,int &lwork,int &info);
+   int zgeqrf_(int &m,int &n,complex<double> *A,int &ldA,complex<double> *tau,complex<double> *work,int &lwork,int &info);
 
 }
 #endif

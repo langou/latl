@@ -34,7 +34,8 @@ csyr.o zsyr.o
 
 OBJL=xerbla.o dlamch.o slamch.o disnan.o sisnan.o slange.o dlange.o clange.o zlange.o sladiv.o dladiv.o cladiv.o zladiv.o \
 slapy2.o dlapy2.o slapy3.o dlapy3.o slauu2.o dlauu2.o clauu2.o zlauu2.o slauum.o dlauum.o clauum.o zlauum.o \
-strti2.o dtrti2.o ctrti2.o ztrti2.o strtri.o dtrtri.o ctrtri.o ztrtri.o ssytf2.o dsytf2.o csytf2.o zsytf2.o
+strti2.o dtrti2.o ctrti2.o ztrti2.o strtri.o dtrtri.o ctrtri.o ztrtri.o ssytf2.o dsytf2.o csytf2.o zsytf2.o \
+sgeqrf.o dgeqrf.o cgeqrf.o zgeqrf.o
 
 ####
 #### rules and targets
