@@ -51,10 +51,9 @@ namespace LATL
    /// If not used, workspace is managed internally.
 
    template<typename real_t>
-   int GRQRF(int_t m, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *tau, int_t nb=80, complex<real_t> *w=NULL)
+   int GEQRF(int_t m, int_t n,real_t *A, int_t ldA, real_t *tau, int_t nb=80, real_t *w=NULL)
    {
       using std::min;
-      const complex<real_t> one(1.0);
       if(m<0)
          return -1;
       else if(n<0)
@@ -71,8 +70,8 @@ namespace LATL
       
       bool allocate=(w==NULL)?1:0;
       if(allocate)
-         w=new complex<real_t>[n*nb+nb];
-      complex<real_t> *B=A;
+         w=new real_t[n*nb+nb];
+      real_t *B=A;
       for(int_t i=0;i<k;i+=nb)
       {
          int_t ib=min(k-i,nb);
@@ -123,10 +122,9 @@ namespace LATL
    /// If not used, workspace is managed internally.
 
    template<typename real_t>
-   int GRQRF(int_t m, int_t n, real_t *A, int_t ldA, real_t *tau, int_t nb=80, real_t *w=NULL)
+   int GEQRF(int_t m, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *tau, int_t nb=80, complex<real_t> *w=NULL)
    {
       using std::min;
-      const real_t one(1.0);
       if(m<0)
          return -1;
       else if(n<0)
@@ -143,8 +141,8 @@ namespace LATL
 
       bool allocate=(w==NULL)?1:0;
       if(allocate)
-         w=new real_t[n*nb+nb];
-      real_t *B=A;
+         w=new complex<real_t>[n*nb+nb];
+      complex<real_t> *B=A;
       for(int_t i=0;i<k;i+=nb)
       {
          int_t ib=min(k-i,nb);
