@@ -49,7 +49,7 @@ namespace LATL
    /// If not used, workspace is managed internally.
 
    template<typename real_t>
-   int GRQR2(int_t m, int_t n, real_t *A, int_t ldA, real_t *tau, real_t *w=NULL)
+   int GEQR2(int_t m, int_t n, real_t *A, int_t ldA, real_t *tau, real_t *w=NULL)
    {
       using std::min;
       const real_t one(1.0);
@@ -74,7 +74,7 @@ namespace LATL
          {
             real_t alpha=A[i];
             A[i]=one;
-            LARF('L',m-i,n-i-1,A[i],1,tau[i],B+i,ldA,w);
+            LARF('L',m-i,n-i-1,A+i,1,tau[i],B+i,ldA,w);
             A[i]=alpha;
          }
          A=B;
