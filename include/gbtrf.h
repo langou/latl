@@ -35,10 +35,9 @@ namespace LATL
    /// @param ldAB Column length of matrix A.  ldAB >= 2*kL+kU+1
    /// @param ipiv Permutation matrix size min(m,n).  On exit, row k of A was exchanged with ipiv[k].
    /// @param nb Block size.
-   /// @param W Workspace vector of length 2*nb*(nb+1) (optional).  If not used, workspace is managed internally.
    
    template< typename real_t>
-   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const ipiv, const int_t nb, real_t * W=NULL)
+   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const ipiv, const int_t nb)
    {
       if (m < 0)
          return -1;
@@ -63,20 +62,8 @@ namespace LATL
          const real_t one(1.0);
          const int_t kV = kU+kL;
          int_t ldWork = nb+1;
-         bool allocate=(W==NULL)?1:0;
-         real_t *Work13;
-         real_t *Work31;
-         if(allocate)
-         {
-            Work13 = new real_t[(ldWork*nb)];
-            Work31 = new real_t[(ldWork*nb)];
-         }
-         else
-         {
-            Work13 = W;
-            Work31 = W+ldWork*nb;
-         }
-         
+         real_t * Work13 = new real_t[(ldWork*nb)];
+         real_t * Work31 = new real_t[(ldWork*nb)];
          real_t * temp13 = Work13;
          for (int_t j = 0; j < nb; ++j)
          {
@@ -276,11 +263,8 @@ namespace LATL
             }
          }
 
-         if(allocate)
-         {
-            delete [] Work13;
-            delete [] Work31;
-         }
+         delete [] Work13;
+         delete [] Work31;
       }
       return info;
    }
@@ -300,7 +284,6 @@ namespace LATL
    /// @param ldAB Column length of matrix A.  ldAB >= 2*kL+kU+1
    /// @param ipiv Permutation matrix size min(m,n).  On exit, row k of A was exchanged with ipiv[k].
    /// @param nb Block size.
-   /// @param W Workspace vector of length 2*nb*(nb+1) (optional).  If not used, workspace is managed internally.
 
    template< typename real_t>
    int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const ipiv, const int_t nb, complex<real_t> *W=NULL)
