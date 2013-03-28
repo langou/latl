@@ -74,10 +74,9 @@ namespace LATL
    /// the elementary reflectors.  Elements 0:ilo-1 and ihi:n-2 of tau are set
    /// to zero.
    /// @param nb Block size.  0<nb<=n
-   /// @param W Workspace vector of length 2*n*(nb+1) (optional).  If not used, workspace is managed internally.
-   
+
    template <typename real_t>
-   int GEHRD( int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau, int_t nb, real_t *W=NULL)
+   int GEHRD( int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau, int_t nb)
    {
 
       using std::min;
@@ -93,9 +92,7 @@ namespace LATL
       else if(ldA<n)
          return -5;
 
-      bool allocate=(W==NULL)?:1:0;
-      if(allocate)
-         W=new real_t[n*nb+n*(nb+1)+n];
+      real_t *W=new real_t[n*nb+n*(nb+1)+n];
       real_t *T=W+n*nb;
       real_t *w=T+n*(nb+1);
       real_t ei;
@@ -129,8 +126,7 @@ namespace LATL
 
       GEHD2( n, i, ihi, A, ldA, tau, w );
 
-      if(allocate)
-         delete [] W;
+      delete [] W;
       return 0;
 
    }
@@ -186,10 +182,9 @@ namespace LATL
    /// the elementary reflectors.  Elements 0:ilo-1 and ihi:n-2 of tau are set
    /// to zero.
    /// @param nb Block size.  0<nb<=n
-   /// @param W Workspace vector of length 2*n*(nb+1) (optional).  If not used, workspace is managed internally.
 
    template <typename real_t>
-   int GEHRD( int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau, int_t nb, complex<real_t> *W=NULL)
+   int GEHRD( int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau, int_t nb)
    {
 
       using std::min;
@@ -205,9 +200,7 @@ namespace LATL
       else if(ldA<n)
          return -5;
 
-      bool allocate=(W==NULL)?:1:0;
-      if(allocate)
-         W=new complex<real_t>[n*nb+n*(nb+1)+n];
+      complex<real_t> *W=new complex<real_t>[n*nb+n*(nb+1)+n];
       complex<real_t> *T=W+n*nb;
       complex<real_t> *w=T+n*(nb+1);
       complex<real_t> ei;
@@ -240,8 +233,7 @@ namespace LATL
 
       GEHD2( n, i, ihi, A, ldA, tau, w );
 
-      if(allocate)
-         delete [] W;
+      delete [] W;
       return 0;
 
    }
