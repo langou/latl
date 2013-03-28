@@ -34,12 +34,10 @@ namespace LATL
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Real matrix size m-by-n.
    /// @param ldA Column length of the matrix A.  ldA >= m
-   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
+   /// @ingroup AUX
 
    template< typename real_t>
-   real_t LANGE(char normType, int_t m, int_t n, real_t *A, int_t ldA, real_t * Work=NULL)
+   real_t LANGE(char normType, int_t m, int_t n, real_t *A, int_t ldA)
    {
       using std::isnan;
       using std::abs;
@@ -89,9 +87,7 @@ namespace LATL
       }
       else if (normType == 'I' || normType == 'i')
       {
-         bool allocate=(Work==NULL)?1:0;
-         if(allocate)
-            Work = new real_t[m];
+         real_t * Work = new real_t[m];
          real_t temp=zero;
          for (int_t i = 0; i < m; ++i)
          {
@@ -115,13 +111,11 @@ namespace LATL
             }
             else if (isnan(temp))
             {
-               if(allocate)
-                  delete [] Work;
+               delete [] Work;
                return temp;
             }
          }
-         if(allocate)
-            delete [] Work;
+         delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {
@@ -153,12 +147,10 @@ namespace LATL
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Real matrix size m-by-n.
    /// @param ldA Column length of the matrix A.  ldA >= m
-   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template< typename real_t>
-   real_t LANGE(char normType, int_t m, int_t n, complex<real_t> *A, int_t ldA, real_t * Work=NULL)
+   real_t LANGE(char normType, int_t m, int_t n, complex<real_t> *A, int_t ldA)
    {
       using std::isnan;
       using std::abs;
@@ -209,9 +201,7 @@ namespace LATL
       }
       else if (normType == 'I' || normType == 'i')
       {
-         bool allocate=(Work==NULL)?1:0;
-         if(allocate)
-            Work = new real_t[m];
+         real_t * Work = new real_t[m];
          real_t temp=zero;
          for (int_t i = 0; i < m; ++i)
          {
@@ -235,13 +225,11 @@ namespace LATL
             }
             else if (isnan(temp))
             {
-               if(allocate)
-                  delete [] Work;
+               delete [] Work;
                return temp;
             }
          }
-         if(allocate)
-            delete [] Work;
+         delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {

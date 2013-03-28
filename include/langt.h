@@ -34,7 +34,7 @@ namespace LATL
    /// @param DL Real array, size n-1.  On entry, DL must contain the (n-1) subdiagonal elements of A.
    /// @param D Real array, size n.  On entry, D must contain the diagonal elements of A.
    /// @param DU Real array, size (n-1).  On entry, DU must contain the (n-1) superdiagonal elements of A.
-   /// @ingroup NORM
+   /// @ingroup AUX
 
    template <typename real_t>
    real_t LANGT(const char normType, const int_t n, real_t * const DL, real_t * const D, real_t * const DU)
@@ -151,7 +151,7 @@ namespace LATL
    /// @param DL Real array, size n-1.  On entry, DL must contain the (n-1) subdiagonal elements of A.
    /// @param D Real array, size n.  On entry, D must contain the diagonal elements of A.
    /// @param DU Real array, size (n-1).  On entry, DU must contain the (n-1) superdiagonal elements of A.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template <typename real_t>
    real_t LANGT(const char normType, const int_t n, complex<real_t> * const DL, complex<real_t> * const D, complex<real_t> * const DU)

@@ -35,13 +35,10 @@ namespace LATL
    /// @param k The number of super- or sub-diagonals within the band of A.  k >= 0.
    /// @param AB Complex matrix size ldAB-by-n.  On entry, the matrix A in band storage.
    /// @param ldAB Column length of the matrix AB.  ldAB >= k+1
-   /// @param Work Workspace vector of length n (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
-   
+   /// @ingroup AUX
    
    template< typename real_t>
-   real_t LANHB(const char normType, const char uplo, const int_t n, const int_t k, complex<real_t> * const AB, const int_t ldAB, real_t *Work=NULL)
+   real_t LANHB(const char normType, const char uplo, const int_t n, const int_t k, complex<real_t> * const AB, const int_t ldAB)
    {
       using std::isnan;
       using std::abs;
@@ -103,9 +100,7 @@ namespace LATL
       }
       else if ( normType == 'O' || normType == 'o' || normType == '1' || normType == 'I' || normType == 'i')
       {
-         bool allocate=(Work==NULL)?1:0;
-         if(allocate)
-            Work = new real_t[n];
+         real_t * Work = new real_t[n];
          complex<real_t> * ABj = AB;
          real_t sum(0.0);
          for (int_t i = 0; i < n; ++i)
@@ -132,8 +127,7 @@ namespace LATL
                   value = sum;
                else if (isnan(sum))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return sum;
                }
             }
@@ -152,15 +146,13 @@ namespace LATL
                   value = sum;
                else if (isnan(sum))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return sum;
                }
                ABj += ldAB;
             }
          }
-         if(allocate)
-            delete [] Work;
+         delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {

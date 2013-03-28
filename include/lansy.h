@@ -9,7 +9,8 @@
 #ifndef _lansy_h
 #define _lansy_h
 
-/// @file lansy.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a symmetric matrix A.
+/// @file lansy.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest
+/// absolute value of a symmetric matrix A.
 
 #include "latl.h"
 #include <cmath>
@@ -17,7 +18,8 @@
 
 namespace LATL
 {
-   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a real symmetric matrix.
+   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest
+   /// absolute value of a real symmetric matrix.
    ///
    /// @return Calculated norm value for the specified type.
    /// @tparam real_t Real floating point type
@@ -30,16 +32,15 @@ namespace LATL
    ///     'F', 'f', 'E', or 'e' = the Frobenius norm of the matrix A.
    ///         This the square root of the sum of the squares of each element in A.
    ///
-   /// @param uplo Indicates whether the symmetric matrix A is stored as upper triangular or lower triangular.  The other triangular part of A is not referenced.
+   /// @param uplo Indicates whether the symmetric matrix A is stored as upper triangular or lower triangular.
+   /// The other triangular part of A is not referenced.
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Real symmetric matrix size ldA-by-n.
    /// @param ldA Column length of the matrix A.  ldA >= n
-   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template< typename real_t>
-   real_t LANSY(const char normType, const char uplo, const int_t n, real_t * const A, const int_t ldA, real_t *Work=NULL)
+   real_t LANSY(const char normType, const char uplo, const int_t n, real_t * const A, const int_t ldA)
    {
       using std::isnan;
       using std::abs;
@@ -91,9 +92,7 @@ namespace LATL
       else if ( normType == 'O' || normType == 'o' || normType == '1' || normType == 'I' || normType == 'i')
       {
          real_t sum, * Aj = A;
-         bool allocate=(Work==NULL)?1:0;
-         if(allocate)
-            Work = new real_t[n];
+         real_t * Work = new real_t[n];
          for (int_t i = 0; i < n; ++i)
          {
             Work[i] = zero;
@@ -118,8 +117,7 @@ namespace LATL
                   value = sum;
                else if (isnan(sum))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return sum;
                }
             }
@@ -139,14 +137,12 @@ namespace LATL
                   value = sum;
                else if (isnan(sum))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return sum;
                }
             }
          }
-         if(allocate)
-            delete [] Work;
+         delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {
@@ -175,7 +171,8 @@ namespace LATL
       return value;
    }
 
-   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a complex symmetric matrix.
+   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute
+   /// value of a complex symmetric matrix.
    ///
    /// @return Calculated norm value for the specified type.
    /// @tparam real_t Real floating point type
@@ -188,16 +185,15 @@ namespace LATL
    ///     'F', 'f', 'E', or 'e' = the Frobenius norm of the matrix A.
    ///         This the square root of the sum of the squares of each element in A.
    ///
-   /// @param uplo Indicates whether the symmetric matrix A is stored as upper triangular or lower triangular.  The other triangular part of A is not referenced.
+   /// @param uplo Indicates whether the symmetric matrix A is stored as upper triangular or lower triangular.
+   /// The other triangular part of A is not referenced.
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Complex symmetric matrix size ldA-by-n.
    /// @param ldA Column length of the matrix A.  ldA >= n
-   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template< typename real_t>
-   real_t LANSY(const char normType, const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, real_t *Work=NULL)
+   real_t LANSY(const char normType, const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA)
    {
       using std::isnan;
       using std::abs;
@@ -250,9 +246,7 @@ namespace LATL
       {
          real_t sum;
          complex<real_t> * Aj = A;
-         bool allocate=(Work==NULL)?1:0;
-         if(allocate)
-            Work = new real_t[n];
+         real_t * Work = new real_t[n];
          for (int_t i = 0; i < n; ++i)
          {
             Work[i] = zero;
@@ -277,8 +271,7 @@ namespace LATL
                   value = sum;
                else if (isnan(sum))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return sum;
                }
             }
@@ -298,14 +291,12 @@ namespace LATL
                   value = sum;
                else if (isnan(sum))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return sum;
                }
             }
          }
-         if(allocate)
-            delete [] Work;
+         delete [] Work;
       }
       else if ( normType == 'F' || normType == 'f' || normType == 'E' ||normType == 'e')
       {

@@ -34,12 +34,10 @@ namespace LATL
    /// @param diag specifies whether or not A is unit triangular.  If diag = 'U' or 'u' then A is unit triangular and the diagonal elements of A are not referenced; otherwise A is assumed to not be unit triangular.
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param AP Pointer to packed real triangular n-by-n matrix A.
-   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
+   /// @ingroup AUX
 
    template< typename real_t>
-   real_t LANTP(const char normType, const char uplo, const char diag, const int_t n, real_t * const AP, real_t *Work=NULL)
+   real_t LANTP(const char normType, const char uplo, const char diag, const int_t n, real_t * const AP)
    {
       using std::abs;
       using std::isnan;
@@ -191,9 +189,7 @@ namespace LATL
       else if (normType == 'I' || normType == 'i')
       {
          real_t * Aj = AP;
-         bool allocate=(Work==NULL)?1:0;
-         if(allocate)
-            Work = new real_t[n];
+         real_t * Work = new real_t[n];
          real_t temp;
          if (uplo == 'U' || uplo == 'u')
          {
@@ -268,13 +264,11 @@ namespace LATL
                value = temp;
             else if (isnan(temp))
             {
-               if(allocate)
-                  delete [] Work;
+               delete [] Work;
                return temp;
             }
          }
-         if(allocate)
-            delete [] Work;
+         delete [] Work;
       }
       else if (normType == 'F' || normType == 'f' || normType == 'E' || normType == 'e')
       {
@@ -346,12 +340,10 @@ namespace LATL
    /// @param diag specifies whether or not A is unit triangular.  If diag = 'U' or 'u' then A is unit triangular and the diagonal elements of A are not referenced; otherwise A is assumed to not be unit triangular.
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param AP Pointer to packed complex triangular n-by-n matrix A.
-   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template< typename real_t>
-   real_t LANTP(const char normType, const char uplo, const char diag, const int_t n, complex<real_t> * const AP, real_t *Work=NULL)
+   real_t LANTP(const char normType, const char uplo, const char diag, const int_t n, complex<real_t> * const AP)
    {
       using std::abs;
       using std::isnan;
@@ -503,9 +495,7 @@ namespace LATL
       else if (normType == 'I' || normType == 'i')
       {
          complex<real_t> * Aj = AP;
-         bool allocate=(Work==NULL)?1:0;
-         if(allocate)
-            Work = new real_t[n];
+         real_t * Work = new real_t[n];
          real_t temp;
          if (uplo == 'U' || uplo == 'u')
          {
@@ -580,13 +570,11 @@ namespace LATL
                value = temp;
             else if (isnan(temp))
             {
-               if(allocate)
-                  delete [] Work;
+               delete [] Work;
                return temp;
             }
          }
-         if(allocate)
-            delete [] Work;
+         delete [] Work;
       }
       else if (normType == 'F' || normType == 'f' || normType == 'E' || normType == 'e')
       {

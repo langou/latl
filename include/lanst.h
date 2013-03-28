@@ -33,7 +33,7 @@ namespace LATL
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param D Real array, size n.  On entry, D should contain the n diagonal elements of A.
    /// @param E Real array, size (n-1).  On entry, E should contain the (n-1) superdiagonal (or subdiagonal) elements of A.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template <typename real_t>
    real_t LANST(const char normType, const int_t n, real_t * const D, real_t * const E)
@@ -115,7 +115,7 @@ namespace LATL
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param D Complex array, size n.  On entry, D should contain the n diagonal elements of A.
    /// @param E Complex array, size (n-1).  On entry, E should contain the (n-1) superdiagonal (or subdiagonal) elements of A.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template <typename real_t>
    real_t LANST(const char normType, const int_t n, complex<real_t> * const D, complex<real_t> * const E)

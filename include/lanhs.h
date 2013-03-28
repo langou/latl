@@ -9,14 +9,16 @@
 #ifndef _lanhs_h
 #define _lanhs_h
 
-/// @file lanhs.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of an upper Hessenberg matrix A.
+/// @file lanhs.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest
+/// absolute value of an upper Hessenberg matrix A.
 
 #include "latl.h"
 #include "lassq.h"
 
 namespace LATL
 {
-   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a real upper Hessenberg matrix A.
+   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest
+   /// absolute value of a real upper Hessenberg matrix A.
    ///
    /// @return Calculated norm value for the specified type.
    /// @tparam real_t Real floating point type
@@ -32,12 +34,10 @@ namespace LATL
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Real matrix size ldA-by-n.  Elements of A below the first subdiagonal are not referenced.
    /// @param ldA Column length of the matrix A.  ldA >= n
-   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template <typename real_t>
-   real_t LANHS( const char normType, const int_t n, real_t * A, const int_t ldA, real_t *Work=NULL)
+   real_t LANHS( const char normType, const int_t n, real_t * A, const int_t ldA)
    {
       using std::min;
       using std::isnan;
@@ -86,9 +86,7 @@ namespace LATL
             value = abs(A[0]);
          else
          {
-            bool allocate=(Work==NULL)?1:0;
-            if(allocate)
-               Work = new real_t[n];
+            real_t * Work = new real_t[n];
             real_t * Aj = A;
             real_t temp;
             for (int_t i = 0; i < n; ++i)
@@ -110,13 +108,11 @@ namespace LATL
                   value = temp;
                else if (isnan(temp))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return temp;
                }
             }
-            if(allocate)
-               delete [] Work;
+            delete [] Work;
          }
       }
       else if (normType == 'E' || normType == 'F' || normType == 'e' || normType == 'f')
@@ -150,12 +146,10 @@ namespace LATL
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Complex matrix size ldA-by-n.  Elements of A below the first subdiagonal are not referenced.
    /// @param ldA Column length of the matrix A.  ldA >= n
-   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template <typename real_t>
-   real_t LANHS( const char normType, const int_t n, complex<real_t> * A, const int_t ldA, real_t *Work=NULL)
+   real_t LANHS( const char normType, const int_t n, complex<real_t> * A, const int_t ldA)
    {
       using std::min;
       using std::isnan;
@@ -206,9 +200,7 @@ namespace LATL
             value = abs(A[0]);
          else
          {
-            bool allocate=(Work==NULL)?1:0;
-            if(allocate)
-               Work = new real_t[n];
+            real_t * Work = new real_t[n];
             complex<real_t> * Aj = A;
             real_t temp;
             for (int_t i = 0; i < n; ++i)
@@ -230,13 +222,11 @@ namespace LATL
                   value = temp;
                else if (isnan(temp))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return temp;
                }
             }
-            if(allocate)
-               delete [] Work;
+            delete [] Work;
          }
       }
       else if (normType == 'E' || normType == 'F' || normType == 'e' || normType == 'f')

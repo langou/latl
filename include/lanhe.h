@@ -17,7 +17,8 @@
 
 namespace LATL
 {
-   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a complex Hermitian matrix A.
+   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest
+   /// absolute value of a complex Hermitian matrix A.
    ///
    /// @return Calculated norm value for the specified type.
    /// @tparam real_t Real floating point type
@@ -30,16 +31,15 @@ namespace LATL
    ///     'F', 'f', 'E', or 'e' = the Frobenius norm of the matrix A.
    ///         This the square root of the sum of the squares of each element in A.
    ///
-   /// @param uplo Indicates whether the Hermitian matrix A is stored as upper triangular or lower triangular.  The other part of A is not referenced.
+   /// @param uplo Indicates whether the Hermitian matrix A is stored as upper triangular or lower triangular.
+   /// The other part of A is not referenced.
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param A Complex matrix size n-by-n.
    /// @param ldA Column length of the matrix A.  ldA >= n
-   /// @param Work Workspace vector of length n (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template<typename real_t>
-   real_t LANHE(const char normType, const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, real_t * Work=NULL)
+   real_t LANHE(const char normType, const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA)
    {
       using std::abs;
       using std::real;
@@ -99,9 +99,7 @@ namespace LATL
       {
          real_t sum(0.0), temp(0.0);
          complex<real_t> * Aj = A;
-         bool allocate=(Work==NULL)?1:0;
-         if(allocate)
-            Work = new real_t[n];
+         real_t * Work = new real_t[n];
          for (int_t i = 0; i < n; ++i)
             Work[i] = zero;
          if (uplo == 'U' || uplo == 'u')
@@ -125,8 +123,7 @@ namespace LATL
                   value = sum;
                else if (isnan(sum))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return sum;
                }
             }
@@ -148,13 +145,11 @@ namespace LATL
                value = sum;
             else if (isnan(sum))
             {
-               if(allocate)
-                  delete [] Work;
+               delete [] Work;
                return sum;
             }
          }
-         if(allocate)
-            delete [] Work;
+         delete [] Work;
       }
       else if (normType == 'F' || normType == 'f' || normType == 'E' || normType == 'e')
       {

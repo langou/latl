@@ -33,7 +33,7 @@ namespace LATL
    /// @param lld Real vector of length n-1 containing the elements L(i)*L(i)*D(i).
    /// @param sigma Real scalar, specifies shift about in T - sigma I.
    /// @param r The twist index for the twisted factorization that is used for the negative count.
-   /// @ingroup MAT
+   /// @ingroup AUX
 
    template<typename real_t>
    int_t LANEG(int_t n, real_t *d, real_t *lld, real_t sigma, int_t r)

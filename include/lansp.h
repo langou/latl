@@ -9,7 +9,8 @@
 #ifndef _lansp_h
 #define _lansp_h
 
-/// @file lansp.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a symmetric packed matrix A.
+/// @file lansp.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest
+/// absolute value of a symmetric packed matrix A.
 
 #include "lassq.h"
 #include <cmath>
@@ -17,7 +18,8 @@
 
 namespace LATL
 {
-   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a real symmetric matrix A supplied in packed form.
+   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest
+   /// absolute value of a real symmetric matrix A supplied in packed form.
    ///
    /// @return Calculated norm value for the specified type.
    /// @tparam real_t Real floating point type
@@ -30,15 +32,14 @@ namespace LATL
    ///     'F', 'f', 'E', or 'e' = the Frobenius norm of the matrix A.
    ///         This the square root of the sum of the squares of each element in A.
    ///
-   /// @param uplo Specifies whether A is stored as upper or lower triangular.  If uplo = 'U' or 'u' then A is upper triangular; otherwise A is assumed to be lower triangular.
+   /// @param uplo Specifies whether A is stored as upper or lower triangular.  If uplo = 'U' or 'u' then A is
+   /// upper triangular; otherwise A is assumed to be lower triangular.
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param AP Pointer to packed real symmetric n-by-n matrix A.
-   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template< typename real_t>
-   real_t LANSP(const char normType, const char uplo, const int_t n, real_t * const AP, real_t *Work=NULL)
+   real_t LANSP(const char normType, const char uplo, const int_t n, real_t * const AP)
    {
       using std::abs;
       using std::isnan;
@@ -86,9 +87,7 @@ namespace LATL
       else if (normType == 'O' || normType == 'o' || normType == '1' || normType == 'I' || normType == 'i')
       {
          real_t * Aj = AP;
-         bool allocate=(Work==NULL)?1:0;
-         if(allocate)
-            Work = new real_t[n];
+         real_t * Work = new real_t[n];
          real_t temp, sum;
          for (int_t i = 0; i < n; ++i)
          {
@@ -115,8 +114,7 @@ namespace LATL
                   value = temp;
                else if (isnan(temp))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return temp;
                }
             }
@@ -136,15 +134,13 @@ namespace LATL
                   value = sum;
                else if (isnan(sum))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return sum;
                }
                Aj += n-j;
             }
          }
-         if(allocate)
-            delete [] Work;
+         delete [] Work;
       }
       else if (normType == 'F' || normType == 'f' || normType == 'E' || normType == 'e')
       {
@@ -216,7 +212,8 @@ namespace LATL
       return value;
    }
 
-   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a complex symmetric matrix A supplied in packed form.
+   /// @brief Calculates the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute
+   /// value of a complex symmetric matrix A supplied in packed form.
    ///
    /// @return Calculated norm value for the specified type.
    /// @tparam real_t Real floating point type
@@ -229,15 +226,14 @@ namespace LATL
    ///     'F', 'f', 'E', or 'e' = the Frobenius norm of the matrix A.
    ///         This the square root of the sum of the squares of each element in A.
    ///
-   /// @param uplo Specifies whether A is stored as upper or lower triangular.  If uplo = 'U' or 'u' then A is upper triangular; otherwise A is assumed to be lower triangular.
+   /// @param uplo Specifies whether A is stored as upper or lower triangular.  If uplo = 'U' or 'u' then A is
+   /// upper triangular; otherwise A is assumed to be lower triangular.
    /// @param n Number of columns to be included in the norm. n >= 0
    /// @param AP Pointer to packed complex symmetric n-by-n matrix A.
-   /// @param Work Workspace vector of length m (optional).  If not used, workspace will be allocated and
-   /// deallocated internally; only used for the infinity norm.
-   /// @ingroup NORM
+   /// @ingroup AUX
    
    template< typename real_t>
-   real_t LANSP(const char normType, const char uplo, const int_t n, complex<real_t> * const AP, real_t *Work=NULL)
+   real_t LANSP(const char normType, const char uplo, const int_t n, complex<real_t> * const AP)
    {
       using std::abs;
       using std::isnan;
@@ -285,9 +281,7 @@ namespace LATL
       else if (normType == 'O' || normType == 'o' || normType == '1' || normType == 'I' || normType == 'i')
       {
          complex<real_t> * Aj = AP;
-         bool allocate=(Work==NULL)?1:0;
-         if(allocate)
-            Work = new real_t[n];
+         real_t * Work = new real_t[n];
          real_t temp, sum;
          for (int_t i = 0; i < n; ++i)
          {
@@ -314,8 +308,7 @@ namespace LATL
                   value = temp;
                else if (isnan(temp))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return temp;
                }
             }
@@ -335,15 +328,13 @@ namespace LATL
                   value = sum;
                else if (isnan(sum))
                {
-                  if(allocate)
-                     delete [] Work;
+                  delete [] Work;
                   return sum;
                }
                Aj += n-j;
             }
          }
-         if(allocate)
-            delete [] Work;
+         delete [] Work;
       }
       else if (normType == 'F' || normType == 'f' || normType == 'E' || normType == 'e')
       {
