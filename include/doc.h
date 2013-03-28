@@ -13,17 +13,18 @@
 
 /// @mainpage
 /// @section intro Introduction
-/// The LATL is a precision neutral generic dense linear algebra
-/// library based on <A HREF="http://netlib.org/lapack/">LAPACK</A>
-/// written in C++ using function templates.
+/// The Linear Algebra Template Library is a precision neutral dense linear algebra
+/// software library based on <A HREF="http://netlib.org/lapack/">LAPACK</A>.
+/// It is written entirely in C++ using function templates, with the floating
+/// point type specified by a template parameter.
 ///
 /// @section code Download
-/// Source code and git access is available on GitHub
-/// <A HREF="http://github.com/projects/latl/latl">here</A>.
+/// Source code and git access is available on GitHub at
+/// <A HREF="http://github.com/latl/latl">http://github.com/latl/latl</A>.
 ///
-/// @defgroup BLAS BLAS routine
-/// @defgroup AUX Auxiliary routine
-/// @defgroup COMP Computational routine
-/// @defgroup DRIV Driver routine
+/// @defgroup DRIV Driver Routines
+/// @defgroup COMP Computational Routines
+/// @defgroup AUX Auxiliary Routines
+/// @defgroup BLAS BLAS Routines
 
 #endif
