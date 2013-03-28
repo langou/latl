@@ -68,10 +68,9 @@ namespace LATL
    /// @param ldA Column length of matrix A.  ldA>=n
    /// @param tau Pointer to an array of dimension (N-1). The scalar factors of
    /// the elementary reflector.
-   /// @param w Workspace vector of length n (optional).  If not used, workspace is managed internally.
      
    template <typename real_t>
-   int GEHD2(int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau, real_t *w=NULL )
+   int GEHD2(int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau)
    {
 
       using std::min; 
@@ -89,9 +88,7 @@ namespace LATL
 
       int_t i;
       real_t alpha;
-      bool allocate=(W==NULL)?1:0;
-      if(allocate)
-         w=new real_t[n];
+      real_t *w = new real_t[n];
       real_t *v = A+ilo+1+ilo*ldA;
       real_t *CR = A+(ilo+1)*ldA;
       real_t *CL = v+ldA;
@@ -107,8 +104,7 @@ namespace LATL
          CR += ldA;
          CL = v+ldA;
       }
-      if(allocate)
-         delete [] w;
+      delete [] w;
       return 0;
    }
 
@@ -158,10 +154,9 @@ namespace LATL
    /// @param ldA Column length of matrix A.  ldA>=n
    /// @param tau Pointer to an array of dimension (N-1). The scalar factors of
    /// the elementary reflector.
-   /// @param w Workspace vector of length n (optional).  If not used, workspace is managed internally.
 
    template <typename real_t>
-   int_t GEHD2(int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau, complex<real_t> *w=NULL )
+   int_t GEHD2(int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau)
    {
 
       using std::min; 
@@ -180,9 +175,7 @@ namespace LATL
 
       int_t i;
       complex<real_t> alpha;
-      bool allocate=(w==NULL)?1:0;
-      if(allocate)
-         w=new complex<real_t>[n];
+      complex<real_t> *w=new complex<real_t>[n];
       complex<real_t> *v = A+ilo+1+ilo*ldA;
       complex<real_t> *CR = A+(ilo+1)*ldA;
       complex<real_t> *CL = v+ldA;
@@ -198,8 +191,7 @@ namespace LATL
          CR += ldA;
          CL = v+ldA;
       }
-      if(allocate)
-         delete [] w;
+      delete [] w;
       return 0;
    }
 }
