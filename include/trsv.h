@@ -48,7 +48,7 @@ namespace LATL
    /// @param x Pointer to real vector x.  On entry, x contains the right hand side vector b.
    /// On exit, x is overwritten with the solution vector x.
    /// @param incx Increment of the vector x.  incx!=0
-   /// @ingroup SOLV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TRSV(char uplo, char trans, char diag, int_t n, real_t *A, int_t ldA, real_t *x, int_t incx)
@@ -249,7 +249,7 @@ namespace LATL
    /// @param x Pointer to complex vector x.  On entry, x contains the right hand side vector b.
    /// On exit, x is overwritten with the solution vector x.
    /// @param incx Increment of the vector x.  incx!=0
-   /// @ingroup SOLV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TRSV(char uplo, char trans, char diag, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx)

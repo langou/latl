@@ -44,6 +44,7 @@ namespace LATL
    /// @param bsdv Bool array size n.  On exit, contains the details of the block structure of D.
    /// @param B Complex array size n-by-nrhs.  On exit, contains the solution X.
    /// @param ldB Column length of the matrix B.  ldB >= n
+   /// @ingroup DRIV
    
    template<typename real_t>
    int_t HESV(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB)
@@ -96,6 +97,7 @@ namespace LATL
    /// @param B Complex array size n-by-nrhs.  On exit, contains the solution X.
    /// @param ldB Column length of the matrix B.  ldB >= n
    /// @param nb Block size for computing the factorization.
+   /// @ingroup DRIV
    
    template<typename real_t>
    int_t HESV(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, int_t ldB, int_t nb)

@@ -44,7 +44,7 @@ namespace LATL
    /// @param PIV Integer array size n.  The nonzero entries of PIV indicate P(PIV[k], k) = 1
    /// @param rank Integer.  On exit, indicates the number of steps the algorithm completed.
    /// @param tol User defined tolerance.  If tol < 0, the n*U*max(Ak[k]) will be used.  The algorithm terminates at the k-1st step if the pivot <= tol.
-   /// @ingroup TRF
+   /// @ingroup COMP
 
    template< typename real_t>
    int PSTRF(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * const PIV, int_t &rank, const real_t tol)
@@ -250,7 +250,7 @@ namespace LATL
    /// @param PIV Integer array size n.  The nonzero entries of PIV indicate P(PIV[k], k) = 1
    /// @param rank Integer.  On exit, indicates the number of steps the algorithm completed.
    /// @param tol User defined tolerance.  If tol < 0, the n*U*max(Ak[k]) will be used.  The algorithm terminates at the k-1st step if the pivot <= tol.
-   /// @ingroup TRF
+   /// @ingroup COMP
 
    template< typename real_t> int_t PSTRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const PIV, int_t &rank, const real_t tol)
    {
@@ -481,6 +481,7 @@ namespace LATL
    /// @param rank Integer.  On exit, indicates the number of steps the algorithm completed.
    /// @param tol User defined tolerance.  If tol < 0, the n*U*max(Ak[k]) will be used.  The algorithm terminates at the k-1st step if the pivot <= tol.
    /// @param nb Block size.
+   /// @ingroup COMP
    
    template< typename real_t>
    int PSTRF(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * PIV, int_t &rank, const real_t tol, const int_t nb)
@@ -728,7 +729,8 @@ namespace LATL
    /// @param rank Integer.  On exit, indicates the number of steps the algorithm completed.
    /// @param tol User defined tolerance.  If tol < 0, the n*U*max(Ak[k]) will be used.  The algorithm terminates at the k-1st step if the pivot <= tol.
    /// @param nb Block size.
-
+   /// @ingroup COMP
+   
    template< typename real_t>
    int PSTRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * PIV, int_t &rank, const real_t tol, const int_t nb)
    {

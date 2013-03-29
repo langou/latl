@@ -22,7 +22,7 @@ namespace LATL
    /// @param n Length of vector x.
    /// @param x Pointer to real vector x.
    /// @param incx Increment of vector x.
-   /// @ingroup VEC
+   /// @ingroup BLAS
    
    template <typename real_t>
    real_t NRM2(int_t n, real_t *x, int_t incx)
@@ -74,7 +74,7 @@ namespace LATL
    /// @param n Length of vector x.
    /// @param x Pointer to complex vector x.
    /// @param incx Increment of vector x.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    real_t NRM2(int_t n, complex<real_t> *x, int_t incx)

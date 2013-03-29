@@ -38,6 +38,7 @@ namespace LATL
    /// @param ldAB Column length of the array AB.  ldAB >= 2*kL+kU
    /// @param ipiv Integer array deminsion min(m, n).  The pivot indices, 0 <= i <= min(m, n), row i was interchanged with
    /// row ipiv(i).
+   /// @ingroup COMP
 
    template< typename real_t>
    int_t GBTF2(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const ipiv)
@@ -128,6 +129,7 @@ namespace LATL
    /// @param ldAB Column length of the array AB.  ldAB >= 2*kL+kU
    /// @param ipiv Integer array deminsion min(m, n).  The pivot indices, 0 <= i <= min(m, n), row i was interchanged
    /// with row ipiv(i).
+   /// @ingroup COMP
 
    template< typename real_t>
    int_t GBTF2(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const ipiv)

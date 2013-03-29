@@ -33,7 +33,7 @@ namespace LATL
    /// @param ipiv Permutation matrix size min(m,n), computed by getrf.  In A, row k of A was exchanged with ipiv[k].
    /// @param B Real matrix size ldB-by-colB.  On exit, the solution matrix X.
    /// @param ldB Column length of B.  ldB >= n
-   /// @ingroup SOLV
+   /// @ingroup COMP
    
    template<typename real_t>
    int GETRS( const char trans, const int_t n, const int_t colB, real_t * const A, const int_t ldA, int_t * const ipiv, real_t * const B, const int_t ldB)
@@ -86,7 +86,7 @@ namespace LATL
    /// @param ipiv Permutation matrix size min(m,n), computed by getrf.  In A, row k of A was exchanged with ipiv[k].
    /// @param B Complex matrix size ldB-by-colB.  On exit, the solution matrix X.
    /// @param ldB Column length of B.  ldB >= n
-   /// @ingroup SOLV
+   /// @ingroup COMP
 
    template < typename real_t>
    int GETRS( const char trans, const int_t n, const int_t colB, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, complex<real_t> * const B, const int_t ldB)

@@ -46,12 +46,11 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=m.
    /// @param[out] tau Real vector of length min(m,n).
    /// The scalar factors of the elementary reflectors.
-   /// @param nb Blocking factor (optional).
-   /// @param w Workspace vector of length nb*(n+1) (optional).
-   /// If not used, workspace is managed internally.
+   /// @param nb Blocking factor.  nb>0.
+   /// @ingroup COMP
 
    template<typename real_t>
-   int GEQRF(int_t m, int_t n,real_t *A, int_t ldA, real_t *tau, int_t nb=80, real_t *w=NULL)
+   int GEQRF(int_t m, int_t n,real_t *A, int_t ldA, real_t *tau, int_t nb)
    {
       using std::min;
       if(m<0)
@@ -64,19 +63,18 @@ namespace LATL
          return -6;
 
       int_t k=min(m,n);
-
+      nb=min(nb,k);
+      
       if(k==0)
          return 0;
       
-      bool allocate=(w==NULL)?1:0;
-      if(allocate)
-         w=new real_t[n*nb+nb];
+      real_t *w=new real_t[n*nb+nb];
       real_t *B=A;
       for(int_t i=0;i<k;i+=nb)
       {
          int_t ib=min(k-i,nb);
          B+=ib*ldA;
-         GEQR2(m-i,ib,A+i,ldA,tau,w);
+         GEQR2(m-i,ib,A+i,ldA,tau);
          if(i+ib<n-1)
          {
             LARFT('F','C',m-i,ib,A+i,ldA,tau,w,ib);
@@ -85,8 +83,7 @@ namespace LATL
          A=B;
          tau+=ib;
       }
-      if(allocate)
-         delete [] w;
+      delete [] w;
       return 0;
    }
 
@@ -117,12 +114,11 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=m.
    /// @param[out] tau Complex vector of length min(m,n).
    /// The scalar factors of the elementary reflectors.
-   /// @param nb Blocking factor (optional).
-   /// @param w Workspace vector of length nb*(n+1) (optional).
-   /// If not used, workspace is managed internally.
+   /// @param nb Blocking factor.  nb>0.
+   /// @ingroup COMP
 
    template<typename real_t>
-   int GEQRF(int_t m, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *tau, int_t nb=80, complex<real_t> *w=NULL)
+   int GEQRF(int_t m, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *tau, int_t nb)
    {
       using std::min;
       if(m<0)
@@ -135,19 +131,18 @@ namespace LATL
          return -6;
 
       int_t k=min(m,n);
+      nb=min(nb,k);
 
       if(k==0)
          return 0;
 
-      bool allocate=(w==NULL)?1:0;
-      if(allocate)
-         w=new complex<real_t>[n*nb+nb];
+      real_t *w=new complex<real_t>[n*nb+nb];
       complex<real_t> *B=A;
       for(int_t i=0;i<k;i+=nb)
       {
          int_t ib=min(k-i,nb);
          B+=ib*ldA;
-         GEQR2(m-i,ib,A+i,ldA,tau,w);
+         GEQR2(m-i,ib,A+i,ldA,tau);
          if(i+ib<n-1)
          {
             LARFT('F','C',m-i,ib,A+i,ldA,tau,w,ib);
@@ -156,8 +151,7 @@ namespace LATL
          A=B;
          tau+=ib;
       }
-      if(allocate)
-         delete [] w;
+      delete [] w;
       return 0;
    }
 }

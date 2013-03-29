@@ -47,11 +47,10 @@ namespace LATL
    /// @param ipiv is integer array with dimension n.  Details of the
    /// interchanges and the block structure of D as determined by LATL::SYTRF.
    /// @param bsdv Bool array size n.  On entry, contains the details of the block structure of D.
-   /// @param work Workspace vector of length n (optional).  If not used, workspace will be allocated
-   /// and deallocated internally.
-
+   /// @ingroup COMP
+   
    template <typename real_t>
-   int_t SYTRI(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv, real_t *work=NULL)
+   int_t SYTRI(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv)
    {
       using std::abs;
       using std::toupper;
@@ -82,9 +81,7 @@ namespace LATL
                return 1;
       }
 
-      bool allocate=(work==NULL)?1:0;
-      if(allocate)
-         work =new real_t[n];
+      real_t *work =new real_t[n];
       int_t kstep;
 
       if(uplo=='U')
@@ -206,8 +203,7 @@ namespace LATL
             k = k - kstep;
          }
       }
-      if(allocate)
-         delete [] work;
+      delete [] work;
 
       return 0;
    }
@@ -235,11 +231,10 @@ namespace LATL
    /// @param ipiv is integer array with dimension n.  Details of the
    /// interchanges and the block structure of D as determined by LATL::SYTRF.
    /// @param bsdv Bool array size n.  On entry, contains the details of the block structure of D.
-   /// @param work Workspace vector of length n (optional).  If not used, workspace will be allocated
-   /// and deallocated internally.
+   /// @ingroup COMP
 
    template <typename real_t>
-   int_t SYTRI(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv, complex<real_t> *work=NULL)
+   int_t SYTRI(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv)
    {
       using std::toupper;
       uplo=toupper(uplo);
@@ -269,9 +264,8 @@ namespace LATL
                return 1;
       }
 
-      bool allocate=(work==NULL)?1:0;
-      if(allocate)
-         work =new complex<real_t>[n];
+
+      complex<real_t> *work =new complex<real_t>[n];
       int_t kstep;
 
       if(uplo=='U')
@@ -394,8 +388,7 @@ namespace LATL
          }
       }
 
-      if(allocate)
-         delete [] work;
+      delete [] work;
       
       return 0;
    }
@@ -425,11 +418,10 @@ namespace LATL
    /// @param bsdv is a boolean array with dimension n.  Details of the 
    /// interchanges and the block structure of D as determined by LATL::SYTRF.
    /// @param nb Block size.
-   /// @param work Workspace vector of length (n+nb+1)*(nb+3) (optional).
-   /// If not used, workspace will be allocated and deallocated internally.
+   /// @ingroup COMP
 
    template <typename real_t>
-   int_t SYTRI(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb, real_t *work=NULL )
+   int_t SYTRI(char uplo, int_t n, real_t *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb)
    {
       using std::abs;
       using std::toupper;
@@ -460,9 +452,7 @@ namespace LATL
          return 0;
       }
 
-      bool allocate=(work==NULL)?1:0;
-      if(allocate)
-         work = new real_t[ldwork*(nb+3)];
+      real_t *work = new real_t[ldwork*(nb+3)];
       SYCONV<real_t>( uplo, 'C', n, A, ldA, ipiv, bsdv, work );
 
       real_t *Aii;
@@ -787,8 +777,7 @@ namespace LATL
          }
       }
 
-      if(allocate)
-         delete [] work;
+      delete [] work;
       return 0;
    }
 
@@ -817,11 +806,10 @@ namespace LATL
    /// @param bsdv is a boolean array with dimension n.  Details of the 
    /// interchanges and the block structure of D as determined by LATL::SYTRF.
    /// @param nb Block size.
-   /// @param work Workspace vector of length (n+nb+1)*(nb+3) (optional).
-   /// If not used, workspace will be allocated and deallocated internally.
+   /// @ingroup COMP
 
    template <typename real_t>
-   int_t SYTRI(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb, complex<real_t> *work=NULL )
+   int_t SYTRI(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv, int_t nb)
    {
       using std::abs;
       using std::toupper;
@@ -852,9 +840,7 @@ namespace LATL
          return 0;
       }
 
-      bool allocate=(work==NULL)?1:0;
-      if(allocate)
-         work = new complex<real_t>[ldwork*(nb+3)];
+      complex<real_t> *work = new complex<real_t>[ldwork*(nb+3)];
       SYCONV<real_t>( uplo, 'C', n, A, ldA, ipiv, bsdv, work );
 
       complex<real_t> *Aii;
@@ -1179,8 +1165,7 @@ namespace LATL
          }
       }
 
-      if(allocate)
-         delete [] work;
+      delete [] work;
       return 0;
    }
 }

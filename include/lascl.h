@@ -46,6 +46,7 @@ namespace LATL
    /// @param n The number of columns of the matrix A. n>=0
    /// @param A Pointer to the real matrix A [in/out].
    /// @param ldA The column length of the matrix A.
+   /// @ingroup AUX
    
    template<typename real_t>
    int LASCL(char type,int_t kl,int_t ku,real_t b,real_t a,int_t m,int_t n,real_t *A,int_t ldA)
@@ -219,6 +220,7 @@ namespace LATL
    /// @param n The number of columns of the matrix A. n>=0
    /// @param A Pointer to the complex matrix A [in/out].
    /// @param ldA The column length of the matrix A.
+   /// @ingroup AUX
    
    template<typename real_t>
    int_t LASCL(char type,int_t kl,int_t ku,real_t b,real_t a,int_t m,int_t n,complex<real_t> *A,int_t ldA)

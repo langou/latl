@@ -53,7 +53,7 @@ namespace LATL
    /// @param beta Real scalar.
    /// @param y Real vector of length m if trans='N' or 'n', or length n otherwise.
    /// @param incy Increment of vector y.
-   /// @ingroup MATV
+   /// @ingroup BLAS
    
    template <typename real_t>
    int GBMV(char trans, int_t m, int_t n, int_t kl, int_t ku, real_t alpha, real_t *A, int_t lda, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
@@ -239,7 +239,7 @@ namespace LATL
    /// @param beta Complex scalar.
    /// @param y Complex vector of length m if trans='N' or 'n', or length n otherwise.
    /// @param incy Increment of vector y.
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int GBMV(char trans, int_t m, int_t n, int_t kl, int_t ku, complex<real_t> alpha, complex<real_t> *A, int_t lda, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)

@@ -24,7 +24,8 @@ namespace LATL
    /// @param alpha Real scalar.
    /// @param B Real m-by-n matrix.
    /// @param ldB Column length of the matrix B.  ldB>=m.
-
+   /// @ingroup BLAS
+   
    template<typename real_t>
    void LAPEQ(int_t m, int_t n, real_t *A, int_t ldA,real_t alpha, real_t *B, int_t ldB)
    {
@@ -71,7 +72,8 @@ namespace LATL
    /// @param alpha Complex scalar.
    /// @param B Complex m-by-n matrix.
    /// @param ldB Column length of the matrix B.  ldB>=m.
-
+   /// @ingroup BLAS
+   
    template<typename real_t>
    inline void LAPEQ(int_t m, int_t n, complex<real_t> *A, int_t ldA,complex<real_t> alpha, complex<real_t> *B, int_t ldB)
    {

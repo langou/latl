@@ -35,12 +35,11 @@ namespace LATL
    /// @param ldA Column length of the array A.
    /// @param ipiv Integer array size n.  On exit, contains the details of the interchanges of D.
    /// @param bsdv Bool array size n.  On exit, contains the details of the block structure of D.  If bsdv[k] = 0, then rows and columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If bsdv[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were interchanged.  If uplo = 'L' and ipiv[k] = ipiv[k+1], then rows and columns k+1 and ipiv[k] were interchanged.
-   /// @param nb Block size, optional.  Default value is 32.
-   /// @param Work Workspace vector of length n*nb, optional.  Default value of NULL causes workspace to be managed internally.
-   /// @ingroup TRF
+   /// @param nb Block size.  0<nb<=n.
+   /// @ingroup COMP
 
    template< typename real_t >
-   int_t HETRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv, const int_t nb = 32, complex<real_t> * Work = NULL)
+   int_t HETRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv, const int_t nb)
    {
       if (uplo != 'U' && uplo != 'L' && uplo != 'u' && uplo != 'l')
          return -1;
@@ -53,9 +52,7 @@ namespace LATL
          return 0;
       
       int_t info = 0, k, temp = 0, kb;
-      bool allocate = (Work==NULL)?1:0;
-      if(allocate)
-         Work = new complex<real_t>[n*nb];
+      complex<real_t> * Work = new complex<real_t>[n*nb];
       if (uplo == 'U' || uplo == 'u')
       {
          // in this section, k is not an index variable
@@ -110,8 +107,7 @@ namespace LATL
             k += kb;
          }
       }
-      if(allocate)
-         delete [] Work;
+      delete [] Work;
       return info;
    }
 }

@@ -36,7 +36,7 @@ namespace LATL
    /// @param c The cosine of the rotation.
    /// @param s the sine of the rotation.
    /// @param r The nonzero component of the rotated vector.
-   /// @ingroup ROT
+   /// @ingroup AUX
    
    template<typename real_t>
    void LARTGP(real_t f, real_t g, real_t &c, real_t &s, real_t &r)

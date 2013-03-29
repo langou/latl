@@ -22,7 +22,7 @@ namespace LATL
    /// @param x scalar value x
    /// @param y scalar value y
    /// @param z scalar value z
-   /// @ingroup SCAL
+   /// @ingroup AUX
 
    template<typename real_t>
    real_t LAPY3(real_t x, real_t y, real_t z)

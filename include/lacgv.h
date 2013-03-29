@@ -20,7 +20,7 @@ namespace LATL
    /// @param n Length of vector x.
    /// @param x Pointer to complex vector x.
    /// @param incx Increment of vector x.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template<typename real_t>
    void LACGV(int_t n,complex<real_t> *x,int_t incx)

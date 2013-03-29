@@ -22,7 +22,7 @@ namespace LATL
    /// @tparam real_t Floating point type.
    /// @param n Length of vector x.
    /// @param x Pointer to real vector of length n.
-   /// @ingroup VEC
+   /// @ingroup AUX
    
    template<typename real_t>
    void LARUV(int_t n, real_t *x)

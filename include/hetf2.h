@@ -44,6 +44,7 @@ namespace LATL
    /// columns k-1 and ipiv[k] were interchanged and D(k-1:k,k-1:k) is a 2-by-2 diagonal block.
    /// If uplo=='L' and bsdv[k] and bsdv[k+1] are true, then rows and columns k+1 and ipiv[k]
    /// were interchanged and D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
+   /// @ingroup COMP
 
    template <typename real_t>
    int_t HETF2(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv)

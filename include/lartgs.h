@@ -35,7 +35,7 @@ namespace LATL
    /// @param sigma The shift.
    /// @param c The cosine of the rotation.
    /// @param s The sine of the rotation.
-   /// @ingroup ROT
+   /// @ingroup COMP
    
    template<typename real_t>
    void LARTGS(real_t x, real_t y, real_t sigma, real_t &c, real_t &s)

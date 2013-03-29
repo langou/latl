@@ -30,7 +30,7 @@ namespace LATL
    /// @param incy Increment of the vector y.
    /// @param c Real scalar.
    /// @param s Real scalar.
-   /// @ingroup ROT
+   /// @ingroup BLAS
    
    template <typename real_t>
    void ROT(int_t n, real_t *x, int_t incx, real_t *y, int_t incy, real_t c, real_t s)
@@ -79,7 +79,7 @@ namespace LATL
    /// @param incy Increment of the vector y.
    /// @param c Real scalar.
    /// @param s Complex scalar.
-   /// @ingroup ROT
+   /// @ingroup BLAS
 
    template <typename real_t>
    void ROT(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy, real_t c, complex<real_t> s)

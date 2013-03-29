@@ -24,7 +24,7 @@ namespace LATL
    /// @param incx Increment of vector x.
    /// @param y Pointer to real vector y.
    /// @param incy Increment of y.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    real_t DOT(int_t n, real_t *x, int_t incx, real_t *y, int_t incy)
@@ -69,7 +69,7 @@ namespace LATL
    /// @param incx Increment of vector x.
    /// @param y Pointer to real vector y.
    /// @param incy Increment of y.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t,typename xreal_t>
    real_t DOTX(int_t n, real_t b, real_t *x, int_t incx, real_t *y, int_t incy)
@@ -110,7 +110,7 @@ namespace LATL
    /// @param incx Increment of vector x.
    /// @param y Pointer to real vector y.
    /// @param incy Increment of y.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t, typename xreal_t>
    xreal_t DOTX(int_t n, real_t *x, int_t incx, real_t *y, int_t incy)
@@ -153,7 +153,7 @@ namespace LATL
    /// @param incx Increment of vector x.
    /// @param y Pointer to complex vector y.
    /// @param incy Increment of y.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    complex<real_t> DOTC(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)
@@ -191,7 +191,7 @@ namespace LATL
    /// @param incx Increment of vector x.
    /// @param y Pointer to complex vector y.
    /// @param incy Increment of y.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    complex<real_t> DOT(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)

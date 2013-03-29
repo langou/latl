@@ -30,7 +30,7 @@ namespace LATL
    /// @param ldA Column length of matrix A.  ldA>=m
    /// @param B Pointer to matrix B.
    /// @param ldB Column length of matrix B.  ldB>=m
-   /// @ingroup MAT
+   /// @ingroup AUX
    
    template<typename real_t,typename xreal_t>
    int LAG2X(int_t m,int_t n,real_t *A,int_t ldA,xreal_t *B,int_t ldB)
@@ -69,7 +69,7 @@ namespace LATL
    /// @param ldA Column length of matrix A.  ldA>=m
    /// @param B Pointer to complex matrix B.
    /// @param ldB Column length of matrix B.  ldB>=m
-   /// @ingroup MAT
+   /// @ingroup AUX
    
    template<typename real_t,typename xreal_t>
    int LAG2X(int_t m,int_t n,complex<real_t> *A,int_t ldA,complex<xreal_t> *B,int_t ldB)

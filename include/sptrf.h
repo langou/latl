@@ -1,9 +1,9 @@
 //
 //  sptrf.h
-//  LAPACK Template Library
+//  Linear Algebra Template Library
 //
 //  Created by Stephanie Patterson on 8/2/12.
-//
+//  Copyright (c) 2012 University of Colorado Denver. All rights reserved.
 //
 
 #ifndef _sptrf_h
@@ -37,7 +37,7 @@ namespace LATL
       /// On exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L, stored as a packed triangular matrix.
       /// @param ipiv Integer array size n.  On exit, contains the details of the interchanges of D.
       /// @param bsdv Bool array size n. On exit, contains the details of the block structure of D.  If bsdv[k] = 0, then rows and columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If bsdv[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were interchanged.
-      /// @ingroup TRF
+      /// @ingroup COMP
       
       if (n < 0)
          return -1;
@@ -220,7 +220,7 @@ namespace LATL
       /// On exit, the block diagonal matrix D and the multipliers used to obtain the factor U or L, stored as a packed triangular matrix.
       /// @param ipiv Integer array size n.  On exit, contains the details of the interchanges of D.
       /// @param bsdv Bool array size n. On exit, contains the details of the block structure of D.  If bsdv[k] = 0, then rows and columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If bsdv[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were interchanged.
-      /// @ingroup TRF
+      /// @ingroup COMP
       
       if (n < 0)
          return -1;

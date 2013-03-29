@@ -40,7 +40,7 @@ namespace LATL
    /// @param beta Real scalar.
    /// @param C Real triangular matrix of order n.  On exit, C contains the result of alpha*A*B+beta*C.
    /// @param ldC Column length of the matrix C.  ldC>=n.
-   /// @ingroup MATM
+   /// @ingroup BLAS
    
    template <typename real_t>
    int TTMM(char uplo, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB, real_t beta, real_t *C, int_t ldC)
@@ -158,7 +158,7 @@ namespace LATL
    /// @param beta Complex scalar.
    /// @param C Complex triangular matrix of order n.  On exit, C contains the result of alpha*A*B+beta*C.
    /// @param ldC Column length of the matrix C.  ldC>=n.
-   /// @ingroup MATM
+   /// @ingroup BLAS
    
    template <typename real_t>
    int TTMM(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)

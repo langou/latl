@@ -41,7 +41,7 @@ namespace LATL
    /// @param kd The number of super-diagonals of the matrix A if uplo = 'U' or the number of sub-diagonals if uplo = 'L'.  kd >= 0
    /// @param AB Real array size ldAB-by-n.  On entry, the upper or lower triangle of the symmetric band matrix A, stored in the first kd+1 rows of the array. On exit, the triangular factor U or L from the Cholesky factorization A = U' * U or A = L * L' of the band matrix A in the same storage format as A.
    /// @param ldAB Column length of the array AB.  ldAB >= kd+1;
-   /// @ingroup TRF
+   /// @ingroup COMP
 
    template< typename real_t>
    int_t PBTRF(const char uplo, const int_t n, const int_t kd, real_t * const AB, const int_t ldAB)
@@ -122,7 +122,7 @@ namespace LATL
    /// @param kd The number of super-diagonals of the matrix A if uplo = 'U' or the number of sub-diagonals if uplo = 'L'.  kd >= 0
    /// @param AB Complex array size ldAB-by-n.  On entry, the upper or lower triangle of the Hermitian band matrix A, stored in the first kd+1 rows of the array.  On exit, the triangular factor U or L from the Cholesky factorization A = U^H * U or A = L * L^H of the band matrix A in the same storage format as A.
    /// @param ldAB Column length of the array AB.  ldAB >= kd+1;
-   /// @ingroup TRF
+   /// @ingroup COMP
 
    template< typename real_t>
    int_t PBTRF(const char uplo, const int_t n, const int_t kd, complex<real_t> * const AB, const int_t ldAB)
@@ -212,6 +212,7 @@ namespace LATL
    /// @param AB Real array size ldAB-by-n.  On entry, the upper or lower triangle of the symmetric band matrix A, stored in the first kd+1 rows of the array. On exit, the triangular factor U or L from the Cholesky factorization A = U' * U or A = L * L' of the band matrix A in the same storage format as A.
    /// @param ldAB Column length of the array AB.  ldAB >= kd+1;
    /// @param nb Block size.
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t PBTRF(const char uplo, const int_t n, const int_t kd, real_t * const AB, const int_t ldAB, const int_t nb)
@@ -395,6 +396,7 @@ namespace LATL
    /// @param AB Complex array size ldAB-by-n.  On entry, the upper or lower triangle of the band matrix A, stored in the first kd+1 rows of the array. On exit, the triangular factor U or L from the Cholesky factorization A = U' * U or A = L * L' of the band matrix A in the same storage format as A.
    /// @param ldAB Column length of the array AB.  ldAB >= kd+1;
    /// @param nb Block size.
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t PBTRF(const char uplo, const int_t n, const int_t kd, complex<real_t> * const AB, const int_t ldAB, const int_t nb)

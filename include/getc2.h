@@ -39,6 +39,7 @@ namespace LATL
    /// row i of the matrix has been exchanged with row ipiv[i].
    /// @param jpiv Integer array size n.  Contains pivot indices; for 0 <= j <= n-1,
    /// column j of the matrix has been exchanged with column jpiv[j].
+   /// @ingroup BLAS
    
    template<typename real_t>
    int GETC2(int_t n, real_t *A, int_t ldA, int_t *ipiv, int_t *jpiv)
@@ -120,6 +121,7 @@ namespace LATL
    /// row i of the matrix has been exchanged with row ipiv[i].
    /// @param jpiv Integer array size n.  Contains pivot indices; for 0 <= j <= n-1,
    /// column j of the matrix has been exchanged with column jpiv[j].
+   /// @ingroup BLAS
 
    template<typename real_t>
    int GETC2(int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, int_t *jpiv)

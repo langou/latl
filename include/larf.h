@@ -47,14 +47,14 @@ namespace LATL
    ///                H * C if side='L',
    ///             or C * H if side='R'.
    /// @param ldC Column length of matrix C.  ldC >= m.
-   /// @param w Workspace vector (optional).  If used, must of of the following length:
+   /// @param w Workspace vector of of the following length:
    ///
    ///          n if side='L'
-   ///          m if side='R'
-   /// otherwise, workspace will be allocated and deallocated internally.
+   ///          m if side='R'.
+   /// @ingroup AUX
 
    template<typename real_t>
-   int LARF(char side, int_t m, int_t n, real_t *v, int_t incv, real_t tau, real_t *C, int_t ldC,real_t *w=NULL)
+   int LARF(char side, int_t m, int_t n, real_t *v, int_t incv, real_t tau, real_t *C, int_t ldC,real_t *w)
    {
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -71,10 +71,6 @@ namespace LATL
       else if(ldC<m)
          return -8;
 
-      bool allocate=w?0:1;
-      if(allocate)
-         w=new real_t[(side=='L')?n:m];
-
       if(side=='L')
       {
          GEMV<real_t>('T',m,n,one,C,ldC,v,incv,zero,w,1);
@@ -85,8 +81,6 @@ namespace LATL
          GEMV<real_t>('N',m,n,one,C,ldC,v,incv,zero,w,1);
          GER<real_t>(m,n,-tau,w,1,v,incv,C,ldC);
       }
-      if(allocate)
-         delete [] w;
 
       return 0;
    }
@@ -119,14 +113,14 @@ namespace LATL
    ///                H * C if side='L',
    ///             or C * H if side='R'.
    /// @param ldC Column length of matrix C.  ldC >= m.
-   /// @param w Workspace vector (optional).  If used, must of of the following length:
+   /// @param w Workspace vector of of the following length:
    ///
    ///          n if side='L'
-   ///          m if side='R'
-   /// otherwise, workspace will be allocated and deallocated internally.
+   ///          m if side='R'.
+   /// @ingroup AUX
 
    template<typename real_t>
-   int LARF(char side, int_t m, int_t n, complex<real_t> *v, int_t incv, complex<real_t> tau, complex<real_t> *C, int_t ldC, complex<real_t> *w=NULL)
+   int LARF(char side, int_t m, int_t n, complex<real_t> *v, int_t incv, complex<real_t> tau, complex<real_t> *C, int_t ldC, complex<real_t> *w)
    {
       const real_t one(1.0);
       const real_t zero(0.0);
@@ -143,10 +137,6 @@ namespace LATL
       else if(ldC<m)
          return -8;
 
-      bool allocate=w?0:1;
-      if(allocate)
-         w=new complex<real_t>[(side=='L')?n:m];
-         
       if(side=='L')
       {
          GEMV<real_t>('C',m,n,one,C,ldC,v,incv,zero,w,1);
@@ -157,8 +147,6 @@ namespace LATL
          GEMV<real_t>('N',m,n,one,C,ldC,v,incv,zero,w,1);
          GERC<real_t>(m,n,-tau,w,1,v,incv,C,ldC);
       }
-      if(allocate)
-         delete [] w;
       return 0;
    }
 }

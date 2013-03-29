@@ -31,6 +31,7 @@ namespace LATL
    /// @param beta Value to assign to the diagonal elements of A.
    /// @param A Pointer to real matrix A [out].
    /// @param ldA Column length of the matrix A.
+   /// @ingroup AUX
    
    template<typename real_t>
    int LASET(char uplo,int_t m,int_t n,real_t alpha,real_t beta,real_t *A,int_t ldA)
@@ -89,6 +90,7 @@ namespace LATL
    /// @param beta Value to assign to the diagonal elements of A.
    /// @param A Pointer to complex matrix A [out].
    /// @param ldA Column length of the matrix A.
+   /// @ingroup AUX
    
    template<typename real_t>
    int LASET(char uplo,int_t m,int_t n,complex<real_t> alpha,complex<real_t> beta,complex<real_t> *A,int_t ldA)

@@ -35,7 +35,8 @@ namespace LATL
    /// @param ldAB Column length of matrix A.  ldAB >= 2*kL+kU+1
    /// @param ipiv Permutation matrix size min(m,n).  On exit, row k of A was exchanged with ipiv[k].
    /// @param nb Block size.
-   
+   /// @ingroup COMP
+
    template< typename real_t>
    int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const ipiv, const int_t nb)
    {
@@ -284,6 +285,7 @@ namespace LATL
    /// @param ldAB Column length of matrix A.  ldAB >= 2*kL+kU+1
    /// @param ipiv Permutation matrix size min(m,n).  On exit, row k of A was exchanged with ipiv[k].
    /// @param nb Block size.
+   /// @ingroup COMP
 
    template< typename real_t>
    int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const ipiv, const int_t nb, complex<real_t> *W=NULL)

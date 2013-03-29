@@ -45,6 +45,7 @@ namespace LATL
    /// If bsdv[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and ipiv[k] = ipiv[k-1],
    /// then rows and columns k-1 and ipiv[k] were interchanged.  If uplo = 'L' and ipiv[k] = ipiv[k+1],
    /// then rows and columns k+1 and ipiv[k] were interchanged.
+   /// @ingroup COMP
    
    template<typename real_t>
    int_t SYTF2(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * ipiv, bool * bsdv)
@@ -348,6 +349,7 @@ namespace LATL
    /// columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If bsdv[k] = 1, then k is part of a 2-by-2
    /// diagonal block.  In a 2 by 2 block, if uplo = 'U', and ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were
    /// interchanged.  If uplo = 'L' and ipiv[k] = ipiv[k+1], then rows and columns k+1 and ipiv[k] were interchanged.
+   /// @ingroup COMP
    
    template<typename real_t>
    int_t SYTF2(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * ipiv, bool * bsdv)

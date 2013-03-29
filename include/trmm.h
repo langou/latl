@@ -53,7 +53,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  If side='L' or 'l' then ldA>=n; if side='R' or 'r' then lda>=m.
    /// @param B Pointer to real m-by-n matrix B.
    /// @param ldB Column length of the matrix B.  ldB>=m.
-   /// @ingroup MATM
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TRMM(char side, char uplo, char trans, char diag, int_t m, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB)
@@ -331,7 +331,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  If side='L' or 'l' then ldA>=n; if side='R' or 'r' then lda>=m.
    /// @param B Pointer to complex m-by-n matrix B.
    /// @param ldB Column length of the matrix B.  ldB>=m.
-   /// @ingroup MATM
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TRMM(char side, char uplo, char trans, char diag, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB)

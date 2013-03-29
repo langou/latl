@@ -28,7 +28,7 @@ namespace LATL
    /// @param[in,out] y Real scalar, the y coordinate.
    /// @param[out] c Real scalar, cos(theta).
    /// @param[out] s Real scalar, sin(theta).
-   /// @ingroup ROT
+   /// @ingroup BLAS
 
    template <typename real_t>
    void ROTG(real_t &x, real_t &y, real_t &c, real_t &s)
@@ -86,7 +86,7 @@ namespace LATL
    /// @param[in,out] y Complex scalar, the y coordinate.
    /// @param[out] c Real scalar, cos(theta).
    /// @param[out] s Complex scalar, sin(theta).
-   /// @ingroup ROT
+   /// @ingroup BLAS
 
    template <typename real_t>
    void ROTG(complex<real_t> &x,complex<real_t> y, real_t &c, complex<real_t> &s)

@@ -26,7 +26,7 @@ namespace LATL
    /// @param incy Increment of vector y.
    /// @param flag Indicates the form of the Givens rotation matrix H, obtained from LATL::ROTMG.
    /// @param H Pointer to 2-by-2 Givens rotation matrix obtained from LATL::ROTMG.
-   /// @ingroup ROT
+   /// @ingroup BLAS
 
    template <typename real_t>
    void ROTM(int_t n, real_t *x, int_t incx, real_t *y, int_t incy, real_t flag, real_t *H)

@@ -36,7 +36,7 @@ namespace LATL
    /// @param tol Real scalar.  On entry, a relative tolerance used to indicate whether the matrix (T - lambda*I) is nearly singular.  Tol should be set to an approximation of the largest relative error in the elements of T.  For example, if the elements of T are correct to about 4 significant figures, tol should be set to 5*10^-4.  If the supplied tol is less than relative machine precision, then the machine eps will be used in place of tol.
    /// @param D Real array size n-2.  On exit, D is overwritten by the n-2 second super-diagonal elements of the matrix U.
    /// @param IN Integer array size n.  On exit, IN contains details of the permutation matrix P.  If an interchange occured at the kth step of the elimination, then IN[k] = 1; otherwise IN[k] = 0.  The final element of IN, IN[n-1], contains the smallest positive integer j such that the j-1th diagonal entry is less than or equal to the norm of T-lambda*I times tol.  If no such j exists, then IN[n-1] is returned as 0.  If such a j exists, then a diagonal element of U is small, indicating that T-lambda*I is singular or nearly singular.
-   /// @ingroup TRF
+   /// @ingroup COMP
    
    template< typename real_t >
    int LAGTF(const int_t n, real_t * const A, const real_t lambda, real_t * const B, real_t * const C, real_t tol, real_t * const D, int_t * const IN)

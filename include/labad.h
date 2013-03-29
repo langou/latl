@@ -28,7 +28,7 @@ namespace LATL
    /// big, sqrt(small) is returned, otherwise small is unchanged.
    /// @param[in,out] large Overflow threshold; if log10(large) is sufficiently
    /// big, sqrt(large) is returned, otherwise large is unchanged.
-   /// @ingroup SCAL
+   /// @ingroup AUX
    
    template<typename real_t>
    void LABAD(real_t &small, real_t &large)

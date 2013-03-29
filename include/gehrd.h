@@ -74,6 +74,7 @@ namespace LATL
    /// the elementary reflectors.  Elements 0:ilo-1 and ihi:n-2 of tau are set
    /// to zero.
    /// @param nb Block size.  0<nb<=n
+   /// @ingroup COMP
 
    template <typename real_t>
    int GEHRD( int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau, int_t nb)
@@ -182,6 +183,7 @@ namespace LATL
    /// the elementary reflectors.  Elements 0:ilo-1 and ihi:n-2 of tau are set
    /// to zero.
    /// @param nb Block size.  0<nb<=n
+   /// @ingroup COMP
 
    template <typename real_t>
    int GEHRD( int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau, int_t nb)

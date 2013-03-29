@@ -49,7 +49,7 @@ namespace LATL
    /// and so on until the nth column, which has length 1.  The entire n-by-n triangular matrix is stored using n(n+1)/2 elements.
    /// @param x Pointer to real vector x.
    /// @param incx Increment of the vector x.  incx!=0
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TPMV(char uplo, char trans, char diag, int_t n, real_t *A, real_t *x, int_t incx)
@@ -249,7 +249,7 @@ namespace LATL
    /// and so on until the nth column, which has length 1.  The entire n-by-n triangular matrix is stored using n(n+1)/2 elements.
    /// @param x Pointer to complex vector x.
    /// @param incx Increment of the vector x.  incx!=0
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TPMV(char uplo, char trans, char diag, int_t n, complex<real_t> *A, complex<real_t> *x, int_t incx)

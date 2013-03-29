@@ -22,7 +22,7 @@ namespace LATL
    /// @param n Length of the vector x.
    /// @param x Pointer to complex vector x.
    /// @param incx Increment of the complex vector x; incx > 0.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    real_t SUM1(int_t n, complex<real_t> *x, int_t incx)

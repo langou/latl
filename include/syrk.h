@@ -48,7 +48,7 @@ namespace LATL
    /// @param C Pointer to real symmetric n-by-n matrix C.  
    /// Only the upper or lower triangular part of C is referenced, depending on the value of uplo above.
    /// @param ldC Column length of the matrix C.  ldC>=n
-   /// @ingroup MATM
+   /// @ingroup BLAS
 
    template <typename real_t>
    int SYRK(char uplo, char trans, int_t n, int_t k, real_t alpha, real_t *A, int_t ldA, real_t beta, real_t *C, int_t ldC)
@@ -216,7 +216,7 @@ namespace LATL
    /// @param C Pointer to complex symmetric n-by-n matrix C.  
    /// Only the upper or lower triangular part of C is referenced, depending on the value of uplo above.
    /// @param ldC Column length of the matrix C.  ldC>=n
-   /// @ingroup MATM
+   /// @ingroup BLAS
 
    template <typename real_t>
    int SYRK(char uplo, char trans, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> beta, complex<real_t> *C, int_t ldC)

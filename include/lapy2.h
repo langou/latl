@@ -21,7 +21,7 @@ namespace LATL
    /// @tparam real_t Floating point type.
    /// @param x scalar value x
    /// @param y scalar value y
-   /// @ingroup SCAL
+   /// @ingroup AUX
    
    template<typename real_t>
    real_t LAPY2(real_t x, real_t y)

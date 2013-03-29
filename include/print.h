@@ -29,7 +29,8 @@ namespace LATL
    /// @param A Real matrix of size m-by-n.
    /// @param ldA Column length of matrix A.
    /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
-
+   /// @ingroup AUX
+   
    template <typename real_t>
    int PRINT(int m, int n, real_t *A, int ldA,std::ostream &outfile=std::cout)
    {
@@ -71,7 +72,8 @@ namespace LATL
    /// @param A Complex matrix of size m-by-n.
    /// @param ldA Column length of matrix A.
    /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
-
+   /// @ingroup AUX
+   
    template <typename real_t>
    int PRINT(int m, int n, complex<real_t> *A, int ldA,std::ostream &outfile=std::cout)
    {
@@ -121,6 +123,7 @@ namespace LATL
    /// @param A Real matrix of size m-by-n.
    /// @param ldA Column length of matrix A.
    /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
+   /// @ingroup AUX
 
    template <typename real_t>
    int PRINT(char uplo, char diag, int n, real_t *A, int ldA,std::ostream &outfile=std::cout)
@@ -201,6 +204,7 @@ namespace LATL
    /// @param A Complex matrix of size m-by-n.
    /// @param ldA Column length of matrix A.
    /// @param[in] outfile Output stream to write matrix.  Defaults to standard output.
+   /// @ingroup AUX
 
    template <typename real_t>
    int PRINT(char uplo, char diag, int n, complex<real_t> *A, int ldA,std::ostream &outfile=std::cout)

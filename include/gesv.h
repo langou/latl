@@ -40,7 +40,7 @@ namespace LATL
    /// @param B Real matrix size n-by-colB.  On exit, the solution matrix X.
    /// @param ldB Column length of the matrix B. ldB >= n
    /// @param nb Block size, optional.  Default value is 80.
-   /// @ingroup SOLV
+   /// @ingroup DRIV
    
    template< typename real_t >
    int_t GESV(const int_t n, const int_t colB, real_t * const A, const int_t ldA, int_t * const ipiv, real_t * const B, const int_t ldB, int_t nb=32)
@@ -86,7 +86,7 @@ namespace LATL
    /// @param B Complex matrix size n-by-colB.  On exit, the solution matrix X.
    /// @param ldB Column length of the matrix B. ldB >= n
    /// @param nb Block size, optional.  Default value is 80.
-   /// @ingroup SOLV
+   /// @ingroup DRIV
    
    template< typename real_t >
    int_t GESV(const int_t n, const int_t colB, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, complex<real_t> * const B, const int_t ldB, int_t nb=32)

@@ -26,7 +26,8 @@ namespace LATL
    /// @param[out] m Number of rows in matrix.
    /// @param[out] n Number of columns in matrix.
    /// @param[in] infile Input stream from which to read matrix.  Defaults to standard input.
-   
+   /// @ingroup AUX
+
    template <typename real_t>
    real_t *LOAD(int &m,int &n,std::istream &infile=std::cin)
    {
@@ -85,7 +86,8 @@ namespace LATL
    ///             uplo == 'L' : matrix is lower triangular
    /// @param[out] n Order of packed triangular matrix.
    /// @param[in] infile Input stream from which to read matrix.  Defaults to standard input.
-   
+   /// @ingroup AUX
+
    template <typename real_t>
    real_t *LOAD(char &uplo,int &n,std::istream &infile=std::cin)
    {

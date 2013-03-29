@@ -45,7 +45,7 @@ namespace LATL
    /// @param beta Complex scalar.
    /// @param C Pointer to complex m-by-n matrix C.
    /// @param ldC Column length of the matrix C.  ldC>=m.
-   /// @ingroup MATM
+   /// @ingroup BLAS
 
    template <typename real_t>
    int HEMM(char side, char uplo, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)

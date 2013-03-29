@@ -30,6 +30,7 @@ namespace LATL
    ///        'D' or 'd' for decreasing order
    /// @param n Length of vector d.  n>=0
    /// @param d Pointer to real vector of length n.
+   /// @ingroup COMP
    
    template<typename real_t>
    int LASRT(char direction,int_t n,real_t *d)

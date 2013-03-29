@@ -41,7 +41,7 @@ namespace LATL
    /// @param beta Real scalar.
    /// @param y Pointer to real vector y.  
    /// @param incy Increment of the vector y.
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int GEMV(char trans, int_t m, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
@@ -201,7 +201,7 @@ namespace LATL
    /// @param beta Complex scalar.
    /// @param y Pointer to complex vector y.  
    /// @param incy Increment of the vector y.
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int GEMV(char trans, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)

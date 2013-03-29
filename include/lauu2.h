@@ -38,7 +38,8 @@ namespace LATL
    /// the upper triangle of the product U*U'; if lower trianglar, A is overwritten with the lower
    //  triangle of the product L'*L.
    /// @param ldA Column length of the matrix A.  ldA>=n.
-
+   /// @ingroup AUX
+   
    template <typename real_t>
    int LAUU2(char uplo, int_t n, real_t *A, int_t ldA)
    {
@@ -102,6 +103,7 @@ namespace LATL
    /// the upper triangle of the product U*U'; if lower trianglar, A is overwritten with the lower
    //  triangle of the product L'*L.
    /// @param ldA Column length of the matrix A.  ldA>=n.
+   /// @ingroup AUX
 
    template <typename real_t>
    int LAUU2(char uplo, int_t n, complex<real_t> *A, int_t ldA)

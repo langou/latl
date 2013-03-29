@@ -70,7 +70,7 @@ namespace LATL
    /// @param ldA Column length of matrix A.  ldA>=k+1.
    /// @param x Pointer to real vector x.
    /// @param incx Increment of the vector x.  incx!=0
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TBMV(char uplo, char trans, char diag, int_t n, int_t k, real_t *A, int_t ldA, real_t *x, int_t incx)
@@ -306,7 +306,7 @@ namespace LATL
    /// @param ldA Column length of matrix A.  ldA>=k+1.
    /// @param x Pointer to complex vector x.
    /// @param incx Increment of the vector x.  incx!=0
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TBMV(char uplo, char trans, char diag, int_t n, int_t k, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx)

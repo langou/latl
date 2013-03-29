@@ -41,7 +41,7 @@ namespace LATL
    /// @param beta Real scalar.
    /// @param y Pointer the real vector y.
    /// @param incy Increment of vector y. incy!=0
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int SPMV(char uplo, int_t n, real_t alpha, real_t *A, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
@@ -217,7 +217,7 @@ namespace LATL
    /// @param beta Complex scalar.
    /// @param y Pointer the complex vector y.
    /// @param incy Increment of vector y. incy!=0
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int SPMV(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *A, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)

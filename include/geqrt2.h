@@ -48,7 +48,7 @@ namespace LATL
    /// @param T Pointer to the n-by-n upper triangular factor of the block reflector [out].
    /// The elements on and above the diagonal contain the block reflector T, and the first column of T contains tau.
    /// @param ldT Column length of the matrix T.
-   /// @ingroup QRF
+   /// @ingroup COMP
    
    template<typename real_t>
    int GEQRT2(int_t m,int_t n,real_t *A,int_t ldA,real_t *T,int_t ldT)
@@ -126,7 +126,7 @@ namespace LATL
    /// @param T Pointer to the n-by-n upper triangular factor of the block reflector [out].
    /// The elements on and above the diagonal contain the block reflector T, and the first column of T contains tau.
    /// @param ldT Column length of the matrix T.
-   /// @ingroup QRF
+   /// @ingroup COMP
    
    template<typename real_t>
    int GEQRT2(int_t m,int_t n,complex<real_t> *A,int_t ldA,complex<real_t> *T,int_t ldT)

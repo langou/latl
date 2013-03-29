@@ -34,6 +34,7 @@ namespace LATL
    /// @param ldA Column length of matrix A. ldA>=n
    /// @param i First index for row and column transposition.  0<=i<n
    /// @param j Second index for row and column transposition. 0<=j<n
+   /// @ingroup AUX
    
    template<typename real_t>
    int SYSWAPR(char uplo,int_t n,real_t *A,int_t ldA,int_t i,int_t j)

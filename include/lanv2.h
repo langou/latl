@@ -41,7 +41,7 @@ namespace LATL
    /// @param rt2i Real scalar; on exit the imaginary part of second eigenvalue.
    /// @param sn Real scalar; on exit the matrix element sn.
    /// @param cs Real scalar; on exit the matrix element cs.
-   /// @ingroup SCAL
+   /// @ingroup AUX
    
    template<typename real_t>
    void LANV2(real_t &a,real_t &b,real_t &c,real_t &d,real_t &rt1r,real_t &rt1i,real_t &rt2r,real_t &rt2i,real_t &cs,real_t &sn)

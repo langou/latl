@@ -36,7 +36,7 @@ namespace LATL
    /// @param rowcnd Real number.  On exit, if the return value is 0 or is greater than m, rowcnd is the ratio of the smallest R(i) to the largest R(i).  If rowcnd >= .1 and amax is neither too large nor too small, it is not worth scaling by R.
    /// @param colcnd Real number.  On exit, if the return value is 0, colcnd is the ratio of the smallest C(i) to the largest C(i).  If colcnd >= .1, it is not worth scaling by C.
    /// @param amax Real number.  On exit, the absolute value of the largest matrix element.  If amax if very close to overflow or underflow, the matrix should be scaled.
-   /// @ingroup COND
+   /// @ingroup COMP
    
    template< typename real_t>
    int GEEEQU(const int_t m, const int_t n, real_t * const A, const int_t ldA, real_t * const R, real_t * const C, real_t &rowcnd, real_t &colcnd, real_t &amax)
@@ -176,7 +176,7 @@ namespace LATL
    /// @param rowcnd Real number.  On exit, if the return value is 0 or is greater than m, rowcnd is the ratio of the smallest R(i) to the largest R(i).  If rowcnd >= .1 and amax is neither too large nor too small, it is not worth scaling by R.
    /// @param colcnd Real number.  On exit, if the return value is 0, colcnd is the ratio of the smallest C(i) to the largest C(i).  If colcnd >= .1, it is not worth scaling by C.
    /// @param amax Real number.  On exit, the absolute value of the largest matrix element.  If amax if very close to overflow or underflow, the matrix should be scaled.
-   /// @ingroup COND
+   /// @ingroup COMP
 
    template< typename real_t>
    int GEEEQU(const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, real_t * const R, real_t * const C, real_t &rowcnd, real_t &colcnd, real_t &amax)

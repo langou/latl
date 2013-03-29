@@ -31,7 +31,8 @@ namespace LATL
    /// @param E Real array size (n-1).  On entry, the (n-1) subdiagonal elements of the unit bidiagonal factor L from the L*D*L' factorization as computed by pttrf.
    /// @param B Real array size ldB-by-nrhs.  On entry, the right hand side vectors B for the system of linear equations.  On exit, the solution vectors X.
    /// @param ldB Column length of the array B.
-   
+   /// @ingroup COMP
+
    template<typename real_t>
    int_t PTTS2(const int_t n, const int_t nrhs, real_t * const D, real_t * const E, real_t * const B, const int_t ldB)
    {
@@ -80,7 +81,8 @@ namespace LATL
    /// @param E Complex array size (n-1).  On entry, the (n-1) subdiagonal elements of the unit bidiagonal factor L from the L*D*L^H factorization as computed by pttrf.
    /// @param B Complex array size ldB-by-nrhs.  On entry, the right hand side vectors B for the system of linear equations.  On exit, the solution vectors X.
    /// @param ldB Column length of the array B.
-   
+   /// @ingroup COMP
+
    template<typename real_t>
    int_t PTTS2(bool iuplo, const int_t n, const int_t nrhs, real_t * const D, complex<real_t> * const E, complex<real_t> * const B, const int_t ldB)
    {

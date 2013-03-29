@@ -40,7 +40,8 @@ namespace LATL
    /// triangle of the product L'*L.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param nb Block size.
-   
+   /// @ingroup AUX
+
    template <typename real_t>
    int LAUUM(char uplo, int_t n, real_t *A, int_t ldA, int_t nb)
    {
@@ -119,7 +120,8 @@ namespace LATL
    //  triangle of the product L'*L.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param nb Block size.
-   
+   /// @ingroup AUX
+
    template <typename real_t>
    int LAUUM(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t nb)
    {

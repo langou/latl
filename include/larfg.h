@@ -48,8 +48,8 @@ namespace LATL
    /// @param x Array of length 1+(n-2)*abs(incx).  On entry, the vector x.  On exit, it is overwritten with the vector v.
    /// @param incx  The increment between elements of x; incx > 0.
    /// @param tau On exit, the value tau.
-   /// @ingroup HOUS
-
+   /// @ingroup AUX
+   
    template<typename real_t>
    void LARFG(int_t n, real_t &alpha, real_t *x, int_t incx, real_t &tau)
    {
@@ -119,7 +119,7 @@ namespace LATL
    /// @param x Array of length 1+(n-2)*abs(incx).  On entry, the vector x.  On exit, it is overwritten with the vector v.
    /// @param incx  The increment between elements of x; incx > 0.
    /// @param tau On exit, the value tau.
-   /// @ingroup HOUS
+   /// @ingroup AUX
    
    template<typename real_t>
    void LARFG(int_t n, complex<real_t> &alpha, complex<real_t> *x, int_t incx, complex<real_t> &tau)

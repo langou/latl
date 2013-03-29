@@ -39,7 +39,7 @@ namespace LATL
    /// of the diagonal element, which has length 1.  The second column has length 2, the third length 3, and so on until the
    /// nth column, which has length n.  Similarly, if A is lower triangular, the first column has length n, the second length n-1,
    /// and so on until the nth column, which has length 1.  The entire n-by-n triangular matrix is stored using n(n+1)/2 elements.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    int HPR(char uplo, int_t n, real_t alpha, complex<real_t> *x, int_t incx, complex<real_t> *A)

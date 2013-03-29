@@ -80,7 +80,8 @@ namespace LATL
    /// If the direction of the elementary reflectors is forward, T is upper triangular;
    /// if the direction of the elementary reflectors is backward, T is lower triangular.
    /// @param ldT Column length of the matrix T.  ldT >= k.
-
+   /// @ingroup AUX
+   
    template<typename real_t>
    int LARFT(char direct, char storeV, int_t n, int_t k, real_t *V, int_t ldV, real_t *tau, real_t *T, int_t ldT)
    {
@@ -245,6 +246,7 @@ namespace LATL
    /// If the direction of the elementary reflectors is forward, T is upper triangular;
    /// if the direction of the elementary reflectors is backward, T is lower triangular.
    /// @param ldT Column length of the matrix T.  ldT >= k.
+   /// @ingroup AUX
    
    template<typename real_t>
    int LARFT(char direct, char storeV, int_t n, int_t k, complex<real_t> *V, int_t ldV, complex<real_t> *tau, complex<real_t> *T, int_t ldT)

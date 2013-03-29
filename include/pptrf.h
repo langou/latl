@@ -39,7 +39,7 @@ namespace LATL
    ///         AP[i + (j)*(2n-j-1)/2] = A[i, j] for j <= i <= n-1  if uplo = 'L'
    ///
    /// On exit, if return value equals 0, the triangular factor U or L from the Cholesky factorization in the same storage format as A.
-   /// @ingroup TRF
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t PPTRF( const char uplo, const int_t n, real_t * const AP)
@@ -122,7 +122,7 @@ namespace LATL
    ///         AP[i + (j)*(2n-j-1)/2] = A[i, j] for j <= i <= n-1  if uplo = 'L'
    ///
    /// On exit, if return value equals 0, the triangular factor U or L from the Cholesky factorization in the same storage format as A.
-   /// @ingroup TRF
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t PPTRF( const char uplo, const int_t n, complex<real_t> * const AP)

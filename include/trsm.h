@@ -54,7 +54,7 @@ namespace LATL
    /// @param B Pointer to real m-by-n matrix B.  On entry, B contains the right hand side matrix B.  
    /// On exit, B is overwritten with the solution matrix X.
    /// @param ldB Column length of the matrix B.  ldB>=m.
-   /// @ingroup SOLV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TRSM(char side, char uplo, char trans, char diag, int_t m, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB)
@@ -343,7 +343,7 @@ namespace LATL
    /// @param B Pointer to complex m-by-n matrix B.  On entry, B contains the right hand side matrix B.  
    /// On exit, B is overwritten with the solution matrix X.
    /// @param ldB Column length of the matrix B.  ldB>=m.
-   /// @ingroup SOLV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TRSM(char side, char uplo, char trans, char diag, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB)

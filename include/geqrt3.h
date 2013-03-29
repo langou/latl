@@ -30,6 +30,7 @@ namespace LATL
    /// @param ldA Leading dimension of the matrix A.  ldA>=m.
    /// @param T Upper triangular part of the block reflector of order n.
    /// @param ldT Leading dimension of the matrix T.  ldT>=n
+   /// @ingroup COMP
 
    template<typename real_t>
    int GEQRT3(int_t m,int_t n,real_t *A,int_t ldA,real_t *T,int_t ldT)
@@ -117,6 +118,7 @@ namespace LATL
    /// @param ldA Leading dimension of the matrix A.  ldA>=m.
    /// @param T Upper triangular part of the block reflector of order n.
    /// @param ldT Leading dimension of the matrix T.  ldT>=n
+   /// @ingroup COMP
 
    template<typename real_t>
    int GEQRT3(int_t m,int_t n,complex<real_t> *A,int_t ldA,complex<real_t> *T,int_t ldT)

@@ -9,10 +9,7 @@
 #ifndef _lahr2_h
 #define _lahr2_h
 
-/// @file lahr2.h Reduces the specified number of first columns of a general 
-/// rectangular matrix A so that elements below the specified subdiagonal are 
-/// zero, and returns auxiliary matrices which are needed to apply the 
-/// transformation to the unreduced part of A.
+/// @file lahr2.h Part of a Hessenberg reduction of general rectangular matrix.
 
 #include <algorithm>
 #include "latl.h"
@@ -29,41 +26,23 @@
 
 namespace LATL
 {
-   /// @brief Reduces the first NB columns of A real general n-BY-(n-k+1)
-   /// matrix A so that elements below the k-th subdiagonal are zero. The 
-   /// reduction is performed by an orthogonal similarity transformation 
-   /// Q**T * A * Q. The routine returns the matrices V and T which determine Q
-   /// as a block reflector I - V*T*V**T, and also the matrix Y = A * V * T.
+   /// @brief Part of a Hessenberg reduction of real rectangular matrix.
    ///
-   /// This is an auxiliary routine called by GEHRD.
+   /// Reduces the first NB columns of A real general n-BY-(n-k+1)
+   /// matrix A so that elements below the k-th subdiagonal are zero. The
+   /// reduction is performed by an orthogonal similarity transformation
+   /// Q' * A * Q. The routine returns the matrices V and T which determine Q
+   /// as a block reflector I - V*T*V', and also the matrix Y = A * V * T.
    ///
-   /// @return 0 if success.
-   /// @param n Order of the matrix A.
-   /// @param k The offset for the reduction. Elements below the k-th 
-   /// subdiagonal in the first NB columns are reduced to zero.  k < n.
-   /// @param nb The number of columns to be reduced.
-   /// @param A Pointer to a real array, dimension (LDA,N-K+1). On entry, the
-   /// n-by-(n-k+1) general matrix A.  On exit, the elements on and above the 
-   /// k-th subdiagonal in the first NB columns are overwritten with the 
-   /// corresponding elements of the reduced matrix; the elements below the 
-   /// k-th subdiagonal, with the array TAU, represent the matrix Q as a 
-   /// product of elementary reflectors. The other columns of A are unchanged.
-   /// @param ldA Column length of matrix A.  ldA>=n
-   /// @param tau Pointer to an array of dimension (nb). The scalar factors of
-   /// the elementary reflector.
-   /// @param T Pointer to a real array, dimension (ldT,nb) The upper
-   /// triangular matrix T.
-   /// @param ldT Column length of matrix T.  ldT>=nb
-   /// @param Y Pointer to a real array, dimension (ldY,nb) 
-   /// @param ldY Column length of matrix Y.  ldY>=n
+   /// This is an auxiliary routine called by LATL::GEHRD.
    ///
    /// The matrix Q is represented as a product of nb elementary reflectors
    ///
-   ///    Q = H(1) H(2) . . . H(nb).
+   ///             Q = H(1) H(2) . . . H(nb).
    ///
    /// Each H(i) has the form
    ///
-   ///    H(i) = I - tau * v * v**T
+   ///             H(i) = I - tau * v * v'
    ///
    /// where tau is a real scalar, and v is a real vector with
    /// v(1:i+k-1) = 0, v(i+k) = 1; v(i+k+1:n) is stored on exit in
@@ -72,36 +51,45 @@ namespace LATL
    /// The elements of the vectors v together form the (n-k+1)-by-nb matrix
    /// V which is needed, with T and Y, to apply the transformation to the
    /// unreduced part of the matrix, using an update of the form:
-   /// A := (I - V*T*V**T) * (A - Y*V**T).
+   /// A := (I - V*T*V') * (A - Y*V').
    ///
    /// The contents of A on exit are illustrated by the following example
    /// with n = 7, k = 3 and nb = 2:
    ///
-   ///    ( a   a   a   a   a )
-   ///    ( a   a   a   a   a )
-   ///    ( a   a   a   a   a )
-   ///    ( h   h   a   a   a )
-   ///    ( v1  h   a   a   a )
-   ///    ( v1  v2  a   a   a )
-   ///    ( v1  v2  a   a   a )
+   ///             ( a   a   a   a   a )
+   ///             ( a   a   a   a   a )
+   ///             ( a   a   a   a   a )
+   ///             ( h   h   a   a   a )
+   ///             ( v1  h   a   a   a )
+   ///             ( v1  v2  a   a   a )
+   ///             ( v1  v2  a   a   a )
    ///
    /// where a denotes an element of the original matrix A, h denotes a
    /// modified element of the upper Hessenberg matrix H, and vi denotes an
    /// element of the vector defining H(i).
    ///
-   /// This subroutine is a slight modification of LAPACK-3.0's LAHRD
-   /// incorporating improvements proposed by Quintana-Orti and Van de
-   /// Gejin. Note that the entries of A(1:K,2:NB) differ from those
-   /// returned by the original LAPACK-3.0's LAHRD routine. (This
-   /// subroutine is not backward compatible with LAPACK-3.0's LAHRD.)
-   ///
-   ///References:
-   ///================
-   ///
-   /// Gregorio Quintana-Orti and Robert van de Geijn, "Improving the
-   /// performance of reduction to Hessenberg form," ACM Transactions on
-   /// Mathematical Software, 32(2):180-194, June 2006.
-   ///
+   /// Reference: @cite QOvdG.
+   /// @return 0 if success.
+   /// @param n Order of the matrix A.
+   /// @param k The offset for the reduction. Elements below the k-th
+   /// subdiagonal in the first NB columns are reduced to zero.  k < n.
+   /// @param nb The number of columns to be reduced.
+   /// @param A Pointer to a real array, dimension (LDA,N-K+1). On entry, the
+   /// n-by-(n-k+1) general matrix A.  On exit, the elements on and above the
+   /// k-th subdiagonal in the first NB columns are overwritten with the
+   /// corresponding elements of the reduced matrix; the elements below the
+   /// k-th subdiagonal, with the array TAU, represent the matrix Q as a
+   /// product of elementary reflectors. The other columns of A are unchanged.
+   /// @param ldA Column length of matrix A.  ldA>=n
+   /// @param tau Pointer to an array of dimension (nb). The scalar factors of
+   /// the elementary reflector.
+   /// @param T Pointer to a real array, dimension (ldT,nb) The upper
+   /// triangular matrix T.
+   /// @param ldT Column length of matrix T.  ldT>=nb
+   /// @param Y Pointer to a real array, dimension (ldY,nb)
+   /// @param ldY Column length of matrix Y.  ldY>=n
+   /// @ingroup COMP
+
    template <typename real_t>
    int_t LAHR2( int_t n, int_t k, int_t nb, real_t *A, int_t ldA, real_t *tau, real_t *T, int_t ldT, real_t *Y, int_t ldY )
    {
@@ -126,7 +114,7 @@ namespace LATL
          LARFG<real_t>( n-k-i, A[k+i+i*ldA], A+min(k+i+1,n-1)+i*ldA, 1, tau[i]);
          ei = A[k+i+i*ldA];
          A[k+i+i*ldA] = 1.0;
-         GEMV<real_t>( 'N', n-k, n-k-i, 1.0, A+k+(i+1)*ldA, ldA, A+k+i+i*ldA, 1, 0.0, Y+k+i*ldY, 1); 
+         GEMV<real_t>( 'N', n-k, n-k-i, 1.0, A+k+(i+1)*ldA, ldA, A+k+i+i*ldA, 1, 0.0, Y+k+i*ldY, 1);
          GEMV<real_t>( 'T', n-k-i, i, 1.0, A+k+i, ldA, A+k+i+i*ldA, 1, 0.0, T+i*ldT, 1);
          GEMV<real_t>( 'N', n-k, i, -1.0, Y+k, ldY, T+i*ldT, 1, 1.0, Y+k+i*ldY, 1);
          SCAL<real_t>( n-k, tau[i], Y+k+i*ldY, 1);
@@ -143,41 +131,23 @@ namespace LATL
       return 0;
    }
 
-   /// @brief Reduces the first NB columns of A real general n-BY-(n-k+1)
-   /// matrix A so that elements below the k-th subdiagonal are zero. The 
-   /// reduction is performed by an orthogonal similarity transformation 
-   /// Q**T * A * Q. The routine returns the matrices V and T which determine Q
-   /// as a block reflector I - V*T*V**T, and also the matrix Y = A * V * T.
+   /// @brief Part of a Hessenberg reduction of complex rectangular matrix.
    ///
-   /// This is an auxiliary routine called by GEHRD.
+   /// Reduces the first NB columns of A real general n-BY-(n-k+1)
+   /// matrix A so that elements below the k-th subdiagonal are zero. The
+   /// reduction is performed by an orthogonal similarity transformation
+   /// Q' * A * Q. The routine returns the matrices V and T which determine Q
+   /// as a block reflector I - V*T*V', and also the matrix Y = A * V * T.
    ///
-   /// @return 0 if success.
-   /// @param n Order of the matrix A.
-   /// @param k The offset for the reduction. Elements below the k-th 
-   /// subdiagonal in the first NB columns are reduced to zero.  k < n.
-   /// @param nb The number of columns to be reduced.
-   /// @param A Pointer to a real array, dimension (LDA,N-K+1). On entry, the
-   /// n-by-(n-k+1) general matrix A.  On exit, the elements on and above the 
-   /// k-th subdiagonal in the first NB columns are overwritten with the 
-   /// corresponding elements of the reduced matrix; the elements below the 
-   /// k-th subdiagonal, with the array TAU, represent the matrix Q as a 
-   /// product of elementary reflectors. The other columns of A are unchanged.
-   /// @param ldA Column length of matrix A.  ldA>=n
-   /// @param tau Pointer to an array of dimension (nb). The scalar factors of
-   /// the elementary reflector.
-   /// @param T Pointer to a real array, dimension (ldT,nb) The upper
-   /// triangular matrix T.
-   /// @param ldT Column length of matrix T.  ldT>=nb
-   /// @param Y Pointer to a real array, dimension (ldY,nb) 
-   /// @param ldY Column length of matrix Y.  ldY>=n
+   /// This is an auxiliary routine called by LATL::GEHRD.
    ///
    /// The matrix Q is represented as a product of nb elementary reflectors
    ///
-   ///    Q = H(1) H(2) . . . H(nb).
+   ///             Q = H(1) H(2) . . . H(nb).
    ///
    /// Each H(i) has the form
    ///
-   ///    H(i) = I - tau * v * v**T
+   ///             H(i) = I - tau * v * v'
    ///
    /// where tau is a real scalar, and v is a real vector with
    /// v(1:i+k-1) = 0, v(i+k) = 1; v(i+k+1:n) is stored on exit in
@@ -186,36 +156,45 @@ namespace LATL
    /// The elements of the vectors v together form the (n-k+1)-by-nb matrix
    /// V which is needed, with T and Y, to apply the transformation to the
    /// unreduced part of the matrix, using an update of the form:
-   /// A := (I - V*T*V**T) * (A - Y*V**T).
+   /// A := (I - V*T*V') * (A - Y*V').
    ///
    /// The contents of A on exit are illustrated by the following example
    /// with n = 7, k = 3 and nb = 2:
    ///
-   ///    ( a   a   a   a   a )
-   ///    ( a   a   a   a   a )
-   ///    ( a   a   a   a   a )
-   ///    ( h   h   a   a   a )
-   ///    ( v1  h   a   a   a )
-   ///    ( v1  v2  a   a   a )
-   ///    ( v1  v2  a   a   a )
+   ///             ( a   a   a   a   a )
+   ///             ( a   a   a   a   a )
+   ///             ( a   a   a   a   a )
+   ///             ( h   h   a   a   a )
+   ///             ( v1  h   a   a   a )
+   ///             ( v1  v2  a   a   a )
+   ///             ( v1  v2  a   a   a )
    ///
    /// where a denotes an element of the original matrix A, h denotes a
    /// modified element of the upper Hessenberg matrix H, and vi denotes an
    /// element of the vector defining H(i).
    ///
-   /// This subroutine is a slight modification of LAPACK-3.0's LAHRD
-   /// incorporating improvements proposed by Quintana-Orti and Van de
-   /// Gejin. Note that the entries of A(1:K,2:NB) differ from those
-   /// returned by the original LAPACK-3.0's LAHRD routine. (This
-   /// subroutine is not backward compatible with LAPACK-3.0's LAHRD.)
-   ///
-   ///References:
-   ///================
-   ///
-   /// Gregorio Quintana-Orti and Robert van de Geijn, "Improving the
-   /// performance of reduction to Hessenberg form," ACM Transactions on
-   /// Mathematical Software, 32(2):180-194, June 2006.
-   ///
+   /// Reference: @cite QOvdG.
+   /// @return 0 if success.
+   /// @param n Order of the matrix A.
+   /// @param k The offset for the reduction. Elements below the k-th
+   /// subdiagonal in the first NB columns are reduced to zero.  k < n.
+   /// @param nb The number of columns to be reduced.
+   /// @param A Pointer to a real array, dimension (LDA,N-K+1). On entry, the
+   /// n-by-(n-k+1) general matrix A.  On exit, the elements on and above the
+   /// k-th subdiagonal in the first NB columns are overwritten with the
+   /// corresponding elements of the reduced matrix; the elements below the
+   /// k-th subdiagonal, with the array TAU, represent the matrix Q as a
+   /// product of elementary reflectors. The other columns of A are unchanged.
+   /// @param ldA Column length of matrix A.  ldA>=n
+   /// @param tau Pointer to an array of dimension (nb). The scalar factors of
+   /// the elementary reflector.
+   /// @param T Pointer to a complex array, dimension (ldT,nb) The upper
+   /// triangular matrix T.
+   /// @param ldT Column length of matrix T.  ldT>=nb
+   /// @param Y Pointer to a complex array, dimension (ldY,nb)
+   /// @param ldY Column length of matrix Y.  ldY>=n
+   /// @ingroup COMP
+
    template <typename real_t>
    int_t LAHR2( int_t n, int_t k, int_t nb, complex<real_t> *A, int_t ldA, complex<real_t> *tau, complex<real_t> *T, int_t ldT, complex<real_t> *Y, int_t ldY )
    {
@@ -242,7 +221,7 @@ namespace LATL
          LARFG<real_t>( n-k-i, A[k+i+i*ldA], A+min(k+i+1,n-1)+i*ldA, 1, tau[i]);
          ei = A[k+i+i*ldA];
          A[k+i+i*ldA] = 1.0;
-         GEMV<real_t>( 'N', n-k, n-k-i, 1.0, A+k+(i+1)*ldA, ldA, A+k+i+i*ldA, 1, 0.0, Y+k+i*ldY, 1); 
+         GEMV<real_t>( 'N', n-k, n-k-i, 1.0, A+k+(i+1)*ldA, ldA, A+k+i+i*ldA, 1, 0.0, Y+k+i*ldY, 1);
          GEMV<real_t>( 'C', n-k-i, i, 1.0, A+k+i, ldA, A+k+i+i*ldA, 1, 0.0, T+i*ldT, 1);
          GEMV<real_t>( 'N', n-k, i, -1.0, Y+k, ldY, T+i*ldT, 1, 1.0, Y+k+i*ldY, 1);
          SCAL<real_t>( n-k, tau[i], Y+k+i*ldY, 1);

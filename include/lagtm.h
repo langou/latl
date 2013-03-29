@@ -42,7 +42,7 @@ namespace LATL
    /// @param beta Real scalar, must be either 1, -1 or 0; otherwise, assumed to be 1.
    /// @param B Pointer to n-by-nrhs matrix B.  On exit, B contains the result of the computation.
    /// @param ldB Column length of B.  ldB>=n
-   /// @ingroup MATV
+   /// @ingroup AUX
    
    template<typename real_t>
    int LAGTM(char trans,int_t n,int_t nrhs,real_t alpha,real_t *dl,real_t *d,real_t *du,real_t *X,int_t ldX,real_t beta,real_t *B,int_t ldB)
@@ -206,7 +206,7 @@ namespace LATL
    /// @param beta Real scalar, must be either 1, -1 or 0; otherwise, assumed to be 1.
    /// @param B Pointer to n-by-nrhs matrix B.  On exit, B contains the result of the computation.
    /// @param ldB Column length of B.  ldB>=n
-   /// @ingroup MATV
+   /// @ingroup AUX
    
    template<typename real_t>
    int LAGTM(char trans,int_t n,int_t nrhs,real_t alpha,complex<real_t> *dl,complex<real_t> *d,complex<real_t> *du,complex<real_t> *X,int_t ldX,real_t beta,complex<real_t> *B,int_t ldB)

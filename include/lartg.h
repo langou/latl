@@ -37,7 +37,7 @@ namespace LATL
    /// @param c The cosine of the rotation [out].
    /// @param s the sine of the rotation [out].
    /// @param r The nonzero component of the rotated vector [out].
-   /// @ingroup ROT
+   /// @ingroup AUX
    
    template<typename real_t>
    void LARTG(real_t f, real_t g, real_t &c, real_t &s, real_t &r)
@@ -143,7 +143,7 @@ namespace LATL
    /// @param c The cosine of the rotation [out].
    /// @param s The sine of the rotation [out].
    /// @param r The nonzero component of the rotated vector [out].
-   /// @ingroup ROT
+   /// @ingroup AUX
    
    template<typename real_t>
    void LARTG(complex<real_t> f, complex<real_t> g, real_t &c, complex<real_t> &s, complex<real_t> &r)

@@ -34,7 +34,7 @@ namespace LATL
    ///     'R': Row equilibration; A has been premultiplied by diag(R).
    ///     'C': Column equilibration; A has been postmultiplied by diag(C).
    ///     'B': Both row and column equilibration; A has been replaced by diag(R) * A * diag(C).
-   /// @ingroup COND
+   /// @ingroup AUX
    
    template< typename real_t>
    void LAQGE(const int_t m, const int_t n, real_t * const A, const int_t ldA, real_t * const R, real_t * const C, const real_t rowcnd, const real_t colcnd, const real_t amax, char &equed)
@@ -113,7 +113,7 @@ namespace LATL
    ///     'R': Row equilibration; A has been premultiplied by diag(R).
    ///     'C': Column equilibration; A has been postmultiplied by diag(C).
    ///     'B': Both row and column equilibration; A has been replaced by diag(R) * A * diag(C).
-   /// @ingroup COND
+   /// @ingroup AUX
 
    template< typename real_t>
    void LAQGE(const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, real_t * const R, real_t * const C, const real_t rowcnd, const real_t colcnd, const real_t amax, char &equed)

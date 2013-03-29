@@ -33,7 +33,7 @@ namespace LATL
    /// On exit, the scaling factor for the sum of squares.
    /// @param sumsq On entry, the value sumsq in the equation above.
    /// On exit, the basic sum of the squares from which scl has been factored out.  Assumed to be non-negative.
-   /// @ingroup VEC
+   /// @ingroup AUX
    
    template< typename real_t>
    void LASSQ( const int_t n, real_t * const X, const int_t incx, real_t &scale, real_t &sumsq)
@@ -87,7 +87,7 @@ namespace LATL
    /// On exit, the scaling factor for the sum of squares = maximum value among scale, abs(real(x[i])), and abs(imag(x[i])).
    /// @param sumsq On entry, the value sumsq in the equation above, assumed to be at least unity.
    /// On exit, the value ssq, which satisfies 1 <= ssq <= (sumsq + 2*n).
-   /// @ingroup VEC
+   /// @ingroup AUX
    
    template< typename real_t>
    void LASSQ( const int_t n, complex<real_t> * const X, const int_t incx, real_t &scale, real_t &sumsq)

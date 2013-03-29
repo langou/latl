@@ -35,7 +35,7 @@ namespace LATL
    /// @param y Pointer to real vector y.
    /// @param incy Increment of vector y.
    /// @param ssmin On exit, the smallest singular value of the matrix A.
-   /// @ingroup VEC
+   /// @ingroup AUX
    
    template<typename real_t>
    void LAPLL(int_t n,real_t *x,int_t incx,real_t *y,int_t incy,real_t &ssmin)
@@ -75,7 +75,7 @@ namespace LATL
    /// @param y Pointer to complex vector y.
    /// @param incy Increment of vector y.
    /// @param ssmin On exit, the smallest singular value of the matrix A.
-   /// @ingroup VEC
+   /// @ingroup AUX
    
    template<typename real_t>
    void LAPLL(int_t n,complex<real_t> *x,int_t incx,complex<real_t> *y,int_t incy,real_t &ssmin)

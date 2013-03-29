@@ -26,7 +26,7 @@ namespace LATL
    /// ipiv[k] = L indicates an exchange of row k of A with row L.
    /// @param inc Determines whether ipiv is read forward (inc=1) or backward (inc=-1).
    /// (optional, default value is 1)
-   /// @ingroup MAT
+   /// @ingroup AUX
    
    template< typename real_t>
    int LASWP(const int_t n, real_t * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const ipiv, int_t inc=1)
@@ -106,7 +106,7 @@ namespace LATL
    /// ipiv[k] = L indicates an exchange of row k of A with row L.
    /// @param inc Determines whether ipiv is read forward (inc=1) or backward (inc=-1).
    /// (optional, default value is 1)
-   /// @ingroup MAT
+   /// @ingroup AUX
    
    template< typename real_t>
    int LASWP(const int_t n, complex<real_t> * const A, const int_t ldA, const int_t k1, const int_t k2, int_t * const ipiv, int_t inc=1)

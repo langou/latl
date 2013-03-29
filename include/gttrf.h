@@ -32,7 +32,7 @@ namespace LATL
    /// @param DU Real array, size (n-1).  On entry, DU must contain the (n-1) superdiagonal elements of A.  On exit, DU is overwritten by the (n-1) elements of the first superdiagonal of U.
    /// @param DU2 Real array, size (n-2).  On exit, DU2 is overwritten by the n-2 elements of the second superdiagonal of U.
    /// @param ipiv Integer array, size n.  The pivot indices; for 0 <= i < n, row i of the matrix was interchanged with row ipiv[i].  ipiv[i] will always be either i or i+1; ipiv[i] = i indicates a row interchange was not required.
-   /// @ingroup TRF
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t GTTRF(const int_t n, real_t * const DL, real_t * const D, real_t * const DU, real_t * const DU2, int_t * const ipiv)
@@ -120,7 +120,7 @@ namespace LATL
    /// @param DU Complex array, size (n-1).  On entry, DU must contain the (n-1) superdiagonal elements of A.  On exit, DU is overwritten by the (n-1) elements of the first superdiagonal of U.
    /// @param DU2 Complex array, size (n-2).  On exit, DU2 is overwritten by the n-2 elements of the second superdiagonal of U.
    /// @param ipiv Integer array, size n.  The pivot indices; for 0 <= i < n, row i of the matrix was interchanged with row ipiv[i].  ipiv[i] will always be either i or i+1; ipiv[i] = i indicates a row interchange was not required.
-   /// @ingroup TRF
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t GTTRF(const int_t n, complex<real_t> * const DL, complex<real_t> * const D, complex<real_t> * const DU, complex<real_t> * const DU2, int_t * const ipiv)

@@ -41,7 +41,7 @@ namespace LATL
    /// triangular part of A is referenced and the lower part is not referenced.  If uplo = 'L' or 'l' then
    /// only the lower triangular part of A is referenced and the upper part is not referenced.
    /// @param ldA Column length of matrix A.  ldA>=n.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    int SYR2(char uplo, int_t n, real_t alpha, real_t *x, int_t incx, real_t *y, int_t incy, real_t *A, int_t ldA)

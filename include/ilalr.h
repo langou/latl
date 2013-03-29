@@ -23,7 +23,7 @@ namespace LATL
    /// @param n Number of columns in A; n >= 0.
    /// @param A Pointer to real matrix A. 
    /// @param ldA Column length of A; ldA >= m.
-   /// @ingroup MAT
+   /// @ingroup AUX
 
    template<typename real_t>
    int_t ILALR(int_t m, int_t n, real_t *A, int_t ldA)
@@ -52,7 +52,7 @@ namespace LATL
    /// @param n Number of columns in A; n >= 0.
    /// @param A Pointer to complex matrix A. 
    /// @param ldA Column length of A; ldA >= m.
-   /// @ingroup MAT
+   /// @ingroup AUX
 
    template<typename real_t>
    int_t ILALR(int_t m, int_t n, complex<real_t> *A, int_t ldA)

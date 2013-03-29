@@ -68,7 +68,8 @@ namespace LATL
    /// @param ldA Column length of matrix A.  ldA>=n
    /// @param tau Pointer to an array of dimension (N-1). The scalar factors of
    /// the elementary reflector.
-     
+   /// @ingroup COMP
+
    template <typename real_t>
    int GEHD2(int_t n, int_t ilo, int_t ihi, real_t *A, int_t ldA, real_t *tau)
    {
@@ -154,6 +155,7 @@ namespace LATL
    /// @param ldA Column length of matrix A.  ldA>=n
    /// @param tau Pointer to an array of dimension (N-1). The scalar factors of
    /// the elementary reflector.
+   /// @ingroup COMP
 
    template <typename real_t>
    int_t GEHD2(int_t n, int_t ilo, int_t ihi, complex<real_t> *A, int_t ldA, complex<real_t> *tau)

@@ -24,7 +24,7 @@ namespace LATL
    /// @param n Order of the matrix A.  n >= 0
    /// @param D Real array, size n.  On entry, the n diagonal elements of the tridiagonal matrix A.  On exit, the n diagonal elements of the diagonal matrix D from the L*D*L' factorization of A.
    /// @param E Real array, size (n-1).  On entry, the (n-1) subdiagonal elements of the tridiagonal matrix A.  On exit, the (n-1) subdiagonal elements of the unit bidiagonal factor L from the L*D*L' factorization of A.  E can also be regarded as the superdiagonal of the unit bidiagonal factor U from the U'*D*U factorization of A.
-   /// @ingroup TRF
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t PTTRF(const int_t n, real_t * const D, real_t * const E)
@@ -99,7 +99,7 @@ namespace LATL
    /// @param n Order of the matrix A.  n >= 0
    /// @param D Real array, size n.  On entry, the n diagonal elements of the tridiagonal matrix A.  On exit, the n diagonal elements of the diagonal matrix D from the L*D*L^H factorization of A.
    /// @param E Complex array, size (n-1).  On entry, the (n-1) subdiagonal elements of the tridiagonal matrix A.  On exit, the (n-1) subdiagonal elements of the unit bidiagonal factor L from the L*D*L^H factorization of A.  E can also be regarded as the superdiagonal of the unit bidiagonal factor U from the U^H*D*U factorization of A.
-   /// @ingroup TRF
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t PTTRF(const int_t n, real_t * const D, complex<real_t> * const E)

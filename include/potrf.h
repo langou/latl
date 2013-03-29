@@ -40,6 +40,7 @@ namespace LATL
    /// @param n Order of the matrix A.  n >= 0
    /// @param A Real symmetric matrix size ldA-by-n.  On entry, the matrix A.  On exit, the factor U or L from the Cholesky factorization A = U' * U or A = L * L'.
    /// @param ldA Column length of matrix A. ldA >= n
+   /// @ingroup COMP
 
    template< typename real_t>
    int_t POTRF(const char uplo, const int_t n, real_t * A, const int_t ldA)
@@ -120,6 +121,7 @@ namespace LATL
    /// @param n Order of the matrix A.  n >= 0
    /// @param A Hermitian matrix size ldA-by-n.  On entry, the matrix A.  On exit, the factor U or L from the Cholesky factorization A = U^H * U or A = L * L^H.
    /// @param ldA Column length of matrix A. ldA >= n
+   /// @ingroup COMP
 
    template< typename real_t>
    int_t POTRF(const char uplo, const int_t n, complex<real_t> * A, const int_t ldA)
@@ -207,7 +209,8 @@ namespace LATL
    /// @param A Real symmetric matrix size ldA-by-n.  On entry, the matrix A.  On exit, the factor U or L from the Cholesky factorization A = U' * U or A = L * L'.
    /// @param ldA Column length of matrix A. ldA >= n
    /// @param nb Block size.
-   
+   /// @ingroup COMP
+
    template< typename real_t>
    int_t POTRF(const char uplo, const int_t n, real_t * const A, const int_t ldA, const int_t nb)
    {
@@ -285,6 +288,7 @@ namespace LATL
    /// @param A Hermitian matrix size ldA-by-n.  On entry, the matrix A.  On exit, the factor U or L from the Cholesky factorization A = U^H * U or A = L * L^H.
    /// @param ldA Column length of matrix A. ldA >= n
    /// @param nb Block size.
+   /// @ingroup COMP
 
    template< typename real_t>
    int_t POTRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, const int_t nb)

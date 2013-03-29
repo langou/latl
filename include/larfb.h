@@ -38,7 +38,7 @@ namespace LATL
    /// @param ldC Leading dimension of matrix C.  ldC>=m
    /// @param W Workspace vector of length: k*n if side='L' or k*m if side='R'.
    /// @ingroup AUX
-
+   
    template<typename real_t>
    void LARFB(char side, char trans, char direct, char storeV, int_t m, int_t n, int_t k, real_t *V, int_t ldV, real_t *T, int_t ldT, real_t *C, int_t ldC, real_t *W)
    {

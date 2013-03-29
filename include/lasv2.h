@@ -40,7 +40,7 @@ namespace LATL
    /// @param csr On exit, part of the right singular vector.
    /// @param snl On exit, part of the left singular vector.
    /// @param csl On exit, part of the left singular vector.
-   /// @ingroup SCAL
+   /// @ingroup AUX
    
    template<typename real_t>
    void LASV2(real_t f,real_t g,real_t h,real_t &ssmin,real_t &ssmax,real_t &snr,real_t &csr,real_t &snl,real_t &csl)

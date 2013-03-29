@@ -51,15 +51,10 @@ namespace LATL
    ///                 If side='R' & trans='C':  C <- C * Q'
    ///                 If side='R' & trans='N':  C <- C * Q
    /// @param ldC The column length the matrix C. ldC>=m.
-   /// @param W Workspace vector (optional).
-   ///
-   ///                 If side='L', length of W is m;
-   ///                 if side='R', length of W is n.
-   /// If not provided, workspace is managed internally.
    /// @ingroup COMP
    
    template<typename real_t>
-   int unmr2(char side, char trans, int_t m, int_t n, int_t k, complex<real_t> *A, int_t ldA, complex<real_t> *tau, complex<real_t> *C, int_t ldC, complex<real_t> *W=NULL)
+   int unmr2(char side, char trans, int_t m, int_t n, int_t k, complex<real_t> *A, int_t ldA, complex<real_t> *tau, complex<real_t> *C, int_t ldC)
    {
       const complex<real_t> one(1.0);
       using std::toupper;
@@ -85,9 +80,7 @@ namespace LATL
       if((m==0)||(n==0)||(k==0))
          return 0;
 
-      bool allocate=(W==NULL)?1:0;
-      if(allocate)
-         W=new complex<real_t>[(side=='L')?m:n];
+      complex<real_t> *W=new complex<real_t>[(side=='L')?m:n];
 
       if((side=='L')&&(trans=='N'))
       {
@@ -138,8 +131,7 @@ namespace LATL
             B[i]=alpha;
          }
       }
-      if(allocate)
-         delete [] W;
+      delete [] W;
       return 0;
    }
 }

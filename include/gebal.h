@@ -63,7 +63,8 @@ namespace LATL
    /// The order in which the interchanges are made is n-1 to ihi+1, then 0 to ilo-1.
    /// @param[out] D Real vector of length n containing the diagonal elements of the matrix D.
    /// D[j] is the scaling factor applied to row and column j.
-   
+   /// @ingroup COMP
+
    template<typename real_t>
    int GEBAL(char job, int_t n, real_t *A, int_t ldA, int_t &ilo, int_t &ihi, int_t *P, real_t *D)
    {

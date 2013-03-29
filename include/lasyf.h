@@ -21,29 +21,34 @@
 
 namespace LATL
 {
-   /// @brief Computes a partial factorization of a real symmetric matrix A using the Bunch-Kaufman diagonal pivoting method.  The partial factorization has the form:
+   /// @brief Computes a partial factorization of a real symmetric matrix A using the Bunch-Kaufman diagonal pivoting method.
+   /// The partial factorization has the form:
    ///
    ///     A = (I  U12 ) (A11 0 ) ( I   0   )   if uplo = 'U'
    ///         (0  U22 ) (0   D ) (U12' U22')
    ///     A = (L11  0 ) (D   0 ) (L11' L21')   if uplo = 'L'
    ///         (L21  I ) (0  A22) ( 0    I  )
    ///
-   /// where the order of D is at most nb.  The actual order is returned in the argument kb, and is either nb or nb-1, or n if n <= nb.
-   /// This routine is an auxiliary routine for sytrf.  It uses blocked code to update the submatrix A11 (if uplo = 'U') or A22 (if uplo = 'L').
+   /// where the order of D is at most nb.  The actual order is returned in the argument kb, and is either nb or nb-1,
+   /// or n if n <= nb.
+   /// This routine is an auxiliary routine for LATL::SYTRF.  It uses blocked code to update the submatrix A11 (if uplo = 'U')
+   /// or A22 (if uplo = 'L').
    /// @return 0 if success.
    /// @return -i if the ith argument is invalid.
-   /// @return i+1 if the ith pivot of D is exactly zero.  The factorization has been completed, but the block diagonal matrix D is exactly singular.
+   /// @return i+1 if the ith pivot of D is exactly zero.  The factorization has been completed, but the block diagonal
+   /// matrix D is exactly singular.
    /// @tparam real_t Floating point type.
    /// @param uplo Specifies whether the upper or lower triangular part of the symmetric matrix A is stored.
    /// @param n Order of the matrix A.  n >= 0.
-   /// @param nb The maximum number of columns of the matrix A that should be factored.  nb should be at least 2 to allow for 2-by-2 pivot blocks.
+   /// @param nb The maximum number of columns of the matrix A that should be factored.  nb should be at least 2 to
+   /// allow for 2-by-2 pivot blocks.
    /// @param kb The number of columns of A that were actually factored.  kb is either nb-1 or nb, or n if n <= nb.
    /// @param A Real array size ldA-by-n.  On entry, the symmetric matrix A.   On exit, A contains details of the partial factorization.
    /// @param ldA Column length of the array A.  ldA >= n
    /// @param ipiv Integer array size n. On exit, details of the interchanges of D. If uplo = 'U', the last kb elements of ipiv and bsdv are set, and if uplo = 'L', the first kb elements of ipiv and bsdv are set.
    /// @param bsdv Bool array size n. On exit, contains the details of the block structure of D.  If bsdv[k] = 0, then rows and columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If bsdv[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were interchanged.  If uplo = 'L' and ipiv[k] = ipiv[k+1], then rows and columns k+1 and ipiv[k] were interchanged.
    /// @param Work Real array size n-by-nb.
-   /// @ingroup TRF
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t LASYF(const char uplo, const int_t n, const int_t nb, int_t &kb, real_t * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv, real_t * Work)
@@ -410,7 +415,7 @@ namespace LATL
    ///         (L21  I ) (0  A22) ( 0    I  )
    ///
    /// where the order of D is at most nb.  The actual order is returned in the argument kb, and is either nb or nb-1, or n if n <= nb.
-   /// This routine is an auxiliary routine for sytrf.  It uses blocked code to update the submatrix A11 (if uplo = 'U') or A22 (if uplo = 'L').
+   /// This routine is an auxiliary routine for LATL::SYTRF.  It uses blocked code to update the submatrix A11 (if uplo = 'U') or A22 (if uplo = 'L').
    /// @return 0 if success.
    /// @return -i if the ith argument is invalid.
    /// @return i+1 if the ith pivot of D is exactly zero.  The factorization has been completed, but the block diagonal matrix D is exactly singular.
@@ -424,7 +429,7 @@ namespace LATL
    /// @param ipiv Integer array size n. On exit, details of the interchanges of D. If uplo = 'U', the last kb elements of ipiv and bsdv are set, and if uplo = 'L', the first kb elements of ipiv and bsdv are set.
    /// @param bsdv Bool array size n. On exit, contains the details of the block structure of D.  If bsdv[k] = 0, then rows and columns k and ipiv[k] were interchanged and D[k, k] is a 1-by-1 diagonal block.  If bsdv[k] = 1, then k is part of a 2-by-2 diagonal block.  In a 2 by 2 block, if uplo = 'U', and ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were interchanged.  If uplo = 'L' and ipiv[k] = ipiv[k+1], then rows and columns k+1 and ipiv[k] were interchanged.
    /// @param Work Complex array size n-by-nb.
-   /// @ingroup TRF
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t LASYF(const char uplo, const int_t n, const int_t nb, int_t &kb, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv, complex<real_t> *Work)

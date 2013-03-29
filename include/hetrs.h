@@ -31,7 +31,7 @@ namespace LATL
    /// @param bsdv Bool array size n.  On entry, contains the details of the block structure of D.
    /// @param B Real matrix size ldB-by-nrhs.  On exit, the solution matrix X.
    /// @param ldB Column length of B.  ldB >= n
-   /// @ingroup SOLV
+   /// @ingroup COMP
    
    template<typename real_t>
    int_t HETRS(const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, int_t * ipiv, bool * bsdv, complex<real_t> * const B, const int_t ldB)

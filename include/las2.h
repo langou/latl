@@ -29,7 +29,7 @@ namespace LATL
    /// @param h Real scalar, the second element of the diagonal of the input matrix.
    /// @param ssmin On exit, the smaller singular value.
    /// @param ssmax On exit, the larger singular value.
-   /// @ingroup SCAL
+   /// @ingroup AUX
 
    template<typename real_t>
    void LAS2(real_t f,real_t g,real_t h,real_t &ssmin,real_t &ssmax)

@@ -40,7 +40,7 @@ namespace LATL
    /// triangular part of A is referenced and the lower part is not referenced.  If uplo = 'L' or 'l' then
    /// only the lower triangular part of A is referenced and the upper part is not referenced.
    /// @param ldA Column length of matrix A.  ldA>=n.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    int HER(char uplo, int_t n, real_t alpha, complex<real_t> *x, int_t incx, complex<real_t> *A, int_t ldA)

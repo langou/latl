@@ -22,8 +22,8 @@ namespace LATL
    /// @param incx Increment of vector x.
    /// @param y Pointer to real vector y.
    /// @param incy Increment of vector y.
-   /// @ingroup VEC
-   
+   /// @ingroup BLAS
+
    template <typename real_t>
    void COPY(int_t n, real_t *x, int_t incx, real_t *y, int_t incy)
    {
@@ -56,7 +56,7 @@ namespace LATL
    /// @param incx Increment of vector x.
    /// @param y Pointer to complex vector y.
    /// @param incy Increment of vector y.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    void COPY(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)

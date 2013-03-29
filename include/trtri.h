@@ -40,6 +40,7 @@ namespace LATL
    /// are assumed to be one. On exit, A contains the inverse of the original matrix.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param nb Block size.
+   /// @ingroup COMP
 
    template <typename real_t>
    int_t TRTRI(char uplo, char diag, int_t n, real_t *A, int_t ldA, int_t nb)
@@ -121,6 +122,7 @@ namespace LATL
    /// are assumed to be one. On exit, A contains the inverse of the original matrix.
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param nb Block size.
+   /// @ingroup COMP
 
    template <typename real_t>
    int_t TRTRI(char uplo, char diag, int_t n, complex<real_t> *A, int_t ldA, int_t nb)

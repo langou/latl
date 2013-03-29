@@ -23,7 +23,7 @@ namespace LATL
    /// @param n Length of vector x; n>=0.
    /// @param x Pointer to real vector of length n;
    /// @param incx Increment of the real vector x; incx > 0
-   /// @ingroup VEC
+   /// @ingroup BLAS
    
    template <typename real_t>
    int_t IMAX(int_t n, real_t *x, int_t incx)
@@ -74,7 +74,7 @@ namespace LATL
    /// @param n Length of vector x; n>=0.
    /// @param x Pointer to complex vector of length n;
    /// @param incx Increment of the real vector x; incx > 0
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    int_t IMAX(int_t n, complex<real_t> *x, int_t incx)

@@ -29,7 +29,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=m
    /// @param B Pointer to the real matrix B.
    /// @param ldB Column length of the matrix B.  ldB>=m
-   /// @ingroup MAT
+   /// @ingroup AUX
 
    template<typename real_t>
    void LACPY(char uplo, int_t m, int_t n, real_t *A, int_t ldA, real_t *B, int_t ldB)
@@ -84,7 +84,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=m
    /// @param B Pointer to the complex matrix B.
    /// @param ldB Column length of the matrix B.  ldB>=m
-   /// @ingroup MAT
+   /// @ingroup AUX
 
    template<typename real_t>
    void LACPY(char uplo, int_t m, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB)

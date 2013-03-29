@@ -16,6 +16,9 @@
 
 namespace LATL
 {
+
+   /// @ingroup COMP
+   
    template< typename real_t>
    int_t POTRS( const char uplo, const int_t n, const int_t nrhs, real_t * const A, const int_t ldA, real_t * const B, const int_t ldB)
    {
@@ -45,7 +48,9 @@ namespace LATL
       }
       return 0;
    }
-   
+
+   /// @ingroup COMP
+
    template< typename real_t>
    int_t POTRS( const char uplo, const int_t n, const int_t nrhs, complex<real_t> * const A, const int_t ldA, complex<real_t> * const B, const int_t ldB)
    {

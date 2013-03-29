@@ -34,7 +34,7 @@ namespace LATL
    /// @param x1 Real scalar.
    /// @param y1 Real scalar.
    /// @param param Pointer to flag and 2-by-2 Givens transformation matrix.
-   /// @ingroup ROT
+   /// @ingroup BLAS
    
    template <typename real_t>
    int ROTMG(real_t &d1, real_t &d2, real_t &x1, real_t y1, real_t *param)

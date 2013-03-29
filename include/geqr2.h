@@ -45,11 +45,10 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=m.
    /// @param[out] tau Real vector of length min(m,n).
    /// The scalar factors of the elementary reflectors.
-   /// @param w Workspace vector of length n (optional).
-   /// If not used, workspace is managed internally.
+   /// @ingroup COMP
 
    template<typename real_t>
-   int GEQR2(int_t m, int_t n, real_t *A, int_t ldA, real_t *tau, real_t *w=NULL)
+   int GEQR2(int_t m, int_t n, real_t *A, int_t ldA, real_t *tau)
    {
       using std::min;
       const real_t one(1.0);
@@ -62,9 +61,7 @@ namespace LATL
 
       int_t k=min(m,n);
 
-      bool allocate=(w==NULL)?1:0;
-      if(allocate)
-         w=new real_t[n];
+      real_t *w=new real_t[n];
       real_t *B=A;
       for(int_t i=0;i<k;i++)
       {
@@ -79,8 +76,7 @@ namespace LATL
          }
          A=B;
       }
-      if(allocate)
-         delete [] w;
+      delete [] w;
       return 0;
    }
 
@@ -111,13 +107,12 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=m.
    /// @param[out] tau Complex vector of length min(m,n).
    /// The scalar factors of the elementary reflectors.
-   /// @param w Workspace vector of length n (optional).
-   /// If not used, workspace is managed internally.
+   /// @ingroup COMP
 
    template<typename real_t>
-   int GEQR2(int_t m, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *tau, complex<real_t> *w=NULL)
+   int GEQR2(int_t m, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *tau)
    {
-      return GEQR2< complex<real_t> >(m,n,A,ldA,tau,w);
+      return GEQR2< complex<real_t> >(m,n,A,ldA,tau);
    }
 }
 #endif

@@ -21,7 +21,8 @@ namespace LATL
 {
    /// @brief Computes the inverse of a Hermitian indefinite matrix.
    ///
-   
+   /// @ingroup COMP
+
    template <typename real_t>
    int_t HETRI(char uplo, int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, bool *bsdv)
    {

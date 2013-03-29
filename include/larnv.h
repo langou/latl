@@ -30,7 +30,7 @@ namespace LATL
    /// @param n Length of vector x.
    /// @param x Pointer to real vector of length n.
    /// @param s Seed for random number generator. (optional)
-   /// @ingroup VEC
+   /// @ingroup AUX
    
    template<typename real_t> 
    void LARNV(int_t dist,int_t n,real_t *x,uint32_t s=0)
@@ -72,7 +72,7 @@ namespace LATL
    /// @param n Length of vector x.
    /// @param x Pointer to complex vector of length n.
    /// @param s Seed for random number generator. (optional)
-   /// @ingroup VEC
+   /// @ingroup AUX
    
    template<typename real_t> 
    void LARNV(int_t dist,int_t n,complex<real_t> *x,uint32_t s=0)

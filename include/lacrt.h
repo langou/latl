@@ -30,7 +30,7 @@ namespace LATL
    /// @param incy Increment of vector y.
    /// @param c Complex scalar.
    /// @param s Complex scalar.
-   /// @ingroup VEC
+   /// @ingroup AUX
    
    template<typename real_t>
    void LACRT(int_t n, complex<real_t> *x, int_t incx, complex<real_t> *y,int_t incy,complex<real_t> c, complex<real_t> s)

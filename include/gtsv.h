@@ -13,6 +13,9 @@
 
 namespace LATL
 {
+
+   /// @ingroup DRIV
+   
    template< typename real_t>
    int_t GTSV(const int_t n, const int_t nrhs, real_t * const DL, real_t * const D, real_t * const DU, real_t * const B, const int_t ldB)
    {

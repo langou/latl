@@ -16,6 +16,8 @@
 namespace LATL
 {
    ///@brief
+   /// @ingroup COMP
+   
    template< typename real_t>
    int_t GTTS2(const int_t itrans, const int_t n, const int_t nrhs, real_t * const DL, real_t * const D, real_t * const DU, real_t * const DU2, int_t * const IPIV, real_t * const B, const int_t ldB)
    {

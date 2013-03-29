@@ -42,7 +42,7 @@ namespace LATL
    /// diagonal block.  In a 2 by 2 block, if uplo = 'U', and ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were interchanged.
    /// If uplo = 'L' and ipiv[k] = ipiv[k+1], then rows and columns k+1 and ipiv[k] were interchanged.
    /// @param nb Block size, optional.  Default value is 32.
-   /// @ingroup TRF
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t SYTRF(const char uplo, const int_t n, real_t * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv, const int_t nb = 32)
@@ -144,7 +144,7 @@ namespace LATL
    /// In a 2 by 2 block, if uplo = 'U', and ipiv[k] = ipiv[k-1], then rows and columns k-1 and ipiv[k] were interchanged.  If uplo = 'L' and
    /// ipiv[k] = ipiv[k+1], then rows and columns k+1 and ipiv[k] were interchanged.
    /// @param nb Block size, optional.  Default value is 32.
-   /// @ingroup TRF
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t SYTRF(const char uplo, const int_t n, complex<real_t> * const A, const int_t ldA, int_t * const ipiv, bool * const bsdv, const int_t nb = 32)

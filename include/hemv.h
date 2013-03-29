@@ -41,7 +41,7 @@ namespace LATL
    /// @param beta Complex scalar.
    /// @param y Pointer to complex vector y.
    /// @param incy Increment of the vector y.
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int HEMV(char uplo, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)

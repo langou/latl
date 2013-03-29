@@ -34,7 +34,7 @@ namespace LATL
    /// @param X Pointer to the real matrix X. On exit, the columns of X are permuted as specified by k.
    /// @param ldX Column length of the matrix X.  ldX>=m
    /// @param k Pointer to permutation vector of length m.
-   /// @ingroup MAT
+   /// @ingroup AUX
 
    template<typename real_t>
    int LAPMT(bool forw,int_t m,int_t n,real_t *X,int_t ldX,int_t *k)
@@ -124,7 +124,7 @@ namespace LATL
    /// @param X Pointer to the complex matrix X. On exit, the columns of X are permuted as specified by k.
    /// @param ldX Column length of the matrix X.  ldX>=m
    /// @param k Pointer to permutation vector of length m.
-   /// @ingroup MAT
+   /// @ingroup AUX
    
    template<typename real_t>
    int LAPMT(bool forw,int_t m,int_t n,complex<real_t> *X,int_t ldX,int_t *k)

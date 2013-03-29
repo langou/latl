@@ -39,7 +39,8 @@ namespace LATL
    /// If A is unit triangular, the diagonal elements of A are also not referenced and
    /// are assumed to be one. On exit, A contains the inverse of the original matrix.
    /// @param ldA Column length of the matrix A.  ldA>=n.
-
+   /// @ingroup COMP
+   
    template <typename real_t>
    int_t TRTI2(char uplo, char diag, int_t n, real_t *A, int_t ldA)
    {
@@ -120,6 +121,7 @@ namespace LATL
    /// If A is unit triangular, the diagonal elements of A are also not referenced and
    /// are assumed to be one. On exit, A contains the inverse of the original matrix.
    /// @param ldA Column length of the matrix A.  ldA>=n.
+   /// @ingroup COMP
 
    template <typename real_t>
    int_t TRTI2(char uplo, char diag, int_t n, complex<real_t> *A, int_t ldA)

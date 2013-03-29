@@ -31,7 +31,7 @@ namespace LATL
    ///
    ///        b[i] = a[index[i]]
    /// for i=0,..,n1+n2-1, then b will be sorted in ascending order.
-   /// @ingroup VEC
+   /// @ingroup COMP
    
    template<typename real_t>
    void LAMRG(int_t n1, int_t n2, real_t *a, bool s1, bool s2, int_t *index)

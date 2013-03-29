@@ -23,7 +23,7 @@ namespace LATL
    /// @param alpha Real scalar.
    /// @param x Pointer to real vector.
    /// @param incx Increment of vector x.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    void SCAL(int_t n, real_t alpha, real_t *x, int_t incx)
@@ -56,7 +56,7 @@ namespace LATL
    /// @param alpha Real scalar.
    /// @param x Pointer to complex vector.
    /// @param incx Increment of vector x.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    void SCAL(int_t n, real_t alpha, complex<real_t> *x, int_t incx)
@@ -89,7 +89,7 @@ namespace LATL
    /// @param alpha Complex scalar.
    /// @param x Pointer to complex vector.
    /// @param incx Increment of vector x.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    void SCAL(int_t n, complex<real_t> alpha, complex<real_t> *x, int_t incx)

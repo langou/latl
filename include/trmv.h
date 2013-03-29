@@ -47,7 +47,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param x Pointer to real vector x.
    /// @param incx Increment of the vector x.  incx!=0
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TRMV(char uplo, char trans, char diag, int_t n, real_t *A, int_t ldA, real_t *x, int_t incx)
@@ -248,7 +248,7 @@ namespace LATL
    /// @param ldA Column length of the matrix A.  ldA>=n.
    /// @param x Pointer to complex vector x.
    /// @param incx Increment of the vector x.  incx!=0
-   /// @ingroup MATV
+   /// @ingroup BLAS
 
    template <typename real_t>
    int TRMV(char uplo, char trans, char diag, int_t n, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx)

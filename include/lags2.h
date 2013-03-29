@@ -55,7 +55,7 @@ namespace LATL
    /// @param snv Off-diagonal element of output matrix V.
    /// @param csq Diagonal element of output matrix Q.
    /// @param snq Off-diagonal element of output matrix Q.
-   /// @ingroup SCAL
+   /// @ingroup AUX
    
    template<typename real_t>
    void LAGS2(bool upper,real_t a1,real_t a2,real_t a3,real_t b1,real_t b2,real_t b3,real_t &csu,real_t &snu,real_t &csv,real_t &snv,real_t &csq,real_t &snq)
@@ -225,7 +225,7 @@ namespace LATL
    /// @param snv Off-diagonal element of output matrix V.
    /// @param csq Diagonal element of output matrix Q.
    /// @param snq Off-diagonal element of output matrix Q.
-   /// @ingroup SCAL
+   /// @ingroup AUX
    
    template<typename real_t>
    void LAGS2(bool upper,real_t a1,complex<real_t> a2,real_t a3,real_t b1,complex<real_t> b2,real_t b3,real_t &csu,complex<real_t> &snu,real_t &csv,complex<real_t> &snv,real_t &csq,complex<real_t> &snq)

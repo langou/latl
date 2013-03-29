@@ -29,8 +29,8 @@ namespace LATL
    /// @param incx Increment of vector x.
    /// @param y Real vector of length n.  On exit, y contains the product ax+y.
    /// @param incy Increment of vector y.
-   /// @ingroup VEC
-   
+   /// @ingroup BLAS
+
    template <typename real_t>
    void AXPY(int_t n, real_t a, real_t *x, int_t incx, real_t *y, int_t incy)
    {
@@ -71,7 +71,7 @@ namespace LATL
    /// @param incx Increment of vector x.
    /// @param y Complex vector of length n.  On exit, y contains the product ax+y.
    /// @param incy Increment of vector y.
-   /// @ingroup VEC
+   /// @ingroup BLAS
 
    template <typename real_t>
    void AXPY(int_t n, complex<real_t> a, complex<real_t> *x, int_t incx, complex<real_t> *y, int_t incy)

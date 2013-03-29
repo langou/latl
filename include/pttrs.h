@@ -32,6 +32,7 @@ namespace LATL
    /// @param B Real array size ldB-by-nrhs.  On entry, the right hand side vectors B for the system of linear equations.  On exit, the solution vectors X.
    /// @param ldB Column length of the array B.
    /// @param nb Block size.
+   /// @ingroup COMP
    
    template< typename real_t>
    int_t PTTRS(const int_t n, const int_t nrhs, real_t * const D, real_t * const E, real_t * const B, const int_t ldB, const int_t nb)
@@ -78,7 +79,8 @@ namespace LATL
    /// @param B Complex array size ldB-by-nrhs.  On entry, the right hand side vectors B for the system of linear equations.  On exit, the solution vectors X.
    /// @param ldB Column length of the array B.
    /// @param nb Block size.
-   
+   /// @ingroup COMP
+
    template< typename real_t>
    int_t PTTRS(const char uplo, const int_t n, const int_t nrhs, real_t * const D, complex<real_t> * const E, complex<real_t> * const B, const int_t ldB, const int_t nb)
    {

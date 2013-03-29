@@ -24,7 +24,7 @@ namespace LATL
    /// @param a Real scalar; vector x is multiplied by 1/a.
    /// @param x Pointer to real vector of length n.
    /// @param incx Increment of vector x.
-   /// @ingroup VEC
+   /// @ingroup AUX
    
    template<typename real_t> 
    void RSCL(int_t n, real_t a, real_t *x, int_t incx)
@@ -76,7 +76,7 @@ namespace LATL
    /// @param a Real scalar; vector x is multiplied by 1/a.
    /// @param x Pointer to complex vector of length n.
    /// @param incx Increment of vector x.
-   /// @ingroup VEC
+   /// @ingroup AUX
    
    template<typename real_t> 
    void RSCL(int_t n, real_t a, complex<real_t> *x, int_t incx)

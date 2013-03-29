@@ -27,7 +27,7 @@ namespace LATL
    /// @param d Imaginary part of denominator.
    /// @param p Real part of quotient.
    /// @param q Imaginary part of quotient.
-   /// @ingroup SCAL
+   /// @ingroup AUX
 
    template<typename real_t>
    void LADIV(real_t a, real_t b, real_t c, real_t d, real_t &p, real_t &q)
@@ -55,7 +55,7 @@ namespace LATL
    /// @tparam real_t Floating point type.
    /// @param x Complex numerator.
    /// @param y Complex denominator.
-   /// @ingroup SCAL
+   /// @ingroup AUX
 
    template<typename real_t>
    complex<real_t> LADIV(complex<real_t> x, complex<real_t> y)
