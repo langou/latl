@@ -11,14 +11,9 @@
 
 using LATL::GEQRF;
 
-int dgeqrf_(int &m,int &n,complex<double> *A,int &ldA,complex<double> *tau,complex<double> *work,int &lwork,int &info)
+int zgeqrf_(int &m,int &n,complex<double> *A,int &ldA,complex<double> *tau,complex<double> *work,int &lwork,int &info)
 {
    int nb=80;
-   work[0]=n*nb;
-   if(lwork<0)
-      return 0;
-   else
-      nb=lwork/n;
-   info=GEQRF<double>(m,n,A,ldA,tau,nb,work);
+   info=GEQRF<double>(m,n,A,ldA,tau,nb);
    return 0;
 }

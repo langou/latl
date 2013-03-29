@@ -14,11 +14,6 @@ using LATL::GEQRF;
 int sgeqrf_(int &m,int &n,float *A,int &ldA,float *tau,float *work,int &lwork,int &info)
 {
    int nb=80;
-   work[0]=n*nb;
-   if(lwork<0)
-      return 0;
-   else
-      nb=lwork/n;
-   info=GEQRF<float>(m,n,A,ldA,tau,nb,work);
+   info=GEQRF<float>(m,n,A,ldA,tau,nb);
    return 0;
 }
