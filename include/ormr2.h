@@ -51,14 +51,10 @@ namespace LATL
    ///                 If side='R' & trans='T':  C <- C * Q'
    ///                 If side='R' & trans='N':  C <- C * Q
    /// @param ldC The column length the matrix C. ldC>=m.
-   /// @param W Workspace vector (optional).
-   ///
-   ///                 If side='L', length of W is m;
-   ///                 if side='R', length of W is n.
-   /// If not provided, workspace is managed internally.
-
+   /// @ingroup COMP
+   
    template<typename real_t>
-   int ORMR2(char side, char trans, int_t m, int_t n, int_t k, real_t *A, int_t ldA, real_t *tau, real_t *C, int_t ldC, real_t *W=NULL)
+   int ORMR2(char side, char trans, int_t m, int_t n, int_t k, real_t *A, int_t ldA, real_t *tau, real_t *C, int_t ldC)
    {
       const real_t one(1.0);
       using std::toupper;
@@ -73,9 +69,12 @@ namespace LATL
          return -3;
       else if(n<0)
          return -4;
-      else if((k<0)||(k>((side=='L')?m:n)))
+
+      int_t q=(side=='L')?m:n;
+
+      if((k<0)||(k>q))
          return -5;
-      else if(ldA<((side=='L')?m:n))
+      else if(ldA<q)
          return -7;
       else if(ldC<m)
          return -10;
@@ -83,60 +82,41 @@ namespace LATL
       if((m==0)||(n==0)||(k==0))
          return 0;
 
-      bool allocate=(W==NULL)?1:0;
-      if(allocate)
-         W=new real_t[(side=='L')?m:n];
+      real_t *W=new real_t[q];
+      real_t *v=new real_t[q];
 
       if((side=='L')&&(trans=='N'))
       {
-         real_t *B=A+(m-k)*ldA;
          for(int_t i=0;i<k;i++)
          {
-            real_t alpha=B[i];
-            B[i]=one;
+            for(int_t j=0;j<=m-k+i)
+               v[j]=A[i+j*ldA];
             LARF('L',m-k+i+1,n,A+i,ldA,tau[i],C,ldC,W);
-            B[i]=alpha;
-            B+=ldA;
          }
       }
       else if((side=='L')&&(trans=='T'))
       {
-         real_t *B=A+m*ldA;
          for(int_t i=k-1;i>=0;--i)
          {
-            B-=ldA;
-            real_t alpha=B[i];
-            B[i]=one;
             LARF('L',m-k+i+1,n,A+i,ldA,tau[i],C,ldC,W);
-            B[i]=alpha;
          }
       }
       else if((side=='R')&&(trans=='N'))
       {
-         real_t *B=A+(n-k)*ldA;
          for(int_t i=0;i<k;i++)
          {
-            real_t alpha=B[i];
-            B[i]=one;
             LARF('R',m,n-k+i+1,A+i,ldA,tau[i],C,ldC,W);
-            B[i]=alpha;
-            B+=ldA;
          }
       }
       else // (side=='R')&&(trans=='T')
       {
-         real_t *B=A+n*ldA;
          for(int_t i=k-1;i>=0;--i)
          {
-            B-=ldA;
-            real_t alpha=B[i];
-            B[i]=one;
             LARF('R',m,n-k+i+1,A+i,ldA,tau[i],C,ldC,W);
-            B[i]=alpha;
          }
       }
-      if(allocate)
-         delete [] W;
+      delete [] v;
+      delete [] W;
       return 0;
    }
 }
