@@ -14,9 +14,11 @@
 /// @mainpage
 /// @section intro Introduction
 /// The Linear Algebra Template Library is a precision neutral dense linear algebra
-/// software library based on <A HREF="http://netlib.org/lapack/">LAPACK</A>.
-/// It is written entirely in C++ using function templates, with the floating
-/// point type specified by a template parameter.
+/// library which implements the core functionality of
+/// <A HREF="http://netlib.org/lapack/">LAPACK</A>
+/// in C++ using function templates.  The floating point type is
+/// specified by a template parameter, enabling arbitrary precision computations.
+/// First release: summer 2013.
 ///
 /// @section code Download
 /// Source code and git access is available on GitHub at
