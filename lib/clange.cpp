@@ -13,5 +13,5 @@ using LATL::LANGE;
 
 float clange_(char &norm,int &m,int &n,complex<float> *A,int &ldA,float *work)
 {
-   return LANGE<float>(norm,m,n,A,ldA,work);
+   return LANGE<float>(norm,m,n,A,ldA);
 }
