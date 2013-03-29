@@ -136,7 +136,7 @@ namespace LATL
       if(k==0)
          return 0;
 
-      real_t *w=new complex<real_t>[n*nb+nb];
+      complex<real_t> *w=new complex<real_t>[n*nb+nb];
       complex<real_t> *B=A;
       for(int_t i=0;i<k;i+=nb)
       {
