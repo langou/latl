@@ -15,6 +15,7 @@
 #include <cctype>
 #include "gemv.h"
 #include "ger.h"
+#include "gerc.h"
 #include "latl.h"
 
 namespace LATL
