@@ -7,7 +7,7 @@
 //
 
 #include "blas.h"
-#include "dot.h"
+#include "dotx.h"
 
 using LATL::DOTX;
 

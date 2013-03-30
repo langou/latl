@@ -7,7 +7,7 @@
 //
 
 #include "blas.h"
-#include "ger.h"
+#include "gerc.h"
 
 using LATL::GERC;
 using std::complex;
