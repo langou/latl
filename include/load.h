@@ -29,7 +29,7 @@ namespace LATL
    /// @ingroup AUX
 
    template <typename real_t>
-   real_t *LOAD(int &m,int &n,std::istream &infile=std::cin)
+   real_t *Load(int &m,int &n,std::istream &infile=std::cin)
    {
       using std::string;
       using std::queue;
@@ -89,7 +89,7 @@ namespace LATL
    /// @ingroup AUX
 
    template <typename real_t>
-   real_t *LOAD(char &uplo,int &n,std::istream &infile=std::cin)
+   real_t *Load(char &uplo,int &n,std::istream &infile=std::cin)
    {
       using std::string;
       using std::queue;

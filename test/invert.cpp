@@ -64,7 +64,7 @@ real_t general(int nb,bool resi,bool prnt)
    const matrix_t one(1.0);
    const matrix_t zero(0.0);
    real_t residual;
-   matrix_t *A=LOAD<matrix_t>(m,n);
+   matrix_t *A=Load<matrix_t>(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -83,7 +83,7 @@ real_t general(int nb,bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      PRINT<real_t>(n,n,A,n);
+      Print<real_t>(n,n,A,n);
    LASET<real_t>(uplo,n,n,zero,one,C,n);
    LASET<real_t>(uplo,n,n,zero,one,D,n);
    GEMM<real_t>('n','n',n,n,n,one,A,n,B,n,-one,C,n);
@@ -108,7 +108,7 @@ real_t symmetric(int nb,char uplo,bool resi,bool prnt)
    const matrix_t one(1.0);
    const matrix_t zero(0.0);
    real_t residual;
-   matrix_t *A=LOAD<matrix_t>(m,n);
+   matrix_t *A=Load<matrix_t>(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -128,7 +128,7 @@ real_t symmetric(int nb,char uplo,bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      PRINT<real_t>(n,n,A,n);
+      Print<real_t>(n,n,A,n);
    LASET<real_t>('a',n,n,zero,one,C,n);
    LASET<real_t>('a',n,n,zero,one,D,n);
    SYMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
@@ -154,7 +154,7 @@ real_t hermitian(int nb,char uplo,bool resi,bool prnt)
    const complex<real_t> one(1.0);
    const complex<real_t> zero(0.0);
    real_t residual;
-   complex<real_t> *A=LOAD< complex<real_t> >(m,n);
+   complex<real_t> *A=Load< complex<real_t> >(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -174,7 +174,7 @@ real_t hermitian(int nb,char uplo,bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      PRINT<real_t>(n,n,A,n);
+      Print<real_t>(n,n,A,n);
    LASET<real_t>('a',n,n,zero,one,C,n);
    LASET<real_t>('a',n,n,zero,one,D,n);
    HEMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
@@ -200,7 +200,7 @@ real_t symmetric_positive(int nb,char uplo,bool resi,bool prnt)
    const real_t one(1.0);
    const real_t zero(0.0);
    real_t residual;
-   real_t *A=LOAD<real_t>(m,n);
+   real_t *A=Load<real_t>(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -223,7 +223,7 @@ real_t symmetric_positive(int nb,char uplo,bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      PRINT<real_t>(n,n,A,n);
+      Print<real_t>(n,n,A,n);
    LASET<real_t>('a',n,n,zero,one,C,n);
    LASET<real_t>('a',n,n,zero,one,D,n);
    SYMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
@@ -247,7 +247,7 @@ real_t hermitian_positive(int nb,char uplo,bool resi,bool prnt)
    const complex<real_t> one(1.0);
    const complex<real_t> zero(0.0);
    real_t residual;
-   complex<real_t> *A=LOAD< complex<real_t> >(m,n);
+   complex<real_t> *A=Load< complex<real_t> >(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -270,7 +270,7 @@ real_t hermitian_positive(int nb,char uplo,bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      PRINT<real_t>(n,n,A,n);
+      Print<real_t>(n,n,A,n);
    LASET<real_t>('a',n,n,zero,one,C,n);
    LASET<real_t>('a',n,n,zero,one,D,n);
    HEMM<real_t>('l',uplo,n,n,one,A,n,B,n,-one,C,n);
@@ -294,7 +294,7 @@ real_t triangular(int nb,char uplo, char diag,bool resi,bool prnt)
    const matrix_t one(1.0);
    const matrix_t zero(0.0);
    real_t residual;
-   matrix_t *A=LOAD<matrix_t>(m,n);
+   matrix_t *A=Load<matrix_t>(m,n);
    if((A==NULL)||(m!=n))
    {
       cerr << "error reading input matrix" << endl;
@@ -311,7 +311,7 @@ real_t triangular(int nb,char uplo, char diag,bool resi,bool prnt)
       exit(0);
    }
    if(prnt)
-      PRINT<real_t>(uplo,diag,n,A,n);
+      Print<real_t>(uplo,diag,n,A,n);
    LASET<real_t>(uplo,n,n,zero,one,C,n);
    LASET<real_t>(uplo,n,n,zero,one,D,n);
    if(diag=='u')
