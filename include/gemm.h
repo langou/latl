@@ -50,7 +50,7 @@ namespace LATL
    /// @param C Pointer to real matrix C, where C is m-by-n.
    /// @param ldC Column length of the matrix C.  ldC>=m.
    /// @ingroup BLAS
-
+   
    template<typename real_t>
    int GEMM(char transA, char transB, int_t m, int_t n, int_t k, real_t alpha, real_t *A, int_t ldA, real_t *B, int_t ldB, real_t beta, real_t *C, int_t ldC)
    {
@@ -60,7 +60,7 @@ namespace LATL
       int_t i,j,l;
       real_t s,t;
       real_t *a,*b,*c;
-
+      
       transA=toupper(transA);
       transB=toupper(transB);
       
@@ -216,7 +216,7 @@ namespace LATL
    /// @param C Pointer to complex matrix C, where C is m-by-n.
    /// @param ldC Column length of the matrix C.  ldC>=m.
    /// @ingroup BLAS
-
+   
    template<typename real_t>
    int GEMM(char transA, char transB, int_t m, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
    {
@@ -230,7 +230,7 @@ namespace LATL
       
       transA=toupper(transA);
       transB=toupper(transB);
-
+      
       if((transA!='N')&&(transA!='T')&&(transA!='C'))
          return -1;
       else if((transB!='N')&&(transB!='T')&&(transB!='C'))
@@ -453,29 +453,16 @@ namespace LATL
       }
       return 0;
    }
-
-
+   
+   
 #ifdef __latl_cblas
 #include <cblas.h>
-
-
-   inline CBLAS_TRANSPOSE ConvertTrans(char trans)
-   {
-      CBLAS_TRANSPOSE Trans;
-      if(trans=='T')
-         Trans=CblasTrans;
-      else if(trans=='C')
-         Trans=CblasConjTrans;
-      else
-         Trans=CblasNoTrans;
-      return Trans;
-   }
-
+  
    template<> int GEMM<float>(char transA, char transB, int_t m, int_t n, int_t k, float alpha, float *A, int_t ldA, float *B, int_t ldB, float beta, float *C, int_t ldC)
    {
       transA=toupper(transA);
       transB=toupper(transB);
-
+      
       if((transA!='N')&&(transA!='T')&&(transA!='C'))
          return -1;
       else if((transB!='N')&&(transB!='T')&&(transB!='C'))
@@ -492,20 +479,20 @@ namespace LATL
          return -10;
       else if(ldC<m)
          return -13;
-
-      const CBLAS_TRANSPOSE TransA=ConvertTrans(transA);
-      const CBLAS_TRANSPOSE TransB=ConvertTrans(transB);
-
+      
+      const CBLAS_TRANSPOSE TransA=(transA=='N')?CblasNoTrans:((transA=='T')?CblasTrans:CblasConjTrans);
+      const CBLAS_TRANSPOSE TransB=(transB=='N')?CblasNoTrans:((transB=='T')?CblasTrans:CblasConjTrans);
+      
       cblas_sgemm(CblasColMajor,TransA,TransB,m,n,k,alpha,A,ldA,B,ldB,beta,C,ldC);
-
+      
       return 0;
    }
-
-      template<> int GEMM<double>(char transA, char transB, int_t m, int_t n, int_t k, double alpha, double *A, int_t ldA, double *B, int_t ldB, double beta, double *C, int_t ldC)
+   
+   template<> int GEMM<double>(char transA, char transB, int_t m, int_t n, int_t k, double alpha, double *A, int_t ldA, double *B, int_t ldB, double beta, double *C, int_t ldC)
    {
       transA=toupper(transA);
       transB=toupper(transB);
-
+      
       if((transA!='N')&&(transA!='T')&&(transA!='C'))
          return -1;
       else if((transB!='N')&&(transB!='T')&&(transB!='C'))
@@ -522,20 +509,20 @@ namespace LATL
          return -10;
       else if(ldC<m)
          return -13;
-
-      const CBLAS_TRANSPOSE TransA=ConvertTrans(transA);
-      const CBLAS_TRANSPOSE TransB=ConvertTrans(transB);
-
+      
+      const CBLAS_TRANSPOSE TransA=(transA=='N')?CblasNoTrans:((transA=='T')?CblasTrans:CblasConjTrans);
+      const CBLAS_TRANSPOSE TransB=(transB=='N')?CblasNoTrans:((transB=='T')?CblasTrans:CblasConjTrans);
+      
       cblas_dgemm(CblasColMajor,TransA,TransB,m,n,k,alpha,A,ldA,B,ldB,beta,C,ldC);
-
+      
       return 0;
    }
-
+   
    template<> int GEMM<float>(char transA, char transB, int_t m, int_t n, int_t k, complex<float> alpha, complex<float> *A, int_t ldA, complex<float> *B, int_t ldB, complex<float> beta, complex<float> *C, int_t ldC)
    {
       transA=toupper(transA);
       transB=toupper(transB);
-
+      
       if((transA!='N')&&(transA!='T')&&(transA!='C'))
          return -1;
       else if((transB!='N')&&(transB!='T')&&(transB!='C'))
@@ -552,20 +539,20 @@ namespace LATL
          return -10;
       else if(ldC<m)
          return -13;
-
-      const CBLAS_TRANSPOSE TransA=ConvertTrans(transA);
-      const CBLAS_TRANSPOSE TransB=ConvertTrans(transB);
+      
+      const CBLAS_TRANSPOSE TransA=(transA=='N')?CblasNoTrans:((transA=='T')?CblasTrans:CblasConjTrans);
+      const CBLAS_TRANSPOSE TransB=(transB=='N')?CblasNoTrans:((transB=='T')?CblasTrans:CblasConjTrans);
 
       cblas_cgemm(CblasColMajor,TransA,TransB,m,n,k,&alpha,A,ldA,B,ldB,&beta,C,ldC);
-
+      
       return 0;
    }
-
+   
    template<> int GEMM<double>(char transA, char transB, int_t m, int_t n, int_t k, complex<double> alpha, complex<double> *A, int_t ldA, complex<double> *B, int_t ldB, complex<double> beta, complex<double> *C, int_t ldC)
    {
       transA=toupper(transA);
       transB=toupper(transB);
-
+      
       if((transA!='N')&&(transA!='T')&&(transA!='C'))
          return -1;
       else if((transB!='N')&&(transB!='T')&&(transB!='C'))
@@ -582,14 +569,15 @@ namespace LATL
          return -10;
       else if(ldC<m)
          return -13;
-
-      const CBLAS_TRANSPOSE TransA=ConvertTrans(transA);
-      const CBLAS_TRANSPOSE TransB=ConvertTrans(transB);
-
+      
+      const CBLAS_TRANSPOSE TransA=(transA=='N')?CblasNoTrans:((transA=='T')?CblasTrans:CblasConjTrans);
+      const CBLAS_TRANSPOSE TransB=(transB=='N')?CblasNoTrans:((transB=='T')?CblasTrans:CblasConjTrans);
+      
       cblas_zgemm(CblasColMajor,TransA,TransB,m,n,k,&alpha,A,ldA,B,ldB,&beta,C,ldC);
-
+      
       return 0;
    }
+   
 #endif
 }
 #endif
