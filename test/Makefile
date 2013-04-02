@@ -1,14 +1,15 @@
-CC=clang++
+CC=/usr/local/bin/c++
 LATL=../include
-CFLAGS=-O3 -Wall -pedantic -std=c++11 -I$(LATL)
+CBLAS=-D__latl_cblas  -I/System/Library/Frameworks/vecLib.framework/Headers
+CFLAGS=-O3 -Wall -pedantic -std=c++11 -I$(LATL) $(CBLAS)
 
-all: invert lamch
+all: invert lamch blas gmres
 
 float: clean
-	@$(MAKE) all DEFS="-DFLOAT"
+	@$(MAKE) all DEFS="-DFLOAT" LIBS="-lblas"
 
 double: clean
-	@$(MAKE) all DEFS="-DDOUBLE"
+	@$(MAKE) all DEFS="-DDOUBLE" LIBS="-lblas"
 
 ldouble: clean
 	@$(MAKE) all DEFS="-DLDOUBLE"
@@ -37,8 +38,14 @@ invert: invert.o
 lamch: lamch.o
 	$(CC) -o $@ lamch.o $(LIBS)
 
+blas: blas.o timer.o
+	$(CC) -o $@ blas.o timer.o $(LIBS) $(CBLAS)
+
+gmres: gmres.o
+	$(CC) -o $@ gmres.o $(LIBS)
+
 .cpp.o:
 	$(CC) -c $(CFLAGS) $(DEFS) $<
 
 clean:
-	rm -f invert invert.o lamch lamch.o
+	rm -f *.o invert lamch blas gmres
