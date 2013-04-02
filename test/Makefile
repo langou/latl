@@ -1,15 +1,14 @@
 CC=/usr/local/bin/c++
 LATL=../include
-CBLAS=-D__latl_cblas  -I/System/Library/Frameworks/vecLib.framework/Headers
-CFLAGS=-O3 -Wall -pedantic -std=c++11 -I$(LATL) $(CBLAS)
+CFLAGS=-O3 -Wall -pedantic -std=c++11 -I$(LATL) -I/System/Library/Frameworks/vecLib.framework/Headers
 
 all: invert lamch blas gmres
 
 float: clean
-	@$(MAKE) all DEFS="-DFLOAT" LIBS="-lblas"
+	@$(MAKE) all DEFS="-DFLOAT -D__latl_cblas" LIBS="-lblas"
 
 double: clean
-	@$(MAKE) all DEFS="-DDOUBLE" LIBS="-lblas"
+	@$(MAKE) all DEFS="-DDOUBLE -D__latl_cblas" LIBS="-lblas"
 
 ldouble: clean
 	@$(MAKE) all DEFS="-DLDOUBLE"
