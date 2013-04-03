@@ -210,5 +210,65 @@ namespace LATL
       }
       return 0;
    }
+
+#ifdef __latl_cblas
+#include <cblas.h>
+
+   template <> int HEMM<float>(char side, char uplo, int_t m, int_t n, complex<float> alpha, complex<float> *A, int_t ldA, complex<float> *B, int_t ldB, complex<float> beta, complex<float> *C, int_t ldC)
+   {
+      using std::toupper;
+      side=toupper(side);
+      uplo=toupper(uplo);
+      if((side!='L')&&(side!='R'))
+         return -1;
+      else if((uplo!='U')&&(uplo!='L'))
+         return -2;
+      else if(m<0)
+         return -3;
+      else if(n<0)
+         return -4;
+      else if(ldA<((side=='L')?m:n))
+         return -7;
+      else if(ldB<m)
+         return -9;
+      else if(ldC<m)
+         return -12;
+
+      const CBLAS_SIDE Side=(side=='L')?CblasLeft:CblasRight;
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+
+      cblas_chemm(CblasColMajor,Side,Uplo,m,n,&alpha,A,ldA,B,ldB,&beta,C,ldC);
+
+      return 0;
+   }
+
+   template <> int HEMM<double>(char side, char uplo, int_t m, int_t n, complex<double> alpha, complex<double> *A, int_t ldA, complex<double> *B, int_t ldB, complex<double> beta, complex<double> *C, int_t ldC)
+   {
+      using std::toupper;
+      side=toupper(side);
+      uplo=toupper(uplo);
+      if((side!='L')&&(side!='R'))
+         return -1;
+      else if((uplo!='U')&&(uplo!='L'))
+         return -2;
+      else if(m<0)
+         return -3;
+      else if(n<0)
+         return -4;
+      else if(ldA<((side=='L')?m:n))
+         return -7;
+      else if(ldB<m)
+         return -9;
+      else if(ldC<m)
+         return -12;
+
+      const CBLAS_SIDE Side=(side=='L')?CblasLeft:CblasRight;
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+
+      cblas_zhemm(CblasColMajor,Side,Uplo,m,n,&alpha,A,ldA,B,ldB,&beta,C,ldC);
+
+      return 0;
+   }
+#endif
 }
 #endif
