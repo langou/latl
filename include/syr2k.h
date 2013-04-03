@@ -411,6 +411,123 @@ namespace LATL
       }
       return 0;
    }
+
+#ifdef __latl_cblas
+#include <cblas.h>
+
+   template <> int SYR2K<float>(char uplo, char trans, int_t n, int_t k, float alpha, float *A, int_t ldA, float *B, int_t ldB, float beta, float *C, int_t ldC)
+   {
+      using std::toupper;
+      uplo=toupper(uplo);
+      trans=toupper(trans);
+      if((uplo!='U')&&(uplo!='L'))
+         return -1;
+      else if((trans!='N')&&(trans!='T')&&(trans!='C'))
+         return -2;
+      else if(n<0)
+         return -3;
+      else if(k<0)
+         return -4;
+      else if(ldA<((trans=='N')?n:k))
+         return -7;
+      else if(ldB<((trans=='N')?n:k))
+         return -9;
+      else if(ldC<n)
+         return -12;
+
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_ssyr2k(CblasColMajor,Uplo,Trans,n,k,alpha,A,ldA,B,ldB,beta,C,ldC);
+
+      return 0;
+   }
+
+   template <> int SYR2K<double>(char uplo, char trans, int_t n, int_t k, double alpha, double *A, int_t ldA, double *B, int_t ldB, double beta, double *C, int_t ldC)
+   {
+      using std::toupper;
+      uplo=toupper(uplo);
+      trans=toupper(trans);
+      if((uplo!='U')&&(uplo!='L'))
+         return -1;
+      else if((trans!='N')&&(trans!='T')&&(trans!='C'))
+         return -2;
+      else if(n<0)
+         return -3;
+      else if(k<0)
+         return -4;
+      else if(ldA<((trans=='N')?n:k))
+         return -7;
+      else if(ldB<((trans=='N')?n:k))
+         return -9;
+      else if(ldC<n)
+         return -12;
+
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_dsyr2k(CblasColMajor,Uplo,Trans,n,k,alpha,A,ldA,B,ldB,beta,C,ldC);
+
+      return 0;
+   }
+   
+   template <> int SYR2K<float>(char uplo, char trans, int_t n, int_t k, complex<float> alpha, complex<float> *A, int_t ldA, complex<float> *B, int_t ldB, complex<float> beta, complex<float> *C, int_t ldC)
+   {
+      using std::toupper;
+      uplo=toupper(uplo);
+      trans=toupper(trans);
+      if((uplo!='U')&&(uplo!='L'))
+         return -1;
+      else if((trans!='N')&&(trans!='T'))
+         return -2;
+      else if(n<0)
+         return -3;
+      else if(k<0)
+         return -4;
+      else if(ldA<((trans=='N')?n:k))
+         return -7;
+      else if(ldB<((trans=='N')?n:k))
+         return -9;
+      else if(ldC<n)
+         return -12;
+
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_csyr2k(CblasColMajor,Uplo,Trans,n,k,&alpha,A,ldA,B,ldB,&beta,C,ldC);
+
+      return 0;
+   }
+
+   template <> int SYR2K<double>(char uplo, char trans, int_t n, int_t k, complex<double> alpha, complex<double> *A, int_t ldA, complex<double> *B, int_t ldB, complex<double> beta, complex<double> *C, int_t ldC)
+   {
+      using std::toupper;
+      uplo=toupper(uplo);
+      trans=toupper(trans);
+      if((uplo!='U')&&(uplo!='L'))
+         return -1;
+      else if((trans!='N')&&(trans!='T'))
+         return -2;
+      else if(n<0)
+         return -3;
+      else if(k<0)
+         return -4;
+      else if(ldA<((trans=='N')?n:k))
+         return -7;
+      else if(ldB<((trans=='N')?n:k))
+         return -9;
+      else if(ldC<n)
+         return -12;
+
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_zsyr2k(CblasColMajor,Uplo,Trans,n,k,&alpha,A,ldA,B,ldB,&beta,C,ldC);
+
+      return 0;
+   }
+
+#endif
 }
 
 #endif
