@@ -11,6 +11,7 @@
 
 /// @file gemv.h Computes general matrix-vector products.
 
+#include <cctype>
 #include "latl.h"
 
 namespace LATL
@@ -46,6 +47,7 @@ namespace LATL
    template <typename real_t>
    int GEMV(char trans, int_t m, int_t n, real_t alpha, real_t *A, int_t ldA, real_t *x, int_t incx, real_t beta, real_t *y, int_t incy)
    {
+      trans=std::toupper(trans);
       const real_t one(1.0);
       const real_t zero(0.0);
       int_t kx,ky,lenx,leny,i,ix,iy,j,jx,jy;
@@ -206,6 +208,7 @@ namespace LATL
    template <typename real_t>
    int GEMV(char trans, int_t m, int_t n, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *x, int_t incx, complex<real_t> beta, complex<real_t> *y, int_t incy)
    {
+      trans=std::toupper(trans);
       using std::conj;
       const complex<real_t> one(1.0,0.0);
       const complex<real_t> zero(0.0,0.0);
@@ -359,6 +362,109 @@ namespace LATL
       }
       return 0;
    }
+
+#ifdef __latl_cblas
+#include <cblas.h>
+
+   template <> int GEMV<float>(char trans, int_t m, int_t n, float alpha, float *A, int_t ldA, float *x, int_t incx, float beta, float *y, int_t incy)
+   {
+      trans=std::toupper(trans);
+      if((trans!='N')&&(trans!='T')&&(trans!='C'))
+         return -1;
+      else if(m<0)
+         return -2;
+      else if(n<0)
+         return -3;
+      else if(ldA<m)
+         return -6;
+      else if(incx==0)
+         return -8;
+      else if(incy==0)
+         return -11;
+      else if((m==0)||(n==0))
+         return 0;
+
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_sgemv(CblasColMajor,Trans,m,n,alpha,A,ldA,x,incx,beta,y,incy);
+
+      return 0;
+   }
+
+   template <> int GEMV<double>(char trans, int_t m, int_t n, double alpha, double *A, int_t ldA, double *x, int_t incx, double beta, double *y, int_t incy)
+   {
+      trans=std::toupper(trans);
+      if((trans!='N')&&(trans!='T')&&(trans!='C'))
+         return -1;
+      else if(m<0)
+         return -2;
+      else if(n<0)
+         return -3;
+      else if(ldA<m)
+         return -6;
+      else if(incx==0)
+         return -8;
+      else if(incy==0)
+         return -11;
+      else if((m==0)||(n==0))
+         return 0;
+
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_dgemv(CblasColMajor,Trans,m,n,alpha,A,ldA,x,incx,beta,y,incy);
+
+      return 0;
+   }
+
+   template <> int GEMV<float>(char trans, int_t m, int_t n, complex<float> alpha, complex<float> *A, int_t ldA, complex<float> *x, int_t incx, complex<float> beta, complex<float> *y, int_t incy)
+   {
+      trans=std::toupper(trans);
+      if((trans!='N')&&(trans!='T')&&(trans!='C'))
+         return -1;
+      else if(m<0)
+         return -2;
+      else if(n<0)
+         return -3;
+      else if(ldA<m)
+         return -6;
+      else if(incx==0)
+         return -8;
+      else if(incy==0)
+         return -11;
+      else if((m==0)||(n==0))
+         return 0;
+
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_cgemv(CblasColMajor,Trans,m,n,&alpha,A,ldA,x,incx,&beta,y,incy);
+
+      return 0;
+   }
    
+   template <> int GEMV<double>(char trans, int_t m, int_t n, complex<double> alpha, complex<double> *A, int_t ldA, complex<double> *x, int_t incx, complex<double> beta, complex<double> *y, int_t incy)
+   {
+      trans=std::toupper(trans);
+      if((trans!='N')&&(trans!='T')&&(trans!='C'))
+         return -1;
+      else if(m<0)
+         return -2;
+      else if(n<0)
+         return -3;
+      else if(ldA<m)
+         return -6;
+      else if(incx==0)
+         return -8;
+      else if(incy==0)
+         return -11;
+      else if((m==0)||(n==0))
+         return 0;
+
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_zgemv(CblasColMajor,Trans,m,n,&alpha,A,ldA,x,incx,&beta,y,incy);
+
+      return 0;
+   }
+#endif
 }
 #endif
