@@ -1,4 +1,4 @@
-CC=/usr/local/bin/c++
+CC=clang++
 LATL=../include
 CFLAGS=-O3 -Wall -pedantic -std=c++11 -I$(LATL) -I/System/Library/Frameworks/vecLib.framework/Headers
 

@@ -11,7 +11,6 @@
 #include <load.h>
 #include <print.h>
 #include <cstdlib>
-#include <laruv.h>
 #include "timer.h"
 
 #if defined(FLOAT)
@@ -35,9 +34,14 @@ typedef complex<Real> Complex;
 using namespace std;
 using namespace LATL;
 
+double ran()
+{
+   return static_cast<double>(rand())/static_cast<double>(RAND_MAX);
+}
+
 int main(int argc, char **argv)
 {
-   long n=100;
+   long n=1000;
 
    if(argc>1)
       n=atoi(argv[1]);
@@ -47,9 +51,13 @@ int main(int argc, char **argv)
    Real *C=new Real[n*n];
 
 
-   LARUV(n*n,A);
-   LARUV(n*n,B);
-   LARUV(n*n,C);
+   for(int i=0;i<n*n;i++)
+   {
+      A[i]=ran();
+      B[i]=ran();
+      C[i]=ran();
+   }
+
    Timer T1;
    T1.Start();
    GEMM<Real>('N','N',n,n,n,1.0,A,n,B,n,1.0,C,n);
