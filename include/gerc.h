@@ -85,5 +85,47 @@ namespace LATL
       }
       return 0;
    }
+   
+#ifdef __latl_cblas
+#include <cblas.h>
+
+   template <> int GERC<float>(int_t m, int_t n, complex<float> alpha, complex<float> *x, int_t incx, complex<float> *y, int_t incy, complex<float> *A, int_t ldA)
+   {
+      if(m<0)
+         return -1;
+      else if(n<0)
+         return -2;
+      else if(incx==0)
+         return -5;
+      else if(incy==0)
+         return -7;
+      else if(ldA<m)
+         return -9;
+
+      cblas_cgerc(CblasColMajor,m,n,&alpha,x,incx,y,incy,A,ldA);
+
+      return 0;
+   }
+
+   template <> int GERC<double>(int_t m, int_t n, complex<double> alpha, complex<double> *x, int_t incx, complex<double> *y, int_t incy, complex<double> *A, int_t ldA)
+   {
+      if(m<0)
+         return -1;
+      else if(n<0)
+         return -2;
+      else if(incx==0)
+         return -5;
+      else if(incy==0)
+         return -7;
+      else if(ldA<m)
+         return -9;
+
+      cblas_cgerc(CblasColMajor,m,n,&alpha,x,incx,y,incy,A,ldA);
+
+      return 0;
+   }
+   
+#endif
+
 }
 #endif
