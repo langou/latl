@@ -11,6 +11,7 @@
 
 /// @file her2k.h Performs multiplication of two complex matrices resulting in a Hermitian matrix.
 
+#include <cctype>
 #include "latl.h"
 
 namespace LATL
@@ -54,8 +55,11 @@ namespace LATL
    /// @ingroup BLAS
 
    template <typename real_t>
-   int HER2K(char uplo, char trans, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, complex<real_t> beta, complex<real_t> *C, int_t ldC)
+   int HER2K(char uplo, char trans, int_t n, int_t k, complex<real_t> alpha, complex<real_t> *A, int_t ldA, complex<real_t> *B, int_t ldB, real_t beta, complex<real_t> *C, int_t ldC)
    {
+      using std::toupper;
+      uplo=toupper(uplo);
+      trans=toupper(trans);
       using std::real;
       using std::conj;
       const complex<real_t> zero(0.0,0.0);
@@ -221,5 +225,67 @@ namespace LATL
       }
       return 0;
    }
+
+#ifdef __latl_cblas
+#include <cblas.h>
+
+   template <> int HER2K<float>(char uplo, char trans, int_t n, int_t k, complex<float> alpha, complex<float> *A, int_t ldA, complex<float> *B, int_t ldB, float beta, complex<float> *C, int_t ldC)
+   {
+      using std::toupper;
+      uplo=toupper(uplo);
+      trans=toupper(trans);
+      if((uplo!='U')&&(uplo!='L'))
+         return -1;
+      else if((trans!='N')&&(trans!='C'))
+         return -2;
+      else if(n<0)
+         return -3;
+      else if(k<0)
+         return -4;
+      else if(ldA<((trans=='N')?n:k))
+         return -7;
+      else if(ldB<((trans=='N')?n:k))
+         return -9;
+      else if(ldC<n)
+         return -12;
+
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_cher2k(CblasColMajor,Uplo,Trans,n,k,&alpha,A,ldA,B,ldB,beta,C,ldC);
+
+      return 0;
+   }
+
+   template <> int HER2K<double>(char uplo, char trans, int_t n, int_t k, complex<double> alpha, complex<double> *A, int_t ldA, complex<double> *B, int_t ldB, double beta, complex<double> *C, int_t ldC)
+   {
+      using std::toupper;
+      uplo=toupper(uplo);
+      trans=toupper(trans);
+      if((uplo!='U')&&(uplo!='L'))
+         return -1;
+      else if((trans!='N')&&(trans!='C'))
+         return -2;
+      else if(n<0)
+         return -3;
+      else if(k<0)
+         return -4;
+      else if(ldA<((trans=='N')?n:k))
+         return -7;
+      else if(ldB<((trans=='N')?n:k))
+         return -9;
+      else if(ldC<n)
+         return -12;
+
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+      const CBLAS_TRANSPOSE Trans=(trans=='N')?CblasNoTrans:((trans=='T')?CblasTrans:CblasConjTrans);
+
+      cblas_zher2k(CblasColMajor,Uplo,Trans,n,k,&alpha,A,ldA,B,ldB,beta,C,ldC);
+
+      return 0;
+   }
+#endif
+
+
 }
 #endif
