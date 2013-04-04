@@ -27,6 +27,7 @@ namespace LATL
    ///        'S' = safe minimum (sfmin), such that 1/sfmin does not overflow
    ///        'U' = underflow threshold
    ///        'O' = overflow threshold
+   /// @ingroup AUX
    
    template <typename real_t>
    real_t LAMCH(char OPT)
