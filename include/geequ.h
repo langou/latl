@@ -11,9 +11,9 @@
 
 /// @file geequ.h Computes row and column scalings intended to equilibrate and reduce the condition number of a general m-by-n matrix.
 
-#include <limits>
 #include <cmath>
 #include <algorithm>
+#include "lamch.h"
 #include "latl.h"
 
 namespace LATL
@@ -41,8 +41,10 @@ namespace LATL
    template< typename real_t>
    int GEEEQU(const int_t m, const int_t n, real_t * const A, const int_t ldA, real_t * const R, real_t * const C, real_t &rowcnd, real_t &colcnd, real_t &amax)
    {
-      using std::numeric_limits;
-      
+      using std::abs;
+      using std::min;
+      using std::max;
+
       if ( m < 0)
          return -1;
       if ( n < 0)
@@ -60,21 +62,21 @@ namespace LATL
       
       const real_t one(1.0);
       const real_t zero(0.0);
-      const real_t smlnum = numeric_limits<real_t>::min();
+      const real_t smlnum = LAMCH<real_t>('S');
       const real_t bignum = one/smlnum;
       
       for (int_t i = 0; i < m; ++i)
       {
-         R[i] = std::abs(A[i]);
+         R[i] = abs(A[i]);
       }
       real_t * Aj = A + ldA;
       for (int_t j = 1; j < n; ++j)
       {
          for (int_t i = 0; i < m; ++i)
          {
-            if (std::abs(Aj[i]) > R[i])
+            if (abs(Aj[i]) > R[i])
             {
-               R[i] = std::abs(Aj[i]);
+               R[i] = abs(Aj[i]);
             }
          }
          Aj += ldA;
@@ -103,15 +105,15 @@ namespace LATL
       
       for (int_t i = 0; i < m; ++i)
       {
-         R[i] = one/std::min(std::max(R[i], smlnum), bignum);
+         R[i] = one/min(max(R[i], smlnum), bignum);
       }
       
-      rowcnd = std::max(rcmin, smlnum)/ std::min(rcmax, bignum);
+      rowcnd = max(rcmin, smlnum)/ min(rcmax, bignum);
       
       Aj = A;
       for (int_t j = 0; j < n; ++j)
       {
-         C[j] = std::abs(Aj[0]*R[0]);
+         C[j] = abs(Aj[0]*R[0]);
          Aj += ldA;
       }
       Aj = A;
@@ -119,7 +121,7 @@ namespace LATL
       {
          for (int_t i = 1; i < m; ++i)
          {
-            C[j] = std::max(C[j], std::abs(Aj[i]*R[i]));
+            C[j] = max(C[j], abs(Aj[i]*R[i]));
          }
          Aj += ldA;
       }
@@ -150,10 +152,10 @@ namespace LATL
       
       for (int_t j = 0; j < n; ++j)
       {
-         C[j] = one/std::min(std::max(C[j], smlnum), bignum);
+         C[j] = one/min(max(C[j], smlnum), bignum);
       }
       
-      colcnd = std::max(rcmin, smlnum)/std::min(rcmax, bignum);
+      colcnd = max(rcmin, smlnum)/min(rcmax, bignum);
       
       return 0;
    }
@@ -181,8 +183,12 @@ namespace LATL
    template< typename real_t>
    int GEEEQU(const int_t m, const int_t n, complex<real_t> * const A, const int_t ldA, real_t * const R, real_t * const C, real_t &rowcnd, real_t &colcnd, real_t &amax)
    {
-      using std::numeric_limits;
-
+      using std::abs;
+      using std::min;
+      using std::max;
+      using std::real;
+      using std::imag;
+      
       if ( m < 0)
          return -1;
       if ( n < 0)
@@ -200,19 +206,19 @@ namespace LATL
       
       const real_t one(1.0);
       const real_t zero(0.0);
-      const real_t smlnum = numeric_limits<real_t>::min();
+      const real_t smlnum = LAMCH<real_t>('S');
       const real_t bignum = one/smlnum;
       
       for (int_t i = 0; i < m; ++i)
       {
-         R[i] = std::abs(real(A[i]))+ std::abs(imag(A[i]));
+         R[i] = abs(real(A[i]))+ abs(imag(A[i]));
       }
       complex<real_t> * Aj = A + ldA;
       for (int_t j = 1; j < n; ++j)
       {
          for (int_t i = 0; i < m; ++i)
          {
-            R[i] = std::max(R[i], std::abs(real(Aj[i]))+ std::abs(imag(Aj[i])));
+            R[i] = max(R[i], abs(real(Aj[i]))+ abs(imag(Aj[i])));
          }
          Aj += ldA;
       }
@@ -240,15 +246,15 @@ namespace LATL
       
       for (int_t i = 0; i < m; ++i)
       {
-         R[i] = one/std::min(std::max(R[i], smlnum), bignum);
+         R[i] = one/min(max(R[i], smlnum), bignum);
       }
       
-      rowcnd = std::max(rcmin, smlnum)/ std::min(rcmax, bignum);
+      rowcnd = max(rcmin, smlnum)/ min(rcmax, bignum);
       
       Aj = A;
       for (int_t j = 0; j < n; ++j)
       {
-         C[j] = (std::abs(real(Aj[0])) + std::abs(imag(Aj[0])))*R[0];
+         C[j] = (abs(real(Aj[0])) + abs(imag(Aj[0])))*R[0];
          Aj += ldA;
       }
       Aj = A;
@@ -256,7 +262,7 @@ namespace LATL
       {
          for (int_t i = 1; i < m; ++i)
          {
-            C[j] = std::max(C[j], (std::abs(real(Aj[i])) + std::abs(imag(Aj[i])))*R[i]);
+            C[j] = max(C[j], (abs(real(Aj[i])) + abs(imag(Aj[i])))*R[i]);
          }
          Aj += ldA;
       }
@@ -287,10 +293,10 @@ namespace LATL
       
       for (int_t j = 0; j < n; ++j)
       {
-         C[j] = one/std::min(std::max(C[j], smlnum), bignum);
+         C[j] = one/min(max(C[j], smlnum), bignum);
       }
       
-      colcnd = std::max(rcmin, smlnum)/std::min(rcmax, bignum);
+      colcnd = max(rcmin, smlnum)/min(rcmax, bignum);
       
       return 0;
       
