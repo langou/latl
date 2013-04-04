@@ -8,12 +8,7 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <limits>
-#include <algorithm>
-#include <iomanip>
-#include <limits>
-#include <cmath>
-#include <larf.h>
+#include <lamch.h>
 
 #if defined(FLOAT)
 typedef float real_t;
@@ -35,7 +30,7 @@ int main(int argc, char** argv)
 {
    using std::cout;
    using std::endl;
-   using std::numeric_limits;
+   using LATL::LAMCH;
 #ifdef MPREAL
    int prec=53;
    using std::atoi;
@@ -43,13 +38,10 @@ int main(int argc, char** argv)
       prec=atoi(argv[1]);
    mpfr::mpreal::set_default_prec(prec);
 #endif
-   cout << endl;
-   cout << "-------------------------------------" << endl;
-   cout << "machine epsilon  = " << numeric_limits<real_t>::epsilon() << endl;
-   cout << "minimum value    = " << numeric_limits<real_t>::min() << endl;
-   cout << "maximum value    = " << numeric_limits<real_t>::max() << endl;
-   cout << "-------------------------------------" << endl;
-   cout << endl;
-   
+   cout << "LAMCH('E')=" << LAMCH<real_t>('E') << endl;
+   cout << "LAMCH('P')=" << LAMCH<real_t>('P') << endl;
+   cout << "LAMCH('S')=" << LAMCH<real_t>('S') << endl;
+   cout << "LAMCH('U')=" << LAMCH<real_t>('U') << endl;
+   cout << "LAMCH('O')=" << LAMCH<real_t>('O') << endl;
    return(0);
 }
