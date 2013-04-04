@@ -14,7 +14,7 @@
 #include <cctype>
 #include <cmath>
 #include <algorithm>
-#include <limits>
+#include "lamch.h"
 #include "latl.h"
 
 namespace LATL
@@ -55,7 +55,6 @@ namespace LATL
       using std::isnan;
       using std::max;
       using std::min;
-      using std::numeric_limits;
       const real_t zero=0.0;
       type=toupper(type);
       if((type!='G')&&(type!='L')&&(type!='U')&&(type!='H')&&(type!='B')&&(type!='Q')&&(type!='Z'))
@@ -85,7 +84,7 @@ namespace LATL
       
       const real_t one(1.0);
       const real_t zero(0.0);
-      const real_t small=numeric_limits<real_t>::min();
+      const real_t small=LAMCH<real_t>('S');
       const real_t big=one/small;
       bool done=0;
       real_t c;
@@ -229,7 +228,6 @@ namespace LATL
       using std::isnan;
       using std::max;
       using std::min;
-      using std::numeric_limits;
       const real_t zero=0.0;
       type=toupper(type);
       if((type!='G')&&(type!='L')&&(type!='U')&&(type!='H')&&(type!='B')&&(type!='Q')&&(type!='Z'))
@@ -259,7 +257,7 @@ namespace LATL
       
       const real_t one(1.0);
       const real_t zero(0.0);
-      const real_t small=numeric_limits<real_t>::min();
+      const real_t small=LAMCH<real_t>('S');
       const real_t big=one/small;
       bool done=0;
       real_t c;
