@@ -30,7 +30,7 @@ namespace LATL
    /// @ingroup AUX
    
    template <typename real_t>
-   real_t LAMCH(char OPT)
+   real_t LAMCH(char opt)
    {
       using std::toupper;
       using std::numeric_limits;
@@ -46,7 +46,7 @@ namespace LATL
       const real_t underflow=numeric_limits<real_t>::min();
       const real_t overflow=numeric_limits<real_t>::max();
 
-      const char opt=toupper(OPT);
+      opt=toupper(opt);
 
       if(opt=='E')
          return eps;
