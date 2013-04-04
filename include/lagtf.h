@@ -11,7 +11,9 @@
 
 /// @file lagtf.h Factorizes the matrix (T - lamda*I) where T is tridiagonal and lambda is a scalar.
 
-#include <limits>
+#include <algorithm>
+#include <cmath>
+#include "lamch.h"
 #include "latl.h"
 
 namespace LATL
@@ -41,8 +43,8 @@ namespace LATL
    template< typename real_t >
    int LAGTF(const int_t n, real_t * const A, const real_t lambda, real_t * const B, real_t * const C, real_t tol, real_t * const D, int_t * const IN)
    {
-      using std::numeric_limits;
-
+      using std::max;
+      using std::abs;
       if (n < 0)
          return -1;
       
@@ -59,23 +61,23 @@ namespace LATL
       }
       
       real_t const zero(0.0);
-      real_t const eps = numeric_limits<real_t>::epsilon();
-      tol = std::max(tol, eps);
-      real_t scale1 = std::abs(A[0]) + std::abs(B[0]);
+      real_t const eps = LAMCH<real_t>('P');
+      tol = max(tol, eps);
+      real_t scale1 = abs(A[0]) + abs(B[0]);
       real_t scale2, piv1, piv2, mult, temp;
       for (int_t k = 0; k < n-1; ++k)
       {
          A[k+1] -= lambda;
-         scale2 = std::abs(C[k]) + std::abs(A[k+1]);
+         scale2 = abs(C[k]) + abs(A[k+1]);
          if (k < n-2)
          {
-            scale2 += std::abs(B[k+1]);
+            scale2 += abs(B[k+1]);
          }
          if (A[k] == 0)
             piv1 = zero;
          else
          {
-            piv1 = std::abs(A[k]/scale1);
+            piv1 = abs(A[k]/scale1);
          }
          if (C[k] == 0)
          {
@@ -87,7 +89,7 @@ namespace LATL
          }
          else
          {
-            piv2 = std::abs(C[k])/scale2;
+            piv2 = abs(C[k])/scale2;
             if (piv2 <= piv1)
             {
                IN[k] = 0;
@@ -113,10 +115,10 @@ namespace LATL
                C[k] = mult;
             }
          }
-         if (std::max(piv1, piv2) <= tol && IN[n-1] == 0)
+         if (max(piv1, piv2) <= tol && IN[n-1] == 0)
             IN[n-1] = k+1;
       }
-      if (std::abs(A[n-1]) <= scale1*tol && IN[n-1] == 0)
+      if (abs(A[n-1]) <= scale1*tol && IN[n-1] == 0)
          IN[n-1] = n;
       return 0;
    }
