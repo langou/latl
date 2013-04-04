@@ -11,7 +11,7 @@
 
 /// @file rscl.h Multiplies a vector by the reciprocal of a scalar.
 
-#include <limits>
+#include "lamch.h"
 #include "labad.h"
 #include "scal.h"
 #include "latl.h"
@@ -29,7 +29,6 @@ namespace LATL
    template<typename real_t> 
    void RSCL(int_t n, real_t a, real_t *x, int_t incx)
    {
-      using std::numeric_limits;
       using LATL::LABAD;
       using LATL::SCAL;
       const real_t one(1.0);
@@ -38,7 +37,7 @@ namespace LATL
       
       if(n>0)
       {
-         real_t small_num=numeric_limits<real_t>::min();
+         real_t small_num=LAMCH<real_t>('S');
          real_t big_num=one/small_num;
          LABAD<real_t>(small_num,big_num);
          real_t den=a;
@@ -81,7 +80,6 @@ namespace LATL
    template<typename real_t> 
    void RSCL(int_t n, real_t a, complex<real_t> *x, int_t incx)
    {
-      using std::numeric_limits;
       using LATL::LABAD;
       using LATL::SCAL;
       const real_t one(1.0);
@@ -90,7 +88,7 @@ namespace LATL
       
       if(n>0)
       {
-         real_t small_num=numeric_limits<real_t>::min();
+         real_t small_num=LAMCH<real_t>('S');
          real_t big_num=one/small_num;
          LABAD<real_t>(small_num,big_num);
          real_t den=a;
