@@ -12,7 +12,7 @@
 /// @file larfg.h Generates an elementary Householder reflection.
 
 #include <cmath>
-#include <limits>
+#include "lamch.h"
 #include "nrm2.h"
 #include "lapy2.h"
 #include "lapy3.h"
@@ -54,11 +54,10 @@ namespace LATL
    void LARFG(int_t n, real_t &alpha, real_t *x, int_t incx, real_t &tau)
    {
       using std::abs;
-      using std::numeric_limits;
       
       const real_t one(1.0);
       const real_t zero(0.0);
-      const real_t safemin=numeric_limits<real_t>::min()/numeric_limits<real_t>::epsilon();
+      const real_t safemin=LAMCH<real_t>('S')/LAMCH<real_t>('E');
       const real_t rsafemin=one/safemin;
       
       tau=zero;
@@ -127,13 +126,12 @@ namespace LATL
       using std::real;
       using std::imag;
       using std::abs;
-      using std::numeric_limits;
 
       const real_t one(1.0);
       const real_t zero(0.0);
       const complex<real_t> czero(0.0,0.0);
-      const real_t safemin=numeric_limits<real_t>::min()/numeric_limits<real_t>::epsilon();
-      const real_t rsafemin=one/safemin;     
+      const real_t safemin=LAMCH<real_t>('S')/LAMCH<real_t>('E');
+      const real_t rsafemin=one/safemin;
       
       tau=czero;
       if(n>0)
