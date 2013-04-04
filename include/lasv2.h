@@ -12,7 +12,7 @@
 /// @file lasv2.h Computes the singular value decomposition of a 2-2 triangular matrix.
 
 #include <cmath>
-#include <limits>
+#include "lamch.h"
 #include "latl.h"
 
 namespace LATL
@@ -48,13 +48,12 @@ namespace LATL
       using std::sqrt;
       using std::abs;
       using std::copysign;
-      using std::numeric_limits;
       const real_t zero=0.0;
       const real_t one=1.0;
       const real_t half=0.5;
       const real_t two=2.0;
       const real_t four=4.0;
-      const real_t eps=numeric_limits<real_t>::epsilon();
+      const real_t eps=LAMCH<real_t>('E');
       
       real_t ft=f;
       real_t fa=abs(ft);
