@@ -19,6 +19,7 @@
 #include "laswp.h"
 #include "imax.h"
 #include "ger.h"
+#include "geru.h"
 #include "scal.h"
 #include "swap.h"
 #include "latl.h"
@@ -188,7 +189,7 @@ namespace LATL
          }
          if (j < std::min(m,n))
          {
-            LATL::GER(m-j-1, n-j-1, -one, Ajjp1, 1, Ajj+ldA, ldA, Ajjp1+ldA, ldA);
+            LATL::GERU(m-j-1, n-j-1, -one, Ajjp1, 1, Ajj+ldA, ldA, Ajjp1+ldA, ldA);
          }
          Ajj+= (ldA+1);
          Ajjp1 = Ajj+1;

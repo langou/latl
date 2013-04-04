@@ -17,6 +17,7 @@
 #include "labad.h"
 #include "swap.h"
 #include "ger.h"
+#include "geru.h"
 #include "latl.h"
 
 namespace LATL
@@ -175,7 +176,7 @@ namespace LATL
          }
          for(int_t j=i+1;j<n;j++)
             A[j+i*ldA]=A[j+i*ldA]/A[i+i*ldA];
-         GER(n-i-1,n-i-1,minus_one,A+i+1+i*ldA,1,A+i+(i+1)*ldA,ldA,A+i+1+(i+1)*ldA,ldA);
+         GERU(n-i-1,n-i-1,minus_one,A+i+1+i*ldA,1,A+i+(i+1)*ldA,ldA,A+i+1+(i+1)*ldA,ldA);
       }
       if(abs(A[n-1+(n-1)*ldA])<smin)
       {
