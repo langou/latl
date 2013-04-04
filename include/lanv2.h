@@ -14,7 +14,7 @@
 #include <cmath>
 #include <algorithm>
 #include "lapy2.h"
-#include <limits>
+#include "lamch.h"
 #include "latl.h"
 
 namespace LATL
@@ -51,12 +51,11 @@ namespace LATL
       using std::min;
       using std::max;
       using std::copysign;
-      using LATL::LAPY2;
       const real_t zero=0.0;
       const real_t one=1.0;
       const real_t half=0.5;
       const real_t multpl=4.0;
-      const real_t eps=numeric_limits<real_t>::epsilon();
+      const real_t eps=LAMCH<real_t>('P');
       if(c==zero)
       {
          cs=one;
