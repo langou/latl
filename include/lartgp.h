@@ -13,7 +13,7 @@
 
 #include <cmath>
 #include <algorithm>
-#include <limits>
+#include "lamch.h"
 #include "latl.h"
 
 namespace LATL
@@ -45,16 +45,15 @@ namespace LATL
       using std::sqrt;
       using std::log;
       using std::max;
-      using std::numeric_limits;
       const real_t zero=0.0;
       const real_t one=1.0;
       const real_t two=2.0;
-      real_t safmin=numeric_limits<real_t>::min();
-      real_t eps=numeric_limits<real_t>::epsilon();
-      real_t base=numeric_limits<real_t>::radix;
-      real_t p=(log(safmin/eps)/log(base))/two;
-      real_t SafeMin=pow(base,p);
-      real_t SafeMax=one/SafeMin;
+      const real_t safmin=LAMCH<real_t>('S');
+      const real_t eps=LAMCH<real_t>('E');
+      const real_t base(2.0);
+      const real_t p=(log(safmin/eps)/log(base))/two;
+      const real_t SafeMin=pow(base,p);
+      const real_t SafeMax=one/SafeMin;
       if(g==zero)
       {
          c=(f>=zero)?one:-one;
