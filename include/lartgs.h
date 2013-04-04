@@ -12,7 +12,7 @@
 /// @file lartgs.h Generates a plane rotation for a QR iteration.
 
 #include <cmath>
-#include <limits>
+#include "lamch.h"
 #include "lartgp.h"
 #include "latl.h"
 
@@ -40,12 +40,11 @@ namespace LATL
    template<typename real_t>
    void LARTGS(real_t x, real_t y, real_t sigma, real_t &c, real_t &s)
    {
-      using std::numeric_limits;
       using LATL::LARTGP;
       using std::abs;
       const real_t one(1.0);
       const real_t zero(0.0);
-      const real_t thresh=numeric_limits<real_t>::epsilon();
+      const real_t thresh=LAMCH<real_t>('E');
       real_t W,Z,R,S;
       
       if(((sigma==zero)&&(abs(x)<thresh))||((abs(x)==sigma)&&(y==zero)))
