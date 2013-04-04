@@ -11,9 +11,9 @@
 
 /// @file getc2.h Computes an LU factorization with complete pivoting of an n-by-n matrix.
 
-#include <limits>
 #include <cmath>
 #include <algorithm>
+#include "lamch.h"
 #include "labad.h"
 #include "swap.h"
 #include "ger.h"
@@ -45,14 +45,13 @@ namespace LATL
    template<typename real_t>
    int GETC2(int_t n, real_t *A, int_t ldA, int_t *ipiv, int_t *jpiv)
    {
-      using std::numeric_limits;
       using std::abs;
       using std::max;
       const real_t one(1.0);
       const real_t zero(0.0);
-      const real_t eps = numeric_limits<real_t>::epsilon();
+      const real_t eps = LAMCH<real_t>('P');
 
-      real_t smlnum = numeric_limits<real_t>::min()/eps;
+      real_t smlnum = LAMCH<real_t>('S')/eps;
       real_t bignum = one/smlnum;
       LABAD(smlnum, bignum);
 
@@ -127,15 +126,14 @@ namespace LATL
    template<typename real_t>
    int GETC2(int_t n, complex<real_t> *A, int_t ldA, int_t *ipiv, int_t *jpiv)
    {
-      using std::numeric_limits;
       using std::abs;
       using std::max;
       const real_t one(1.0);
       const complex<real_t> minus_one(-1.0);
       const real_t zero(0.0);
-      const real_t eps = numeric_limits<real_t>::epsilon();
+      const real_t eps = LAMCH<real_t>('P');
 
-      real_t smlnum = numeric_limits<real_t>::min()/eps;
+      real_t smlnum = LAMCH<real_t>('S')/eps;
       real_t bignum = one/smlnum;
       LABAD(smlnum, bignum);
 
