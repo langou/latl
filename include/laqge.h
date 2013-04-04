@@ -11,7 +11,7 @@
 
 /// @file laqge.h  Equilibrates a general m-by-n matrix A using the row and column scaling factors in the vectors R and C.
 
-#include <limits>
+#include "lamch.h"
 #include "latl.h"
 
 namespace LATL
@@ -47,8 +47,8 @@ namespace LATL
       
       const real_t one(1.0);
       const real_t thresh(0.1);
-      real_t small = numeric_limits<real_t>::min()/numeric_limits<real_t>::epsilon();
-      real_t large = one/small;
+      const real_t small = LAMCH<real_t>('S')/LAMCH<real_t>('P');
+      const real_t large = one/small;
       
       real_t * Aj = A;
       
@@ -127,7 +127,7 @@ namespace LATL
       
       const real_t one(1.0);
       const real_t thresh(.1);
-      real_t small = numeric_limits<real_t>::min()/numeric_limits<real_t>::epsilon();
+      const real_t small = LAMCH<real_t>('S')/LAMCH<real_t>('P');
       real_t large = one/small;
       
       complex<real_t> * Aj = A;
