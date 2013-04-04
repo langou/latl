@@ -147,6 +147,47 @@ namespace LATL
       }
       return 0;
    }
-   
+#ifdef __latl_cblas
+#include <cblas.h>
+
+   template <> int HER2<float>(char uplo, int_t n, complex<float> alpha, complex<float> *x, int_t incx, complex<float> *y, int_t incy, complex<float> *A, int_t ldA)
+   {
+      uplo=std::toupper(uplo);
+      if((uplo!='U')&&(uplo!='L'))
+         return -1;
+      else if(n<0)
+         return -2;
+      else if(incx==0)
+         return -5;
+      else if(ldA<n)
+         return -7;
+
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+
+      cblas_cher2(CblasColMajor,Uplo,n,&alpha,x,incx,y,incy,A,ldA);
+
+      return 0;
+   }
+
+   template <> int HER2<double>(char uplo, int_t n, complex<double> alpha, complex<double> *x, int_t incx, complex<double> *y, int_t incy, complex<double> *A, int_t ldA)
+   {
+      uplo=std::toupper(uplo);
+      if((uplo!='U')&&(uplo!='L'))
+         return -1;
+      else if(n<0)
+         return -2;
+      else if(incx==0)
+         return -5;
+      else if(ldA<n)
+         return -7;
+
+      const CBLAS_UPLO Uplo=(uplo=='U')?CblasUpper:CblasLower;
+
+      cblas_zher2(CblasColMajor,Uplo,n,&alpha,x,incx,y,incy,A,ldA);
+      
+      return 0;
+   }
+#endif
+
 }
 #endif
