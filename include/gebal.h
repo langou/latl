@@ -11,11 +11,11 @@
 
 /// @file gebal.h Balances a general matrix.
 
-#include <limits>
 #include <cctype>
 #include <cmath>
 #include "swap.h"
 #include "imax.h"
+#include "lamch.h"
 #include "latl.h"
 
 namespace LATL
@@ -77,12 +77,7 @@ namespace LATL
       const real_t one(1.0);
       const real_t factor(0.95);
       const real_t scale_factor(2.0);
-      const real_t eps=numeric_limits<real_t>::epsilon();
-      const real_t maxval=numeric_limits<real_t>::max();
-      const real_t minval=numeric_limits<real_t>::min();
-      const real_t small=one/maxval;
-      const real_t sfmin=(small>maxval)?small*(one+eps):minval;
-      const real_t sfmin1=sfmin/eps;
+      const real_t sfmin1=LAMCH<real_t>('S')/LAMCH<real_t>('P');
       const real_t sfmax1=one/sfmin1;
       const real_t sfmin2=sfmin1*two;
       const real_t sfmax2=one/sfmin2;
