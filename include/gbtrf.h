@@ -62,6 +62,7 @@ namespace LATL
          info = GBTF2(m, n, kL, kU, AB, ldAB, ipiv);
       else
       {
+         const int_t izero(0);
          const real_t zero(0.0);
          const real_t one(1.0);
          const int_t kV = kU+kL;
@@ -159,7 +160,7 @@ namespace LATL
                int_t j2, j3, k2;
                
                j2 = min(jU-j+1, kV)-jb;
-               j3 = max(0, jU-j-kV+1);
+               j3 = max(izero,jU-j-kV+1);
                LASWP(j2, ABj+ldAB*jb+kV-jb, ldAB-1, 0, jb-1, ipiv+j);
                
                for (int_t i = j; i < j+jb; ++i)
