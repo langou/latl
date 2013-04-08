@@ -9,14 +9,28 @@
 #ifndef _potrs_h
 #define _potrs_h
 
-/// @file potrs.h
+/// @file potrs.h Solves a system of linear equations A * X = B.
 
 #include "trsm.h"
 #include "latl.h"
 
 namespace LATL
 {
-
+   /// @brief Solves a real system of linear equations A * X = B
+   ///
+   ///   A * X = B
+   ///
+   /// where A is symmetric positive definite using the Cholesky factorization A = U' * U or A = L*L' computed by POTRF.
+   /// @return 0 if success
+   /// @return -i if the ith argument is invalid.
+   /// @tparam real_t Floating point type.
+   /// @param uplo Indicates whether the symmetric matrix A is stored as upper triangular or lower triangular.  The other triangular part of A is not referenced.
+   /// @param n Order of the matrix A.  n >= 0
+   /// @param nrhs Number of columns of the matrix B.  nrhs >= 0
+   /// @param A Real symmetric matrix size ldA-by-n.  On entry, the matrix A.  On exit, the factor U or L from the Cholesky factorization A = U' * U or A = L * L'.
+   /// @param ldA Column length of matrix A. ldA >= n
+   /// @param B Real matrix size n-by-colB.  On exit, the solution matrix X.
+   /// @param ldB Column length of the matrix B. ldB >= n
    /// @ingroup COMP
    
    template< typename real_t>
@@ -48,7 +62,21 @@ namespace LATL
       }
       return 0;
    }
-
+   /// @brief Solves a complex system of linear equations A * X = B
+   ///
+   ///   A * X = B
+   ///
+   /// where A is symmetric positive definite using the Cholesky factorization A = U' * U or A = L*L' computed by POTRF.
+   /// @return 0 if success
+   /// @return -i if the ith argument is invalid.
+   /// @tparam real_t Floating point type.
+   /// @param uplo Indicates whether the symmetric matrix A is stored as upper triangular or lower triangular.  The other triangular part of A is not referenced.
+   /// @param n Order of the matrix A.  n >= 0
+   /// @param nrhs Number of columns of the matrix B.  nrhs >= 0
+   /// @param A Complex symmetric matrix size ldA-by-n.  On entry, the matrix A.  On exit, the factor U or L from the Cholesky factorization A = U' * U or A = L * L'.
+   /// @param ldA Column length of matrix A. ldA >= n
+   /// @param B Complex matrix size n-by-colB.  On exit, the solution matrix X.
+   /// @param ldB Column length of the matrix B. ldB >= n
    /// @ingroup COMP
 
    template< typename real_t>

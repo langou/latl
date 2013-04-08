@@ -9,7 +9,7 @@
 #ifndef _getrs_h
 #define _getrs_h
 
-/// @file getrs.h Solves a system of linear equations A * x = B.
+/// @file getrs.h Solves a system of linear equations A * X = B.
 
 #include "laswp.h"
 #include "trsm.h"
@@ -19,7 +19,7 @@ namespace LATL
 {
    /// @brief Solves a system of linear equations A * X = B.
    ///
-   ///     A * X = B or A^T * X = B
+   ///     A * X = B or A' * X = B
    ///
    /// with a general n-by-n matrix A using the LU factorization computed by getrf.
    /// @return 0 if success
@@ -72,7 +72,7 @@ namespace LATL
    
    /// @brief Solves a system of linear equations A * X = B.
    ///
-   ///     A * X = B or A^T * X = B
+   ///     A * X = B or A' * X = B
    ///
    /// with a general n-by-n matrix A using the LU factorization computed by getrf.
    /// @return 0 if success

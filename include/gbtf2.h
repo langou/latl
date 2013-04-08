@@ -9,7 +9,7 @@
 #ifndef _gbtf2_h
 #define _gbtf2_h
 
-/// @file gbtrf.h Computes an LU factorization of an m-by-n band matrix A using partial pivoting with row interchanges.
+/// @file gbtf2.h Computes an LU factorization of an m-by-n band matrix A using partial pivoting with row interchanges.
 
 #include "imax.h"
 #include "swap.h"

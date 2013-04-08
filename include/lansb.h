@@ -9,8 +9,7 @@
 #ifndef _lansb_h
 #define _lansb_h
 
-/// @file lansb.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of
-/// largest absolute value of a symmetric banded matrix A.
+/// @file lansb.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a symmetric banded matrix A.
 
 #include "latl.h"
 #include <cmath>

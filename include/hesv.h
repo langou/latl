@@ -9,7 +9,7 @@
 #ifndef _hesv_h
 #define _hesv_h
 
-/// @file hesv.h
+/// @file hesv.h Computes the solution to a system of linear equations A * X = B.
 
 #include "hetrf.h"
 #include "hetrs.h"
