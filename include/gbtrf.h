@@ -39,7 +39,7 @@ namespace LATL
    /// @ingroup COMP
 
    template< typename real_t>
-   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, real_t * const AB, const int_t ldAB, int_t * const ipiv, const int_t nb)
+   int_t GBTRF(int_t m, int_t n, int_t kL, int_t kU, real_t *AB, int_t ldAB, int_t *ipiv, int_t nb)
    {
       using std::min;
       using std::max;
@@ -291,7 +291,7 @@ namespace LATL
    /// @ingroup COMP
 
    template< typename real_t>
-   int_t GBTRF(const int_t m, const int_t n, const int_t kL, const int_t kU, complex<real_t> * const AB, const int_t ldAB, int_t * const ipiv, const int_t nb)
+   int_t GBTRF(int_t m, int_t n, int_t kL, int_t kU, complex<real_t> *AB, int_t ldAB, int_t *ipiv, int_t nb)
    {
       return GBTRF< complex<real_t> > (m, n, kL, kU, AB, ldAB, ipiv, nb);
    }
