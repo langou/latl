@@ -57,24 +57,24 @@ namespace LATL
          return -4;
       else if(ku+kl+1>n)
          return -5;
-      else if(ldAB<ku+kl+1)
+      else if(ldB<ku+kl+1)
          return -6;
 
       for(int_t j=0;j<n;j++)
-         B[ku+j*ldB]=A[j+j*n];
+         B[ku+j*ldB]=A[j+j*ldA];
 
       for(int_t i=ku;i>0;--i)
       {
          for(int_t j=0;j<i;j++)
             B[ku-i+j*ldB]=zero;
          for(int_t j=i;j<n;j++)
-            B[ku-i+j*ldB]=A[j-i+j*n];
+            B[ku-i+j*ldB]=A[j-i+j*ldA];
       }
 
-      for(int_t i=1;i<=ku;i++)
+      for(int_t i=1;i<=kl;i++)
       {
          for(int_t j=0;j<n-i;j++)
-            B[ku+i+j*ldB]=A[i+j+j*n];
+            B[ku+i+j*ldB]=A[i+j+j*ldA];
          for(int_t j=n-i;j<n;j++)
             B[ku+i+j*ldB]=zero;
       }
