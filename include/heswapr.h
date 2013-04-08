@@ -60,7 +60,7 @@ namespace LATL
          complex<real_t> *aj=A+j*ldA;
          complex<real_t> *ak;
          complex<real_t> t;
-         LATL::SWAP(i-1,ai,1,aj,1);
+         LATL::SWAP(i,ai,1,aj,1);
          t=ai[i];
          ai[i]=aj[j];
          aj[j]=t;
@@ -72,7 +72,7 @@ namespace LATL
             ak[i]=conj(aj[i+k]);
             aj[i+k]=conj(t);
          }
-         aj[i]=conj(ai[j]);
+         ai[j]=conj(ai[j]);
          ak=aj;
          for(int_t k=j+1;k<n;k++)
          {
@@ -88,7 +88,7 @@ namespace LATL
          complex<real_t> *aj=A+j*ldA;
          complex<real_t> *ak;
          complex<real_t> t;
-         LATL::SWAP(i-1,A+i,ldA,A+j,ldA);
+         LATL::SWAP(i,A+i,ldA,A+j,ldA);
          t=ai[i];
          ai[i]=aj[j];
          aj[j]=t;

@@ -54,7 +54,6 @@ namespace LATL
                return 1;
       }
       
-      
       complex<real_t> *work =new complex<real_t>[n];
       int_t kstep;
       

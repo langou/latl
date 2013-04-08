@@ -51,6 +51,9 @@ namespace LATL
       if (n == 0)
          return 0;
       
+      if ((nb <= 1) || (nb >= n))
+         return LATL::HETF2(uplo, n, A, ldA, ipiv, bsdv);
+
       int_t info = 0, k, temp = 0, kb;
       complex<real_t> * Work = new complex<real_t>[n*nb];
       if (uplo == 'U' || uplo == 'u')
