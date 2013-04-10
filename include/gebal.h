@@ -14,9 +14,10 @@
 #include <cctype>
 #include <cmath>
 #include "swap.h"
-#include "imax.h"
 #include "lamch.h"
 #include "latl.h"
+
+#include <iostream>
 
 namespace LATL
 {
@@ -71,7 +72,6 @@ namespace LATL
       using std::toupper;
       using std::abs;
       using std::isnan;
-      using std::sqrt;
       const real_t zero(0.0);
       const real_t one(1.0);
       const real_t two(2.0);
@@ -80,6 +80,9 @@ namespace LATL
       const real_t sfmin=beta*LAMCH<real_t>('S');
       const real_t sfmax=one/sfmin;
 
+      using std::cout;
+      using std::endl;
+      
       job=toupper(job);
       if((job!='N')&&(job!='P')&&(job!='S')&&(job!='B'))
          return -1;
@@ -110,26 +113,48 @@ namespace LATL
 
       if(permute)
       {
+         int_t i,j;
          bool swapped=1;
          while(swapped)
          {
             swapped=0;
-            int_t i=ilo;
+            i=ilo;
             while((i<=ihi)&&(!swapped))
             {
                real_t s=zero;
-               for(int_t j=ilo;j<=ihi;j++)
+               for(j=ilo;j<=ihi;j++)
                {
                   if(i==j) continue;
                   s+=abs(A[i+j*ldA]);
                }
                if(s==zero)
                {
-                  
-                  swapped=1;
+                  SWAP<real_t>(n,A+i,ldA,A+ihi,ldA);
+                  SWAP<real_t>(n,A+i*ldA,1,A+ihi*ldA,1);
+                  P[ihi]=i;
                   ihi--;
+                  swapped=1;
                }
                i++;
+            }
+            j=ilo;
+            while((j<=ihi)&&(!swapped))
+            {
+               real_t s=zero;
+               for(i=ilo;i<=ihi;i++)
+               {
+                  if(i==j) continue;
+                  s+=abs(A[i+j*ldA]);
+               }
+               if(s==zero)
+               {
+                  SWAP<real_t>(n,A+ilo*ldA,1,A+j*ldA,1);
+                  SWAP<real_t>(n,A+ilo,ldA,A+j,ldA);
+                  P[ilo]=i;
+                  ilo++;
+                  swapped=1;
+               }
+               j++;
             }
          }
       }
