@@ -29,7 +29,7 @@ namespace LATL
    /// The permutations consist of row and column interchanges which put the matrix in the form
    ///
    ///                ( T1   X   Y  )
-   ///        P A P = (  0   B   Z  )
+   ///       P' A P = (  0   B   Z  )
    ///                (  0   0   T2 )
    /// where T1 and T2 are upper triangular matrices whose eigenvalues lie
    /// along the diagonal.  The column indices ilo and ihi mark the starting
@@ -71,28 +71,26 @@ namespace LATL
       using std::toupper;
       using std::abs;
       using std::isnan;
-      using std::numeric_limits;
-
+      using std::sqrt;
       const real_t zero(0.0);
       const real_t one(1.0);
+      const real_t two(2.0);
       const real_t factor(0.95);
-      const real_t scale_factor(2.0);
-      const real_t sfmin1=LAMCH<real_t>('S')/LAMCH<real_t>('P');
-      const real_t sfmax1=one/sfmin1;
-      const real_t sfmin2=sfmin1*two;
-      const real_t sfmax2=one/sfmin2;
-      
+      const real_t beta(2.0);
+      const real_t sfmin=beta*LAMCH<real_t>('S');
+      const real_t sfmax=one/sfmin;
+
       job=toupper(job);
       if((job!='N')&&(job!='P')&&(job!='S')&&(job!='B'))
          return -1;
       else if(n<0)
          return -2;
-      else if(lda<n)
+      else if(ldA<n)
          return -4;
       else if(n==0)
          return 0;
 
-      bool permuate=0;
+      bool permute=0;
       bool scale=0;
 
       if((job=='P')||(job=='B'))
@@ -100,9 +98,9 @@ namespace LATL
 
       if((job=='S')||(job=='B'))
          scale=1;
-      
-      int_t k=0;
-      int_t l=n-1;
+
+      ilo=0;
+      ihi=n-1;
 
       for(int_t i=0;i<n;i++)
       {
@@ -112,67 +110,80 @@ namespace LATL
 
       if(permute)
       {
-         
-         for(int_t j=l;j>=0;--j)
+         bool swapped=1;
+         while(swapped)
          {
-            for(int_t i=0;i<=l;i++)
+            swapped=0;
+            int_t i=ilo;
+            while((i<=ihi)&&(!swapped))
             {
-               
+               real_t s=zero;
+               for(int_t j=ilo;j<=ihi;j++)
+               {
+                  if(i==j) continue;
+                  s+=abs(A[i+j*ldA]);
+               }
+               if(s==zero)
+               {
+                  
+                  swapped=1;
+                  ihi--;
+               }
+               i++;
             }
          }
-         P[m]=j;
-         if(j!=m)
-         {
-            SWAP(l,A+j*ldA,1,A+m*ldA,1);
-            SWAP(n-k,A+j+k*ldA,ldA,A+m+k*ldA,ldA);
-         }
-
-         
       }
 
       if(scale)
       {
-         real_t *Ak=A+k*ldA;
-         real_t *Ai=A+k*ldA;
-         for(int_t i=k;i<l;i++)
+         bool converged=0;
+         while(!converged)
          {
-            real_t c=zero;
-            real_t r=zero;
-            real_t *Aj=A+k*ldA;
-            for(int_t j=k;j<l;j++)
+            converged=1;
+            for(int_t j=ilo;j<=ihi;j++)
             {
-               if(j!=i)
+               real_t c=zero;
+               real_t r=zero;
+               real_t scal=one;
+               for(int_t i=ilo;i<=ihi;i++)
                {
-                  c+=abs(Ai[j]);
-                  r+=abs(Aj[i]);
+                  if(i==j) continue;
+                  c+=abs(A[i+j*ldA]);
+                  r+=abs(A[j+i*ldA]);
                }
-               Aj+=ldA;
-            }
-            int_t ica=IMAX(l,Ai,1);
-            real_t ca=abs(Ai[ics]);
-            int_t ira=IMAX(n-k,Ak,ldA);
-            real_t ra=abs(Ak[ira]);
-            if((c!=zero)&&(r!=zero))
-            {
-               real_t g=r/two;
-               real_t f=one;
-               real_t s=c+r;
-
-               while((g>=r)&&(max(r,ra)<sfmax2)&&(min(min(min(f,c),g),ca)>sfmin2))
+               if(isnan(c+r))
+                  return -3;
+               if((c>zero)&&(r>zero))
                {
-                  f*=half;
-                  c*=half
-                  g*=half;
-                  ca*=half;
-                  r*=two;
-                  ra*=two;
+                  real_t s=c+r;
+                  while((c<r/beta)&&(c<sfmax)&&(scal<sfmax)&&(r>sfmin))
+                  {
+                     c*=beta;
+                     r/=beta;
+                     scal*=beta;
+                  }
+                  while((c>r*beta)&&(c>sfmin)&&(scal>sfmin)&&(r<sfmax))
+                  {
+                     c/=beta;
+                     r*=beta;
+                     scal/=beta;
+                  }
+                  if((c+r)<factor*s)
+                  {
+                     if(!((scal<one)&&(D[j]<one)&&(D[j]*scal<sfmin))&&!((scal>one)&&(D[j]>one)&&(D[j]>sfmax/scal)))
+                     {
+                        converged=0;
+                        D[j]*=scal;
+                        for(int_t i=ilo;i<=ihi;i++)
+                           A[i+j*ldA]*=scal;
+                        for(int_t i=ilo;i<=ihi;i++)
+                           A[j+i*ldA]/=scal;
+                     }
+                  }
                }
             }
          }
       }
-
-      ilo=k;
-      ihi=l;
       return 0;
    }
 }
