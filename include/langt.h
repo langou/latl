@@ -9,7 +9,7 @@
 #ifndef _langt_h
 #define _langt_h
 
-/// @file langt.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a tridiagonal matrix A.
+/// @file langt.h Returns the norm of a tridiagonal matrix.
 
 #include "lassq.h"
 #include <cmath>

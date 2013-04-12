@@ -9,7 +9,7 @@
 #ifndef _lanhb_h
 #define _lanhb_h
 
-/// @file lanhb.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a Hermitian band matrix A.
+/// @file lanhb.h Returns the norm of a Hermitian band matrix.
 
 #include "lassq.h"
 #include "latl.h"

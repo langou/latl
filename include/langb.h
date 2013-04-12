@@ -9,7 +9,7 @@
 #ifndef _langb_h
 #define _langb_h
 
-/// @file langb.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a banded matrix A.
+/// @file langb.h Returns the norm a banded matrix A.
 
 #include "latl.h"
 #include <cmath>

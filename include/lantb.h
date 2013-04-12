@@ -9,7 +9,7 @@
 #ifndef _lantb_h
 #define _lantb_h
 
-/// @file lantb.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a triangular band matrix A.
+/// @file lantb.h Returns the norm of a triangular band matrix.
 
 #include "latl.h"
 #include <cmath>

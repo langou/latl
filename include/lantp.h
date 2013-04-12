@@ -9,7 +9,7 @@
 #ifndef _lantp_h
 #define _lantp_h
 
-/// @file lantp.h  Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a triangular matrix A.
+/// @file lantp.h  Returns the norm of a triangular matrix.
 
 #include "lassq.h"
 #include <cmath>

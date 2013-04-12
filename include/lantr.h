@@ -9,7 +9,7 @@
 #ifndef _lantr_h
 #define _lantr_h
 
-/// @file lantr.h  Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a triangular or trapezoidal matrix A.
+/// @file lantr.h  Returns the norm of a triangular or trapezoidal matrix.
 
 #include "lassq.h"
 #include "latl.h"

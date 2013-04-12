@@ -9,7 +9,7 @@
 #ifndef _lansp_h
 #define _lansp_h
 
-/// @file lansp.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a symmetric packed matrix A.
+/// @file lansp.h Returns the norm of a symmetric packed matrix.
 
 #include "lassq.h"
 #include <cmath>

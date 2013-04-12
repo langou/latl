@@ -9,7 +9,7 @@
 #ifndef _lanhe_h
 #define _lanhe_h
 
-/// @file lanhe.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a Hermitian matrix A.
+/// @file lanhe.h Returns the norm of a Hermitian matrix.
 
 #include "lassq.h"
 #include "latl.h"

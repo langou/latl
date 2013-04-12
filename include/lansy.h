@@ -9,7 +9,7 @@
 #ifndef _lansy_h
 #define _lansy_h
 
-/// @file lansy.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a symmetric matrix A.
+/// @file lansy.h Returns the norm of a symmetric matrix.
 
 #include "latl.h"
 #include <cmath>

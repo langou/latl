@@ -9,7 +9,7 @@
 #ifndef _lanhs_h
 #define _lanhs_h
 
-/// @file lanhs.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of an upper Hessenberg matrix A.
+/// @file lanhs.h Returns the norm of an upper Hessenberg matrix.
 
 #include "latl.h"
 #include "lassq.h"

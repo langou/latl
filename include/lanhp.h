@@ -9,7 +9,7 @@
 #ifndef _lanhp_h
 #define _lanhp_h
 
-/// @file lanhp.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a general matrix A.
+/// @file lanhp.h Returns the norm of a packed complex Hermitian matrix.
 
 #include "lassq.h"
 #include <cmath>

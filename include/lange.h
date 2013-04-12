@@ -9,7 +9,7 @@
 #ifndef _lange_h
 #define _lange_h
 
-/// @file lange.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a general matrix A.
+/// @file lange.h Returns the norm of a general matrix.
 
 #include "lassq.h"
 #include <cmath>

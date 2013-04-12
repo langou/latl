@@ -9,7 +9,7 @@
 #ifndef _lanst_h
 #define _lanst_h
 
-/// @file lanst.h Returns the value of the one norm, Frobenius norm, infinity norm, or element of largest absolute value of a symmetric tridiagonal matrix A.
+/// @file lanst.h Returns the norm of a symmetric tridiagonal matrix.
 
 #include "latl.h"
 #include <cmath>
