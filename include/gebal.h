@@ -172,7 +172,6 @@ namespace LATL
                real_t scal=one;
                for(int_t i=ilo;i<=ihi;i++)
                {
-                  if(i==j) continue;
                   c+=abs(A[i+j*ldA]);
                   r+=abs(A[j+i*ldA]);
                }
