@@ -10,6 +10,30 @@
 #define _latl_h
 
 /// @file latl.h Global types used in LATL.
+/// @mainpage
+/// @section intro Introduction
+/// The Linear Algebra Template Library is a precision neutral dense linear algebra
+/// library which implements the core functionality of
+/// <A HREF="http://netlib.org/lapack/">LAPACK</A>
+/// in C++ using function templates.  The floating point type is
+/// specified by a template parameter, enabling arbitrary precision computations
+/// by using a multiprecision class such as Pavel Holoborodko's
+/// <A HREF="http://www.holoborodko.com/pavel/mpfr/">mpfr::mpreal</A> or
+/// Christian Schneider's
+/// <A HREF="http://chschneider.eu/programming/mpfr_real/">mpfr::real</A>.
+/// Matrices are implemented as pointers to column-major contiguous arrays,
+/// rather than using objects, in order to simplify operability with other
+/// libraries as well as preserve compatibility with LAPACK.  The first release
+/// in planned for summer 2013.
+///
+/// @section code Download
+/// Source code and git access is available on GitHub at
+/// <A HREF="http://github.com/latl/latl">http://github.com/latl/latl</A>.
+///
+/// @defgroup DRIV Driver Routines
+/// @defgroup COMP Computational Routines
+/// @defgroup AUX Auxiliary Routines
+/// @defgroup BLAS BLAS Routines
 
 #include <complex>
 using std::complex;
