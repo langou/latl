@@ -15,11 +15,32 @@
 
 namespace LATL
 {
-   ///@brief
+   /// @brief Solves a real system of equations of the form
+   ///
+   ///      A * X = B      or    A' * X = B
+   ///
+   /// using the LU factorization of the tridiagonal matrix A computed by GTTRF.
+   /// @return 0 if success
+   /// @return -i if the ith argument is invalid.
+   /// @tparam real_t Floating point type.
+   /// @param itrans Specifies the form of the system of equations.
+   ///
+   ///      0 = no transpose
+   ///      1 = transpose
+   ///
+   /// @param n Order of the matrix A.  n >= 0
+   /// @param nrhs Number of columns of the matrix B.  nrhs >= 0
+   /// @param DL Real array, size n-1.  On entry, should contain the (n-1) multipliers that define the matrix L from the LU factorization of A.
+   /// @param D Real array, size n.  On entry, should contain the n diagonal elements of the upper triangular matrix U from the LU factorization of A.
+   /// @param DU Real array, size n-1.  On entry, the (n-1) elements of the first superdiagonal of U.
+   /// @param DU2 Real array, size n-2.  On entry, the (n-2) elements of the second superdiagonal of U.
+   /// @param ipiv Integer array, size n.  The pivot indices from the factorization LU.
+   /// @param B Real matrix size ldB-by-nrhs.  On exit, the solution matrix X.
+   /// @param ldB Column length of the matrix B.
    /// @ingroup COMP
    
    template< typename real_t>
-   int_t GTTS2(const int_t itrans, const int_t n, const int_t nrhs, real_t * const DL, real_t * const D, real_t * const DU, real_t * const DU2, int_t * const IPIV, real_t * const B, const int_t ldB)
+   int_t GTTS2(const int_t itrans, const int_t n, const int_t nrhs, real_t * const DL, real_t * const D, real_t * const DU, real_t * const DU2, int_t * const ipiv, real_t * const B, const int_t ldB)
    {
       if (itrans != 0 && itrans != 1 && itrans != 2)
          return -1;
@@ -37,7 +58,7 @@ namespace LATL
          {
             for (int_t i = 0; i < n-1; ++i)
             {
-               int_t ip = IPIV[i];
+               int_t ip = ipiv[i];
                real_t temp = B[2*i-ip+1]-DL[i]*B[ip];
                B[i] = B[ip];
                B[i+1] = temp;
@@ -59,7 +80,7 @@ namespace LATL
             {
                for (int_t i = 0; i < n-1; ++i)
                {
-                  if (IPIV[i] == i)
+                  if (ipiv[i] == i)
                      Bj[i+1] -= DL[i]*Bj[i];
                   else
                   {
@@ -97,7 +118,7 @@ namespace LATL
             
             for (int_t i = n-2; i >= 0; --i)
             {
-               int_t ip = IPIV[i];
+               int_t ip = ipiv[i];
                real_t temp = B[i]-DL[i]*B[i+1];
                B[i] = B[ip];
                B[ip] = temp;
@@ -117,7 +138,7 @@ namespace LATL
                }
                for (int_t i = n-2; i >= 0; --i)
                {
-                  if (IPIV[i] == i)
+                  if (ipiv[i] == i)
                   {
                      Bj[i] -= DL[i]*Bj[i+1];
                   }
@@ -133,7 +154,7 @@ namespace LATL
             
          }
       }
-
+      return 0;
    }
 
 }

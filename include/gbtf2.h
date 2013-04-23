@@ -57,12 +57,14 @@ namespace LATL
       if (m == 0 || n == 0)
          return 0;
 
+      using std::max;
+      using std::min;
       int_t kV = kL + kU, jU = 0, km, jp, info = 0;
       real_t * ABj = AB;
       const real_t zero(0.0);
       const real_t one(1.0);
 
-      for (int_t j = kU+1; j < std::min(kV, n); ++j)
+      for (int_t j = kU+1; j < min(kV, n); ++j)
       {
          ABj = AB + ldAB*j;
          for (int_t i = kV-j+1; i < kL; ++i)
@@ -71,7 +73,7 @@ namespace LATL
          }
       }
 
-      for (int_t j = 0; j < std::min(m,n); ++j)
+      for (int_t j = 0; j < min(m,n); ++j)
       {
          if (j+kV < n)
          {
@@ -83,12 +85,12 @@ namespace LATL
          }
 
          ABj = AB+ldAB*j;
-         km = std::min(kL, m-j-1);
+         km = min(kL, m-j-1);
          jp = LATL::IMAX(km+1, ABj+kV, 1);
          ipiv[j] = jp+j;
          if (ABj[kV+jp] != zero)
          {
-            jU = std::max(jU, std::min(j+kU+jp, n-1));
+            jU = max(jU, min(j+kU+jp, n-1));
             if (jp != 0)
             {
                LATL::SWAP(jU-j+1, ABj+kV+jp, ldAB-1, ABj+kV, ldAB-1);
