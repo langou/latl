@@ -15,6 +15,7 @@
 #include <cmath>
 #include "swap.h"
 #include "lamch.h"
+#include "nrm2.h"
 #include "latl.h"
 
 #include <iostream>
@@ -167,19 +168,14 @@ namespace LATL
             converged=1;
             for(int_t j=ilo;j<=ihi;j++)
             {
-               real_t c=zero;
-               real_t r=zero;
+               real_t c=NRM2(ihi-ilo+1,A+ilo+j*ldA,1);
+               real_t r=NRM2(ihi-ilo+1,A+j+ilo*ldA,ldA);
                real_t scal=one;
-               for(int_t i=ilo;i<=ihi;i++)
-               {
-                  c+=abs(A[i+j*ldA]);
-                  r+=abs(A[j+i*ldA]);
-               }
                if(isnan(c+r))
                   return -3;
                if((c>zero)&&(r>zero))
                {
-                  real_t s=c+r;
+                  real_t s=c*c+r*r;
                   while((c<r/beta)&&(c<sfmax)&&(scal<sfmax)&&(r>sfmin))
                   {
                      c*=beta;
@@ -192,7 +188,7 @@ namespace LATL
                      r*=beta;
                      scal/=beta;
                   }
-                  if((c+r)<factor*s)
+                  if((c*c+r*r)<factor*s)
                   {
                      if(!((scal<one)&&(D[j]<one)&&(D[j]*scal<sfmin))&&!((scal>one)&&(D[j]>one)&&(D[j]>sfmax/scal)))
                      {
