@@ -25,23 +25,21 @@ namespace LATL
       const std::size_t row;
       const std::size_t col;
 
-      Matrix(size_t m,size_t n) : row(m),col(n),len(m),allocated(1) { ptr=new T[m*n]; }
+      Matrix(std::size_t m,std::size_t n) : row(m),col(n),len(m),deallocate(1) { ptr=new T[m*n]; }
 
-      Matrix(std::size_t m,std::size_t n, T* p) : row(m),col(n),ptr(p),len(m),allocated(1) { }
-
-      Matrix(std::size_t m,std::size_t n,std::size_t l,T* p) : row(m),col(n),ptr(p),len(l),allocated(0) { }
+      Matrix(T* p,std::size_t m,std::size_t n,std::size_t l,bool dealloc=0) : row(m),col(n),ptr(p),len(l),deallocate(dealloc) { }
 
       Matrix(Matrix &A,std::ptrdiff_t i1,std::ptrdiff_t i2,std::ptrdiff_t j1,std::ptrdiff_t j2) :
-      row(i2-i1+1),col(j2-j1+1),ptr(A.ptr),len(A.len),allocated(0) { }
+      row(i2-i1+1),col(j2-j1+1),len(A.len),deallocate(0) { ptr=&(A(i1,j1));}
 
-      ~Matrix() { if(allocated) delete [] ptr; }
+      ~Matrix() { if(deallocate) delete [] ptr; }
 
       inline T& operator()(std::ptrdiff_t i,std::ptrdiff_t j) { return(ptr[--i+(--j)*len]); }
 
    private:
       T *ptr;
       const std::size_t len;
-      const bool allocated;
+      const bool deallocate;
    };
 }
 #endif
