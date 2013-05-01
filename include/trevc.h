@@ -14,7 +14,7 @@
 namespace LATL
 {
    template<typename real_t>
-   int TREVC()
+   int TREVC(char side,bool back,int_t n,real_t *T,int_t ldT,real_t *VL,int_t ldVL,real_t *VR,int_t ldVR)
    {
       
    }
