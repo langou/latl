@@ -14,7 +14,7 @@
 namespace LATL
 {
    template<typename real_t>
-   int LAHQR()
+   int LAHQR(bool wantT,bool wantZ,int_t n,real_t *H,int_t ldH,real_t *wr,real_t *wi,real_t *Z,int_t ldZ)
    {
 
    }
