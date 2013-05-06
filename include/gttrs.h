@@ -12,6 +12,8 @@
 #include "latl.h"
 #include "gtts2.h"
 
+/// @file gttrs.h Solves a system of equations A * X = B.
+
 namespace LATL
 {
    /// @brief Solves a real system of equations of the form
