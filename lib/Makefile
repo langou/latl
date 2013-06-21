@@ -4,7 +4,6 @@
 
 CC=clang++
 LATL=../include
-CBLAS=-D__latl_cblas -I/System/Library/Frameworks/vecLib.framework/Headers/
 CFLAGS=-O3 -Wall -pedantic -std=c++11 -I$(LATL) $(CBLAS)
 LIBTOOL=ar cr
 LIB=../liblatl.a
