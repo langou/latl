@@ -1,8 +1,8 @@
 CC=clang++
 LATL=../include
-CFLAGS=-O3 -Wall -pedantic -std=c++11 -I$(LATL) -I/System/Library/Frameworks/vecLib.framework/Headers
+CFLAGS=-O3 -Wall -pedantic -std=c++11
 
-all: invert lamch blas gmres
+all: invert lamch
 
 float: clean
 	@$(MAKE) all DEFS="-DFLOAT -D__latl_cblas" LIBS="-lblas"
