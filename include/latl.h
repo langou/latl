@@ -23,8 +23,7 @@
 /// <A HREF="http://chschneider.eu/programming/mpfr_real/">mpfr::real</A>.
 /// Matrices are implemented as pointers to column-major contiguous arrays,
 /// rather than using objects, in order to simplify operability with other
-/// libraries as well as preserve compatibility with LAPACK.  The first release
-/// in planned for summer 2013.
+/// libraries as well as preserve compatibility with LAPACK.
 ///
 /// @section code Download
 /// Source code and git access is available on GitHub at
