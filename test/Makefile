@@ -1,6 +1,6 @@
 CC=clang++
 LATL=../include
-CFLAGS=-O3 -Wall -pedantic -std=c++11
+CFLAGS=-I$(LATL) -O3 -Wall -pedantic -std=c++11
 
 all: invert lamch
 
