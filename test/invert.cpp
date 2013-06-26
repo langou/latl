@@ -121,7 +121,7 @@ real_t symmetric(int nb,char uplo,bool resi,bool prnt)
    bool *block=new bool[n];
    LACPY<real_t>('a',n,n,A,n,B,n);
    int info=SYTRF<real_t>(uplo,n,A,n,ipiv,block,nb);
-   info=SYTRI<real_t>(uplo,n,A,n,ipiv,block,nb);
+   info=SYTRI<real_t>(uplo,n,A,n,ipiv,block);
    if(info>0)
    {
       cerr << "input matrix is singular" << endl;
