@@ -42,7 +42,6 @@ void usage(char *name)
    cerr << "        -s        creates n-by-n symmetric matrix" << endl;
    cerr << "        -p        creates n-by-n positive definite matrix by adding n to the diagonal" << endl;
    cerr << "        -S <seed> sets random number generator seed (default is 0)" << endl;
-   cerr << "        -e        creates M x N random matrix with entries exp(x), where x is determined below" << endl;
    cerr << "        -r <dist> creates M x N random matrix with one of the following distributions: " << endl;
    cerr << "                    1 = uniform on (0,1) (default)" << endl;
    cerr << "                    2 = uniform on (-1,1)" << endl;
