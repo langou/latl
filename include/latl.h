@@ -27,7 +27,7 @@
 ///
 /// @section code Download
 /// Source code and git access is available on GitHub at
-/// <A HREF="http://github.com/latl/latl">http://github.com/latl/latl</A>.
+/// <A HREF="http://github.com/langou/latl">http://github.com/langou/latl</A>.
 ///
 /// @defgroup DRIV Driver Routines
 /// @defgroup COMP Computational Routines
