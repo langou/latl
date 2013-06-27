@@ -33,7 +33,7 @@ namespace LATL
    /// Reference: <A HREF="http://math.nist.gov/MatrixMarket/data/NEP/mvmgrc/mvmgrc.html">J. Grcar</A>.
    /// @tparam T Type of matrix elements.
    /// @return Pointer to matrix of type T containing n-by-n grcar matrix.
-   /// @return NULL if a parameter is invalid.
+   /// @return nullptr if a parameter is invalid.
    /// @param n Order of matrix.  n>0.
    /// @param k Number of superdiagonals. k>0.
    /// @ingroup MATGEN
@@ -44,7 +44,7 @@ namespace LATL
       const T zero(0.0);
       
       if((n<1)||(k<0))
-         return NULL;
+         return nullptr;
 
       T *M=new T[n*n];
       if(M)

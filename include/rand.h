@@ -20,7 +20,7 @@ namespace LATL
    /// @brief Generates random m-by-n real matrix.
    /// @tparam real_t Floating point type.
    /// @return Pointer to matrix of type T containing m-by-n random matrix.
-   /// @return NULL if parameter invalid.
+   /// @return nullptr if parameter invalid.
    /// @param m Number of rows of matrix.  m>0.
    /// @param n Number of columns of matrix.  n>0.
    /// @ingroup MATGEN
@@ -45,7 +45,7 @@ namespace LATL
    /// @brief Generates random symmetric n-by-n real matrix.
    /// @tparam real_t Floating point type.
    /// @return Pointer to matrix of type T containing n-by-n random matrix.
-   /// @return NULL if parameter invalid.
+   /// @return nullptr if parameter invalid.
    /// @param n Number of columns of matrix.  n>0.
    /// @ingroup MATGEN
 

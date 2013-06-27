@@ -21,7 +21,7 @@ namespace LATL
 {
    /// @brief Attempts to read a rectangular matrix from standard input.
    /// @return Pointer to rectangular matrix read from standard input.
-   /// @return NULL if unable to read matrix.
+   /// @return nullptr if unable to read matrix.
    /// @tparam real_t Floating point type.
    /// @param[out] m Number of rows in matrix.
    /// @param[out] n Number of columns in matrix.
@@ -56,7 +56,7 @@ namespace LATL
       if(m*n!=count)
       {
          m=n=0;
-         return NULL;
+         return nullptr;
       }
       real_t *A=new real_t[m*n];
       int i=0;
@@ -78,7 +78,7 @@ namespace LATL
 
    /// @brief Attempts to read a packed triangular matrix from standard input.
    /// @return Pointer to packed triangular matrix read from standard input.
-   /// @return NULL if unable to read matrix.
+   /// @return nullptr if unable to read matrix.
    /// @tparam real_t Floating point type.
    /// @param[out] uplo Determines whether the matrix is upper or lower triangular.
    ///
@@ -122,7 +122,7 @@ namespace LATL
       if(n*(n+1)/2!=count)
       {
          n=0;
-         return NULL;
+         return nullptr;
       }
       bool upper=(m==n)?1:0;
       uplo=(upper)?'U':'L';

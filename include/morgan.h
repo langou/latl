@@ -32,7 +32,7 @@ namespace LATL
    /// unless balancing is disabled.
    /// @tparam T Type of matrix elements.
    /// @return Pointer to matrix of type T containing n-by-n Morgan matrix.
-   /// @return NULL if a parameter is invalid.
+   /// @return nullptr if a parameter is invalid.
    /// @param n Order of matrix.  n>0.
    /// @param k Degree of the epsilon term.
    /// @ingroup MATGEN
@@ -45,7 +45,7 @@ namespace LATL
       using std::pow;
       
       if(n<1)
-         return NULL;
+         return nullptr;
 
       T *M=new T[n*n];
       if(M)

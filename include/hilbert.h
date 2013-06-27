@@ -22,14 +22,14 @@ namespace LATL
    ///           H(i,j) = 1/(i+j-1); i,j=1,...,n.
    /// @tparam T Type of matrix elements.
    /// @return Pointer to matrix of type T containing n-by-n Hilbert matrix.
-   /// @return NULL if parameter invalid.
+   /// @return nullptr if parameter invalid.
    /// @param n Order of matrix.  n>0.
    /// @ingroup MATGEN
 
    template<typename T> T *Hilbert(int_t n)
    {
       if(n<1)
-         return NULL;
+         return nullptr;
 
       T *M=new T[n*n];
       if(M)
