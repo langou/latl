@@ -9,7 +9,7 @@
 #ifndef _positive_h
 #define _positive_h
 
-/// @file positve.h Generates random positive definite matrices.
+/// @file positive.h Generates random positive definite matrices.
 
 #include <cstdlib>
 #include <random>
