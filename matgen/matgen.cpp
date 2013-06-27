@@ -62,12 +62,11 @@ void usage(char *name)
    using std::cerr;
    using std::endl;
    
-   cerr << "Usage: " << name << " [-o <file>] [-m <m>] [-n <n>] [-k <k>] [-hilbert] [-morgan] [-grcar]";
+   cerr << "Usage: " << name << " [-o <file>] [-m <m>] [-n <n>] [-k <k>] [-hilbert] [-morgan] [-grcar] [-random] [-sym]";
    cerr << endl;
    cerr << "        -o <file> save matrix to <file>, otherwise writes matrix to standard output" << endl;
    cerr << "        -m <m>    sets number of rows (default is m=1)" << endl;
    cerr << "        -n <n>    sets number of columns (default is n=1)" << endl;
-   cerr << "        -c        use complex numbers if possible" << endl;
    cerr << "        -hilbert  creates n-by-n Hilbert matrix" << endl;
    cerr << "        -morgan   creates n-by-n Morgan matrix" << endl;
    cerr << "        -grcar    creates n-by-n Grcar matrix with k superdiagonals" << endl;
