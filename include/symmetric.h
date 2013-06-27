@@ -22,9 +22,10 @@ namespace LATL
    /// @return Pointer to matrix of type real_t containing n-by-n random matrix.
    /// @return nullptr if parameter invalid.
    /// @param n Number of columns of matrix.  n>0.
+   /// @param s Seed for random number generator (optional).
    /// @ingroup MATGEN
 
-   template<typename real_t> real_t *Symmetric(int_t n)
+   template<typename real_t> real_t *Symmetric(int_t n,uint32_t s=0)
    {
       if(n<1)
          return nullptr;
@@ -34,6 +35,8 @@ namespace LATL
       {
          std::random_device device;
          std::mt19937 generator(device());
+         if(s>0)
+            generator.seed(s);
          std::uniform_real_distribution<real_t> distribution(0,1);
          for(int_t j=0;j<n;j++)
             for(int_t i=0;i<=j;i++)
@@ -47,9 +50,10 @@ namespace LATL
    /// @return Pointer to matrix of type std::complex<real_t> containing n-by-n random matrix.
    /// @return nullptr if parameter invalid.
    /// @param n Number of columns of matrix.  n>0.
+   /// @param s Seed for random number generator (optional).
    /// @ingroup MATGEN
 
-   template<typename real_t> complex<real_t> *SymmetricComplex(int_t n)
+   template<typename real_t> complex<real_t> *SymmetricComplex(int_t n,uint32_t s=0)
    {
       if(n<1)
          return nullptr;
@@ -59,6 +63,8 @@ namespace LATL
       {
          std::random_device device;
          std::mt19937 generator(device());
+         if(s>0)
+            generator.seed(s);
          std::uniform_real_distribution<real_t> distribution(0,1);
          for(int_t j=0;j<n;j++)
             for(int_t i=0;i<=j;i++)

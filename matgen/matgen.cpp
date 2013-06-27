@@ -103,6 +103,7 @@ void usage(char *name)
    cerr << "        -m <m>     sets number of rows (default is m=1)" << endl;
    cerr << "        -n <n>     sets number of columns (default is n=1)" << endl;
    cerr << "        -c         use complex numbers if possible" << endl;
+   cerr << "        -seed <s>  set random number generator seed to <s>" << endl;
    cerr << "        -hilbert   creates n-by-n Hilbert matrix" << endl;
    cerr << "        -morgan    creates n-by-n Morgan matrix" << endl;
    cerr << "        -grcar     creates n-by-n Grcar matrix with k superdiagonals" << endl;
@@ -144,6 +145,7 @@ int main(int argc, char** argv)
    int arg=1;
    char *outfile=nullptr;
    bool cmplx=false;
+   uint32_t Seed=0;
    
    MatrixType matrix=random;
    SymmetryType symmetry=none;
@@ -194,7 +196,15 @@ int main(int argc, char** argv)
          if(m<1)
             usage(argv[0]);
       }
-      else if(strncmp(argv[arg],"-n",2)==0)
+      else if(strncmp(argv[arg],"-seed",5)==0)
+      {
+         arg++;
+         if(arg<argc)
+            Seed=atoi(argv[arg]);
+         else
+            Seed=0;
+      }
+     else if(strncmp(argv[arg],"-n",2)==0)
       {
          arg++;
          if(arg<argc)
@@ -245,22 +255,22 @@ int main(int argc, char** argv)
       {
          if(symmetry==symmetric)
          {
-            Complex *A=SymmetricComplex<Real>(n);
+            Complex *A=SymmetricComplex<Real>(n,Seed);
             output<Real>(n,n,A,outfile);
          }
          else if(symmetry==hermitian)
          {
-            Complex *A=Hermitian<Real>(n);
+            Complex *A=Hermitian<Real>(n,Seed);
             output<Real>(n,n,A,outfile);
          }
          else if(symmetry==positive)
          {
-            Complex *A=PositiveComplex<Real>(n);
+            Complex *A=PositiveComplex<Real>(n,Seed);
             output<Real>(n,n,A,outfile);
          }
          else
          {
-            Complex *A=GeneralComplex<Real>(m,n);
+            Complex *A=GeneralComplex<Real>(m,n,Seed);
             output<Real>(m,n,A,outfile);
          }
       }
@@ -268,17 +278,17 @@ int main(int argc, char** argv)
       {
          if(symmetry==symmetric)
          {
-            Real *A=Symmetric<Real>(n);
+            Real *A=Symmetric<Real>(n,Seed);
             output<Real>(n,n,A,outfile);
          }
          else if(symmetry==positive)
          {
-            Real *A=Positive<Real>(n);
+            Real *A=Positive<Real>(n,Seed);
             output<Real>(n,n,A,outfile);
          }
          else
          {
-            Real *A=General<Real>(m,n);
+            Real *A=General<Real>(m,n,Seed);
             output<Real>(m,n,A,outfile);
          }
       }
