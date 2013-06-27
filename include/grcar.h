@@ -14,6 +14,7 @@
 #include <cstdlib>
 #include <limits>
 #include <cmath>
+#include "latl.h"
 
 namespace LATL
 {
@@ -35,8 +36,9 @@ namespace LATL
    /// @return NULL if a parameter is invalid.
    /// @param n Order of matrix.  n>0.
    /// @param k Number of superdiagonals. k>0.
-   
-   template<typename T> T *Grcar(int n,int k)
+   /// @ingroup MATGEN
+
+   template<typename T> T *Grcar(int_t n,int_t k)
    {
       const T one(1.0);
       const T zero(0.0);
@@ -47,18 +49,18 @@ namespace LATL
       T *M=new T[n*n];
       if(M)
       {
-         for(int i=0;i<n;i++)
-            for(int j=0;j<n;j++)
+         for(int_t i=0;i<n;i++)
+            for(int_t j=0;j<n;j++)
                M[i+j*n]=zero;
 
-         for(int i=0;i<n;i++)
+         for(int_t i=0;i<n;i++)
             M[i+i*n]=one;
          
-         for(int i=1;i<n;i++)
+         for(int_t i=1;i<n;i++)
             M[i+(i-1)*n]=-one;
 
-         for(int j=1;j<=k;j++)
-            for(int i=0;i<n-j;i++)
+         for(int_t j=1;j<=k;j++)
+            for(int_t i=0;i<n-j;i++)
                M[i+(i+j)*n]=one;
       }
       return M;

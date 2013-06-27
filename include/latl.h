@@ -33,6 +33,7 @@
 /// @defgroup COMP Computational Routines
 /// @defgroup AUX Auxiliary Routines
 /// @defgroup BLAS BLAS Routines
+/// @defgroup MATGEN Matrix Generation Routines
 
 #include <complex>
 using std::complex;

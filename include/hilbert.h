@@ -12,6 +12,7 @@
 /// @file hilbert.h Generates Hilbert matrix.
 
 #include <cstdlib>
+#include "latl.h"
 
 namespace LATL
 {
@@ -23,9 +24,9 @@ namespace LATL
    /// @return Pointer to matrix of type T containing n-by-n Hilbert matrix.
    /// @return NULL if parameter invalid.
    /// @param n Order of matrix.  n>0.
-   /// @ingroup matgen
+   /// @ingroup MATGEN
 
-   template<typename T> T *Hilbert(int n)
+   template<typename T> T *Hilbert(int_t n)
    {
       if(n<1)
          return NULL;
@@ -33,8 +34,8 @@ namespace LATL
       T *M=new T[n*n];
       if(M)
       {
-         for(int i=0;i<n;i++)
-            for(int j=0;j<=i;j++)
+         for(int_t i=0;i<n;i++)
+            for(int_t j=0;j<=i;j++)
                M[i+j*n]=M[j+i*n]=static_cast<T>(1)/static_cast<T>(i+j+1);
       }
       return M;

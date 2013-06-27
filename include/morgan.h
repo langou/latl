@@ -14,6 +14,7 @@
 #include <cstdlib>
 #include <limits>
 #include <cmath>
+#include "latl.h"
 
 namespace LATL
 {
@@ -34,8 +35,9 @@ namespace LATL
    /// @return NULL if a parameter is invalid.
    /// @param n Order of matrix.  n>0.
    /// @param k Degree of the epsilon term.
-   
-   template<typename T> T *Morgan(int n,int k)
+   /// @ingroup MATGEN
+
+   template<typename T> T *Morgan(int_t n,int_t k)
    {
       const T zero(0.0);
       const T one(1.0);
@@ -48,14 +50,14 @@ namespace LATL
       T *M=new T[n*n];
       if(M)
       {
-         for(int i=0;i<n;i++)
-            for(int j=0;j<n;j++)
+         for(int_t i=0;i<n;i++)
+            for(int_t j=0;j<n;j++)
                M[i+j*n]=zero;
 
-         for(int i=0;i<n;i++)
+         for(int_t i=0;i<n;i++)
             M[i+i*n]=static_cast<T>(i+1);
          
-         for(int i=0;i<n-1;i++)
+         for(int_t i=0;i<n-1;i++)
             M[i+(i+1)*n]=one;
          
          M[n-1]=pow(eps,k);
