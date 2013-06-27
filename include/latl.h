@@ -10,6 +10,7 @@
 #define _latl_h
 
 /// @file latl.h Global types used in LATL.
+
 /// @mainpage
 /// @section intro Introduction
 /// The Linear Algebra Template Library is a precision neutral dense linear algebra
