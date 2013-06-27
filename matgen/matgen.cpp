@@ -1,5 +1,5 @@
 //
-//  LATL.cpp
+//  matgen.cpp
 //  Linear Algebra Template Library
 //
 //  Created by Rodney James on 4/3/13.
@@ -17,6 +17,7 @@
 #include <hilbert.h>
 #include <morgan.h>
 #include <grcar.h>
+#include <rand.h>
 
 typedef long double ldouble;
 
@@ -26,6 +27,7 @@ typedef long double ldouble;
 
 typedef REAL Real;
 
+typedef std::complex<Real> Complex;
 
 template<typename T> void output(int m,int n,T *A,char *outfile)
 {
@@ -71,6 +73,8 @@ void usage(char *name)
    cerr << "        -hilbert  creates n-by-n Hilbert matrix" << endl;
    cerr << "        -morgan   creates n-by-n Morgan matrix" << endl;
    cerr << "        -grcar    creates n-by-n Grcar matrix with k superdiagonals" << endl;
+   cerr << "        -random   creates m-by-n random matrix (default)" << endl;
+   cerr << "        -help     display help" << endl;
    exit(0);
 }
 
@@ -87,8 +91,10 @@ int main(int argc, char** argv)
    using LATL::Hilbert;
    using LATL::Morgan;
    using LATL::Grcar;
+   using LATL::Rand;
    
-   enum MatrixType {hilbert,morgan,grcar,none};
+   enum MatrixType {hilbert,morgan,grcar,random};
+   enum SymmetryType {symmetric,none};
 
    int m=1;
    int n=1;
@@ -96,7 +102,7 @@ int main(int argc, char** argv)
    int arg=1;
    char *outfile=NULL;
 
-   MatrixType matrix=none;
+   MatrixType matrix=random;
    
    while(arg<argc)
    {
@@ -108,9 +114,17 @@ int main(int argc, char** argv)
       {
          matrix=hilbert;
       }
-      else if(strncmp(argv[arg],"-grcar",8)==0)
+      else if(strncmp(argv[arg],"-grcar",6)==0)
       {
          matrix=grcar;
+      }
+      else if(strncmp(argv[arg],"-random",7)==0)
+      {
+         matrix=random;
+      }
+      else if(strncmp(argv[arg],"-help",5)==0)
+      {
+         usage(argv[0]);
       }
       else if(strncmp(argv[arg],"-m",2)==0)
       {
@@ -162,9 +176,10 @@ int main(int argc, char** argv)
       Real *A=Grcar<Real>(n,k);
       output<Real>(n,n,A,outfile);
    }
-   else
+   else if(matrix==random)
    {
-      usage(argv[0]);
+      Real *A=Rand<Real>(m,n);
+      output<Real>(m,n,A,outfile);
    }
    return 0;
 }
