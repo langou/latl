@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 University of Colorado Denver. All rights reserved.
 //
 
-#include <complex>
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -27,8 +26,6 @@ typedef long double ldouble;
 
 typedef REAL Real;
 
-typedef std::complex<Real> Complex;
-
 template<typename T> void output(int m,int n,T *A,char *outfile)
 {
    using std::cerr;
@@ -39,13 +36,13 @@ template<typename T> void output(int m,int n,T *A,char *outfile)
    {
       if(outfile==NULL)
       {
-         Print<T>(n,n,A,n);
+         Print<T>(m,n,A,m);
       }
       else
       {
          std::ofstream out(outfile);
          if(out)
-            Print<T>(m,n,A,n,out);
+            Print<T>(m,n,A,m,out);
          else
          {
             cerr << "Cannot open output file " << outfile << "." << endl;
@@ -70,10 +67,12 @@ void usage(char *name)
    cerr << "        -o <file> save matrix to <file>, otherwise writes matrix to standard output" << endl;
    cerr << "        -m <m>    sets number of rows (default is m=1)" << endl;
    cerr << "        -n <n>    sets number of columns (default is n=1)" << endl;
+   cerr << "        -c        use complex numbers if possible" << endl;
    cerr << "        -hilbert  creates n-by-n Hilbert matrix" << endl;
    cerr << "        -morgan   creates n-by-n Morgan matrix" << endl;
    cerr << "        -grcar    creates n-by-n Grcar matrix with k superdiagonals" << endl;
    cerr << "        -random   creates m-by-n random matrix (default)" << endl;
+   cerr << "        -sym      creates n-by-n random symmetric matrix" << endl;
    cerr << "        -help     display help" << endl;
    exit(0);
 }
@@ -95,14 +94,15 @@ int main(int argc, char** argv)
    
    enum MatrixType {hilbert,morgan,grcar,random};
    enum SymmetryType {symmetric,none};
-
+   
    int m=1;
    int n=1;
    int k=1;
    int arg=1;
-   char *outfile=NULL;
+   char *outfile=nullptr;
 
    MatrixType matrix=random;
+   SymmetryType symmetry=none;
    
    while(arg<argc)
    {
@@ -121,6 +121,10 @@ int main(int argc, char** argv)
       else if(strncmp(argv[arg],"-random",7)==0)
       {
          matrix=random;
+      }
+      else if(strncmp(argv[arg],"-sym",4)==0)
+      {
+         symmetry=symmetric;
       }
       else if(strncmp(argv[arg],"-help",5)==0)
       {
@@ -160,7 +164,7 @@ int main(int argc, char** argv)
       }
       arg++;
    }
-   
+
    if(matrix==hilbert)
    {
       Real *A=Hilbert<Real>(n);
@@ -178,8 +182,16 @@ int main(int argc, char** argv)
    }
    else if(matrix==random)
    {
-      Real *A=Rand<Real>(m,n);
-      output<Real>(m,n,A,outfile);
+      if(symmetry==symmetric)
+      {
+         Real *A=Rand<Real>(n);
+         output<Real>(n,n,A,outfile);
+      }
+      else
+      {
+         Real *A=Rand<Real>(m,n);
+         output<Real>(m,n,A,outfile);
+      }
    }
    return 0;
 }
