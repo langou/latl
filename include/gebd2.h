@@ -55,32 +55,32 @@ namespace LATL
   /// @return 0 if success.
   /// @return -i if the ith argument is invalid.
   /// @tparam real_t Floating point type.
-  /// @param m The number of rows of the matrix A. m>=0
-  /// @param n The number of columns of the matrix A. n>=0
-  /// @param A pointer to real matrix A.
-  /// On entry, the m by n general matrix to be reduced.
-  /// On exit,
-  /// if m >= n, the diagonal and the first super diagonal are overwritten
-  /// with the upper bidiagonal matrix B; the elemenets below the diagonal,
-  /// with the array tauq, represent the orthogonal matrix Q as a product of
-  /// elementary reflectors, and the elements above the superdiagonal, with
-  /// the array taup, represent the orthogonal matrix P as a product of
-  /// elementary reflectors;
-  /// if m < n, the diagonal and the first subdiagonal are overwritten with
-  /// the lower bidiagonal matrix B; the elements below the first subdiagonal,
-  /// with the array tauq, represent the orthogonal matrix Q as a product of
-  /// elementary reflectors, and the elements above the diagonal, with the
-  /// array taup, represent the ortogonal matrix P as a product of elementary
-  /// reflectors.
-  /// @param ldA Column length of the matrix A. ldA>=max(1,m)
-  /// @param d The diagonal elements of the bidiagonal matrix B. Array of
-  /// dimension min(m,n).
-  /// @param e The off-diagonal elements of the bidiagonal matrix B. Array of
-  /// dimension min(m,n)-1.
-  /// @param tauq The scalar factors of the elementary reflectors which
-  /// represent the orthogonal matrix Q. Array of dimension min(m,n).
-  /// @param taup The scalar factors of the elementary reflectors which
-  /// represent the orthogonal matrix P. Array of dimension min(m,n).
+  /// @param[in] m The number of rows of the matrix A. m>=0
+  /// @param[in] n The number of columns of the matrix A. n>=0
+  /// @param[in,out] A pointer to real matrix A.
+  ///  On entry, the m by n general matrix to be reduced.
+  ///  On exit,
+  ///  if m >= n, the diagonal and the first super diagonal are overwritten
+  ///  with the upper bidiagonal matrix B; the elements below the diagonal,
+  ///  with the array tauq, represent the orthogonal matrix Q as a product of
+  ///  elementary reflectors, and the elements above the superdiagonal, with
+  ///  the array taup, represent the orthogonal matrix P as a product of
+  ///  elementary reflectors;
+  ///  if m < n, the diagonal and the first subdiagonal are overwritten with
+  ///  the lower bidiagonal matrix B; the elements below the first subdiagonal,
+  ///  with the array tauq, represent the orthogonal matrix Q as a product of
+  ///  elementary reflectors, and the elements above the diagonal, with the
+  ///  array taup, represent the ortogonal matrix P as a product of elementary
+  ///  reflectors.
+  /// @param[in] ldA Column length of the matrix A. ldA>=max(1,m)
+  /// @param[out] d The diagonal elements of the bidiagonal matrix B.
+  ///  Array of dimension min(m,n).
+  /// @param[out] e The off-diagonal elements of the bidiagonal matrix B.
+  ///  Array of dimension min(m,n)-1.
+  /// @param[out] tauq The scalar factors of the elementary reflectors which
+  ///  represent the orthogonal matrix Q. Array of dimension min(m,n).
+  /// @param[out] taup The scalar factors of the elementary reflectors which
+  ///  represent the orthogonal matrix P. Array of dimension min(m,n).
   ///
   /// @ingroup COMP
 
