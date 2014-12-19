@@ -58,8 +58,8 @@ void get_left_orthogonal (int m, int n, matrix_t *A, real_t *tauq, matrix_t *Q)
   else
   {
     // A is lower bidiagonal
-    LACPY<real_t>('a', m-1, m-1, &A[1], m, Q, m);
-    info=ORG2R<real_t>(m, m, m-1, Q, m, tauq);
+    LACPY<real_t>('a', m-1, m-1, &A[1], m, &Q[1+m], m);
+    info=ORG2R<real_t>(m-1, m-1, m-1, &Q[1+m], m, tauq);
   }
   if (info!=0)
   {
