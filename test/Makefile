@@ -3,7 +3,7 @@ CXX=clang++
 LATL=../include
 CXXFLAGS=$(DEFS) -I$(LATL) -O3 -Wall -pedantic -std=c++11
 
-TESTSUITE = gebd2-t
+TESTSUITE = 
 PROGRAMS = invert lamch gebd2
 
 all: $(PROGRAMS) $(TESTSUITE)
