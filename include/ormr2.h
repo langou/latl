@@ -89,7 +89,7 @@ namespace LATL
       {
          for(int_t i=0;i<k;i++)
          {
-            for(int_t j=0;j<=m-k+i)
+	   for(int_t j=0;j<=m-k+i;j++)
                v[j]=A[i+j*ldA];
             LARF('L',m-k+i+1,n,A+i,ldA,tau[i],C,ldC,W);
          }
