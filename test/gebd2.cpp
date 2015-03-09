@@ -12,8 +12,11 @@
 
 #include <iostream>
 #include <cstdlib>
+
 #include <print.h>
 #include <load.h>
+#include "timer.h"
+
 #include <latl.h>
 #include <gebd2.h>
 #include <gemm.h>
@@ -186,7 +189,7 @@ void copy_bidiagonal(int m, int n, matrix_t *A, matrix_t *B)
 }
 
 template <typename real_t, typename matrix_t>
-int test_gebd2(bool prnt, bool res)
+int test_gebd2(bool prnt, bool res, bool time)
 {
   int m, n;
   const real_t zero(0.0);
@@ -212,7 +215,10 @@ int test_gebd2(bool prnt, bool res)
   matrix_t *AA=new matrix_t[m*n];
   LACPY<real_t> ('a',m,n,A,m,AA,m);
 
+  Timer timeit;
+  timeit.Start();
   int info=GEBD2<real_t>(m,n,A,m,D,E,tauq,taup);
+  timeit.Stop();
   if (info!=0)
   {
     cout <<"GEBD2 failed. INFO=" <<info <<endl;
@@ -247,6 +253,9 @@ int test_gebd2(bool prnt, bool res)
   cout <<"Error: " <<error <<endl;
   cout <<"Relative error: " <<error/norm <<endl;
 
+  if (time)
+    cout <<"Elapsed time: " <<timeit.Time() <<" us" <<endl;
+  
   delete [] P;
   delete [] Q;
   delete [] B;
@@ -261,13 +270,14 @@ int test_gebd2(bool prnt, bool res)
 
 void usage(char *name)
 {
-  cerr << "Usage: " <<name;
+  cerr << "Usage: " <<name << " [-w] [-r]";
 #ifdef MPREAL
   cerr << " [-P <n>]";
 #endif
-  cerr << " [-w] [-r]" << endl;
+  cerr << endl;
   cerr << "           -w      write matrices to standard output" << endl;
   cerr << "           -r      write residues to standard output" << endl;
+  cerr << "           -t      write elapsed time to standard output" << endl;
 #ifdef MPREAL
   cerr << "           -P <n>  set mpreal precision to n bits " << endl;
 #endif
@@ -279,6 +289,7 @@ int main(int argc,char **argv)
   int arg=1;
   bool prnt=0;
   bool res=0;
+  bool time=0;
 
   while(arg<argc)
   {
@@ -286,6 +297,8 @@ int main(int argc,char **argv)
       prnt=1;
     else if(strncmp(argv[arg],"-r",2)==0)
       res=1;
+    else if(strncmp(argv[arg],"-t",2)==0)
+      time=1;
 #ifdef MPREAL
     else if(strncmp(argv[arg],"-P",4)==0)
     {
@@ -304,7 +317,7 @@ int main(int argc,char **argv)
     arg++;
   }
 
-  if (test_gebd2<Real,Real>(prnt, res) !=0)
+  if (test_gebd2<Real,Real>(prnt, res, time) !=0)
     usage(argv[0]);
 
   return 0;

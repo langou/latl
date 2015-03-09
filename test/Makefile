@@ -35,6 +35,8 @@ real1024: clean
 mpreal: clean
 	@$(MAKE) all DEFS="-DMPREAL" LDLIBS="-lgmp -lmpfr"
 
+gebd2: gebd2.o timer.o
+	$(CXX) $^ -o $@
 
 clean:
 	rm -f *.o $(PROGRAMS) $(TESTSUITE)
