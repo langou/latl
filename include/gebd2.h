@@ -20,8 +20,8 @@ namespace LATL
   /// an unblocked algorithm.
   ///
   /// The real version of gebd2 reduces a real general m by n matrix A
-  /// to upper or lower bidiagonal form B by an orthogonal tranformation:
-  /// Q**T * A * P = B
+  /// to upper or lower bidiagonal form B by an orthogonal transformation:
+  ///   Q' * A * P = B
   ///
   /// If m >= n, then B is upper diagonal, else B is lower diagonal.
   /// The matrices Q and P are represented as products of elementary
@@ -32,7 +32,7 @@ namespace LATL
   ///
   /// Each H(i) and G(i) has the form:
   ///
-  ///   H(i) = I - tauq * v * v**T and G(i) = I - taup * u * u**T
+  ///   H(i) = I - tauq * v * v' and G(i) = I - taup * u * u'
   ///
   /// where tauq and taup are real scalars, and v and u are real vectors;
   /// v(1:i-1) = 0, v(i) = 1, and v(i+1:m) is stored on exit in A(i+1:m,i);
@@ -45,7 +45,7 @@ namespace LATL
   ///
   /// Each H(i) and G(i) has the form:
   ///
-  ///   H(i) = I - tauq * v * v**T and G(i) = I - taup * u * u**T
+  ///   H(i) = I - tauq * v * v' and G(i) = I - taup * u * u'
   ///
   /// where tauq and taup are real scalars, and v and u are real vectors;
   /// v(1:i) = 0, v(i+1) = 1, and v(i+2:m) is stored on exit in A(i+2:m,i);
