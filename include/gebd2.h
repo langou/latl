@@ -11,6 +11,7 @@
 
 /// @file gebd2.h Reduces a general matrix to bidiagonal form using an unblocked algorithm.
 
+#include <algorithm>
 #include "larf.h"
 #include "larfg.h"
 
