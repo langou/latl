@@ -61,7 +61,7 @@ namespace LATL
   /// @ingroup AUX
   template<typename real_t>
   void LASQ3(int_t i0, int_t &n0, real_t *z, int_t &pp, real_t &dmin,
-             real_t &sigma, real_t &desig, int_t qmax,
+             real_t &sigma, real_t &desig, real_t &qmax,
              int_t &nfail, int_t &iter, int_t &ndiv, int_t &ttype,
              real_t &dmin1, real_t &dmin2, real_t &dn, real_t &dn1,
              real_t &dn2, real_t &g, real_t &tau)
@@ -85,7 +85,8 @@ namespace LATL
     const real_t tol=eps*hundred;
     const real_t tol2=tol*tol;
 
-    int_t j, n0in;
+    int_t n0in = n0;
+    int_t j;
     real_t t;
 
     // z is in qd-format
@@ -102,7 +103,7 @@ namespace LATL
         {
           // e(n0-1) is negligible, 1 eigenvalue
           z[4*(n0-1)]=z[4*(n0-1)+pp]+sigma;
-          no--;
+          n0--;
           continue;
         }
         else if(z[4*(n0-3)+2+pp]>tol2*sigma
@@ -175,15 +176,15 @@ namespace LATL
           z[4*(n0-j-1)]=t;
 
           t=z[4*(i0+j-1)+1];
-          z[4*(i0+j-1)+1]=z[4*(no-j-1)+1];
+          z[4*(i0+j-1)+1]=z[4*(n0-j-1)+1];
           z[4*(n0-j-1)+1]=t;
 
           t=z[4*(i0+j-1)+2];
-          z[4*(i0+j-1)+2]=z[4*(no-j-1)+2];
+          z[4*(i0+j-1)+2]=z[4*(n0-j-1)+2];
           z[4*(n0-j-1)+2]=t;
 
           t=z[4*(i0+j-1)+3];
-          z[4*(i0+j-1)+3]=z[4*(no-j-1)+3];
+          z[4*(i0+j-1)+3]=z[4*(n0-j-1)+3];
           z[4*(n0-j-1)+3]=t;
         }
         if(n0-i0<=4)
@@ -258,7 +259,7 @@ namespace LATL
           continue;
         }
         // NaN and zero shift, or possible underflow: call safe dqd
-        LASQ6<real_t>(i-, n0, z, pp, dmin, dmin1, dmin2, dn, dn1, dn2);
+        LASQ6<real_t>(i0, n0, z, pp, dmin, dmin1, dmin2, dn, dn1, dn2);
         ndiv=ndiv+(n0-i0+2);
         iter++;
         tau=zero;
