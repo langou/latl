@@ -28,7 +28,7 @@ namespace LATL
   /// @param[in] n0 Last index.
   /// @param[in,out] z  Real array of length 4*n. z holds the qd array.
   ///     At output, new emin is stored in z[4*(n0-1)+3-pp] to avoid an extra
-	///     argument.
+  ///     argument.
   /// @param[in] pp 0 for ping, 1 for pong.
   /// @param[in,out] tau The shift. It might be set to zero if negligible.
   /// @param[in] sigma The accumulated shift up to this step.
@@ -60,7 +60,6 @@ namespace LATL
     const real_t thresh=eps*(sigma+tau);
 
     real_t emin;
-    real_t dmin;
     real_t d;
     real_t temp;
 
