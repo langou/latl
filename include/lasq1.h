@@ -81,49 +81,49 @@ namespace LATL
     }
 
     real_t sigmax;
-    real_t sigmn;
+    real_t sigmin;
     if(n==2)
     {
-      LAS2<real_t>(d[0],e[0],d[1],sigmn,sigmx);
-      d[1]=sigmx;
-      d[2]=sigmn;
+      LAS2<real_t>(d[0],e[0],d[1],sigmin,sigmax);
+      d[1]=sigmax;
+      d[2]=sigmin;
       return 0;
     }
 
     // Estimate the largest singular value
-    sigmx=zero;
+    sigmax=zero;
     for(int_t i=0; i<n-1; i++)
     {
       d[i]=abs(d[i]);
-      sigmx=max(sigmx, abs(e[i]));
+      sigmax=max(sigmax, abs(e[i]));
     }
     d[n-1]=abs(d[n-1]);
-    if(sigmx==zero)
+    if(sigmax==zero)
     {
       // Early return, the matrix is already diagonal
       LASRT<real_t>('D',n,d);
       return 0;
     }
     for(int_t i=0; i<n; i++)
-      sigmx=max(sigmx, d[i]);
+      sigmax=max(sigmax, d[i]);
 
     // Copy d and e into workspace in the Z format and scale
     real_t * work = new real_t[4*n];
     COPY(n,d,1,work,2);
     COPY(n-1,e,1,work+1,2);
-    LASCL<real_t>('G',0,0,sigmx,scale,2*n-1,1,work,2*n-1);
+    LASCL<real_t>('G',0,0,sigmax,scale,2*n-1,1,work,2*n-1);
 
     // Compute the q's and e's
     for(int_t i=0;i<2*n-1;i++)
       work[i]=work[i]*work[i];
     work[2*n-1]=0;
 
-    info=DLASQ2<real_t>(n,work);
+    info=LASQ2<real_t>(n,work);
     if(info==0)
     {
       for(int_t i=0;i<n;i++)
         d[i]=sqrt(work[i]);
-      LASCL<real_t>('G',0,0,scale,sigmx,n,1,d,n);
+      LASCL<real_t>('G',0,0,scale,sigmax,n,1,d,n);
     }
     else if(info==2)
     {
@@ -135,8 +135,8 @@ namespace LATL
         d[i]=sqrt(work[2*i]);
         e[i]=sqrt(work[2*i+1]);
       }
-      LASCL<real_t>('G',0,0,scale,sigmx,n,1,d,n);
-      LASCL<real_t>('G',0,0,scale,sigmx,n,1,e,n);
+      LASCL<real_t>('G',0,0,scale,sigmax,n,1,d,n);
+      LASCL<real_t>('G',0,0,scale,sigmax,n,1,e,n);
     }
 
     delete [] work;
