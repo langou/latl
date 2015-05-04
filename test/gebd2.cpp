@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <cstring>
 
 #include <print.h>
 #include <load.h>
@@ -285,7 +286,8 @@ void usage(char *name)
 
 int main(int argc,char **argv)
 {
-
+	using std::strncmp;
+	
   int arg=1;
   bool prnt=0;
   bool res=0;
