@@ -19,7 +19,6 @@
 #include "lasv2.h"
 #include "rot.h"
 #include "las2.h"
-#include "lartg.h"
 #include "scal.h"
 #include "swap.h"
 
@@ -95,16 +94,16 @@ namespace LATL
   /// @return 0 if success.
   /// @return -i if the ith argument is invalid.
   /// @return 1
-	///   if ncVT = nrU = ncC = 0, then 1 element of e has not converged to
-	///   zero,
+  ///   if ncVT = nrU = ncC = 0, then 1 element of e has not converged to
+  ///   zero,
   ///   otherwise, a split was marked by a positive value in e.
   /// @return 3
-	///   if ncVT = nrU = ncC = 0, then 3 elements of e have not converged to
+  ///   if ncVT = nrU = ncC = 0, then 3 elements of e have not converged to
   ///   zero,
-	///   otherwise, the termination criterion of outer while loop is not met.
+  ///   otherwise, the termination criterion of outer while loop is not met.
   /// @return i if ncVT = nrU = ncC = 0, i elements have not converged
   ///   to zero.
-	///   d and e contain the elements of a bidiagonal matrix which is
+  ///   d and e contain the elements of a bidiagonal matrix which is
   ///   orthogonally similar to the input matrix B.
   ///
   /// @ingroup COMP
@@ -119,7 +118,6 @@ namespace LATL
     using std::abs;
     using std::sqrt;
     using std::pow;
-    using std::copysign;
     using std::toupper;
 
     if(toupper(uplo)!='U' && toupper(uplo)!='L')
@@ -132,11 +130,11 @@ namespace LATL
       return -4;
     if(ncC<0)
       return -5;
-    if((ncVT==0 && ldVT<1) || (ncVT>0 && ldVT<max(1,n)))
+    if((ncVT==0 && ldVT<1) || (ncVT>0 && ldVT<max((int_t)1,n)))
       return -9;
-    if(ldU<max(1,nrU))
+    if(ldU<max((int_t)1,nrU))
       return -11;
-    if((ncC==0 && ldC<1) || (ncC>0 && ldC<max(1,n)))
+    if((ncC==0 && ldC<1) || (ncC>0 && ldC<max((int_t)1,n)))
       return -13;
 
     if(n==0)
@@ -162,19 +160,19 @@ namespace LATL
       if(ncVT==0 && nrU==0 && ncC==0)
       {
         // no singular vectors desired, use qd algorithm
-				int_t info;
-				info=LASQ1<real_t>(n,d,e);
+        int_t info;
+        info=LASQ1<real_t>(n,d,e);
         if(info!=2)
           return info;
         // dqds didn't finish, try to finish
       }
 
-      int_t nm1=n-1;
-      int_t nm12=nm1+nm1;
-      int_t nm13=nm12+nm1;
       int_t idir=0;
-      const real_t eps=LAMCH<real_t>("Epsilon");
-      const real_t unfl=LAMCH<real_t>("Safe minimum");
+      const int_t nm1  = n-1;
+      const int_t nm12 = nm1+nm1;
+      const int_t nm13 = nm12+nm1;
+      const real_t eps  = LAMCH<real_t>('E');
+      const real_t unfl = LAMCH<real_t>('S');
       real_t *work = new real_t[4*n];
 
       if(lower)
@@ -185,9 +183,9 @@ namespace LATL
         real_t sn;
         real_t r;
 
-        for(int_t i=0, i<n-1; i++)
+        for(int_t i=0; i<n-1; i++)
         {
-          LARTG<real_t>(d[i],e[i],,cs,sn,r);
+          LARTG<real_t>(d[i],e[i],cs,sn,r);
           d[i]=r;
           e[i]=sn*d[i+1];
           d[i+1]=cs*d[i+1];
@@ -196,32 +194,31 @@ namespace LATL
         }
         if(nrU>0)
           // update left singular vectors
-          LASR<real_t>('R','V','F',nrU,n,work[1],work[n],U,ldU);
+          LASR<real_t>('R','V','F',nrU,n,&work[0],&work[n-1],U,ldU);
         if(ncC>0)
           // update right singular vectors
-          LASR<real_t>('L','V','F',n,ncC,work[1],work[n],C,ldC);
+          LASR<real_t>('L','V','F',n,ncC,&work[0],&work[n-1],C,ldC);
       }
 
-      // compute singular values to relative accuracy tol
       // tolmul controls the convergence criterion of the QR loop.
-      //
-      // By setting tol to be negative, the singular values will be computed
-      // to absolute accuracy abs(tol)*norm(input matrix).
-      //
       // abs(tolmul) should be between 1 and 1/eps, and preferably between
       // 10 (for fast convergence) and .1/eps (for there be some accuracy in
       // the results).
       const real_t tolmul=max(ten, min(hundred, pow(eps,meigth)));
+
+      // compute singular values to relative accuracy tol
+      // By setting tol to be negative, the singular values will be computed
+      // to absolute accuracy abs(tol)*norm(input matrix).
       const real_t tol=tolmul*eps;
-      real_t thresh;
 
       // compute approximate maximum, minimum singular values
+      real_t thresh;
+      real_t sminl=zero;
       real_t smax=zero;
       for(int_t i=0; i<n; i++)
         smax=max(smax, abs(d[i]));
       for(int_t i=0; i<n-1; i++)
         smax=max(smax, abs(e[i]));
-      real_t sminl=zero;
       if(tol>=zero)
       {
         // relative accuracy desired
@@ -248,14 +245,14 @@ namespace LATL
 
       // prepare for main iteration loop for the singular values
       // maxit is the maximum number of passes through the inner loop
-      // permitted before nonconvergence is signalled
-      int_t maxit=maxiter*n*n;
+      // permitted before nonconvergence is signaled
+      const int_t maxit=maxiter*n*n;
       int_t iter=0;
 
       // m points to last element of the unconverged part of the matrix
       // m and ll are 1-based
       int_t m=n;
-      int_t ll;
+      int_t ll=1;
       int_t oldll=-1;
       int_t oldm=-1;
 
@@ -275,10 +272,11 @@ namespace LATL
       real_t oldsn;
       real_t f;
       real_t g;
+      real_t shift;
 
-      while(m>1)
+      while (m>1)
       {
-        if(iter>maxiter)
+        if(iter>maxit)
         {
           // failed to converge
           int_t info=0;
@@ -294,7 +292,6 @@ namespace LATL
         if(tol<zero && abs(d[m-1])<=thresh)
           d[m-1]=zero;
         smax=abs(d[m-1]);
-        smin=smax;
         for(int_t i=1; i<m; i++)
         {
           ll=m-i;
@@ -304,24 +301,20 @@ namespace LATL
             d[ll-1]=zero;
           if(abse<=thresh)
           {
-            // matrix splits
             e[ll-1]=zero;
+            ll++;
             break;
           }
-          smin=min(smin,abss);
-          smax=max(smax,abss,abse);
+          smax=max(max(smax,abss),abse);
         }
-        if(ll==1)
-          ll=0;
-        else if(ll==m-1)
+        if(ll==m)
         {
           // convergence of bottom singular value
           m--;
           continue;
         }
-        ll=ll+1;
 
-        // now, e(ll) through e(m-1) are nonzero, e(ll-1) is zero
+        // now, e(ll) through e(m-1) are nonzero, e(ll-1) is zero if ll > 1
 
         if(ll==m-1)
         {
@@ -333,13 +326,13 @@ namespace LATL
 
           if(ncVT>0)
             // update left singular vectors
-            ROT<real_t>(ncVT, &VT[m-2,0], ldVT, &VT[m-1,0], ldVT, cosr, sinr);
+            ROT<real_t>(ncVT, &VT[m-2], ldVT, &VT[m-1], ldVT, cosr, sinr);
           if(nrU>0)
             // update right singular vectors
-            ROT<real_t>(nrU, &U[0,m-2], 1, &U[0, m-1], 1, cosl, sinl);
+            ROT<real_t>(nrU, &U[(m-2)*ldU], 1, &U[(m-1)*ldU], 1, cosl, sinl);
           if(ncC>0)
             // update C matrix
-            ROT<real_t>(ncC, &C[m-2,0], ldC, &C[m-1,0], ldC, cosl, sinl);
+            ROT<real_t>(ncC, &C[m-2], ldC, &C[m-1], ldC, cosl, sinl);
 
           m-=2;
           continue;
@@ -391,7 +384,7 @@ namespace LATL
         else
         {
           // run convergence test in backward direction
-          // apply stadard test to top of matrix
+          // apply standard test to top of matrix
           if(abs(e[ll-1])<=abs(tol*d[ll-1])
              || (tol<zero && abs(e[ll-1])<=thresh))
           {
@@ -425,7 +418,7 @@ namespace LATL
         oldm=m;
 
         // Compute shift
-        if(tol>=zero && n*tol*(sminl/smax)<=max(eps,hundred*tol))
+        if(tol>=zero && n*tol*sminl<=max(eps,hundredth*tol)*smax)
         {
           // Use a zero shift to avoid loss of relative accuracy
           shift=zero;
@@ -445,7 +438,7 @@ namespace LATL
           }
           if(sll>zero)
           {
-            if((shift/sll)*(shift/sll)<eps)
+            if(shift*shift<eps*sll*sll)
             {
               // the shift is negligible
               shift=zero;
@@ -465,35 +458,35 @@ namespace LATL
             // save cosines and sines for later vector updates
             cs=one;
             oldcs=one;
-            for(int_t i=ll-1; i<m-2; i++)
+            for(int_t i=ll-1; i<m-1; i++)
             {
               LARTG<real_t>(d[i]*cs,e[i],cs,sn,r);
               if(i>ll-1)
                 e[i-1]=oldsn*r;
 
               LARTG<real_t>(oldcs*r,d[i+1]*sn,oldcs,oldsn,d[i]);
-              work[i+ll+1]=cs;
-              work[i+ll+1+nm1]=sn;
-              work[i+ll+1+nm12]=oldcs;
-              work[i+ll+1+nm13]=oldsn;
+              work[i-ll+1]=cs;
+              work[i-ll+1+nm1]=sn;
+              work[i-ll+1+nm12]=oldcs;
+              work[i-ll+1+nm13]=oldsn;
             }
             real_t h;
             h=d[m-1]*cs;
             d[m-1]=h*oldcs;
-            e[m-1]=h*oldsn;
+            e[m-2]=h*oldsn;
 
             // update singular vectors
             if(ncVT>0)
-              LASR<real_t>('L','V','F',m-ll+1,ncVT,&work[0],&work[n-1],
-                           &VT[ll-1,0],ldVT);
+              LASR<real_t>('L','V','F',m-ll+1,ncVT,&work[0],&work[nm1],
+                           &VT[ll-1],ldVT);
             if(nrU>0)
               LASR<real_t>('R','V','F',nrU,m-ll+1,&work[nm12],&work[nm13],
-                           &U[0,ll-1],ldU);
+                           &U[(ll-1)*ldU],ldU);
             if(ncC>0)
               LASR<real_t>('L','V','F',m-ll+1,ncC,&work[nm12],&work[nm13],
-                           &C[ll-1,0],ldC);
+                           &C[ll-1],ldC);
 
-            if(abs(e[m-2]<=thresh))
+            if(abs(e[m-2])<=thresh)
               // convergence
               e[m-2]=zero;
           }
@@ -507,13 +500,13 @@ namespace LATL
             {
               LARTG<real_t>(d[i]*cs,e[i-1],cs,sn,r);
               if(i<m-1)
-                e[i-1]=oldsn*r;
+                e[i]=oldsn*r;
 
               LARTG<real_t>(oldcs*r,d[i-1]*sn,oldcs,oldsn,d[i]);
               work[i-ll]=cs;
-              work[i-ll+nm1]=sn;
+              work[i-ll+nm1]=-sn;
               work[i-ll+nm12]=oldcs;
-              work[i-ll+nm13]=oldsn;
+              work[i-ll+nm13]=-oldsn;
             }
             real_t h;
             h=d[ll-1]*cs;
@@ -523,15 +516,15 @@ namespace LATL
             // update singular vectors
             if(ncVT>0)
               LASR<real_t>('L','V','B',m-ll+1,ncVT,&work[nm12],&work[nm13],
-                           &VT[ll-1,0],ldVT);
+                           &VT[ll-1],ldVT);
             if(nrU>0)
               LASR<real_t>('R','V','B',nrU,m-ll+1,&work[0],&work[n-1],
-                           &U[0,ll-1],ldU);
+                           &U[(ll-1)*ldU],ldU);
             if(ncC>0)
               LASR<real_t>('L','V','B',m-ll+1,ncC,&work[0],&work[n-1],
-                           &C[ll-1,0],ldC);
+                           &C[ll-1],ldC);
 
-            if(abs(e[ll-1]<=thresh))
+            if(abs(e[ll-1])<=thresh)
               // convergence
               e[ll-1]=zero;
           }
@@ -545,26 +538,29 @@ namespace LATL
             // chase bulge from top to bottom
             // save cosines and sines for later singular vector updates
 
-            f=(abs(d[ll-1])-shift)*(copysign(one,d[ll-1])+shift/d[ll-1]);
+            if (d[ll-1] < zero)
+              f=(abs(d[ll-1])-shift)*(negone+shift/d[ll-1]);
+            else
+              f=(abs(d[ll-1])-shift)*(one+shift/d[ll-1]);
             g=e[ll-1];
             for(int_t i=ll-1; i<m-1; i++)
             {
               LARTG<real_t>(f,g,cosr,sinr,r);
               if(i>ll-1)
                 e[i-1]=r;
-              f=cosr*d[i]+sinr*e[i];
-              e[i]=cosr*e[i]-sinr*d[i];
-              g=sinr*d[i+1];
-              d[i+1]=cosr*d[i+1];
+              f      = cosr*d[i] + sinr*e[i];
+              e[i]   = cosr*e[i] - sinr*d[i];
+              g      = sinr*d[i+1];
+              d[i+1] = cosr*d[i+1];
 
               LARTG<real_t>(f,g,cosl,sinl,r);
-              d[i]=r;
-              f=cosl*e[i]+sinl*d[i+1];
-              d[i+1]=cosl*d[i+1]-sinl*e[i];
+              d[i]   = r;
+              f      = cosl*e[i]   + sinl*d[i+1];
+              d[i+1] = cosl*d[i+1] - sinl*e[i];
               if(i<m-2)
               {
-                g=sinl*e[i+1];
-                e[i+1]=cosl*e[i+1];
+                g      = sinl*e[i+1];
+                e[i+1] = cosl*e[i+1];
               }
               work[i-ll+1]=cosr;
               work[i-ll+1+nm1]=sinr;
@@ -575,16 +571,16 @@ namespace LATL
 
             //update singular vectors
             if(ncVT>0)
-              LASR<real_t>('L','V','F',m-ll+1,ncVT,&work[0],&work[n-1],
-                           &VT[ll-1,0],ldVT);
+              LASR<real_t>('L','V','F',m-ll+1,ncVT,&work[0],&work[nm1],
+                           &VT[ll-1],ldVT);
             if(nrU>0)
               LASR<real_t>('R','V','F',nrU,m-ll+1,&work[nm12],&work[nm13],
-                           &U[0,ll-1],ldU);
+                           &U[(ll-1)*ldU],ldU);
             if(ncC>0)
               LASR<real_t>('L','V','F',m-ll+1,ncC,&work[nm12],&work[nm13],
-                           &C[ll-1,0],ldC);
+                           &C[ll-1],ldC);
 
-            if(abs(e[m-2]<=thresh))
+            if(abs(e[m-2])<=thresh)
               // convergence
               e[m-2]=zero;
           }
@@ -593,51 +589,54 @@ namespace LATL
             // chase bulge from bottom to top
             // save cosines and sines for later singular vector updates
 
-            f=(abs(d[m-1])-shift)*(copysign(one,d[m-1])+shift/d[m-1]);
+            if (d[m-1] < zero)
+              f=(abs(d[m-1])-shift)*(negone+shift/d[m-1]);
+            else
+              f=(abs(d[m-1])-shift)*(one+shift/d[m-1]);
             g=e[m-2];
-            for(int_t i=m-1; i>ll; i--)
+            for(int_t i=m-1; i>ll-1; i--)
             {
               LARTG<real_t>(f,g,cosr,sinr,r);
               if(i<m-1)
                 e[i]=r;
-              f=cosr*d[i]+sinr*e[i-1];
-              e[i-1]=cosr*e[i-1]-sinr*d[i];
-              g=sinr*d[i-1];
-              d[i-1]=cosr*d[i-1];
+              f      = cosr*d[i]   + sinr*e[i-1];
+              e[i-1] = cosr*e[i-1] - sinr*d[i];
+              g      = sinr*d[i-1];
+              d[i-1] = cosr*d[i-1];
 
               LARTG<real_t>(f,g,cosl,sinl,r);
               d[i]=r;
-              f=cosl*e[i-1]+sinl*d[i-1];
-              d[i-1]=cosl*d[i-1]-sinl*e[i-1];
+              f      = cosl*e[i-1] + sinl*d[i-1];
+              d[i-1] = cosl*d[i-1] - sinl*e[i-1];
               if(i>ll)
               {
-                g=sinl*e[i-2];
-                e[i-2]=cosl*e[i-2];
+                g      = sinl*e[i-2];
+                e[i-2] = cosl*e[i-2];
               }
               work[i-ll]=cosr;
-              work[i-ll+nm1]=sinr;
+              work[i-ll+nm1]=-sinr;
               work[i-ll+nm12]=cosl;
-              work[i-ll+nm13]=sinl;
+              work[i-ll+nm13]=-sinl;
             }
             e[ll-1]=f;
 
             // update singular vectors
             if(ncVT>0)
               LASR<real_t>('L','V','B',m-ll+1,ncVT,&work[nm12],&work[nm13],
-                           &VT[ll-1,0],ldVT);
+                           &VT[ll-1],ldVT);
             if(nrU>0)
               LASR<real_t>('R','V','B',nrU,m-ll+1,&work[0],&work[n-1],
-                           &U[0,ll-1],ldU);
+                           &U[(ll-1)*ldU],ldU);
             if(ncC>0)
               LASR<real_t>('L','V','B',m-ll+1,ncC,&work[0],&work[n-1],
-                           &C[ll-1,0],ldC);
+                           &C[ll-1],ldC);
 
-            if(abs(e[ll-1]<=thresh))
+            if(abs(e[ll-1])<=thresh)
               // convergence
               e[ll-1]=zero;
           }
         }
-      }
+      } // end of while(m>1) loop
       delete [] work;
     }
 
@@ -651,35 +650,36 @@ namespace LATL
         d[i]=-d[i];
         if(ncVT>0)
           // change sign of singular vector
-          SCAL<real_t>(ncVT,negone,&VT[i,0],ldVT);
+          SCAL<real_t>(ncVT,negone,&VT[i],ldVT);
       }
     }
 
     // sort the singular values into decreasing order
+    real_t smin;
     for(int_t i=0; i<n-1; i++)
     {
       // scan for the smallest d[i]
       int_t isub=0;
-      smin=d[1];
-      for(int_t j=2; j<n+1-i; j++)
+      smin=d[0];
+      for(int_t j=1; j<n-i; j++)
       {
-        if(d[j]<smin)
+        if(d[j]<=smin)
         {
           isub=j;
           smin=d[j];
         }
-        if(isub!=n+1-i)
-        {
-          // swap singular values and vectors
-          d[isub]=d[n+1-i];
-          d[n+1-i]=smin;
-          if(ncVT>0)
-            SWAP<real_t>(ncVT,VT[isub,0],ldVT,VT[n+1-i,0],ldVT);
-          if(nrU>0)
-            SWAP<real_t>(nrU,U[0,isub],1,U[0,n+1-i],1);
-          if(ncC>0)
-            SWAP<real_t>(ncC,C[isub,0],ldC,C[n+1-i,0],ldC);
-        }
+      }
+      if(isub!=n-1-i)
+      {
+        // swap singular values and vectors
+        d[isub]=d[n-1-i];
+        d[n-1-i]=smin;
+        if(ncVT>0)
+          SWAP<real_t>(ncVT,&VT[isub],ldVT,&VT[n-1-i],ldVT);
+        if(nrU>0)
+          SWAP<real_t>(nrU,&U[isub*ldU],1,&U[(n-1-i)*ldU],1);
+        if(ncC>0)
+          SWAP<real_t>(ncC,&C[isub],ldC,&C[n-1-i],ldC);
       }
     }
 
