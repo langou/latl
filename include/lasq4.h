@@ -84,7 +84,6 @@ namespace LATL
     const real_t half(0.5);
     const real_t third(one/three);
     const real_t quarter(0.25);
-    const real_t cnst1(0.5625); // 9/16
     const real_t cnst2(1.01);
     const real_t cnst3(1.05);
 
