@@ -127,7 +127,7 @@ namespace LATL
 
     side=toupper(side);
     pivot=toupper(pivot);
-    direct=touper(direct);
+    direct=toupper(direct);
 
     if((side!='L') && (side!='R'))
       return -1;
@@ -388,6 +388,7 @@ namespace LATL
         }
       }
     }
+    return 0;
   }
 }
 
