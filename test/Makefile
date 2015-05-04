@@ -1,10 +1,13 @@
-CC=clang++
-CXX=clang++
+#CC=g++-4.9
+CXX=g++-4.9
+#CXX=icc
 LATL=../include
-CXXFLAGS=$(DEFS) -I$(LATL) -O3 -Wall -pedantic -std=c++11
+#CXXFLAGS=$(DEFS) -I$(LATL) -O -Wall  -std=c++11 	-pg -g
+#CXXFLAGS=$(DEFS) -I$(LATL) -O -Wall -pedantic -std=c++11 -pg -g
+CXXFLAGS=$(DEFS) -I$(LATL) -O3 -Wall -pedantic -std=c++11 -Werror
 
 TESTSUITE = 
-PROGRAMS = invert lamch gebd2
+PROGRAMS = invert lamch gebd2 bdsqr
 
 all: $(PROGRAMS) $(TESTSUITE)
 
@@ -37,6 +40,12 @@ mpreal: clean
 
 gebd2: gebd2.o timer.o
 	$(CXX) $^ -o $@
+
+bdsqr: bdsqr.o timer.o
+	$(CXX) $^ -o $@ -pg
+# 	$(CXX) $^ -o $@ ../../lapack-dev/build/lib/liblapack.a ../../lapack-dev/build/lib/libblas.a	-lgfortran
+
+.o .cpp:
 
 clean:
 	rm -f *.o $(PROGRAMS) $(TESTSUITE)
