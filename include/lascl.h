@@ -55,6 +55,7 @@ namespace LATL
       using std::isnan;
       using std::max;
       using std::min;
+      const int_t izero=0;
       const real_t zero=0.0;
       type=toupper(type);
       if((type!='G')&&(type!='L')&&(type!='U')&&(type!='H')&&(type!='B')&&(type!='Q')&&(type!='Z'))
@@ -69,9 +70,9 @@ namespace LATL
          return -7;
       else if((ldA<m)&&((type=='G')||(type=='L')||(type=='U')||(type=='H')))
          return -9;
-      else if(((type=='B')||(type=='Q')||(type=='Z'))&&((kl<0)||(kl>max(m-1,0))))
+      else if(((type=='B')||(type=='Q')||(type=='Z'))&&((kl<0)||(kl>max(m-1,izero))))
          return -2;
-      else if(((type=='B')||(type=='Q')||(type=='Z'))&&((ku<0)||(ku>max(n-1,0))))
+      else if(((type=='B')||(type=='Q')||(type=='Z'))&&((ku<0)||(ku>max(n-1,izero))))
          return -3;
       else if(((type=='B')||(type=='Q'))&&((kl!=ku)))
          return -3;
@@ -83,7 +84,6 @@ namespace LATL
          return -9;
       
       const real_t one(1.0);
-      const real_t zero(0.0);
       const real_t small=LAMCH<real_t>('S');
       const real_t big=one/small;
       bool done=0;
@@ -174,7 +174,7 @@ namespace LATL
          {
             for(int_t j=0;j<n;j++)
             {
-               for(int_t i=max(ku-j,0);i<=ku;i++)
+               for(int_t i=max(ku-j,izero);i<=ku;i++)
                   A[i]*=c;
                A+=ldA;
             }
@@ -229,6 +229,7 @@ namespace LATL
       using std::max;
       using std::min;
       const real_t zero=0.0;
+      const int_t izero=0;
       type=toupper(type);
       if((type!='G')&&(type!='L')&&(type!='U')&&(type!='H')&&(type!='B')&&(type!='Q')&&(type!='Z'))
          return -1;
@@ -242,9 +243,9 @@ namespace LATL
          return -7;
       else if((ldA<m)&&((type=='G')||(type=='L')||(type=='U')||(type=='H')))
          return -9;
-      else if(((type=='B')||(type=='Q')||(type=='Z'))&&((kl<0)||(kl>max(m-1,0))))
+      else if(((type=='B')||(type=='Q')||(type=='Z'))&&((kl<0)||(kl>max(m-1,izero))))
          return -2;
-      else if(((type=='B')||(type=='Q')||(type=='Z'))&&((ku<0)||(ku>max(n-1,0))))
+      else if(((type=='B')||(type=='Q')||(type=='Z'))&&((ku<0)||(ku>max(n-1,izero))))
          return -3;
       else if(((type=='B')||(type=='Q'))&&((kl!=ku)))
          return -3;
@@ -256,7 +257,6 @@ namespace LATL
          return -9;
       
       const real_t one(1.0);
-      const real_t zero(0.0);
       const real_t small=LAMCH<real_t>('S');
       const real_t big=one/small;
       bool done=0;
@@ -347,7 +347,7 @@ namespace LATL
          {
             for(int_t j=0;j<n;j++)
             {
-               for(int_t i=max(ku-j,0);i<=ku;i++)
+               for(int_t i=max(ku-j,izero);i<=ku;i++)
                   A[i]*=c;
                A+=ldA;
             }
