@@ -70,7 +70,7 @@ namespace LATL
       return -1;
 
     if(n==0)
-      return;
+      return 0;
     if(n==1)
     {
       // 1-by-1 case
@@ -80,6 +80,7 @@ namespace LATL
     }
 
     const real_t one(1.0);
+    const real_t two(2.0);
     const real_t hundred(100.0);
     const real_t half(0.5);
     const real_t eps=LAMCH<real_t>('P');
@@ -111,11 +112,11 @@ namespace LATL
         {
           real_t s;
           s=z[2]*(z[1]/d);
-          if(s<=t)
-            s=z[2]*(z[1]/(t*(one+sqrt(one+s/d))));
+          if(s<=d)
+            s=z[2]*(z[1]/(d*(one+sqrt(one+s/d))));
           else
             s=z[2]*(z[1]/(d+sqrt(d)*sqrt(d+s)));
-          t=z[0]+(s+z[1]);
+          d=z[0]+(s+z[1]);
           z[2]=z[2]*(z[0]/d);
           z[0]=d;
         }
@@ -128,6 +129,7 @@ namespace LATL
     // check for negative data and compute sums of q's and e's
     real_t emin;
     real_t qmax;
+    real_t qmin;
     real_t zmax;
     real_t d;
     real_t e;
@@ -178,7 +180,7 @@ namespace LATL
     // rearrange for locality in a qd array z
     // z[4(i-1)] is qi, z[4(i-1)+1] is qqi,
     // z[4(i-1)+2] is ei, and z[4(i-1)+3] is eei
-    for(k=2*n-1, k>=0; k-=2)
+    for(int_t k=2*n-1; k>=0; k-=2)
     {
       z[2*k+3]=zero;
       z[2*k+2]=z[k+1];
@@ -195,10 +197,10 @@ namespace LATL
       // reverse the qd-array
       for(int_t k=0; k<n0-i0; k++)
       {
-        d=z[4*(no-k-1)];
+        d=z[4*(n0-k-1)];
         z[4*(n0-k-1)]=z[4*(i0+k-1)];
         z[4*(i0+k-1)]=d;
-        d=z[4*(no-k-1)+2];
+        d=z[4*(n0-k-1)+2];
         z[4*(n0-k-1)+2]=z[4*(i0+k-1)+2];
         z[4*(i0+k-1)+2]=d;
       }
@@ -261,6 +263,7 @@ namespace LATL
 
     const real_t four(4.0);
     int_t ttype=0;
+    real_t dmin=zero;
     real_t dmin1=zero;
     real_t dmin2=zero;
     real_t dn=zero;
@@ -299,7 +302,7 @@ namespace LATL
       }
 
       desig=zero;
-      if(n0=n)
+      if(n0==n)
         sigma=zero;
       else
         // e(n0) holds the value of sigma when submatrix in i0:n0
@@ -358,16 +361,16 @@ namespace LATL
           pp=2;
           for(j=0; j<(n0-i0+1)/2; j++)
           {
-            tmp=z[4*(no-j-1)];
+            tmp=z[4*(n0-j-1)];
             z[4*(n0-j-1)]=z[4*(i0+j-1)];
             z[4*(i0+j-1)]=tmp;
-            tmp=z[4*(no-j-1)+1];
+            tmp=z[4*(n0-j-1)+1];
             z[4*(n0-j-1)+1]=z[4*(i0+j-1)+1];
             z[4*(i0+j-1)+1]=tmp;
-            tmp=z[4*(no-j-1)+2];
+            tmp=z[4*(n0-j-1)+2];
             z[4*(n0-j-1)+2]=z[4*(i0+j-1)+2];
             z[4*(i0+j-1)+2]=tmp;
-            tmp=z[4*(no-j-1)+3];
+            tmp=z[4*(n0-j-1)+3];
             z[4*(n0-j-1)+3]=z[4*(i0+j-1)+3];
             z[4*(i0+j-1)+3]=tmp;
           }
